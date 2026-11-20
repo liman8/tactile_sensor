@@ -1,0 +1,19 @@
+rendering on EGL device 2
+new_v1_clean                 <16 mm2: success 99 % (reached 100 %, 2.0 presses, err 0.7 mm) | <4 mm2: success 30 % (reached 33 %, 9.0 presses) | final err 0.57/1.2 mm, >5 mm 0.0 %  (258 s)
+new_v1_noise_0.05mm          <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.8 mm) | <4 mm2: success 28 % (reached 32 %, 9.0 presses) | final err 0.58/1.2 mm, >5 mm 0.0 %  (557 s)
+new_v1_lateral_0.98          <16 mm2: success 97 % (reached 100 %, 2.0 presses, err 0.8 mm) | <4 mm2: success 21 % (reached 30 %, 9.0 presses) | final err 0.87/1.8 mm, >5 mm 0.0 %  (743 s)
+new_v2_clean                 <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.7 mm) | <4 mm2: success 30 % (reached 33 %, 9.0 presses) | final err 0.57/1.2 mm, >5 mm 0.0 %  (884 s)
+new_v2_noise_0.05mm          <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.8 mm) | <4 mm2: success 28 % (reached 32 %, 9.0 presses) | final err 0.59/1.2 mm, >5 mm 0.0 %  (1027 s)
+new_v2_lateral_0.98          <16 mm2: success 97 % (reached 100 %, 2.0 presses, err 0.8 mm) | <4 mm2: success 21 % (reached 30 %, 9.0 presses) | final err 0.86/1.8 mm, >5 mm 0.0 %  (1171 s)
+new_v1_clean                             <16 mm2: success 99 % (reached 100 %, 2.0 presses, err 0.7 mm) | <4 mm2: success 30 % (reached 33 %, 9.0 presses) | final err 0.57/1.2 mm, >5 mm 0.0 %
+new_v1_lateral_0.98                      <16 mm2: success 97 % (reached 100 %, 2.0 presses, err 0.8 mm) | <4 mm2: success 21 % (reached 30 %, 9.0 presses) | final err 0.87/1.8 mm, >5 mm 0.0 %
+new_v1_noise_0.05mm                      <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.8 mm) | <4 mm2: success 28 % (reached 32 %, 9.0 presses) | final err 0.58/1.2 mm, >5 mm 0.0 %
+new_v2_clean                             <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.7 mm) | <4 mm2: success 30 % (reached 33 %, 9.0 presses) | final err 0.57/1.2 mm, >5 mm 0.0 %
+new_v2_lateral_0.98                      <16 mm2: success 97 % (reached 100 %, 2.0 presses, err 0.8 mm) | <4 mm2: success 21 % (reached 30 %, 9.0 presses) | final err 0.86/1.8 mm, >5 mm 0.0 %
+new_v2_noise_0.05mm                      <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.8 mm) | <4 mm2: success 28 % (reached 32 %, 9.0 presses) | final err 0.59/1.2 mm, >5 mm 0.0 %
+old_v2_clean                             <16 mm2: success 96 % (reached 96 %, 2.0 presses, err 0.7 mm) | <4 mm2: success 66 % (reached 73 %, 8.0 presses) | final err 0.53/1.1 mm, >5 mm 3.7 %
+old_v2_lateral_0.98                      <16 mm2: success 73 % (reached 97 %, 2.0 presses, err 1.4 mm) | <4 mm2: success 5 % (reached 74 %, 8.0 presses) | final err 1.75/2.6 mm, >5 mm 2.7 %
+old_v2_noise_0.05mm                      <16 mm2: success 80 % (reached 84 %, 2.0 presses, err 0.8 mm) | <4 mm2: success 48 % (reached 63 %, 8.0 presses) | final err 0.77/92.7 mm, >5 mm 15.7 %
+old_v1_clean (previous search)           <16 mm2: success 97 % (reached 97 %, 2.0 presses, err 0.7 mm) | <4 mm2: success 66 % (reached 72 %, 8.0 presses) | final err 0.53/1.1 mm, >5 mm 2.7 %
+old_v1_noise_0.05mm (previous search)    <16 mm2: success 80 % (reached 84 %, 2.0 presses, err 0.8 mm) | <4 mm2: success 48 % (reached 63 %, 8.0 presses) | final err 0.77/92.7 mm, >5 mm 15.7 %
+old_v1_lateral_0.98 (previous search)    <16 mm2: success 70 % (reached 96 %, 2.0 presses, err 1.4 mm) | <4 mm2: success 4 % (reached 72 %, 8.0 presses) | final err 1.79/2.7 mm, >5 mm 3.7 %
