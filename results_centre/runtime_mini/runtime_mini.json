@@ -1,0 +1,19 @@
+{
+ "seconds_per_press": {
+  "mini_robust s0, cpu, 1 thread(s)": 0.023429393768310547,
+  "mini_robust_aa s0 (input blur), cpu, 1 thread(s)": 0.02367377281188965,
+  "mini_robust s0 + TTA (11 variants), cpu, 1 thread(s)": 0.2606852054595947,
+  "CAD baseline, cpu, 1 thread(s)": 1.32720947265625,
+  "mini_robust s0, cpu, 8 thread(s)": 0.005449056625366211,
+  "mini_robust_aa s0 (input blur), cpu, 8 thread(s)": 0.005570888519287109,
+  "mini_robust s0 + TTA (11 variants), cpu, 8 thread(s)": 0.06207466125488281,
+  "CAD baseline, cpu, 8 thread(s)": 0.4488016366958618,
+  "mini_robust s0, cuda": 0.0012509822845458984,
+  "mini_robust_aa s0 (input blur), cuda": 0.0013740062713623047,
+  "mini_robust s0 + TTA (11 variants), cuda": 0.01376199722290039,
+  "CAD baseline, cuda": 0.038222670555114746
+ },
+ "n_network": 47,
+ "n_cad": 18,
+ "note": "median over Mini test2 fork presses; network: one press with load_net's wrappers, softmax included; CAD: coarse FFT + refinement + map; GPU = NVIDIA GeForce RTX 4070 Laptop GPU; nothing else running"
+}
