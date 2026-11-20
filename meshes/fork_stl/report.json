@@ -1,0 +1,313 @@
+{
+  "source": "ForkMilimeter.stl",
+  "units": "mm",
+  "raw": {
+    "triangles": 986,
+    "vertices": 495,
+    "watertight": true,
+    "winding_consistent": true,
+    "is_volume": true,
+    "bodies": 1,
+    "euler_number": 2,
+    "degenerate_faces": 0,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "bbox_min": [
+      -84.0,
+      -8.1268,
+      -0.0
+    ],
+    "bbox_max": [
+      36.2819,
+      8.1268,
+      5.0
+    ],
+    "extents": [
+      120.2819,
+      16.2535,
+      5.0
+    ],
+    "volume": 1207.7376912590664,
+    "area": 2273.0964908947253,
+    "triangles_in_file": 986
+  },
+  "changes": [
+    "merged duplicate vertices: 2958 -> 495 (STL stores 3 per triangle; geometry unchanged)"
+  ],
+  "final": {
+    "triangles": 986,
+    "vertices": 495,
+    "watertight": true,
+    "winding_consistent": true,
+    "is_volume": true,
+    "bodies": 1,
+    "euler_number": 2,
+    "degenerate_faces": 0,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "bbox_min": [
+      -84.0,
+      -8.1268,
+      -0.0
+    ],
+    "bbox_max": [
+      36.2819,
+      8.1268,
+      5.0
+    ],
+    "extents": [
+      120.2819,
+      16.2535,
+      5.0
+    ],
+    "volume": 1207.7376912590664,
+    "area": 2273.0964908947253
+  },
+  "rest_pose": {
+    "index": 0,
+    "prob": 0.4709637391014306,
+    "z_up_in_mesh": [
+      0.0291,
+      0.0,
+      -0.9996
+    ],
+    "support_vertices": 11,
+    "support_mesh_bbox": [
+      [
+        -84.0,
+        -8.127,
+        1.5
+      ],
+      [
+        36.282,
+        8.127,
+        5.0
+      ]
+    ],
+    "body_pos_m": [
+      0.0,
+      0.0,
+      0.003942590303435654
+    ],
+    "body_quat": [
+      -4.452982184841316e-19,
+      0.9998942225315995,
+      3.0612931477731363e-17,
+      0.014544543579231678
+    ],
+    "all": [
+      {
+        "prob": 0.4709637391014306,
+        "z_up_in_mesh": [
+          0.0291,
+          0.0,
+          -0.9996
+        ],
+        "support_vertices": 11,
+        "support_mesh_bbox": [
+          [
+            -84.0,
+            -8.127,
+            1.5
+          ],
+          [
+            36.282,
+            8.127,
+            5.0
+          ]
+        ]
+      },
+      {
+        "prob": 0.4540523540835942,
+        "z_up_in_mesh": [
+          0.0,
+          -0.0,
+          1.0
+        ],
+        "support_vertices": 155,
+        "support_mesh_bbox": [
+          [
+            -84.0,
+            -8.127,
+            -0.0
+          ],
+          [
+            7.0,
+            8.127,
+            0.0
+          ]
+        ]
+      },
+      {
+        "prob": 0.03757671599201483,
+        "z_up_in_mesh": [
+          0.0478,
+          0.9989,
+          -0.0
+        ],
+        "support_vertices": 4,
+        "support_mesh_bbox": [
+          [
+            -80.174,
+            -8.121,
+            0.0
+          ],
+          [
+            6.012,
+            -3.996,
+            1.637
+          ]
+        ]
+      },
+      {
+        "prob": 0.03740719082893057,
+        "z_up_in_mesh": [
+          0.0478,
+          -0.9989,
+          -0.0
+        ],
+        "support_vertices": 4,
+        "support_mesh_bbox": [
+          [
+            -80.174,
+            3.996,
+            0.0
+          ],
+          [
+            6.012,
+            8.121,
+            1.637
+          ]
+        ]
+      }
+    ]
+  },
+  "inertia": {
+    "mass_kg": 0.009480740876383672,
+    "com_m": [
+      -0.02425959849057483,
+      -1.2819285990839325e-06,
+      0.0010102797604505164
+    ],
+    "density": 7850.0
+  },
+  "decomposition": {
+    "threshold": 0.01,
+    "parts": 17,
+    "hull_vertices": [
+      82,
+      76,
+      232,
+      9,
+      8,
+      11,
+      10,
+      11,
+      9,
+      10,
+      9,
+      20,
+      13,
+      21,
+      19,
+      16,
+      15
+    ],
+    "max_outside_visual": 0.4509817219639737,
+    "per_part_outside_visual": [
+      7.19618062584834e-05,
+      0.00018246977657378484,
+      0.027502443116784608,
+      0.00966450791454621,
+      2.4160873949939648e-08,
+      2.415616397387633e-08,
+      0.008667609808876525,
+      0.020992928472870685,
+      0.0221103731672238,
+      0.022071617829379348,
+      0.021581106335539366,
+      0.05826064067864392,
+      0.05822319349825445,
+      0.4509817219639737,
+      0.45036579032575635,
+      0.17163108158687373,
+      0.17163108158687373
+    ],
+    "tines_found": 4,
+    "tine_labels": [
+      null,
+      null,
+      null,
+      0,
+      1,
+      2,
+      3,
+      0,
+      1,
+      2,
+      3,
+      2,
+      1,
+      0,
+      3,
+      1,
+      2
+    ]
+  },
+  "sites": {
+    "face": {
+      "stl_xy": [
+        21.6,
+        0.0
+      ],
+      "hits": 464,
+      "plane_fit_max_residual": 0.2200822214309337,
+      "tilt_deg": 6.0426036197521515
+    },
+    "tips": {
+      "stl_xy": [
+        31.0,
+        0.0
+      ],
+      "hits": 200,
+      "plane_fit_max_residual": 0.005023783857740938,
+      "tilt_deg": 8.634491539614423
+    },
+    "palm": {
+      "stl_xy": [
+        4.5,
+        0.0
+      ],
+      "hits": 1256,
+      "plane_fit_max_residual": 2.2293278334473143e-13,
+      "tilt_deg": 1.6667406923525714
+    },
+    "neck": {
+      "stl_xy": [
+        -2.0,
+        0.0
+      ],
+      "hits": 1153,
+      "plane_fit_max_residual": 2.1671553440683056e-13,
+      "tilt_deg": 1.6667406923530088
+    },
+    "handle": {
+      "stl_xy": [
+        -45.0,
+        0.0
+      ],
+      "hits": 1257,
+      "plane_fit_max_residual": 6.075140390748857e-13,
+      "tilt_deg": 1.6667406923521342
+    },
+    "handle_end": {
+      "stl_xy": [
+        -76.0,
+        0.0
+      ],
+      "hits": 1257,
+      "plane_fit_max_residual": 7.993605777301127e-15,
+      "tilt_deg": 1.6667406923530088
+    }
+  }
+}
