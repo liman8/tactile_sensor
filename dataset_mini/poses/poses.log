@@ -1,0 +1,5 @@
+pose 0: face down: tines curve down onto the table; trimesh p=0.471; 1 mm release: moved 0.000 mm, 0.000 deg (rocking up to 0.00 deg in the last 0.5 s); tilted releases passed 20/20
+pose 1: face up: lying on its back, tines curving up; trimesh p=0.454; 1 mm release: moved 0.003 mm, 0.005 deg (rocking up to 0.02 deg in the last 0.5 s); tilted releases passed 20/20
+pose 2: on its side edge (+y side up); trimesh p=0.038; 1 mm release: moved 0.028 mm, 0.114 deg (rocking up to 0.84 deg in the last 0.5 s); tilted releases passed 10/20
+pose 3: on its side edge (-y side up); trimesh p=0.037; 1 mm release: moved 0.052 mm, 0.307 deg (rocking up to 0.61 deg in the last 0.5 s); tilted releases passed 16/20
+natural: [0, 1], propped: [2, 3], rejected: []; drops per pose {0: 222, 1: 277, 2: 0, 3: 1}, unmatched 0 (12 s)

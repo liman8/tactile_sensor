@@ -1,0 +1,521 @@
+{
+ "shards": [
+  "test2-0000.h5",
+  "test2-0001.h5",
+  "test2-0002.h5",
+  "test2-0003.h5",
+  "test2-0004.h5",
+  "train2-0000.h5",
+  "train2-0001.h5",
+  "train2-0002.h5",
+  "train2-0003.h5",
+  "train2-0004.h5",
+  "train2-0005.h5",
+  "train2-0006.h5",
+  "train2-0007.h5",
+  "train2-0008.h5",
+  "train2-0009.h5",
+  "train2-0010.h5",
+  "train2-0011.h5",
+  "train2-0012.h5",
+  "train2-0013.h5",
+  "train2-0014.h5",
+  "train2-0015.h5",
+  "train2-0016.h5",
+  "train2-0017.h5",
+  "train2-0018.h5",
+  "train2-0019.h5",
+  "train2-0020.h5",
+  "train2-0021.h5",
+  "train2-0022.h5",
+  "train2-0023.h5",
+  "train2-0024.h5",
+  "train2-0025.h5",
+  "train2-0026.h5",
+  "train2-0027.h5",
+  "train2-0028.h5",
+  "train2-0029.h5",
+  "train2-0030.h5",
+  "train2-0031.h5",
+  "train2-0032.h5",
+  "train2-0033.h5",
+  "train2-0034.h5",
+  "train2-0035.h5",
+  "train2-0036.h5",
+  "train2-0037.h5",
+  "train2-0038.h5",
+  "train2-0039.h5",
+  "train2-0040.h5",
+  "train2-0041.h5",
+  "train2-0042.h5",
+  "train2-0043.h5",
+  "train2-0044.h5",
+  "train2-0045.h5",
+  "train2-0046.h5",
+  "train2-0047.h5",
+  "train2-0048.h5",
+  "train2-0049.h5",
+  "train2-0050.h5",
+  "train2-0051.h5",
+  "train2-0052.h5",
+  "train2-0053.h5",
+  "train2-0054.h5",
+  "train2-0055.h5",
+  "train2-0056.h5",
+  "train2-0057.h5",
+  "train2-0058.h5",
+  "train2-0059.h5",
+  "train2-0060.h5",
+  "train2-0061.h5",
+  "train2-0062.h5",
+  "train2-0063.h5",
+  "train2-0064.h5",
+  "train2-0065.h5",
+  "train2-0066.h5",
+  "train2-0067.h5",
+  "train2-0068.h5",
+  "train2-0069.h5",
+  "train2-0070.h5",
+  "train2-0071.h5",
+  "train2-0072.h5",
+  "train2-0073.h5",
+  "train2-0074.h5",
+  "train2-0075.h5",
+  "train2-0076.h5",
+  "train2-0077.h5",
+  "train2-0078.h5",
+  "train2-0079.h5",
+  "train2-0080.h5",
+  "train2-0081.h5",
+  "train2-0082.h5",
+  "train2-0083.h5",
+  "train2-0084.h5",
+  "train2-0085.h5",
+  "train2-0086.h5",
+  "train2-0087.h5",
+  "train2-0088.h5",
+  "train2-0089.h5",
+  "train2-0090.h5",
+  "train2-0091.h5",
+  "train2-0092.h5",
+  "train2-0093.h5",
+  "train2-0094.h5",
+  "train2-0095.h5",
+  "train2-0096.h5",
+  "train2-0097.h5",
+  "train2-0098.h5",
+  "train2-0099.h5",
+  "val-0000.h5"
+ ],
+ "reload": {
+  "samples": 106000,
+  "shape_dtype_errors": [],
+  "seeds_unique": true,
+  "split_seed_overlap": false,
+  "per_split": {
+   "train": 0,
+   "val": 1000,
+   "test": 0,
+   "train2": 100000,
+   "test2": 5000
+  },
+  "read_s": 1.2207982540130615
+ },
+ "statistics": {
+  "per_pose": {
+   "0 (natural, face down: tines curve down onto the table)": 54283,
+   "1 (natural, face up: lying on its back, tines curving up)": 51717
+  },
+  "per_type": {
+   "on_fork": 74155,
+   "table": 21159,
+   "hover": 10686
+  },
+  "per_target_part_on_fork": {
+   "tines": 18486,
+   "palm": 18593,
+   "neck": 18554,
+   "handle": 18522,
+   "edge": 0
+  },
+  "per_target_part_by_pose": {
+   "0": {
+    "tines": 9551,
+    "palm": 9515,
+    "neck": 9430,
+    "handle": 9444,
+    "edge": 0
+   },
+   "1": {
+    "tines": 8935,
+    "palm": 9078,
+    "neck": 9124,
+    "handle": 9078,
+    "edge": 0
+   }
+  },
+  "samples_touching_part": {
+   "tines": 38848,
+   "palm": 24549,
+   "neck": 30517,
+   "handle": 21026,
+   "edge": 18352
+  },
+  "contact_rate": {
+   "on_fork": {
+    "fork_contact": 1.0,
+    "table_contact": 0.027712224394848627,
+    "fork_visible": 0.9999460589306183,
+    "anything_visible": 1.0
+   },
+   "table": {
+    "fork_contact": 0.0,
+    "table_contact": 1.0,
+    "fork_visible": 0.0,
+    "anything_visible": 1.0
+   },
+   "hover": {
+    "fork_contact": 0.0,
+    "table_contact": 0.0,
+    "fork_visible": 0.0,
+    "anything_visible": 0.0
+   }
+  },
+  "flawed": {
+   "kept_with_flaw": 0,
+   "redrawn": 658,
+   "reasons": {
+    "housing": 653,
+    "unsettled": 7,
+    "fork_touch": 0,
+    "no_free_spot": 0
+   },
+   "saturated_3mm": 8,
+   "static_unsettled": 0
+  },
+  "would_move": {
+   "0": {
+    "all": 0.0,
+    "n": 54283,
+    "hover": 0.0,
+    "fork_contact_0.2-0.5N": [
+     0.0,
+     8906
+    ],
+    "fork_contact_0.5-1N": [
+     0.0,
+     6845
+    ],
+    "fork_contact_1-2N": [
+     0.0,
+     6630
+    ],
+    "fork_contact_2-5N": [
+     0.0,
+     8898
+    ],
+    "fork_contact_5-10.01N": [
+     0.0,
+     6661
+    ],
+    "no_fork_contact_presses": 0.0
+   },
+   "1": {
+    "all": 0.0,
+    "n": 51717,
+    "hover": 0.0,
+    "fork_contact_0.2-0.5N": [
+     0.0,
+     8370
+    ],
+    "fork_contact_0.5-1N": [
+     0.0,
+     6497
+    ],
+    "fork_contact_1-2N": [
+     0.0,
+     6561
+    ],
+    "fork_contact_2-5N": [
+     0.0,
+     8423
+    ],
+    "fork_contact_5-10.01N": [
+     0.0,
+     6364
+    ],
+    "no_fork_contact_presses": 0.0
+   }
+  },
+  "distance_to_centre_mm": {
+   "com_xy": {
+    "p0": 0.05155190986775944,
+    "p5": 9.211755549807503,
+    "p25": 22.529000392150756,
+    "p50": 33.28873080229888,
+    "p75": 50.4442124087561,
+    "p95": 89.37877980355778,
+    "p100": 100.40727277229814
+   },
+   "bbox_xy": {
+    "p0": 0.11228821682609352,
+    "p5": 9.058220412436254,
+    "p25": 22.236682988882045,
+    "p50": 33.004512542090865,
+    "p75": 50.40766795363593,
+    "p95": 89.36650037999662,
+    "p100": 100.04758020004027
+   },
+   "com_xy_on_fork": {
+    "p0": 0.05155190986775944,
+    "p5": 8.194763783268128,
+    "p25": 19.989053919002888,
+    "p50": 29.211467817397047,
+    "p75": 39.40223401596644,
+    "p95": 55.494946019248296,
+    "p100": 71.04387321460327
+   },
+   "com_xy_table": {
+    "p0": 17.37573099164709,
+    "p5": 36.07509765298371,
+    "p25": 60.34515169210229,
+    "p50": 77.13327913680898,
+    "p75": 89.40119263090656,
+    "p95": 97.94030177738695,
+    "p100": 100.40727277229814
+   }
+  },
+  "force": {
+   "cmd": {
+    "p0": 0.20000378796707707,
+    "p5": 0.24249117805442852,
+    "p25": 0.5356608911154921,
+    "p50": 1.41213184636777,
+    "p75": 3.7477300681222427,
+    "p95": 8.215160953450205,
+    "p100": 9.99851113361825
+   },
+   "touch": {
+    "p0": 0.1937960113355839,
+    "p5": 0.23828121671309999,
+    "p25": 0.5354511564066714,
+    "p50": 1.4255617395019153,
+    "p75": 3.7893188711363575,
+    "p95": 8.333746270155396,
+    "p100": 13.952674826455576
+   }
+  },
+  "n_tines_on_pad": {
+   "0": 65188,
+   "1": 3480,
+   "2": 10833,
+   "3": 15539,
+   "4": 10960
+  },
+  "tilt_deg": {
+   "p0": 0.0003889564541168511,
+   "p5": 0.6530508399009705,
+   "p25": 1.4761862754821777,
+   "p50": 2.089958667755127,
+   "p75": 2.5628857612609863,
+   "p95": 2.8975837230682373,
+   "p100": 3.2175915241241455
+  }
+ },
+ "physics": {
+  "sum_contact_normal_vs_touch": {
+   "n": 106000,
+   "max_abs_n": 3.3874892872643763,
+   "max_rel_where_touch_gt_0_05N": 0.6022255475396029,
+   "median_rel": 0.0
+  },
+  "touch_vs_command_settled": {
+   "n": 95314,
+   "median_rel": 0.004037327483840114,
+   "p99_rel": 0.199148663414221,
+   "max_rel": 0.7921028833978339
+  },
+  "vertical_gel_force_vs_command_settled": {
+   "n": 95314,
+   "median_rel": 0.002373381775940764,
+   "p99_rel": 0.028106026119593754,
+   "max_rel": 0.0891286181858213
+  },
+  "free_fork_force_balance_residual_n": {
+   "n": 0,
+   "note": "no free-fork run in this dataset (static fork, collected without --free-run)"
+  },
+  "hover_touch_max_n": 0.0
+ },
+ "label_check": {
+  "gallery": "verify/label_gallery.png",
+  "gallery_samples": [
+   {
+    "seed": 30028666,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 1.0
+   },
+   {
+    "seed": 30069195,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 0.9991587802313354
+   },
+   {
+    "seed": 30016895,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 0.9970003749531309
+   },
+   {
+    "seed": 30063145,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 0.9997829154455661
+   },
+   {
+    "seed": 30019288,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 0.9982097034075312
+   },
+   {
+    "seed": 30079699,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 0.9991881918819189
+   },
+   {
+    "seed": 30078692,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 0.9950509184353288
+   },
+   {
+    "seed": 30066737,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 0.9987716999672454
+   },
+   {
+    "seed": 30019221,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9659090909090909
+   },
+   {
+    "seed": 30066541,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9686684073107049
+   },
+   {
+    "seed": 30060309,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9878197320341048
+   },
+   {
+    "seed": 30021370,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9886705202312138
+   },
+   {
+    "seed": 30014754,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9893822393822393
+   },
+   {
+    "seed": 30094900,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9911332779163203
+   },
+   {
+    "seed": 30070124,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9907071622846781
+   },
+   {
+    "seed": 30092074,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9979338842975206
+   },
+   {
+    "seed": 30088641,
+    "pose": 1,
+    "type": "table",
+    "iou": 1.0
+   },
+   {
+    "seed": 30002423,
+    "pose": 0,
+    "type": "table",
+    "iou": 1.0
+   },
+   {
+    "seed": 30045115,
+    "pose": 1,
+    "type": "hover",
+    "iou": 1.0
+   }
+  ],
+  "iou_label_vs_stored_fork_depth": {
+   "n": 1000,
+   "mean": 0.9953006652464044,
+   "p1": 0.9726893663633299,
+   "min": 0.9534883720930233,
+   "below_0_9": 0
+  },
+  "depth_abs_diff_mm_median_of_medians": 0.0010410987798384203
+ },
+ "regeneration": [
+  {
+   "shard": "train2-0095.h5",
+   "index": 158,
+   "seed": 30095158,
+   "identical": true,
+   "differing_fields": [],
+   "state_replay": {
+    "img_identical": true,
+    "depth_gel_identical": true,
+    "recon_identical": true,
+    "touch_identical": true,
+    "touch_abs_diff_n": 0.0
+   }
+  },
+  {
+   "shard": "train2-0061.h5",
+   "index": 259,
+   "seed": 30061259,
+   "identical": true,
+   "differing_fields": [],
+   "state_replay": {
+    "img_identical": true,
+    "depth_gel_identical": true,
+    "recon_identical": true,
+    "touch_identical": true,
+    "touch_abs_diff_n": 0.0
+   }
+  },
+  {
+   "shard": "train2-0067.h5",
+   "index": 523,
+   "seed": 30067523,
+   "identical": true,
+   "differing_fields": [],
+   "state_replay": {
+    "img_identical": true,
+    "depth_gel_identical": true,
+    "recon_identical": true,
+    "touch_identical": true,
+    "touch_abs_diff_n": 0.0
+   }
+  }
+ ]
+}

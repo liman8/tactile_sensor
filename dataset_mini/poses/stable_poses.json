@@ -1,0 +1,271 @@
+{
+ "method": {
+  "candidates": "trimesh.poses.compute_stable_poses (convex hull, quasi-static probabilities), yaw-aligned so fork +x = world +x",
+  "release_1mm": "free fork released 1 mm above the pose, 1 s; passed if moved < 0.5 mm and < 1.0 deg",
+  "release_tilted": "20 releases tilted 0-2 deg about random horizontal axes (+1 mm), 1 s, same thresholds",
+  "drops": "500 random orientations (uniform), lowest point 2-10 mm above the table, 3 s; final orientation matched to a candidate by its up vector (< 10 deg)",
+  "natural": "release_1mm passed AND >= 19/20 tilted releases passed AND drop frequency >= 1 %",
+  "propped": "side-edge pose that is not natural: kept only as a separate category (fork held by a fixture)",
+  "sim": "GelSightSim(free_objects=True): CoACD parts vs the table plane, the simulator's own contact settings (incl. the free object's invweight0 = 5 % of the sensor's)"
+ },
+ "poses": [
+  {
+   "id": 0,
+   "description": "face down: tines curve down onto the table",
+   "quat_wxyz": [
+    -4.452982184841316e-19,
+    0.9998942225315995,
+    3.0612931477731363e-17,
+    0.014544543579231678
+   ],
+   "rpy": [
+    3.141592653589793,
+    -0.02909011285852777,
+    6.123233995736766e-17
+   ],
+   "rest_pos_m": [
+    0.02377626413772551,
+    1.4558762885973774e-18,
+    0.003942590224587331
+   ],
+   "up_in_fork": [
+    0.029086010188465652,
+    0.0,
+    -0.9995769125041436
+   ],
+   "trimesh_probability": 0.4709637391014306,
+   "height_mm": 4.146176036730774,
+   "com_height_mm": 2.2271229720058323,
+   "visual_gap_um": 0.0,
+   "support_parts": [
+    "handle",
+    "tines"
+   ],
+   "support_points": 35,
+   "com_margin_mm": 5.091519051146372,
+   "tip_angle_deg": 66.37455741776125,
+   "release_1mm": {
+    "moved_mm": 4.4694160114312206e-05,
+    "rot_deg": 6.994693985297057e-05,
+    "max_rot_last_half_s_deg": 6.998861214731547e-05,
+    "passed": true
+   },
+   "release_tilted": {
+    "n": 20,
+    "passed": 20,
+    "worst_rot_deg": 0.08095681503463277
+   },
+   "drops": {
+    "n": 222,
+    "frequency": 0.444,
+    "rock_deg_median": 0.0
+   },
+   "category": "natural",
+   "probability_within_category": 0.5091411301611019,
+   "top_surface_points": {
+    "tines": 4110,
+    "palm": 1410,
+    "neck": 1168,
+    "handle": 7030,
+    "edge": 0
+   }
+  },
+  {
+   "id": 1,
+   "description": "face up: lying on its back, tines curving up",
+   "quat_wxyz": [
+    1.0,
+    -1.4353393024319337e-18,
+    -1.4198671566580325e-19,
+    0.0
+   ],
+   "rpy": [
+    -2.870678604863867e-18,
+    -2.8397343133160645e-19,
+    -6.633097313269081e-18
+   ],
+   "rest_pos_m": [
+    0.023859073638916015,
+    -1.6543625376354264e-19,
+    7.888169765252553e-11
+   ],
+   "up_in_fork": [
+    2.8397343133160645e-19,
+    -2.870678604863867e-18,
+    1.0
+   ],
+   "trimesh_probability": 0.4540523540835942,
+   "height_mm": 5.0000000788816985,
+   "com_height_mm": 1.0102798393322139,
+   "visual_gap_um": 7.8881697591702e-05,
+   "support_parts": [
+    "handle",
+    "neck",
+    "palm",
+    "tines"
+   ],
+   "support_points": 164,
+   "com_margin_mm": 6.662863601902024,
+   "tip_angle_deg": 81.37800474289199,
+   "release_1mm": {
+    "moved_mm": 0.0027652542825296034,
+    "rot_deg": 0.004668912219143194,
+    "max_rot_last_half_s_deg": 0.016047529461974526,
+    "passed": true
+   },
+   "release_tilted": {
+    "n": 20,
+    "passed": 20,
+    "worst_rot_deg": 0.04581181924229445
+   },
+   "drops": {
+    "n": 277,
+    "frequency": 0.554,
+    "rock_deg_median": 0.014168135876914421
+   },
+   "category": "natural",
+   "probability_within_category": 0.4908588698388982,
+   "top_surface_points": {
+    "tines": 4208,
+    "palm": 1403,
+    "neck": 1158,
+    "handle": 7030,
+    "edge": 0
+   }
+  },
+  {
+   "id": 2,
+   "description": "on its side edge (+y side up)",
+   "quat_wxyz": [
+    0.7069046443305079,
+    0.7069046541824326,
+    -0.01690611888055162,
+    0.01690611911616725
+   ],
+   "rpy": [
+    1.5707963407316061,
+    -0.047822282425482615,
+    -5.454683416210018e-17
+   ],
+   "rest_pos_m": [
+    0.023831796335249948,
+    0.0024999999999999988,
+    0.007824289444783401
+   ],
+   "up_in_fork": [
+    0.0478040564832937,
+    0.9988567325616532,
+    -1.3920776096996194e-08
+   ],
+   "trimesh_probability": 0.03757671599201483,
+   "height_mm": 17.67618712079686,
+   "com_height_mm": 6.663301751202199,
+   "visual_gap_um": 0.0,
+   "support_parts": [
+    "handle",
+    "palm"
+   ],
+   "support_points": 17,
+   "com_margin_mm": 0.5828436790998544,
+   "tip_angle_deg": 4.99897867292451,
+   "release_1mm": {
+    "moved_mm": 0.02788987017854662,
+    "rot_deg": 0.11426791825271233,
+    "max_rot_last_half_s_deg": 0.8442654011642133,
+    "passed": true
+   },
+   "release_tilted": {
+    "n": 20,
+    "passed": 10,
+    "worst_rot_deg": 89.92127851680723
+   },
+   "drops": {
+    "n": 0,
+    "frequency": 0.0,
+    "rock_deg_median": null
+   },
+   "category": "propped",
+   "probability_within_category": 0.5011304103125026,
+   "top_surface_points": {
+    "tines": 0,
+    "palm": 0,
+    "neck": 0,
+    "handle": 0,
+    "edge": 2743
+   }
+  },
+  {
+   "id": 3,
+   "description": "on its side edge (-y side up)",
+   "quat_wxyz": [
+    0.7069046443305079,
+    -0.7069046541824326,
+    -0.016906118880551598,
+    -0.01690611911616727
+   ],
+   "rpy": [
+    -1.5707963407316061,
+    -0.047822282425482615,
+    0.0
+   ],
+   "rest_pos_m": [
+    0.023831796335249948,
+    -0.0025,
+    0.007824289444783401
+   ],
+   "up_in_fork": [
+    0.0478040564832937,
+    -0.9988567325616532,
+    -1.3920776096996194e-08
+   ],
+   "trimesh_probability": 0.03740719082893057,
+   "height_mm": 17.67618712079686,
+   "com_height_mm": 6.665862677225915,
+   "visual_gap_um": 0.0,
+   "support_parts": [
+    "handle",
+    "palm"
+   ],
+   "support_points": 17,
+   "com_margin_mm": 0.5828418435448334,
+   "tip_angle_deg": 4.997052207578077,
+   "release_1mm": {
+    "moved_mm": 0.05213058343624929,
+    "rot_deg": 0.3073186423119113,
+    "max_rot_last_half_s_deg": 0.6059254052049997,
+    "passed": true
+   },
+   "release_tilted": {
+    "n": 20,
+    "passed": 16,
+    "worst_rot_deg": 89.92115286695673
+   },
+   "drops": {
+    "n": 1,
+    "frequency": 0.002,
+    "rock_deg_median": 0.08140679998592217
+   },
+   "category": "propped",
+   "probability_within_category": 0.4988695896874974,
+   "top_surface_points": {
+    "tines": 0,
+    "palm": 0,
+    "neck": 0,
+    "handle": 0,
+    "edge": 2716
+   }
+  }
+ ],
+ "drops": {
+  "n": 500,
+  "unmatched": 0,
+  "unmatched_clusters": [],
+  "per_pose": {
+   "0": 222,
+   "1": 277,
+   "2": 0,
+   "3": 1
+  }
+ },
+ "elapsed_s": 11.44256043434143
+}

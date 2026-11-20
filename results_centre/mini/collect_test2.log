@@ -1,0 +1,68 @@
+5 shards, 5000 samples, 5 workers
+  test2-0003: 100/1000 (0.023 s/sample)
+  test2-0002: 100/1000 (0.023 s/sample)
+  test2-0000: 100/1000 (0.023 s/sample)
+  test2-0004: 100/1000 (0.023 s/sample)
+  test2-0001: 100/1000 (0.023 s/sample)
+  test2-0003: 200/1000 (0.026 s/sample)
+  test2-0004: 200/1000 (0.027 s/sample)
+  test2-0001: 200/1000 (0.027 s/sample)
+  test2-0002: 200/1000 (0.028 s/sample)
+  test2-0000: 200/1000 (0.028 s/sample)
+  test2-0003: 300/1000 (0.028 s/sample)
+  test2-0002: 300/1000 (0.028 s/sample)
+  test2-0000: 300/1000 (0.028 s/sample)
+  test2-0004: 300/1000 (0.028 s/sample)
+  test2-0001: 300/1000 (0.029 s/sample)
+  test2-0003: 400/1000 (0.029 s/sample)
+  test2-0000: 400/1000 (0.028 s/sample)
+  test2-0002: 400/1000 (0.028 s/sample)
+  test2-0004: 400/1000 (0.029 s/sample)
+  test2-0001: 400/1000 (0.029 s/sample)
+  test2-0003: 500/1000 (0.028 s/sample)
+  test2-0002: 500/1000 (0.028 s/sample)
+  test2-0000: 500/1000 (0.028 s/sample)
+  test2-0004: 500/1000 (0.028 s/sample)
+  test2-0001: 500/1000 (0.029 s/sample)
+  test2-0003: 600/1000 (0.028 s/sample)
+  test2-0002: 600/1000 (0.029 s/sample)
+  test2-0000: 600/1000 (0.029 s/sample)
+  test2-0004: 600/1000 (0.029 s/sample)
+  test2-0001: 600/1000 (0.029 s/sample)
+  test2-0003: 700/1000 (0.028 s/sample)
+  test2-0000: 700/1000 (0.028 s/sample)
+  test2-0002: 700/1000 (0.028 s/sample)
+  test2-0004: 700/1000 (0.028 s/sample)
+  test2-0001: 700/1000 (0.030 s/sample)
+  test2-0003: 800/1000 (0.028 s/sample)
+  test2-0002: 800/1000 (0.028 s/sample)
+  test2-0000: 800/1000 (0.029 s/sample)
+  test2-0004: 800/1000 (0.029 s/sample)
+  test2-0001: 800/1000 (0.030 s/sample)
+  test2-0003: 900/1000 (0.028 s/sample)
+  test2-0000: 900/1000 (0.028 s/sample)
+  test2-0004: 900/1000 (0.029 s/sample)
+  test2-0002: 900/1000 (0.030 s/sample)
+  test2-0001: 900/1000 (0.028 s/sample)
+  test2-0003: 1000/1000 (0.028 s/sample)
+  test2-0000: 1000/1000 (0.029 s/sample)
+  test2-0002: 1000/1000 (0.028 s/sample)
+  test2-0004: 1000/1000 (0.028 s/sample)
+wrote dataset_mini/test2-0003.h5: 1000 samples, 28 s, 112 MB
+  test2-0001: 1000/1000 (0.028 s/sample)
+wrote dataset_mini/test2-0000.h5: 1000 samples, 28 s, 112 MB
+wrote dataset_mini/test2-0002.h5: 1000 samples, 28 s, 112 MB
+wrote dataset_mini/test2-0004.h5: 1000 samples, 28 s, 113 MB
+wrote dataset_mini/test2-0001.h5: 1000 samples, 28 s, 112 MB
+{
+ "samples": 5000,
+ "wall_s": 30.168604850769043,
+ "workers": 5,
+ "samples_per_s": 165.7352079996017,
+ "seconds_per_sample_per_worker": 0.027832318782806398,
+ "bytes_per_sample": 112250.3486,
+ "projected_100k": {
+  "size_gb": 11.22503486,
+  "hours_at_this_parallelism": 0.16760336028205025
+ }
+}

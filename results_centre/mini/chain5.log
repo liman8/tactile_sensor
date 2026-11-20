@@ -1,0 +1,11 @@
+=== 2026-11-18 15:58:54 waiting for the standard seeds report
+=== 2026-11-18 16:50:56 collect dataset_mini
+=== 2026-11-18 16:55:44 verify dataset_mini
+=== 2026-11-18 16:56:04 prepare + bank
+=== 2026-11-18 17:20:03 train 100000
+=== 2026-11-18 20:22:23 train 40000
+=== 2026-11-18 21:36:24 train 20000
+=== 2026-11-18 22:14:03 curve
+=== 2026-11-18 22:14:26 search (iGPU rendering, like every earlier search)
+=== 2026-11-18 22:21:15 fov-compare
+=== 2026-11-18 22:21:24 MINI_CHAIN_DONE

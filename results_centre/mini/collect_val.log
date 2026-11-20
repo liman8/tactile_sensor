@@ -1,0 +1,24 @@
+1 shards, 1000 samples, 1 workers
+  val-0000: 100/1000 (0.019 s/sample)
+  val-0000: 200/1000 (0.021 s/sample)
+  val-0000: 300/1000 (0.025 s/sample)
+  val-0000: 400/1000 (0.025 s/sample)
+  val-0000: 500/1000 (0.026 s/sample)
+  val-0000: 600/1000 (0.025 s/sample)
+  val-0000: 700/1000 (0.025 s/sample)
+  val-0000: 800/1000 (0.025 s/sample)
+  val-0000: 900/1000 (0.025 s/sample)
+  val-0000: 1000/1000 (0.025 s/sample)
+wrote dataset_mini/val-0000.h5: 1000 samples, 24 s, 112 MB
+{
+ "samples": 1000,
+ "wall_s": 25.497016191482544,
+ "workers": 1,
+ "samples_per_s": 39.22027552126107,
+ "seconds_per_sample_per_worker": 0.024020805597305298,
+ "bytes_per_sample": 112229.838,
+ "projected_100k": {
+  "size_gb": 11.2229838,
+  "hours_at_this_parallelism": 0.708250449763404
+ }
+}

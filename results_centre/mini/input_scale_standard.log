@@ -1,0 +1,22 @@
+sensor standard: data dataset_v3, results results_centre/v3, input 160 x 120 px
+test2  40k s0 scale 0.980: median 0.925 p90 2.02 hit 0.984 part 0.930 pose 0.885
+test2  40k s0 scale 0.990: median 0.906 p90 1.92 hit 0.986 part 0.929 pose 0.890
+test2  40k s0 scale 0.995: median 0.909 p90 1.92 hit 0.987 part 0.929 pose 0.889
+test2  40k s0 scale 1.000: median 0.926 p90 2.06 hit 0.985 part 0.928 pose 0.889
+test2  40k s0 scale 1.005: median 0.908 p90 1.97 hit 0.990 part 0.928 pose 0.887
+test2  40k s0 scale 1.010: median 0.911 p90 1.93 hit 0.991 part 0.929 pose 0.888
+test2  40k s0 scale 1.020: median 0.950 p90 2.28 hit 0.986 part 0.928 pose 0.885
+test2  40k s1 scale 0.980: median 0.916 p90 2.01 hit 0.984 part 0.933 pose 0.886
+test2  40k s1 scale 0.990: median 0.903 p90 1.89 hit 0.987 part 0.931 pose 0.891
+test2  40k s1 scale 0.995: median 0.906 p90 1.92 hit 0.988 part 0.932 pose 0.889
+test2  40k s1 scale 1.000: median 0.925 p90 2.07 hit 0.988 part 0.931 pose 0.889
+test2  40k s1 scale 1.005: median 0.914 p90 1.97 hit 0.989 part 0.929 pose 0.889
+test2  40k s1 scale 1.010: median 0.913 p90 1.93 hit 0.987 part 0.929 pose 0.887
+test2  40k s1 scale 1.020: median 0.945 p90 2.27 hit 0.986 part 0.929 pose 0.885
+test2  40k s2 scale 0.980: median 0.930 p90 2.05 hit 0.980 part 0.932 pose 0.886
+test2  40k s2 scale 0.990: median 0.911 p90 1.93 hit 0.983 part 0.932 pose 0.889
+test2  40k s2 scale 0.995: median 0.910 p90 1.97 hit 0.984 part 0.932 pose 0.889
+test2  40k s2 scale 1.000: median 0.931 p90 2.07 hit 0.984 part 0.930 pose 0.891
+test2  40k s2 scale 1.005: median 0.915 p90 1.98 hit 0.985 part 0.930 pose 0.889
+test2  40k s2 scale 1.010: median 0.910 p90 1.95 hit 0.986 part 0.930 pose 0.889
+test2  40k s2 scale 1.020: median 0.954 p90 2.25 hit 0.982 part 0.929 pose 0.891

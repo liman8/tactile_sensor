@@ -1,0 +1,1205 @@
+{
+ "description": "GelSight tactile dataset of fork_stl (ForkMilimeter.stl), moving sensor; see README.md",
+ "conventions": {
+  "units": "SI (m, N, s, rad) unless a name ends in _mm or _deg; depth maps in mm; images uint8 RGB",
+  "quaternion": "(w, x, y, z), unit, rotates vectors from the child frame into the parent frame",
+  "rpy": "(roll, pitch, yaw) in rad with R = Rz(yaw) @ Ry(pitch) @ Rx(roll) (intrinsic Z-Y'-X'')",
+  "pose_X_in_Y": "p_Y = R @ p_X + t, t = origin of X in Y, R = axes of X in Y (columns)",
+  "world_frame": "W: table top is z = 0, +z up",
+  "fork_frame": "F: body fork_stl = the STL file's own frame scaled to metres; +x towards the tine tips, +z = side the tines curve towards, origin = STL origin (neck/palm junction)",
+  "sensor_frame": "S: origin at the centre of the undeformed gel contact face; +x = image column, +y = image row, +z = viewing direction, out of the gel into the object (world down for an untilted sensor). Right-handed.",
+  "pixel_to_sensor": "x_mm = (col - (W-1)/2) * mm_per_px, y_mm = (row - (H-1)/2) * mm_per_px; pixel (col, row) shows the point (x, y) of the gel face, the camera is orthographic along +z_S",
+  "fork_centre": "bbox: centre of the fork mesh's axis-aligned bounding box in F; com: centre of mass",
+  "gel_contacts": "normal_s: unit vector from the fork/table into the gel (= direction of the normal force on the gel), in S; force_s: total force the fork/table exerts on the gel, in S; fn = normal, ft = tangential (2 components in MuJoCo's contact frame)",
+  "table_contacts": "fork-table contacts of the FREE-fork run at the end of the press (the welded fork has none): normal_w from the table into the fork, in W",
+  "marker_field": "marker_rest (N, 2) and marker_shift (N, 2) in pixels (col, row); drawn at rest + shift",
+  "parts": "by fork-frame x: tines >= 7.0 mm > palm >= 1.0 > neck >= -15.0 > handle; 'edge' = surface whose normal is within 60 deg of the fork plane (side walls, rim)"
+ },
+ "units_note": "see conventions",
+ "fields": {
+  "seed": {
+   "shape": [],
+   "dtype": "int64"
+  },
+  "sample_type": {
+   "shape": [],
+   "dtype": "uint8"
+  },
+  "pose_id": {
+   "shape": [],
+   "dtype": "uint8"
+  },
+  "pose_category": {
+   "shape": [],
+   "dtype": "uint8"
+  },
+  "target_part": {
+   "shape": [],
+   "dtype": "int8"
+  },
+  "target_w": {
+   "shape": [
+    3
+   ],
+   "dtype": "float64"
+  },
+  "target_offset_s": {
+   "shape": [
+    2
+   ],
+   "dtype": "float64"
+  },
+  "fork_place": {
+   "shape": [
+    3
+   ],
+   "dtype": "float64"
+  },
+  "arm_cmd": {
+   "shape": [
+    5
+   ],
+   "dtype": "float64"
+  },
+  "force_cmd": {
+   "shape": [],
+   "dtype": "float64"
+  },
+  "hover_gap": {
+   "shape": [],
+   "dtype": "float64"
+  },
+  "force_touch": {
+   "shape": [],
+   "dtype": "float64"
+  },
+  "peak_indent_mm": {
+   "shape": [],
+   "dtype": "float32"
+  },
+  "peak_fork_mm": {
+   "shape": [],
+   "dtype": "float32"
+  },
+  "contact_fork": {
+   "shape": [],
+   "dtype": "bool"
+  },
+  "contact_table": {
+   "shape": [],
+   "dtype": "bool"
+  },
+  "fork_visible": {
+   "shape": [],
+   "dtype": "bool"
+  },
+  "contact_visible": {
+   "shape": [],
+   "dtype": "bool"
+  },
+  "saturated": {
+   "shape": [],
+   "dtype": "bool"
+  },
+  "n_tines": {
+   "shape": [],
+   "dtype": "uint8"
+  },
+  "settled": {
+   "shape": [],
+   "dtype": "bool"
+  },
+  "retries": {
+   "shape": [],
+   "dtype": "uint8"
+  },
+  "retry_reasons": {
+   "shape": [],
+   "dtype": "uint8"
+  },
+  "flawed": {
+   "shape": [],
+   "dtype": "bool"
+  },
+  "qpos": {
+   "shape": [
+    6
+   ],
+   "dtype": "float64"
+  },
+  "qvel": {
+   "shape": [
+    6
+   ],
+   "dtype": "float64"
+  },
+  "ctrl": {
+   "shape": [
+    6
+   ],
+   "dtype": "float64"
+  },
+  "qacc_warmstart": {
+   "shape": [
+    6
+   ],
+   "dtype": "float64"
+  },
+  "fork_body_pos": {
+   "shape": [
+    3
+   ],
+   "dtype": "float64"
+  },
+  "fork_body_quat": {
+   "shape": [
+    4
+   ],
+   "dtype": "float64"
+  },
+  "fork_pos_w": {
+   "shape": [
+    3
+   ],
+   "dtype": "float64"
+  },
+  "fork_quat_w": {
+   "shape": [
+    4
+   ],
+   "dtype": "float64"
+  },
+  "fork_rpy_w": {
+   "shape": [
+    3
+   ],
+   "dtype": "float64"
+  },
+  "sensor_pos_w": {
+   "shape": [
+    3
+   ],
+   "dtype": "float64"
+  },
+  "sensor_quat_w": {
+   "shape": [
+    4
+   ],
+   "dtype": "float64"
+  },
+  "sensor_rpy_w": {
+   "shape": [
+    3
+   ],
+   "dtype": "float64"
+  },
+  "fork_pos_s": {
+   "shape": [
+    3
+   ],
+   "dtype": "float64"
+  },
+  "fork_quat_s": {
+   "shape": [
+    4
+   ],
+   "dtype": "float64"
+  },
+  "fork_rpy_s": {
+   "shape": [
+    3
+   ],
+   "dtype": "float64"
+  },
+  "com_s": {
+   "shape": [
+    3
+   ],
+   "dtype": "float64"
+  },
+  "bbox_s": {
+   "shape": [
+    3
+   ],
+   "dtype": "float64"
+  },
+  "com_w": {
+   "shape": [
+    3
+   ],
+   "dtype": "float64"
+  },
+  "bbox_w": {
+   "shape": [
+    3
+   ],
+   "dtype": "float64"
+  },
+  "tilt_deg": {
+   "shape": [],
+   "dtype": "float32"
+  },
+  "gel_force_s": {
+   "shape": [
+    3
+   ],
+   "dtype": "float64"
+  },
+  "would_move": {
+   "shape": [],
+   "dtype": "bool"
+  },
+  "free_shift_mm": {
+   "shape": [],
+   "dtype": "float32"
+  },
+  "free_origin_shift_mm": {
+   "shape": [],
+   "dtype": "float32"
+  },
+  "free_rot_deg": {
+   "shape": [],
+   "dtype": "float32"
+  },
+  "free_settled": {
+   "shape": [],
+   "dtype": "bool"
+  },
+  "free_force_touch": {
+   "shape": [],
+   "dtype": "float64"
+  },
+  "free_force_residual": {
+   "shape": [],
+   "dtype": "float64"
+  },
+  "free_fork_pos_w": {
+   "shape": [
+    3
+   ],
+   "dtype": "float64"
+  },
+  "free_fork_quat_w": {
+   "shape": [
+    4
+   ],
+   "dtype": "float64"
+  },
+  "free_qpos": {
+   "shape": [
+    118
+   ],
+   "dtype": "float64"
+  },
+  "free_qvel": {
+   "shape": [
+    102
+   ],
+   "dtype": "float64"
+  },
+  "img": {
+   "shape": [
+    144,
+    186,
+    3
+   ],
+   "dtype": "uint8"
+  },
+  "depth_gel": {
+   "shape": [
+    144,
+    186
+   ],
+   "dtype": "float16"
+  },
+  "depth_fork": {
+   "shape": [
+    144,
+    186
+   ],
+   "dtype": "float16"
+  },
+  "depth_recon": {
+   "shape": [
+    144,
+    186
+   ],
+   "dtype": "float16"
+  },
+  "marker_shift": {
+   "shape": [
+    63,
+    2
+   ],
+   "dtype": "float32"
+  }
+ },
+ "gel_contact_fields": {
+  "pos_s": {
+   "shape": [
+    3
+   ],
+   "dtype": "float64"
+  },
+  "pos_w": {
+   "shape": [
+    3
+   ],
+   "dtype": "float64"
+  },
+  "normal_s": {
+   "shape": [
+    3
+   ],
+   "dtype": "float64"
+  },
+  "fn": {
+   "shape": [],
+   "dtype": "float64"
+  },
+  "ft": {
+   "shape": [
+    2
+   ],
+   "dtype": "float64"
+  },
+  "force_s": {
+   "shape": [
+    3
+   ],
+   "dtype": "float64"
+  },
+  "dist": {
+   "shape": [],
+   "dtype": "float64"
+  },
+  "other": {
+   "shape": [],
+   "dtype": "int8"
+  },
+  "part": {
+   "shape": [],
+   "dtype": "int8"
+  },
+  "coacd_part": {
+   "shape": [],
+   "dtype": "int8"
+  },
+  "tine": {
+   "shape": [],
+   "dtype": "int8"
+  }
+ },
+ "table_contact_fields": {
+  "pos_w": {
+   "shape": [
+    3
+   ],
+   "dtype": "float64"
+  },
+  "normal_w": {
+   "shape": [
+    3
+   ],
+   "dtype": "float64"
+  },
+  "fn": {
+   "shape": [],
+   "dtype": "float64"
+  },
+  "ft": {
+   "shape": [
+    2
+   ],
+   "dtype": "float64"
+  },
+  "dist": {
+   "shape": [],
+   "dtype": "float64"
+  },
+  "part": {
+   "shape": [],
+   "dtype": "int8"
+  },
+  "coacd_part": {
+   "shape": [],
+   "dtype": "int8"
+  },
+  "tine": {
+   "shape": [],
+   "dtype": "int8"
+  }
+ },
+ "codes": {
+  "sample_type": [
+   "on_fork",
+   "table",
+   "hover"
+  ],
+  "pose_category": [
+   "natural",
+   "propped",
+   "rejected"
+  ],
+  "part": [
+   "tines",
+   "palm",
+   "neck",
+   "handle",
+   "edge"
+  ],
+  "retry_reasons": {
+   "housing": 1,
+   "unsettled": 2,
+   "fork_touch": 4,
+   "no_free_spot": 8
+  },
+  "gel_contact_other": [
+   "fork",
+   "table",
+   "other"
+  ]
+ },
+ "fork": {
+  "mass_kg": 0.00948074088,
+  "com_f": [
+   -0.0242595985,
+   -1.2819286e-06,
+   0.00101027976
+  ],
+  "inertia_principal": [
+   1.1441688108338683e-05,
+   1.1345843223769816e-05,
+   1.0444672489150169e-07
+  ],
+  "inertia_quat_wxyz": [
+   3.12470618892835e-05,
+   0.7033836632754326,
+   -1.5415152454512082e-06,
+   0.710810397545282
+  ],
+  "inertia_tensor_f": [
+   [
+    1.0569735700000086e-07,
+    5.18705763992512e-10,
+    -1.1906671500000081e-07
+   ],
+   [
+    5.187057639925121e-10,
+    1.134584320000009e-05,
+    9.498136059923669e-12
+   ],
+   [
+    -1.1906671500000081e-07,
+    9.498136059923626e-12,
+    1.1440437500000092e-05
+   ]
+  ],
+  "bbox_centre_f": [
+   -0.023859073638916015,
+   0.0,
+   0.0025
+  ],
+  "bbox_f": [
+   [
+    -0.084,
+    -0.008126769065856933,
+    -4.6658684168050025e-20
+   ],
+   [
+    0.03628185272216797,
+    0.008126769065856933,
+    0.005
+   ]
+  ],
+  "mesh": "meshes/fork_stl/fork_stl_visual.stl (mm, scale 0.001)",
+  "coacd_parts": [
+   "fork_stl_c00",
+   "fork_stl_c01",
+   "fork_stl_c02",
+   "fork_stl_c03_tine0",
+   "fork_stl_c04_tine1",
+   "fork_stl_c05_tine2",
+   "fork_stl_c06_tine3",
+   "fork_stl_c07_tine0",
+   "fork_stl_c08_tine1",
+   "fork_stl_c09_tine2",
+   "fork_stl_c10_tine3",
+   "fork_stl_c11_tine2",
+   "fork_stl_c12_tine1",
+   "fork_stl_c13_tine0",
+   "fork_stl_c14_tine3",
+   "fork_stl_c15_tine1",
+   "fork_stl_c16_tine2"
+  ],
+  "part_boundaries_mm": {
+   "tine_root": 7.0,
+   "palm_start": 1.0,
+   "neck_start": -15.0,
+   "edge_abs_nz_below": 0.5
+  }
+ },
+ "gel": {
+  "size_half_m": [
+   0.009300000000000001,
+   0.007200000000000001,
+   0.0015
+  ],
+  "solref": [
+   0.006,
+   1.0
+  ],
+  "solimp": [
+   0.0,
+   0.95,
+   0.003,
+   0.5,
+   1.5
+  ],
+  "friction": [
+   1.0,
+   0.01,
+   0.001
+  ],
+  "priority": 1,
+  "condim": 3,
+  "touch_site_half_m": [
+   0.0094,
+   0.007300000000000001,
+   0.0025
+  ],
+  "d0_m": 0.026999999999999996
+ },
+ "sim": {
+  "timestep": 0.0005,
+  "integrator": 3,
+  "cone": 1,
+  "solver": 2,
+  "iterations": 100,
+  "gravity": [
+   0.0,
+   0.0,
+   -9.81
+  ],
+  "tactile_render": "fork visual mesh + table (render_table=True)",
+  "static_fork": "welded: body without joints (fixed to the world)",
+  "free_fork": "freejoint, GelSightSim(free_objects=True)"
+ },
+ "optics": {
+  "height": 144,
+  "width": 186,
+  "max_indent_mm": 3.0,
+  "spread_sigma_mm": 0.45,
+  "spread_gain": 0.9,
+  "edge_sigma_mm": 0.08,
+  "led_azimuth_deg": [
+   90.0,
+   210.0,
+   330.0
+  ],
+  "led_elevation_deg": 35.0,
+  "background_rgb": [
+   118.0,
+   124.0,
+   136.0
+  ],
+  "led_gain": [
+   150.0,
+   150.0,
+   165.0
+  ],
+  "led_falloff": 0.12,
+  "optics_blur_px": 0.6,
+  "noise_std": 1.5,
+  "markers": true,
+  "marker_pitch_mm": 2.0,
+  "marker_radius_mm": 0.28,
+  "marker_darkness": 0.85,
+  "marker_shift_gain_mm": 0.35
+ },
+ "image": {
+  "height": 144,
+  "width": 186,
+  "mm_per_px": 0.10000000000000002
+ },
+ "marker_rest_px": [
+  [
+   12.500000000000014,
+   11.500000000000014
+  ],
+  [
+   32.500000000000014,
+   11.500000000000014
+  ],
+  [
+   52.50000000000001,
+   11.500000000000014
+  ],
+  [
+   72.5,
+   11.500000000000014
+  ],
+  [
+   92.5,
+   11.500000000000014
+  ],
+  [
+   112.5,
+   11.500000000000014
+  ],
+  [
+   132.5,
+   11.500000000000014
+  ],
+  [
+   152.5,
+   11.500000000000014
+  ],
+  [
+   172.5,
+   11.500000000000014
+  ],
+  [
+   12.500000000000014,
+   31.500000000000007
+  ],
+  [
+   32.500000000000014,
+   31.500000000000007
+  ],
+  [
+   52.50000000000001,
+   31.500000000000007
+  ],
+  [
+   72.5,
+   31.500000000000007
+  ],
+  [
+   92.5,
+   31.500000000000007
+  ],
+  [
+   112.5,
+   31.500000000000007
+  ],
+  [
+   132.5,
+   31.500000000000007
+  ],
+  [
+   152.5,
+   31.500000000000007
+  ],
+  [
+   172.5,
+   31.500000000000007
+  ],
+  [
+   12.500000000000014,
+   51.5
+  ],
+  [
+   32.500000000000014,
+   51.5
+  ],
+  [
+   52.50000000000001,
+   51.5
+  ],
+  [
+   72.5,
+   51.5
+  ],
+  [
+   92.5,
+   51.5
+  ],
+  [
+   112.5,
+   51.5
+  ],
+  [
+   132.5,
+   51.5
+  ],
+  [
+   152.5,
+   51.5
+  ],
+  [
+   172.5,
+   51.5
+  ],
+  [
+   12.500000000000014,
+   71.5
+  ],
+  [
+   32.500000000000014,
+   71.5
+  ],
+  [
+   52.50000000000001,
+   71.5
+  ],
+  [
+   72.5,
+   71.5
+  ],
+  [
+   92.5,
+   71.5
+  ],
+  [
+   112.5,
+   71.5
+  ],
+  [
+   132.5,
+   71.5
+  ],
+  [
+   152.5,
+   71.5
+  ],
+  [
+   172.5,
+   71.5
+  ],
+  [
+   12.500000000000014,
+   91.5
+  ],
+  [
+   32.500000000000014,
+   91.5
+  ],
+  [
+   52.50000000000001,
+   91.5
+  ],
+  [
+   72.5,
+   91.5
+  ],
+  [
+   92.5,
+   91.5
+  ],
+  [
+   112.5,
+   91.5
+  ],
+  [
+   132.5,
+   91.5
+  ],
+  [
+   152.5,
+   91.5
+  ],
+  [
+   172.5,
+   91.5
+  ],
+  [
+   12.500000000000014,
+   111.5
+  ],
+  [
+   32.500000000000014,
+   111.5
+  ],
+  [
+   52.50000000000001,
+   111.5
+  ],
+  [
+   72.5,
+   111.5
+  ],
+  [
+   92.5,
+   111.5
+  ],
+  [
+   112.5,
+   111.5
+  ],
+  [
+   132.5,
+   111.5
+  ],
+  [
+   152.5,
+   111.5
+  ],
+  [
+   172.5,
+   111.5
+  ],
+  [
+   12.500000000000014,
+   131.5
+  ],
+  [
+   32.500000000000014,
+   131.5
+  ],
+  [
+   52.50000000000001,
+   131.5
+  ],
+  [
+   72.5,
+   131.5
+  ],
+  [
+   92.5,
+   131.5
+  ],
+  [
+   112.5,
+   131.5
+  ],
+  [
+   132.5,
+   131.5
+  ],
+  [
+   152.5,
+   131.5
+  ],
+  [
+   172.5,
+   131.5
+  ]
+ ],
+ "photometric_calibration": {
+  "model": "results_moving/fork_detector.joblib",
+  "A": [
+   [
+    0.14880673941252684,
+    102.17036587272001,
+    51.70027117025553
+   ],
+   [
+    -89.97242753856821,
+    -51.544629560263814,
+    54.839302042295856
+   ],
+   [
+    98.74235055878846,
+    -56.44581744833604,
+    57.95851153292798
+   ]
+  ],
+  "b": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "pipeline": "fork_detector.PhotometricModel.height_map (markers removed, photometric stereo, Poisson/DCT integration)"
+ },
+ "config": {
+  "frac_on_fork": 0.7,
+  "frac_table": 0.2,
+  "frac_hover": 0.1,
+  "propped_frac": 0.0,
+  "free_run": false,
+  "part_weights": {
+   "tines": 1,
+   "palm": 1,
+   "neck": 1,
+   "handle": 1,
+   "edge": 1
+  },
+  "fork_xy_range_m": 0.03,
+  "tilt_max_deg": 3.0,
+  "force_min_n": 0.2,
+  "force_max_n": 10.0,
+  "hover_gap_mm": [
+   0.2,
+   3.0
+  ],
+  "table_radius_m": 0.1,
+  "table_margin_mm": 2.0,
+  "max_tries": 20,
+  "free_hold_s": 0.3,
+  "press_max_s": 0.6,
+  "sensor": "mini"
+ },
+ "poses": [
+  {
+   "id": 0,
+   "description": "face down: tines curve down onto the table",
+   "quat_wxyz": [
+    -4.452982184841316e-19,
+    0.9998942225315995,
+    3.0612931477731363e-17,
+    0.014544543579231678
+   ],
+   "rpy": [
+    3.141592653589793,
+    -0.02909011285852777,
+    6.123233995736766e-17
+   ],
+   "rest_pos_m": [
+    0.02377626413772551,
+    1.4558762885973774e-18,
+    0.003942590224587331
+   ],
+   "up_in_fork": [
+    0.029086010188465652,
+    0.0,
+    -0.9995769125041436
+   ],
+   "trimesh_probability": 0.4709637391014306,
+   "height_mm": 4.146176036730774,
+   "com_height_mm": 2.2271229720058323,
+   "visual_gap_um": 0.0,
+   "support_parts": [
+    "handle",
+    "tines"
+   ],
+   "support_points": 35,
+   "com_margin_mm": 5.091519051146372,
+   "tip_angle_deg": 66.37455741776125,
+   "release_1mm": {
+    "moved_mm": 4.4694160114312206e-05,
+    "rot_deg": 6.994693985297057e-05,
+    "max_rot_last_half_s_deg": 6.998861214731547e-05,
+    "passed": true
+   },
+   "release_tilted": {
+    "n": 20,
+    "passed": 20,
+    "worst_rot_deg": 0.08095681503463277
+   },
+   "drops": {
+    "n": 222,
+    "frequency": 0.444,
+    "rock_deg_median": 0.0
+   },
+   "category": "natural",
+   "probability_within_category": 0.5091411301611019,
+   "top_surface_points": {
+    "tines": 4110,
+    "palm": 1410,
+    "neck": 1168,
+    "handle": 7030,
+    "edge": 0
+   }
+  },
+  {
+   "id": 1,
+   "description": "face up: lying on its back, tines curving up",
+   "quat_wxyz": [
+    1.0,
+    -1.4353393024319337e-18,
+    -1.4198671566580325e-19,
+    0.0
+   ],
+   "rpy": [
+    -2.870678604863867e-18,
+    -2.8397343133160645e-19,
+    -6.633097313269081e-18
+   ],
+   "rest_pos_m": [
+    0.023859073638916015,
+    -1.6543625376354264e-19,
+    7.888169765252553e-11
+   ],
+   "up_in_fork": [
+    2.8397343133160645e-19,
+    -2.870678604863867e-18,
+    1.0
+   ],
+   "trimesh_probability": 0.4540523540835942,
+   "height_mm": 5.0000000788816985,
+   "com_height_mm": 1.0102798393322139,
+   "visual_gap_um": 7.8881697591702e-05,
+   "support_parts": [
+    "handle",
+    "neck",
+    "palm",
+    "tines"
+   ],
+   "support_points": 164,
+   "com_margin_mm": 6.662863601902024,
+   "tip_angle_deg": 81.37800474289199,
+   "release_1mm": {
+    "moved_mm": 0.0027652542825296034,
+    "rot_deg": 0.004668912219143194,
+    "max_rot_last_half_s_deg": 0.016047529461974526,
+    "passed": true
+   },
+   "release_tilted": {
+    "n": 20,
+    "passed": 20,
+    "worst_rot_deg": 0.04581181924229445
+   },
+   "drops": {
+    "n": 277,
+    "frequency": 0.554,
+    "rock_deg_median": 0.014168135876914421
+   },
+   "category": "natural",
+   "probability_within_category": 0.4908588698388982,
+   "top_surface_points": {
+    "tines": 4208,
+    "palm": 1403,
+    "neck": 1158,
+    "handle": 7030,
+    "edge": 0
+   }
+  },
+  {
+   "id": 2,
+   "description": "on its side edge (+y side up)",
+   "quat_wxyz": [
+    0.7069046443305079,
+    0.7069046541824326,
+    -0.01690611888055162,
+    0.01690611911616725
+   ],
+   "rpy": [
+    1.5707963407316061,
+    -0.047822282425482615,
+    -5.454683416210018e-17
+   ],
+   "rest_pos_m": [
+    0.023831796335249948,
+    0.0024999999999999988,
+    0.007824289444783401
+   ],
+   "up_in_fork": [
+    0.0478040564832937,
+    0.9988567325616532,
+    -1.3920776096996194e-08
+   ],
+   "trimesh_probability": 0.03757671599201483,
+   "height_mm": 17.67618712079686,
+   "com_height_mm": 6.663301751202199,
+   "visual_gap_um": 0.0,
+   "support_parts": [
+    "handle",
+    "palm"
+   ],
+   "support_points": 17,
+   "com_margin_mm": 0.5828436790998544,
+   "tip_angle_deg": 4.99897867292451,
+   "release_1mm": {
+    "moved_mm": 0.02788987017854662,
+    "rot_deg": 0.11426791825271233,
+    "max_rot_last_half_s_deg": 0.8442654011642133,
+    "passed": true
+   },
+   "release_tilted": {
+    "n": 20,
+    "passed": 10,
+    "worst_rot_deg": 89.92127851680723
+   },
+   "drops": {
+    "n": 0,
+    "frequency": 0.0,
+    "rock_deg_median": null
+   },
+   "category": "propped",
+   "probability_within_category": 0.5011304103125026,
+   "top_surface_points": {
+    "tines": 0,
+    "palm": 0,
+    "neck": 0,
+    "handle": 0,
+    "edge": 2743
+   }
+  },
+  {
+   "id": 3,
+   "description": "on its side edge (-y side up)",
+   "quat_wxyz": [
+    0.7069046443305079,
+    -0.7069046541824326,
+    -0.016906118880551598,
+    -0.01690611911616727
+   ],
+   "rpy": [
+    -1.5707963407316061,
+    -0.047822282425482615,
+    0.0
+   ],
+   "rest_pos_m": [
+    0.023831796335249948,
+    -0.0025,
+    0.007824289444783401
+   ],
+   "up_in_fork": [
+    0.0478040564832937,
+    -0.9988567325616532,
+    -1.3920776096996194e-08
+   ],
+   "trimesh_probability": 0.03740719082893057,
+   "height_mm": 17.67618712079686,
+   "com_height_mm": 6.665862677225915,
+   "visual_gap_um": 0.0,
+   "support_parts": [
+    "handle",
+    "palm"
+   ],
+   "support_points": 17,
+   "com_margin_mm": 0.5828418435448334,
+   "tip_angle_deg": 4.997052207578077,
+   "release_1mm": {
+    "moved_mm": 0.05213058343624929,
+    "rot_deg": 0.3073186423119113,
+    "max_rot_last_half_s_deg": 0.6059254052049997,
+    "passed": true
+   },
+   "release_tilted": {
+    "n": 20,
+    "passed": 16,
+    "worst_rot_deg": 89.92115286695673
+   },
+   "drops": {
+    "n": 1,
+    "frequency": 0.002,
+    "rock_deg_median": 0.08140679998592217
+   },
+   "category": "propped",
+   "probability_within_category": 0.4988695896874974,
+   "top_surface_points": {
+    "tines": 0,
+    "palm": 0,
+    "neck": 0,
+    "handle": 0,
+    "edge": 2716
+   }
+  }
+ ],
+ "seeds": {
+  "sample": "split_index * 10000000 + index (splits ['train', 'val', 'test', 'train2', 'test2'])",
+  "reference_image": "1000000000 + 1000 * split_index + shard_index",
+  "image_noise": "np.random.default_rng([seed, 1])"
+ },
+ "provenance": {
+  "git_commit": null,
+  "git_note": "not a git repository",
+  "source_sha256": {
+   "collect_dataset.py": "2069f30c733eeb436852637fe18afbd62aba8d01d1efc12c3598a88ec260b96f",
+   "gelsight_sim.py": "9a759b41e969e3ae7917f961db6dd5683442ec175849ec7c4699198f0489deae",
+   "fork_detector.py": "b5c030357addf6e48443a0cdf2c8262d60c204d9077ca181f88369b89dcfe942",
+   "stl_to_mjcf.py": "e2fb232a9500b2b160271f2f422ae6da033f3f86138768c70fbd5d466e18c960",
+   "gelsight_moving.xml": "35268136b3bf0e34cd5aab56e4f38207827d29ea400649cea71d6d28a347f3c4",
+   "meshes/fork_stl/fork_stl.xml": "c2359533230b2264f426770aa7e30f7ed326404d44521ee3183c473a8395ace1",
+   "ForkMilimeter.stl": "407920ee0d98a4cf51bf7eda87367162675af2ecc928a579f475b46dd872da98"
+  },
+  "mesh_sha256": "fab66a36311c6acc80de751673ee2017140cb0ab51078312f29d4ce5bf7d59d6",
+  "model_sha256": "2b83e6cd4e9fe0d9e72c764b60dfd0365e1398a29de412ca15ccf5f5f25bf61a",
+  "mujoco": "4.0.1",
+  "numpy": "2.5.4",
+  "python": "3.14.2",
+  "host": "fedora"
+ }
+}
