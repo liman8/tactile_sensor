@@ -5,7 +5,7 @@ metrics (json), logs, figures, videos and the per-episode search records. Three 
 
 * the datasets: HDF5 shards, 27.7 GB;
 * the training caches and the CAD baseline's match caches derived from them, about 33 GB;
-* most of the trained networks: 15 of the 21 model files, 0.66 GB.
+* most of the trained networks: 17 of the 23 model files, 0.73 GB.
 
 They are listed here with their sizes and the commands that rebuild them. Every model file has its SHA-256 in
 `MODELS.sha256`, versioned or not, so a rebuilt or restored file can be checked against the one used for the
@@ -72,8 +72,9 @@ described by `results_centre/train*.log`, `metrics.json` and `seeds.json`; the v
 | `results_centre/v3/model_40k_seed{0,1,2}.pt` | no | standard | v3, 40k presses, three seeds | `python centre_v3.py train --size 40000 --seed S` |
 | `results_centre/mini/model_{20k,40k,100k}_seed0.pt` | no | Mini | v3 recipe on `dataset_mini/` | `GELSIGHT_SENSOR=mini python centre_v3.py train --size N` |
 | `results_centre/mini_exact/model_100k_seed{0,1,2}.pt` | **yes** | Mini | a quarter of the training inputs not resampled | `GELSIGHT_SENSOR=mini CENTRE_AUG_EXACT=0.25 CENTRE_MINI_OUT=results_centre/mini_exact python centre_v3.py train --size 100000 --seed S` |
-| `results_centre/mini_robust/model_100k_seed0.pt` | **yes** | Mini | pipeline-robust augmentation, test border masked; **current candidate for the final model**, used by the demo | `GELSIGHT_SENSOR=mini CENTRE_AUG_ROBUST=1 CENTRE_MINI_OUT=results_centre/mini_robust python centre_v3.py train --size 100000 --seed 0` |
+| `results_centre/mini_robust/model_100k_seed0.pt` | **yes** | Mini | pipeline-robust augmentation, test border masked; **the final model** (`results_centre/FINAL_MODEL.md`), used by the demo | `GELSIGHT_SENSOR=mini CENTRE_AUG_ROBUST=1 CENTRE_MINI_OUT=results_centre/mini_robust python centre_v3.py train --size 100000 --seed 0` |
 | `results_centre/mini_robust_tta/model_100k_seed0.pt` | **yes** (symlink) | Mini | the same network as `mini_robust`, evaluated with test-time augmentation | - |
+| `results_centre/mini_robust/model_100k_seed{1,2}.pt` | no | Mini | the same recipe as the final model, seeds 1 and 2, trained on 2026-11-20 only to measure the seed spread (README "v3, Mini", section 12) | `GELSIGHT_SENSOR=mini CENTRE_AUG_ROBUST=1 CENTRE_MINI_OUT=results_centre/mini_robust python centre_v3.py train --size 100000 --seed S` (or `results_centre/mini_robust/chain9b_seeds12.sh`) |
 | `results_centre/mini_robust_aa/model_100k_seed0.pt` | **yes** | Mini | robust recipe + fixed Gaussian input blur, sigma 1 px | `GELSIGHT_SENSOR=mini CENTRE_AUG_ROBUST=1 CENTRE_INPUT_BLUR_PX=1.0 CENTRE_MINI_OUT=results_centre/mini_robust_aa python centre_v3.py train --size 100000 --seed 0` |
 
 **Training times.** v1 takes 34 min; Mini 100k takes about 3-4.5 h. All on an RTX 4070 Laptop GPU; the exact
@@ -83,9 +84,10 @@ seconds are in each model's json.
 (bf16 autocast, `cudnn.benchmark = True`), so a retrained model will differ slightly from the one hashed here. How much the results move between trainings is measured by the seed
 studies:
 * v3 40k: p90 2.069 ± 0.005 mm;
-* Mini `mini_exact`: 1.84 ± 0.07 mm.
+* Mini `mini_exact`: 1.84 ± 0.07 mm;
+* Mini `mini_robust` (the final recipe): 2.07 ± 0.10 mm, and the clean search's final median 0.603 ± 0.015 mm.
 
-These are in `results_centre/v3/seeds_40k.json` and `results_centre/mini_exact/seeds_100k.json`.
+These are in `results_centre/v3/seeds_40k.json`, `results_centre/mini_exact/seeds_100k.json` and `results_centre/mini_robust/seeds_100k.json`.
 
 The full SHA-256 of every model is in `MODELS.sha256`.
 

@@ -15,12 +15,14 @@ and detector:
 `gelsight_moving.xml` opened on its own shows it. `fork_stl` exists only in the moving-sensor model,
 so `fixed_sensor` still starts with `fork_dinner`.
 
-**Status (2026-11-20).**
+**Status (2026-11-21).**
 * Everything is simulation; no real sensor has been used yet.
 * **The final model is `results_centre/mini_robust/model_100k_seed0.pt`** (`results_centre/FINAL_MODEL.md`): GelSight
   Mini field of view, training made robust to the image pipeline. The demo and the viewer use it.
 * It was chosen on 2026-11-20 by a rule written down before the results (`results_centre/RUN_LOG.md`, 2026-11-19 20:05
   and 20:30; "v3, Mini", section 11).
+* Its recipe was trained three times (seeds 0-2) to measure the seed spread ("v3, Mini", section 12). The clean
+  search's final median is 0.603 ± 0.015 mm; seed 0 is the weakest of the three by about 0.02 mm.
 * Large files are not in git: see `DATA_AND_MODELS.md`.
 * A Serbian summary is in `REZIME.md`, and presentation material in `prezentacija/`.
 
@@ -60,7 +62,7 @@ so `fixed_sensor` still starts with `fork_dinner`.
 | `dataset_mini/` | generated with `collect_dataset.py collect --sensor mini`: the same kind of presses seen by a GelSight Mini-sized sensor (18.6 x 14.4 mm): val 1k, train2 100k, test2 5k, caches (19 GB) |
 | `results_centre/mini/` | `GELSIGHT_SENSOR=mini python centre_v3.py ...`: Mini models (20k, 40k, 100k), `learning_curve.*`, `fov_compare*.json/png`, `input_scale*`, `search/`, `replay_presses.py`, logs, job scripts (see "v3, Mini") |
 | `results_centre/mini_exact/` | the Mini 100k retrained with a quarter of the training inputs not resampled (`CENTRE_AUG_EXACT=0.25 CENTRE_MINI_OUT=results_centre/mini_exact`), seeds 0-2: models, `input_scale_sweep*.json`, `input_interp.json`, `input_edge.json`, `seeds_100k.json`, `search/`, `replay/` (world-frame replays of all three sensors' runs), `diag/` (`zoom_slope.py`, `fork_frame_bias.py`, `bias_by_condition.py` and their json), `chain7_exact.sh`, `chain8*.sh`, logs (see "v3, Mini", sections 5-6) |
-| `results_centre/mini_robust/` | the Mini 100k trained to ignore the image pipeline (`CENTRE_AUG_ROBUST=1`, seed 0): model, `input_*.json`, `search/`, `diag/criterion.py` (the pass / fail criterion; `python mini_robust/diag/criterion.py CANDIDATE=PREFIX` from `results_centre/`), `diag/zoom_slope.json`, `checks/` (augmentation, target convention, TTA, gallery), `chain9*.sh` (see "v3, Mini", section 7) |
+| `results_centre/mini_robust/` | the Mini 100k trained to ignore the image pipeline (`CENTRE_AUG_ROBUST=1`): seed 0 (the final model) and seeds 1-2 (`chain9b_seeds12.sh`, only to measure the seed spread), `input_*.json` (seed 0) and `input_*_3seeds.json`, `seeds_100k.json`, `search/` (3 seeds x 9 conditions), `diag/criterion.py` (the pass / fail criterion; `python mini_robust/diag/criterion.py CANDIDATE=PREFIX` from `results_centre/`; it writes `CANDIDATE/diag/criterion.json`), `diag/seeds_summary.py/json/log` (per-seed criterion, 3 seeds vs mini_exact), `diag/zoom_slope.json`, `checks/` (augmentation, target convention, TTA, gallery), `chain9*.sh` (see "v3, Mini", sections 7 and 12) |
 | `results_centre/mini_robust_tta/` | the same weights (symlink) with test-time augmentation in the json (`"tta"`), `search/`, `diag/criterion*.json`, `runtime_tta.json` |
 | `results_centre/mini_robust_aa/` | the one extra training change: robust recipe + a fixed Gaussian input blur (`CENTRE_INPUT_BLUR_PX=1.0`), `chain_aa.sh`: model, `input_scale_sweep*.json`, `input_interp.json`, `input_edge.json`, `search/` (9 conditions). Criterion: FAIL (1 of 3 parts, like every candidate); best clean search but not significantly better than `mini_robust`, so it is the reserve model ("v3, Mini", section 11) |
 | `results_centre/mini_cad/` | the CAD baseline on the Mini sensor: `abs_params.json`, per-condition cache, `compare_cad_vs_net_<model>.json/png` (`compare_model.sh TAG MODEL.pt`), `search/` (CAD in the search loop), `chain_cad.sh` |
@@ -77,7 +79,7 @@ so `fixed_sensor` still starts with `fork_dinner`.
 | `freeze_sim.py`, `results_centre/FROZEN_SIM/` | the frozen simulation state: copies of the code, the final model, dataset metadata, and a SHA-256 manifest (`--verify` re-hashes). Run on 2026-11-20 with the final model: 98 files copied, 21 models and 106 Mini shards hashed in place, `--verify`: 225 hashes match. The folder is a local archive and is not versioned |
 | `REZIME.md`, `REZIME_hronologija.md` | a self-contained summary in Serbian for the professor (goal, setup, data, model, robustness findings, search, choice of the final model, CAD comparison, viewer, limits, what the real sensor needs; every number with its source file); the earlier chronological summary (v1 to Mini) |
 | `prezentacija/` | presentation material in Serbian: `PREZENTACIJA.md` (talk text, demo script, expected questions, sources of every number), `demo.sh` (the MuJoCo demos, `bash prezentacija/demo.sh` lists them), `slike/` and `video/` (copies, in the order of the talk), headless self-test images |
-| `DATA_AND_MODELS.md`, `MODELS.sha256` | what is not in git (datasets, caches, 15 of the 21 model files), with sizes and the commands that rebuild them; SHA-256 of every model file |
+| `DATA_AND_MODELS.md`, `MODELS.sha256` | what is not in git (datasets, caches, 17 of the 23 model files), with sizes and the commands that rebuild them; SHA-256 of every model file |
 
 ## Setup
 
@@ -2382,6 +2384,73 @@ presses and conditions as `mini_robust` s0.
 * **Supersedes an earlier figure:** the TTA runtime in the table above (12-17x) was measured under load. Measured
   on an idle machine, TTA costs about 11x the plain network: 260.7 / 23.4 ms, 62.1 / 5.45 ms and 13.8 / 1.25 ms.
 
+#### 12. Seed spread of the final recipe: mini_robust seeds 1 and 2 (`results_centre/mini_robust/`)
+
+**Why:** the final model was trained once (seed 0). The only seed-to-seed spread on the Mini came from mini_exact
+(p90 std 0.07 mm), so it was not known whether seed 0 is typical of its recipe, or whether its criterion failure
+belongs to the seed or to the recipe.
+
+**What was run** (2026-11-20 17:51 to 2026-11-21 00:39, `mini_robust/chain9b_seeds12.sh`, under
+`systemd-inhibit`):
+* **Training:** seeds 1 and 2 with the same recipe and 120 epochs each, one after the other: 11,222 s and 11,419 s
+  (about 94 s per epoch on an idle GPU at 100 W). Best epochs 117 / 120, clean val loss 1.440 / 1.436 (seed 0:
+  1.497, epoch 119).
+* **Search:** the same 9 conditions on the same 300 starts as seed 0.
+* **One press:** the input sweeps for all three seeds were written to new files (`*_3seeds.json`). Then
+  `centre_v3.py seeds --size 100000` → `seeds_100k.json`, and `diag/seeds_summary.py` → `diag/seeds_summary.json`
+  / `.log`. The summary applies the criterion of section 7 to each seed and compares with mini_exact's 3 seeds.
+* **Seed 0's files are unchanged** (SHA-256 checked). Its numbers in the 3-seed files are bit-identical to the
+  originals.
+
+| | s0 (final) | s1 | s2 | mean ± std | mini_exact, 3 seeds |
+|---|---|---|---|---|---|
+| one press, test2 as rendered: median (mm) | 0.894 | 0.883 | 0.885 | 0.888 ± 0.006 | 0.880 ± 0.009 |
+| one press: p90 (mm) | 2.16 | 2.08 | 1.97 | 2.07 ± 0.10 | 1.84 ± 0.07 |
+| one press: handle p90 (mm) | 18.3 | 17.6 | 17.8 | 17.9 ± 0.3 | 14.5 ± 0.5 |
+| search, clean: final median (mm) | 0.620 | 0.592 | 0.599 | **0.603 ± 0.015** | 0.708 ± 0.040 |
+| search, clean: final p90 (mm) | 1.18 | 1.14 | 1.09 | 1.14 ± 0.04 | 1.26 ± 0.11 |
+| search, clean: centre inside the 90 % region | 95 % | 93 % | 93 % | 94 ± 1 % | 83 ± 4 % |
+| search, clean: below 16 mm² within 2 presses | 80 % | 88 % | 90 % | 86 ± 5 % | 95 ± 1 % |
+| search, clean: presses (mean of 10 max) | 9.24 | 8.87 | 8.92 | 9.01 ± 0.20 | 7.99 ± 0.08 |
+| search 0.98: final median, along (mm) | 1.78, −1.72 | 1.72, −1.76 | 1.72, −1.72 | 1.74, −1.74 ± 0.02 | 0.59, −0.30 |
+| search 1.02: final median, along (mm) | 1.29, +1.22 | 1.22, +1.17 | 1.22, +1.20 | 1.24, +1.20 ± 0.03 | 0.79, +0.66 |
+| spread over the 8 inputs: median / along (mm) | 1.16 / 2.95 | 1.13 / 2.93 | 1.12 / 2.92 | | 0.59-0.64 / 1.79-1.82 |
+| parts of the criterion met | 1 of 3 | 1 of 3 | 1 of 3 | | 1 of 3 each |
+
+The std is over the seeds (ddof 1). "One press" is the 5k test2 split. The search starts are the 300 test2 presses.
+Sources: `mini_robust/seeds_100k.json`, `mini_robust/diag/seeds_summary.json`, `mini_exact/seeds_100k.json`.
+
+* **The seed noise is small.** Between seeds, the clean search's final median varies by 0.015 mm (std) and its
+  p90 by 0.04 mm. One press's p90 varies by 0.10 mm, close to mini_exact's 0.07 mm.
+* **The criterion failure belongs to the recipe, not to seed 0.** Every seed fails the same two parts by nearly
+  the same amounts: spreads of 1.12-1.16 and 2.92-2.95 mm. The dependence on the true scale is the same on every
+  seed: the offset along the handle has a std of 0.02-0.03 mm at 0.98 and at 1.02.
+* **Seed 0, the final model, is the weakest of the three on most measures, but only slightly.**
+  * Clean search: 0.620 vs 0.592 / 0.599 mm. One-press p90: 2.16 vs 2.08 / 1.97 mm. Below 16 mm² within
+    2 presses: 80 vs 88 / 90 %. It also has the highest val loss.
+  * So the final model's numbers slightly understate the recipe, by about 0.02 mm in the clean search median.
+  * **The final model stays seed 0.** The rule chose it before these seeds existed. Picking the best of three
+    seeds on test numbers would be selecting on the test set. The gain would be one to two seed std (0.02-0.03 mm).
+* **Robust vs mini_exact, now with 3 seeds each:**
+  * The clean search is better by −0.105 mm. The paired bootstrap over the 300 starts gives [−0.152, −0.056], and
+    the seed-level Welch test (3 vs 3 seed medians) gives t = −4.29, p = 0.033.
+  * Before, robust s0 was compared with each mini_exact seed (`final_select/robust_vs_exact_s*.json`). Against
+    s0 and s1 the CI excluded 0, but against s2 it did not: −0.043 mm [−0.102, +0.016]. With all seeds on both sides,
+    the difference holds beyond the seed noise.
+  * The robust 90 % region is more honest (94 vs 83 % contain the centre). It also shrinks more slowly: below
+    16 mm² within 2 presses 86 vs 95 %, and 9.0 vs 8.0 presses on average.
+  * With one press, robust has the worse p90 (2.07 vs 1.84 mm). All of the difference comes from the handle (p90
+    17.9 vs 14.5 mm).
+* **The reserve (AA, one seed) is inside the robust seed spread.**
+  * AA's clean median (0.592 mm) equals robust seed 1's.
+  * AA's p90 (1.07 mm) is 0.02 mm below robust seed 2's.
+  * So the AA − robust s0 differences of section 11 (−0.028 mm median, −0.11 mm p90) are about the size of the
+    robust recipe's seed spread. This supports calling them a tie. AA itself still has one seed only.
+* **A slip, logged and undone:** while checking seed 1, I ran `diag/criterion.py`. It always writes
+  `mini_robust/diag/criterion.json`, so it overwrote seed 0's file with a 2-seed mean. I restored the file from git
+  (`RUN_LOG.md`, 2026-11-20 21:15). The per-seed criterion is now computed only by `diag/seeds_summary.py`, which
+  imports criterion.py's functions but does not write its file.
+
 #### Plainly (Mini)
 
 1. **One press, same 40k presses:** the Mini's smaller view costs about 0.3 mm of p90 and 4 points of face
@@ -2425,6 +2494,11 @@ presses and conditions as `mini_robust` s0.
       41 % of the episodes and takes 38 ms / 1.3 s.
 11. **Noise (section 9):** illumination drift is the noise that matters. The network was trained with it and hardly
     notices it.
+12. **Three seeds of the final recipe (section 12):**
+    * The recipe is stable: the clean search's final median is 0.603 ± 0.015 mm.
+    * The criterion fails the same way on every seed, so the scale dependence is the recipe's.
+    * The final model (seed 0) is the weakest of the three by about 0.02 mm, and stays final by the rule.
+    * Against mini_exact (3 seeds each), the clean search is 0.105 mm better (p = 0.033 at seed level).
 
 #### What was not verified (Mini)
 
@@ -2462,9 +2536,11 @@ presses and conditions as `mini_robust` s0.
 * **The same data vs optimizer-steps confound applies** (120 epochs for every size). The 20k model was
   still improving at epoch 119.
 * **Search rendering:** the episodes ran on the Intel iGPU, like every earlier search.
-* **The final model and the reserve were trained once each (seed 0).** The selection rule compared them on the
-  final median only. With the seed-to-seed std of mini_exact (p90 0.07 mm), the 0.03 mm between them is within
-  noise either way.
+* **The reserve (mini_robust_aa) was trained once (seed 0).** The final recipe now has 3 seeds (section 12), and
+  the 0.03 mm between the final model and the reserve is within the final recipe's seed spread. The selection rule
+  compared them on the final median only.
+* **The extra robust seeds were evaluated on the single-press sweeps and the search only.** The taper test, the CAD
+  comparison, the yaw measurement, the viewer and the videos use seed 0, the final model.
 * **The CAD baseline's scale:** it does better on inputs shrunk by 2-5 %. This hints that its templates and the
   reconstructed depth differ in scale, which was not investigated.
 * **The viewer's DisplayGuard** (F6 also cycles the viewer's frame display) was checked headless only.

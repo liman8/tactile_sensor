@@ -27,7 +27,7 @@ results_centre/v3/.watch_state/
 # Detector evaluation sample cache (18.7 MB), rebuilt by train_detector.py
 results_moving/eval_samples.npz
 
-# Trained networks: 20 files of 38-45 MB. Only the five that the demo and the current conclusions rest on are
+# Trained networks: 23 files of 38-45 MB. Only the five that the demo and the current conclusions rest on are
 # versioned (plus mini_robust_tta/model_100k_seed0.pt, a relative symlink to the mini_robust model); the others
 # are listed with their SHA-256 and training command in DATA_AND_MODELS.md and MODELS.sha256.
 *.pt

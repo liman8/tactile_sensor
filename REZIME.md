@@ -216,6 +216,36 @@ Pravilo je zapisano pre rezultata (`RUN_LOG.md`, 19.11. u 20:05 i 20:30):
 - **Napomena:** AA ima bolji p90 (1,07 prema 1,18 mm) i 0,19 pritisaka manje u proseku
   (`final_select/aa_vs_robust.json`). Pravilo je unapred biralo samo po medijani, pa AA ostaje rezervni model.
 
+### 6.2 Rasipanje između seed-ova konačnog recepta
+
+Konačni recept (`mini_robust`) je posle izbora istreniran još dva puta, sa seed-om 1 i 2. Sve ostalo je isto:
+120 epoha, oko 3,1 h po seed-u. Seed-ovi su testirani na istih 300 početaka pretrage i na istom test skupu
+(`mini_robust/seeds_100k.json`, `mini_robust/diag/seeds_summary.json`; README „v3, Mini“, odeljak 12).
+
+| | s0 (konačni) | s1 | s2 | srednja vrednost ± std | mini_exact, 3 seed-a |
+|---|---|---|---|---|---|
+| jedan pritisak, medijana / p90 | 0,894 / 2,16 mm | 0,883 / 2,08 mm | 0,885 / 1,97 mm | 0,89 / 2,07 ± 0,10 mm | 0,88 / 1,84 ± 0,07 mm |
+| pretraga, konačna greška, medijana | 0,620 mm | 0,592 mm | 0,599 mm | **0,603 ± 0,015 mm** | 0,708 ± 0,040 mm |
+| pretraga, konačna greška, p90 | 1,18 mm | 1,14 mm | 1,09 mm | 1,14 ± 0,04 mm | 1,26 ± 0,11 mm |
+| težište u 90 % oblasti na kraju | 95 % | 93 % | 93 % | 94 ± 1 % | 83 ± 4 % |
+| razmera 0,98 / 1,02: pomak duž drške | −1,72 / +1,22 mm | −1,76 / +1,17 mm | −1,72 / +1,20 mm | −1,74 / +1,20 mm | −0,30 / +0,66 mm |
+| ispunjeni delovi kriterijuma | 1 od 3 | 1 od 3 | 1 od 3 | | po 1 od 3 |
+
+- **Recept je stabilan.** Konačna greška pretrage se između seed-ova razlikuje za 0,015 mm (std), a p90 jednog
+  pritiska za 0,10 mm, slično kao kod mini_exact (0,07 mm).
+- **Pad kriterijuma je osobina recepta, a ne seed-a 0.** Sva tri seed-a padaju na ista dva dela, sa skoro istim
+  rasponom (1,12–1,16 i 2,92–2,95 mm). Zavisnost od stvarne razmere je ista na svakom seed-u (5.3).
+- **Konačni model (seed 0) je najslabiji od tri, ali malo.** U pretrazi ima 0,620 prema 0,592 i 0,599 mm, a
+  ima i najveću validacionu grešku. Njegovi brojevi zato malo potcenjuju recept, za oko 0,02 mm.
+  - Konačni model se ne menja. Pravilo ga je izabralo pre nego što su ovi seed-ovi postojali.
+  - Izbor najboljeg od tri seed-a po test brojevima bio bi izbor na test skupu.
+- **Prema mini_exact, sa po 3 seed-a:** čista pretraga je bolja za 0,105 mm.
+  - Bootstrap po počecima daje [−0,152, −0,056].
+  - Welch test na nivou seed-ova (3 prema 3) daje p = 0,033.
+  - Ranije, sa samo jednim seed-om robust modela, razlika prema mini_exact s2 nije bila značajna.
+- **Rezervni AA (jedan seed) je unutar rasipanja recepta.** Njegova medijana (0,592 mm) jednaka je medijani seed-a 1.
+  To potvrđuje da je razlika AA − robust s0 iz 6.1 nerešena.
+
 ## 7. Poređenje sa CAD metodom bez treniranja
 
 - **Metod:** rekonstruisana dubina se poredi sa šablonima iz CAD modela za svaki položaj i ugao (gruba
@@ -285,8 +315,9 @@ Pravilo je zapisano pre rezultata (`RUN_LOG.md`, 19.11. u 20:05 i 20:30):
   podatke.
 - **Razmera:** greška mm/px od 1 % pomera rezultat za oko 0,7 mm (5.3). Kriterijum nezavisnosti od obrade
   slike nije ispunjen.
-- **Jedan seed:** konačni model je treniran jednom. Rasipanje između seed-ova kod sličnog modela (mini_exact) je
-  std p90 0,07 mm (`mini_exact/seeds_100k.json`).
+- **Seed-ovi:** konačni recept je istreniran 3 puta (6.2). Rasipanje je malo, a seed 0 je za oko 0,02 mm
+  slabiji od proseka. Rezervni model (AA) ima samo jedan seed. Test suženja, poređenje sa CAD-om, merenje smera,
+  preglednik i videi rađeni su samo sa seed-om 0.
 - **Gel pravog Mini-ja** (debljina 4,25 mm, mekoća) nije modelovan; fotometrijska kalibracija je simulirana.
 - **Modeli šuma** (drift, tekstura, ostaci markera) su pretpostavke, a ne merenja.
 - **Prevzorkovanje pravog kadra** (faktor oko 3,4 umesto 2) još nijedna skripta ne radi.

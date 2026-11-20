@@ -122,8 +122,13 @@ Isti pritisci i isti uslovi (`mini_cad/compare_cad_vs_net_mini_robust_s0.json`, 
   - kriterijum nezavisnosti od obrade slike nije ispunjen.
 - **Suženje drške:** mreža čita mesto na dršci iz širine drške (`taper_test/taper_mini_robust_s0.json`). Druga
   viljuška zahteva novi trening.
-- **Jedan seed.** Kod sličnog modela (mini_exact) rasipanje p90 između seed-ova je 0,07 mm
-  (`mini_exact/seeds_100k.json`).
+- **Seed-ovi** (dodato 2026-11-21): isti recept je istreniran i sa seed-om 1 i 2, samo radi procene rasipanja
+  (`mini_robust/seeds_100k.json`, `mini_robust/diag/seeds_summary.json`; README „v3, Mini“, odeljak 12).
+  - Čista pretraga, medijana konačne greške: 0,603 ± 0,015 mm (s0 0,620, s1 0,592, s2 0,599).
+  - Jedan pritisak, p90: 2,07 ± 0,10 mm.
+  - Kriterijum pada na isti način na sva tri seed-a.
+  - Ovaj model (s0) je najslabiji od tri, za oko 0,02 mm. Ostaje konačni, jer ga je izabralo unapred zapisano
+    pravilo, a seed-ovi 1–2 nisu bili kandidati.
 - **Samo simulacija:**
   - gel pravog Mini-ja nije modelovan;
   - modeli šuma su pretpostavke;
