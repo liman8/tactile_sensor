@@ -1,0 +1,11 @@
+v3 train size 20000 (20000 presses), seed 0, 120 epochs -> results_centre/v3/model_20k_seed0.pt
+  [20k s0] epoch   1: train d 7.685 | val a 0.335 b 0.891 c 0.585 d 6.821 (83 s)
+  [20k s0] epoch   5: train d 4.743 | val a 0.158 b 0.588 c 0.501 d 4.352 (291 s)
+  [20k s0] epoch  10: train d 4.219 | val a 0.144 b 0.494 c 0.423 d 3.847 (554 s)
+  [20k s0] epoch  15: train d 3.849 | val a 0.148 b 0.432 c 0.384 d 3.449 (812 s)
+  [20k s0] epoch  20: train d 3.522 | val a 0.148 b 0.422 c 0.364 d 3.056 (1074 s)
+  [20k s0] epoch  25: train d 3.272 | val a 0.146 b 0.385 c 0.339 d 2.678 (1289 s)
+  [20k s0] epoch  30: train d 3.082 | val a 0.140 b 0.385 c 0.353 d 2.635 (1712 s)
+  [20k s0] epoch  35: train d 2.981 | val a 0.125 b 0.369 c 0.293 d 2.471 (2235 s)
+  [20k s0] epoch  40: train d 2.808 | val a 0.132 b 0.341 c 0.312 d 2.356 (2646 s)
+  [20k s0] epoch  45: train d 2.696 | val a 0.134 b 0.292 c 0.265 d 2.022 (3023 s)

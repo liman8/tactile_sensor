@@ -1,0 +1,137 @@
+v2_40k_s1      clean          <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.8 mm) | <4 mm2: success 58 % (reached 69 %, 8.0 presses) | final err 0.65/1.3 mm, >5 mm 0.0 % | 0.78 s/press (142 s)
+v2_40k_s1      noise_0.05mm   <16 mm2: success 99 % (reached 100 %, 2.0 presses, err 0.8 mm) | <4 mm2: success 60 % (reached 70 %, 8.0 presses) | final err 0.64/1.2 mm, >5 mm 0.0 % | 0.79 s/press (285 s)
+v2_40k_s1      lateral_0.98   <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.7 mm) | <4 mm2: success 63 % (reached 70 %, 8.0 presses) | final err 0.61/1.2 mm, >5 mm 0.0 % | 0.81 s/press (429 s)
+{
+ "cad_clean": {
+  "success_16mm2_within_2_presses": 0.0,
+  "final": {
+   "err_mm_median": 1.750833650338286,
+   "err_mm_p90": 56.20627215339869,
+   "err_gt5mm": 0.3233333333333333,
+   "truth_in_90": 0.78,
+   "presses_mean": 10.0
+  },
+  "seconds_per_press": 25.124395653963088
+ },
+ "cad_lateral_0.98": {
+  "success_16mm2_within_2_presses": 0.0,
+  "final": {
+   "err_mm_median": 1.5154794473457343,
+   "err_mm_p90": 73.47892122040862,
+   "err_gt5mm": 0.25666666666666665,
+   "truth_in_90": 0.7766666666666666,
+   "presses_mean": 10.0
+  },
+  "seconds_per_press": 20.28893575270971
+ },
+ "cad_noise_0.05mm": {
+  "success_16mm2_within_2_presses": 0.0,
+  "final": {
+   "err_mm_median": 1.5472396433042397,
+   "err_mm_p90": 76.59234154938162,
+   "err_gt5mm": 0.29,
+   "truth_in_90": 0.78,
+   "presses_mean": 10.0
+  },
+  "seconds_per_press": 19.255077268759408
+ },
+ "v2_40k_s0_clean": {
+  "success_16mm2_within_2_presses": 0.88,
+  "final": {
+   "err_mm_median": 0.6495666761156967,
+   "err_mm_p90": 1.2784690693947418,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.8866666666666667,
+   "presses_mean": 8.633333333333333
+  },
+  "seconds_per_press": 0.3387934058784808
+ },
+ "v2_40k_s0_lateral_0.98": {
+  "success_16mm2_within_2_presses": 0.9033333333333333,
+  "final": {
+   "err_mm_median": 0.5801186403601637,
+   "err_mm_p90": 1.1274656002073513,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.93,
+   "presses_mean": 8.763333333333334
+  },
+  "seconds_per_press": 0.3554660828406848
+ },
+ "v2_40k_s0_noise_0.05mm": {
+  "success_16mm2_within_2_presses": 0.8633333333333333,
+  "final": {
+   "err_mm_median": 0.6012959170934944,
+   "err_mm_p90": 1.2377388234959525,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.92,
+   "presses_mean": 8.713333333333333
+  },
+  "seconds_per_press": 0.3476482039267424
+ },
+ "v2_40k_s1_clean": {
+  "success_16mm2_within_2_presses": 0.8966666666666666,
+  "final": {
+   "err_mm_median": 0.652410717588336,
+   "err_mm_p90": 1.315452815136505,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.8733333333333333,
+   "presses_mean": 8.593333333333334
+  },
+  "seconds_per_press": 0.7818992649442935
+ },
+ "v2_40k_s1_lateral_0.98": {
+  "success_16mm2_within_2_presses": 0.9233333333333333,
+  "final": {
+   "err_mm_median": 0.6108922428270189,
+   "err_mm_p90": 1.1594803267102196,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.9266666666666666,
+   "presses_mean": 8.65
+  },
+  "seconds_per_press": 0.8067246143452074
+ },
+ "v2_40k_s1_noise_0.05mm": {
+  "success_16mm2_within_2_presses": 0.89,
+  "final": {
+   "err_mm_median": 0.6361444702992372,
+   "err_mm_p90": 1.23563507064577,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.8766666666666667,
+   "presses_mean": 8.63
+  },
+  "seconds_per_press": 0.7888067736944194
+ },
+ "v2_7k_s0_clean": {
+  "success_16mm2_within_2_presses": 0.5166666666666667,
+  "final": {
+   "err_mm_median": 0.541143377988111,
+   "err_mm_p90": 1.2483012954203017,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.9366666666666666,
+   "presses_mean": 9.606666666666667
+  },
+  "seconds_per_press": 1.134548020565636
+ },
+ "v2_7k_s0_lateral_0.98": {
+  "success_16mm2_within_2_presses": 0.51,
+  "final": {
+   "err_mm_median": 0.9576559479198941,
+   "err_mm_p90": 1.8305793100464889,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.76,
+   "presses_mean": 9.67
+  },
+  "seconds_per_press": 2.2809733670968857
+ },
+ "v2_7k_s0_noise_0.05mm": {
+  "success_16mm2_within_2_presses": 0.49666666666666665,
+  "final": {
+   "err_mm_median": 0.5100845424745541,
+   "err_mm_p90": 1.1383055758293796,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.95,
+   "presses_mean": 9.613333333333333
+  },
+  "seconds_per_press": 2.7684964151631584
+ }
+}

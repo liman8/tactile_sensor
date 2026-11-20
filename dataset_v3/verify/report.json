@@ -1,0 +1,460 @@
+{
+ "shards": [
+  "test2-0000.h5",
+  "test2-0001.h5",
+  "test2-0002.h5",
+  "test2-0003.h5",
+  "test2-0004.h5",
+  "train2-0000.h5",
+  "train2-0001.h5",
+  "train2-0002.h5",
+  "train2-0003.h5",
+  "train2-0004.h5",
+  "train2-0005.h5",
+  "train2-0006.h5",
+  "train2-0007.h5",
+  "train2-0008.h5",
+  "train2-0009.h5",
+  "train2-0010.h5",
+  "train2-0011.h5",
+  "train2-0012.h5",
+  "train2-0013.h5",
+  "train2-0014.h5",
+  "train2-0015.h5",
+  "train2-0016.h5",
+  "train2-0017.h5",
+  "train2-0018.h5",
+  "train2-0019.h5",
+  "train2-0020.h5",
+  "train2-0021.h5",
+  "train2-0022.h5",
+  "train2-0023.h5",
+  "train2-0024.h5",
+  "train2-0025.h5",
+  "train2-0026.h5",
+  "train2-0027.h5",
+  "train2-0028.h5",
+  "train2-0029.h5",
+  "train2-0030.h5",
+  "train2-0031.h5",
+  "train2-0032.h5",
+  "train2-0033.h5",
+  "train2-0034.h5",
+  "train2-0035.h5",
+  "train2-0036.h5",
+  "train2-0037.h5",
+  "train2-0038.h5",
+  "train2-0039.h5"
+ ],
+ "reload": {
+  "samples": 45000,
+  "shape_dtype_errors": [],
+  "seeds_unique": true,
+  "split_seed_overlap": false,
+  "per_split": {
+   "train": 0,
+   "val": 0,
+   "test": 0,
+   "train2": 40000,
+   "test2": 5000
+  },
+  "read_s": 0.7694032192230225
+ },
+ "statistics": {
+  "per_pose": {
+   "0 (natural, face down: tines curve down onto the table)": 23157,
+   "1 (natural, face up: lying on its back, tines curving up)": 21843
+  },
+  "per_type": {
+   "on_fork": 31372,
+   "table": 9116,
+   "hover": 4512
+  },
+  "per_target_part_on_fork": {
+   "tines": 7929,
+   "palm": 7813,
+   "neck": 7807,
+   "handle": 7823,
+   "edge": 0
+  },
+  "per_target_part_by_pose": {
+   "0": {
+    "tines": 4029,
+    "palm": 4008,
+    "neck": 4015,
+    "handle": 4037,
+    "edge": 0
+   },
+   "1": {
+    "tines": 3900,
+    "palm": 3805,
+    "neck": 3792,
+    "handle": 3786,
+    "edge": 0
+   }
+  },
+  "samples_touching_part": {
+   "tines": 19296,
+   "palm": 11321,
+   "neck": 12667,
+   "handle": 9919,
+   "edge": 5936
+  },
+  "contact_rate": {
+   "on_fork": {
+    "fork_contact": 1.0,
+    "table_contact": 0.06158357771260997,
+    "fork_visible": 0.9999681244421778,
+    "anything_visible": 1.0
+   },
+   "table": {
+    "fork_contact": 0.0,
+    "table_contact": 1.0,
+    "fork_visible": 0.0,
+    "anything_visible": 1.0
+   },
+   "hover": {
+    "fork_contact": 0.0,
+    "table_contact": 0.0,
+    "fork_visible": 0.0,
+    "anything_visible": 0.0
+   }
+  },
+  "flawed": {
+   "kept_with_flaw": 0,
+   "redrawn": 359,
+   "reasons": {
+    "housing": 359,
+    "unsettled": 1,
+    "fork_touch": 0,
+    "no_free_spot": 0
+   },
+   "saturated_3mm": 0,
+   "static_unsettled": 0
+  },
+  "would_move": {
+   "0": {
+    "all": 0.0,
+    "n": 23157,
+    "hover": 0.0,
+    "fork_contact_0.2-0.5N": [
+     0.0,
+     3718
+    ],
+    "fork_contact_0.5-1N": [
+     0.0,
+     2873
+    ],
+    "fork_contact_1-2N": [
+     0.0,
+     2883
+    ],
+    "fork_contact_2-5N": [
+     0.0,
+     3805
+    ],
+    "fork_contact_5-10.01N": [
+     0.0,
+     2810
+    ],
+    "no_fork_contact_presses": 0.0
+   },
+   "1": {
+    "all": 0.0,
+    "n": 21843,
+    "hover": 0.0,
+    "fork_contact_0.2-0.5N": [
+     0.0,
+     3461
+    ],
+    "fork_contact_0.5-1N": [
+     0.0,
+     2763
+    ],
+    "fork_contact_1-2N": [
+     0.0,
+     2783
+    ],
+    "fork_contact_2-5N": [
+     0.0,
+     3606
+    ],
+    "fork_contact_5-10.01N": [
+     0.0,
+     2670
+    ],
+    "no_fork_contact_presses": 0.0
+   }
+  },
+  "distance_to_centre_mm": {
+   "com_xy": {
+    "p0": 0.13209552636815156,
+    "p5": 9.79763840871074,
+    "p25": 22.631521774660065,
+    "p50": 35.30444284062421,
+    "p75": 52.80570246063295,
+    "p95": 90.71813353806587,
+    "p100": 100.40037562566575
+   },
+   "bbox_xy": {
+    "p0": 0.18515022629154537,
+    "p5": 9.69299899546312,
+    "p25": 22.37029811347132,
+    "p50": 35.024980636089865,
+    "p75": 52.72400955466671,
+    "p95": 90.70635236197816,
+    "p100": 100.026088768876
+   },
+   "com_xy_on_fork": {
+    "p0": 0.1714649484123124,
+    "p5": 8.716998924686141,
+    "p25": 19.87471644580921,
+    "p50": 30.204646148231205,
+    "p75": 41.25288331716479,
+    "p95": 57.86371830335508,
+    "p100": 76.83933404535267
+   },
+   "com_xy_table": {
+    "p0": 22.492495390190957,
+    "p5": 41.505785894319395,
+    "p25": 64.33804962679706,
+    "p50": 79.61010814872537,
+    "p75": 90.58837969742962,
+    "p95": 98.06165234969004,
+    "p100": 100.40037562566575
+   }
+  },
+  "force": {
+   "cmd": {
+    "p0": 0.20003187101295486,
+    "p5": 0.2420165460670563,
+    "p25": 0.5416156755396219,
+    "p50": 1.427734760359593,
+    "p75": 3.7433128543959593,
+    "p95": 8.23011118785323,
+    "p100": 9.99851113361825
+   },
+   "touch": {
+    "p0": 0.1938798003602622,
+    "p5": 0.23779814342296904,
+    "p25": 0.5413956187731683,
+    "p50": 1.4366718835172576,
+    "p75": 3.7748183018691797,
+    "p95": 8.30106847164452,
+    "p100": 12.662563358958103
+   }
+  },
+  "n_tines_on_pad": {
+   "0": 25150,
+   "1": 1289,
+   "2": 3864,
+   "3": 5312,
+   "4": 9385
+  },
+  "tilt_deg": {
+   "p0": 0.002083858009427786,
+   "p5": 0.6440414190292358,
+   "p25": 1.4532188177108765,
+   "p50": 2.0677990913391113,
+   "p75": 2.5413622856140137,
+   "p95": 2.893063545227051,
+   "p100": 3.396393060684204
+  }
+ },
+ "physics": {
+  "sum_contact_normal_vs_touch": {
+   "n": 45000,
+   "max_abs_n": 3.552713678800501e-15,
+   "max_rel_where_touch_gt_0_05N": 4.814046005732338e-16,
+   "median_rel": 0.0
+  },
+  "touch_vs_command_settled": {
+   "n": 40488,
+   "median_rel": 0.003942297582418319,
+   "p99_rel": 0.15417838671927628,
+   "max_rel": 0.745235511933394
+  },
+  "vertical_gel_force_vs_command_settled": {
+   "n": 40488,
+   "median_rel": 0.002323317247195922,
+   "p99_rel": 0.028187071840115988,
+   "max_rel": 0.04590262439151316
+  },
+  "free_fork_force_balance_residual_n": {
+   "n": 0,
+   "note": "no free-fork run in this dataset (static fork, collected without --free-run)"
+  },
+  "hover_touch_max_n": 0.0
+ },
+ "label_check": {
+  "gallery": "verify/label_gallery.png",
+  "gallery_samples": [
+   {
+    "seed": 30009279,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 0.9960482985729967
+   },
+   {
+    "seed": 30026596,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 0.9932174245319068
+   },
+   {
+    "seed": 30004351,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 0.999687255668491
+   },
+   {
+    "seed": 30024035,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 0.9958614813462358
+   },
+   {
+    "seed": 30005432,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 0.9941303306181121
+   },
+   {
+    "seed": 30030947,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 0.9961071317346621
+   },
+   {
+    "seed": 30030519,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 0.9993669550538088
+   },
+   {
+    "seed": 30025632,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 0.9991163996229971
+   },
+   {
+    "seed": 30005259,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9952065075291725
+   },
+   {
+    "seed": 30025167,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9870633893919794
+   },
+   {
+    "seed": 30022633,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9984193293440217
+   },
+   {
+    "seed": 30006149,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9947655640939971
+   },
+   {
+    "seed": 30003364,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9923713235294118
+   },
+   {
+    "seed": 30037290,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9987694200892171
+   },
+   {
+    "seed": 30026781,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9971057046979865
+   },
+   {
+    "seed": 30036016,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9960812255076594
+   },
+   {
+    "seed": 30034905,
+    "pose": 0,
+    "type": "hover",
+    "iou": 1.0
+   },
+   {
+    "seed": 40003264,
+    "pose": 1,
+    "type": "hover",
+    "iou": 1.0
+   },
+   {
+    "seed": 30016262,
+    "pose": 0,
+    "type": "hover",
+    "iou": 1.0
+   }
+  ],
+  "iou_label_vs_stored_fork_depth": {
+   "n": 1000,
+   "mean": 0.9935394171152705,
+   "p1": 0.9670031104870936,
+   "min": 0.9403292181069959,
+   "below_0_9": 0
+  },
+  "depth_abs_diff_mm_median_of_medians": 0.0010947659415871391
+ },
+ "regeneration": [
+  {
+   "shard": "train2-0037.h5",
+   "index": 518,
+   "seed": 30037518,
+   "identical": true,
+   "differing_fields": [],
+   "state_replay": {
+    "img_identical": true,
+    "depth_gel_identical": true,
+    "recon_identical": true,
+    "touch_identical": true,
+    "touch_abs_diff_n": 0.0
+   }
+  },
+  {
+   "shard": "train2-0023.h5",
+   "index": 128,
+   "seed": 30023128,
+   "identical": true,
+   "differing_fields": [],
+   "state_replay": {
+    "img_identical": true,
+    "depth_gel_identical": true,
+    "recon_identical": true,
+    "touch_identical": true,
+    "touch_abs_diff_n": 0.0
+   }
+  },
+  {
+   "shard": "train2-0025.h5",
+   "index": 788,
+   "seed": 30025788,
+   "identical": true,
+   "differing_fields": [],
+   "state_replay": {
+    "img_identical": true,
+    "depth_gel_identical": true,
+    "recon_identical": true,
+    "touch_identical": true,
+    "touch_abs_diff_n": 0.0
+   }
+  }
+ ]
+}

@@ -1,0 +1,80 @@
+reload: 45000 samples, 0 shape/dtype errors, seeds unique True, split overlap False
+statistics: {
+ "per_pose": {
+  "0 (natural, face down: tines curve down onto the table)": 23157,
+  "1 (natural, face up: lying on its back, tines curving up)": 21843
+ },
+ "per_type": {
+  "on_fork": 31372,
+  "table": 9116,
+  "hover": 4512
+ },
+ "per_target_part_on_fork": {
+  "tines": 7929,
+  "palm": 7813,
+  "neck": 7807,
+  "handle": 7823,
+  "edge": 0
+ },
+ "contact_rate": {
+  "on_fork": {
+   "fork_contact": 1.0,
+   "table_contact": 0.06158357771260997,
+   "fork_visible": 0.9999681244421778,
+   "anything_visible": 1.0
+  },
+  "table": {
+   "fork_contact": 0.0,
+   "table_contact": 1.0,
+   "fork_visible": 0.0,
+   "anything_visible": 1.0
+  },
+  "hover": {
+   "fork_contact": 0.0,
+   "table_contact": 0.0,
+   "fork_visible": 0.0,
+   "anything_visible": 0.0
+  }
+ },
+ "flawed": {
+  "kept_with_flaw": 0,
+  "redrawn": 359,
+  "reasons": {
+   "housing": 359,
+   "unsettled": 1,
+   "fork_touch": 0,
+   "no_free_spot": 0
+  },
+  "saturated_3mm": 0,
+  "static_unsettled": 0
+ }
+}
+physics: {
+ "sum_contact_normal_vs_touch": {
+  "n": 45000,
+  "max_abs_n": 3.552713678800501e-15,
+  "max_rel_where_touch_gt_0_05N": 4.814046005732338e-16,
+  "median_rel": 0.0
+ },
+ "touch_vs_command_settled": {
+  "n": 40488,
+  "median_rel": 0.003942297582418319,
+  "p99_rel": 0.15417838671927628,
+  "max_rel": 0.745235511933394
+ },
+ "vertical_gel_force_vs_command_settled": {
+  "n": 40488,
+  "median_rel": 0.002323317247195922,
+  "p99_rel": 0.028187071840115988,
+  "max_rel": 0.04590262439151316
+ },
+ "free_fork_force_balance_residual_n": {
+  "n": 0,
+  "note": "no free-fork run in this dataset (static fork, collected without --free-run)"
+ },
+ "hover_touch_max_n": 0.0
+}
+label check: IoU(label-predicted fork contact, stored depth_fork) over 1000 samples: mean 0.9935, 1st percentile 0.9670, min 0.9403
+regenerated train2-0037.h5[518] (seed 30037518): identical True ; replay from stored state: {'img_identical': True, 'depth_gel_identical': True, 'recon_identical': True, 'touch_identical': True, 'touch_abs_diff_n': 0.0}
+regenerated train2-0023.h5[128] (seed 30023128): identical True ; replay from stored state: {'img_identical': True, 'depth_gel_identical': True, 'recon_identical': True, 'touch_identical': True, 'touch_abs_diff_n': 0.0}
+regenerated train2-0025.h5[788] (seed 30025788): identical True ; replay from stored state: {'img_identical': True, 'depth_gel_identical': True, 'recon_identical': True, 'touch_identical': True, 'touch_abs_diff_n': 0.0}

@@ -1,0 +1,2 @@
+power.draw [W], clocks.current.sm [MHz], pstate, clocks_event_reasons.active
+22.93 W, 2175 MHz, P0, 0x0000000000000001

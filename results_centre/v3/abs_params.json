@@ -1,0 +1,13 @@
+{
+ "params": {
+  "tau1": 0.16,
+  "tau2": 0.01,
+  "lam": 0.6,
+  "eta": 0.75
+ },
+ "val_loglik": -6.169076442718506,
+ "contact_acc_val": 0.8511111111111112,
+ "n_fork": 300,
+ "n_other": 150,
+ "note": "fitted on dataset/ validation presses (natural poses); the only fitted numbers of the baseline"
+}

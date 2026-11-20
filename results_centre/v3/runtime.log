@@ -1,0 +1,3 @@
+{'v2 network, cpu, 1 thread(s)': 68.7, 'CAD baseline, cpu, 1 thread(s)': 3054.9}
+{'v2 network, cpu, 1 thread(s)': 68.7, 'CAD baseline, cpu, 1 thread(s)': 3054.9, 'v2 network, cpu, 8 thread(s)': 28.9, 'CAD baseline, cpu, 8 thread(s)': 774.5}
+{'v2 network, cpu, 1 thread(s)': 68.7, 'CAD baseline, cpu, 1 thread(s)': 3054.9, 'v2 network, cpu, 8 thread(s)': 28.9, 'CAD baseline, cpu, 8 thread(s)': 774.5, 'v2 network, cuda': 1.6, 'CAD baseline, cuda': 88.2}

@@ -1,0 +1,71 @@
+cad            clean          <16 mm2: success 48 % (reached 52 %, 6.0 presses, err 0.7 mm) | <4 mm2: success 0 % (reached 0 %, None presses) | final err 1.75/56.2 mm, >5 mm 32.3 % | 25.12 s/press (4825 s)
+cad            noise_0.05mm   <16 mm2: success 50 % (reached 55 %, 6.0 presses, err 0.7 mm) | <4 mm2: success 0 % (reached 0 %, None presses) | final err 1.55/76.6 mm, >5 mm 29.0 % | 19.26 s/press (8572 s)
+cad            lateral_0.98   <16 mm2: success 55 % (reached 61 %, 6.0 presses, err 1.0 mm) | <4 mm2: success 0 % (reached 0 %, None presses) | final err 1.52/73.5 mm, >5 mm 25.7 % | 20.29 s/press (12541 s)
+{
+ "cad_clean": {
+  "success_16mm2_within_2_presses": 0.0,
+  "final": {
+   "err_mm_median": 1.750833650338286,
+   "err_mm_p90": 56.20627215339869,
+   "err_gt5mm": 0.3233333333333333,
+   "truth_in_90": 0.78,
+   "presses_mean": 10.0
+  },
+  "seconds_per_press": 25.124395653963088
+ },
+ "cad_lateral_0.98": {
+  "success_16mm2_within_2_presses": 0.0,
+  "final": {
+   "err_mm_median": 1.5154794473457343,
+   "err_mm_p90": 73.47892122040862,
+   "err_gt5mm": 0.25666666666666665,
+   "truth_in_90": 0.7766666666666666,
+   "presses_mean": 10.0
+  },
+  "seconds_per_press": 20.28893575270971
+ },
+ "cad_noise_0.05mm": {
+  "success_16mm2_within_2_presses": 0.0,
+  "final": {
+   "err_mm_median": 1.5472396433042397,
+   "err_mm_p90": 76.59234154938162,
+   "err_gt5mm": 0.29,
+   "truth_in_90": 0.78,
+   "presses_mean": 10.0
+  },
+  "seconds_per_press": 19.255077268759408
+ },
+ "v2_7k_s0_clean": {
+  "success_16mm2_within_2_presses": 0.5166666666666667,
+  "final": {
+   "err_mm_median": 0.541143377988111,
+   "err_mm_p90": 1.2483012954203017,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.9366666666666666,
+   "presses_mean": 9.606666666666667
+  },
+  "seconds_per_press": 1.134548020565636
+ },
+ "v2_7k_s0_lateral_0.98": {
+  "success_16mm2_within_2_presses": 0.51,
+  "final": {
+   "err_mm_median": 0.9576559479198941,
+   "err_mm_p90": 1.8305793100464889,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.76,
+   "presses_mean": 9.67
+  },
+  "seconds_per_press": 2.2809733670968857
+ },
+ "v2_7k_s0_noise_0.05mm": {
+  "success_16mm2_within_2_presses": 0.49666666666666665,
+  "final": {
+   "err_mm_median": 0.5100845424745541,
+   "err_mm_p90": 1.1383055758293796,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.95,
+   "presses_mean": 9.613333333333333
+  },
+  "seconds_per_press": 2.7684964151631584
+ }
+}

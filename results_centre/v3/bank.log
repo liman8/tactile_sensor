@@ -1,0 +1,9 @@
+  1/80 chunks (670 s)
+  11/80 chunks (792 s)
+  21/80 chunks (795 s)
+  31/80 chunks (1399 s)
+  41/80 chunks (1424 s)
+  51/80 chunks (1845 s)
+  61/80 chunks (2001 s)
+  71/80 chunks (2084 s)
+wrote <project>/dataset_v3/cache_v3_bank.npy: (40000, 5, 120, 160), 2189 s

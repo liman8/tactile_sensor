@@ -1,0 +1,5 @@
+v2_7k          clean          <16 mm2: success 99 % (reached 100 %, 2.0 presses, err 0.7 mm) | <4 mm2: success 31 % (reached 34 %, 9.0 presses) | final err 0.54/1.2 mm, >5 mm 0.0 % | 1.13 s/press (232 s)
+v2_7k          noise_0.05mm   <16 mm2: success 100 % (reached 100 %, 3.0 presses, err 0.7 mm) | <4 mm2: success 32 % (reached 35 %, 9.0 presses) | final err 0.51/1.1 mm, >5 mm 0.0 % | 2.77 s/press (846 s)
+v2_7k          lateral_0.98   <16 mm2: success 97 % (reached 100 %, 2.0 presses, err 0.8 mm) | <4 mm2: success 22 % (reached 31 %, 9.0 presses) | final err 0.96/1.8 mm, >5 mm 0.0 % | 2.28 s/press (1387 s)
+/usr/lib64/python3.14/multiprocessing/resource_tracker.py:396: UserWarning: resource_tracker: There appear to be 5 leaked semaphore objects to clean up at shutdown: {'/mp-caj0jz4w', '/mp-zwvmat3z', '/mp-qvkax72q', '/mp-kxz63psu', '/mp-7i7bgm4l'}
+  warnings.warn(

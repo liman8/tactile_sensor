@@ -1,0 +1,11 @@
+{
+ "seconds_per_press": {
+  "v2 network, cpu, 1 thread(s)": 0.0687110424041748,
+  "CAD baseline, cpu, 1 thread(s)": 3.054890751838684,
+  "v2 network, cpu, 8 thread(s)": 0.028926610946655273,
+  "CAD baseline, cpu, 8 thread(s)": 0.7745344638824463,
+  "v2 network, cuda": 0.0016126632690429688,
+  "CAD baseline, cuda": 0.08824074268341064
+ },
+ "note": "median over test presses; network: one press, softmax included; CAD: coarse FFT + refinement + map; CPU = i9-13900HX, GPU = RTX 4070 Laptop"
+}

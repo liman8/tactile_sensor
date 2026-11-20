@@ -1,0 +1,6 @@
+clean                      net:   0.9/   2.1 mm hit 0.98 area   12 | CAD:   8.7/ 101.3 mm hit 0.97 area 13176 called fork 0.95 (63 s)
+noise 0.02 mm              net:   0.9/   2.1 mm hit 0.98 area   12 | CAD:   8.7/ 100.9 mm hit 0.97 area 13178 called fork 0.95 (128 s)
+noise 0.05 mm              net:   1.0/   2.2 mm hit 0.98 area   12 | CAD:   8.8/ 102.9 mm hit 0.97 area 13200 called fork 0.95 (197 s)
+noise 0.1 mm               net:   1.0/   2.4 mm hit 0.98 area   12 | CAD:   8.7/ 106.8 mm hit 0.97 area 13210 called fork 0.94 (235 s)
+blur 1 px (0.2 mm)         net:   0.9/   2.3 mm hit 0.97 area   12 | CAD:   9.3/ 101.4 mm hit 0.97 area 13158 called fork 0.95 (273 s)
+blur 2 px (0.4 mm)         net:   0.9/   2.2 mm hit 0.97 area   12 | CAD:  10.4/ 100.6 mm hit 0.96 area 13076 called fork 0.95 (310 s)

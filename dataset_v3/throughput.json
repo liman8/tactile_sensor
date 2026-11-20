@@ -1,0 +1,12 @@
+{
+ "samples": 5000,
+ "wall_s": 124.95200967788696,
+ "workers": 5,
+ "samples_per_s": 40.0153628012024,
+ "seconds_per_sample_per_worker": 0.12093335170745849,
+ "bytes_per_sample": 287311.7268,
+ "projected_100k": {
+  "size_gb": 28.73117268,
+  "hours_at_this_parallelism": 0.6941778315438165
+ }
+}

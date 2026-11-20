@@ -1,0 +1,12 @@
+K= 48 top=  800 (236 s, 9.1 s/press 1 thread)
+   tines   truth in list 0.39 | best-e within 5 mm 0.36 | map argmax median  52.6 mm, within 5 mm 0.34
+   palm    truth in list 0.60 | best-e within 5 mm 0.55 | map argmax median   3.8 mm, within 5 mm 0.54
+   neck    truth in list 0.78 | best-e within 5 mm 0.37 | map argmax median   9.3 mm, within 5 mm 0.34
+   handle  truth in list 0.79 | best-e within 5 mm 0.42 | map argmax median   7.5 mm, within 5 mm 0.42
+K=150 top= 4000 (777 s, 34.6 s/press 1 thread)
+   tines   truth in list 0.49 | best-e within 5 mm 0.42 | map argmax median  46.2 mm, within 5 mm 0.39
+   palm    truth in list 0.73 | best-e within 5 mm 0.60 | map argmax median   2.9 mm, within 5 mm 0.58
+   neck    truth in list 0.84 | best-e within 5 mm 0.39 | map argmax median   8.5 mm, within 5 mm 0.36
+   handle  truth in list 0.84 | best-e within 5 mm 0.44 | map argmax median   6.8 mm, within 5 mm 0.44
+/usr/lib64/python3.14/multiprocessing/resource_tracker.py:396: UserWarning: resource_tracker: There appear to be 5 leaked semaphore objects to clean up at shutdown: {'/mp-x_tq5pef', '/mp-4if2lwos', '/mp-jacwagag', '/mp-j255m1ny', '/mp-lcojvgim'}
+  warnings.warn(
