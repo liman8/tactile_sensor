@@ -1,0 +1,15 @@
+sensor mini: data dataset_mini, results results_centre/mini_cad, input 93 x 72 px
+raw matching of 450 validation presses: 270 s
+{
+ "params": {
+  "tau1": 0.16,
+  "tau2": 0.01,
+  "lam": 0.4,
+  "eta": -0.5
+ },
+ "val_loglik": -5.1563029289245605,
+ "contact_acc_val": 0.8644444444444445,
+ "n_fork": 300,
+ "n_other": 150,
+ "note": "fitted on dataset/ validation presses (natural poses); the only fitted numbers of the baseline"
+}

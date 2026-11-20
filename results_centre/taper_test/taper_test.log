@@ -1,0 +1,15 @@
+509 mid-handle presses (of 955 handle presses in test2), pad x -69.9..-30.1 mm, width 5.50..7.50 mm
+  mini_robust_s0 s 0.90: along  -9.85 (median -12.16) mm, expected -13.00, across +0.05 | error median 12.91 p90 28.33 mm
+  mini_robust_s0 s 0.95: along  -5.34 (median  -6.28) mm, expected  -6.50, across -0.03 | error median 6.78 p90 28.85 mm
+  mini_robust_s0 s 0.98: along  -2.07 (median  -1.98) mm, expected  -2.60, across -0.01 | error median 2.83 p90 27.46 mm
+  mini_robust_s0 s 1.00: along  +0.00 (median  +0.00) mm, expected  +0.00, across +0.00 | error median 1.23 p90 26.90 mm
+  mini_robust_s0 s 1.02: along  +1.80 (median  +1.95) mm, expected  +2.60, across +0.02 | error median 2.84 p90 27.09 mm
+  mini_robust_s0 s 1.05: along  +4.08 (median  +5.63) mm, expected  +6.50, across +0.02 | error median 6.49 p90 28.95 mm
+  mini_robust_s0 s 1.10: along  +6.98 (median +10.76) mm, expected +13.00, across +0.01 | error median 12.03 p90 32.28 mm
+  mini_exact_s0  s 0.90: along -12.37 (median -11.66) mm, expected -13.00, across +0.02 | error median 12.63 p90 36.00 mm
+  mini_exact_s0  s 0.95: along  -6.15 (median  -6.00) mm, expected  -6.50, across +0.00 | error median 6.78 p90 26.77 mm
+  mini_exact_s0  s 0.98: along  -2.08 (median  -1.98) mm, expected  -2.60, across +0.00 | error median 3.10 p90 23.02 mm
+  mini_exact_s0  s 1.00: along  +0.00 (median  +0.00) mm, expected  +0.00, across +0.00 | error median 1.10 p90 21.80 mm
+  mini_exact_s0  s 1.02: along  +1.10 (median  +1.94) mm, expected  +2.60, across +0.04 | error median 2.06 p90 25.10 mm
+  mini_exact_s0  s 1.05: along  +4.63 (median  +5.60) mm, expected  +6.50, across +0.04 | error median 5.46 p90 24.06 mm
+  mini_exact_s0  s 1.10: along  +7.45 (median +10.72) mm, expected +13.00, across +0.06 | error median 11.03 p90 31.53 mm
