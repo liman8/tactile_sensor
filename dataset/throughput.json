@@ -1,0 +1,22 @@
+{
+ "samples": 10000,
+ "wall_s": 104.0457694530487,
+ "workers": 10,
+ "samples_per_s": 96.11154833654781,
+ "seconds_per_sample_per_worker": 0.09342246990203859,
+ "bytes_per_sample": 286673.1603,
+ "projected_100k": {
+  "size_gb": 28.66731603,
+  "hours_at_this_parallelism": 0.2890160262584686
+ },
+ "measured_32_workers": {
+  "samples": 6400,
+  "shard_size": 200,
+  "wall_s": 46.8,
+  "samples_per_s": 136.7,
+  "seconds_per_sample_per_worker": 0.179,
+  "bytes_per_sample": 288000,
+  "projected_100k_minutes": 12.1921482565228,
+  "note": "i9-13900HX, 24 cores / 32 threads: per-worker speed drops from 0.093 to 0.179 s/sample"
+ }
+}

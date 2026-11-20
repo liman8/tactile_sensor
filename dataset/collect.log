@@ -1,0 +1,124 @@
+10 shards, 10000 samples, 10 workers
+  train-0001: 100/1000 (0.073 s/sample)
+  train-0003: 100/1000 (0.077 s/sample)
+  train-0004: 100/1000 (0.075 s/sample)
+  train-0000: 100/1000 (0.075 s/sample)
+  train-0002: 100/1000 (0.079 s/sample)
+  train-0007: 100/1000 (0.081 s/sample)
+  train-0006: 100/1000 (0.083 s/sample)
+  val-0000: 100/1000 (0.089 s/sample)
+  train-0005: 100/1000 (0.100 s/sample)
+  test-0000: 100/1000 (0.111 s/sample)
+  train-0001: 200/1000 (0.080 s/sample)
+  train-0000: 200/1000 (0.078 s/sample)
+  train-0003: 200/1000 (0.081 s/sample)
+  train-0004: 200/1000 (0.084 s/sample)
+  train-0006: 200/1000 (0.077 s/sample)
+  train-0002: 200/1000 (0.088 s/sample)
+  train-0007: 200/1000 (0.089 s/sample)
+  val-0000: 200/1000 (0.098 s/sample)
+  test-0000: 200/1000 (0.096 s/sample)
+  train-0005: 200/1000 (0.123 s/sample)
+  train-0001: 300/1000 (0.088 s/sample)
+  train-0000: 300/1000 (0.087 s/sample)
+  train-0003: 300/1000 (0.088 s/sample)
+  train-0006: 300/1000 (0.085 s/sample)
+  train-0004: 300/1000 (0.099 s/sample)
+  train-0002: 300/1000 (0.104 s/sample)
+  val-0000: 300/1000 (0.089 s/sample)
+  train-0007: 300/1000 (0.106 s/sample)
+  test-0000: 300/1000 (0.094 s/sample)
+  train-0000: 400/1000 (0.089 s/sample)
+  train-0005: 300/1000 (0.111 s/sample)
+  train-0003: 400/1000 (0.090 s/sample)
+  train-0001: 400/1000 (0.104 s/sample)
+  train-0006: 400/1000 (0.108 s/sample)
+  train-0004: 400/1000 (0.099 s/sample)
+  train-0002: 400/1000 (0.092 s/sample)
+  val-0000: 400/1000 (0.092 s/sample)
+  train-0007: 400/1000 (0.092 s/sample)
+  test-0000: 400/1000 (0.103 s/sample)
+  train-0000: 500/1000 (0.087 s/sample)
+  train-0003: 500/1000 (0.096 s/sample)
+  train-0001: 500/1000 (0.092 s/sample)
+  train-0002: 500/1000 (0.086 s/sample)
+  train-0005: 400/1000 (0.118 s/sample)
+  train-0004: 500/1000 (0.094 s/sample)
+  train-0007: 500/1000 (0.087 s/sample)
+  val-0000: 500/1000 (0.096 s/sample)
+  train-0006: 500/1000 (0.136 s/sample)
+  test-0000: 500/1000 (0.095 s/sample)
+  train-0000: 600/1000 (0.089 s/sample)
+  train-0003: 600/1000 (0.083 s/sample)
+  train-0001: 600/1000 (0.087 s/sample)
+  train-0002: 600/1000 (0.090 s/sample)
+  train-0007: 600/1000 (0.091 s/sample)
+  train-0005: 500/1000 (0.099 s/sample)
+  val-0000: 600/1000 (0.095 s/sample)
+  test-0000: 600/1000 (0.088 s/sample)
+  train-0006: 600/1000 (0.101 s/sample)
+  train-0000: 700/1000 (0.089 s/sample)
+  train-0003: 700/1000 (0.090 s/sample)
+  train-0004: 600/1000 (0.154 s/sample)
+  train-0001: 700/1000 (0.088 s/sample)
+  train-0002: 700/1000 (0.086 s/sample)
+  train-0007: 700/1000 (0.091 s/sample)
+  val-0000: 700/1000 (0.093 s/sample)
+  train-0005: 600/1000 (0.131 s/sample)
+  test-0000: 700/1000 (0.093 s/sample)
+  train-0006: 700/1000 (0.092 s/sample)
+  train-0000: 800/1000 (0.090 s/sample)
+  train-0003: 800/1000 (0.092 s/sample)
+  train-0001: 800/1000 (0.092 s/sample)
+  train-0007: 800/1000 (0.090 s/sample)
+  train-0002: 800/1000 (0.109 s/sample)
+  val-0000: 800/1000 (0.085 s/sample)
+  train-0004: 700/1000 (0.155 s/sample)
+  test-0000: 800/1000 (0.086 s/sample)
+  train-0005: 700/1000 (0.087 s/sample)
+  train-0000: 900/1000 (0.090 s/sample)
+  train-0003: 900/1000 (0.097 s/sample)
+  train-0001: 900/1000 (0.090 s/sample)
+  train-0006: 800/1000 (0.117 s/sample)
+  train-0007: 900/1000 (0.093 s/sample)
+  train-0002: 900/1000 (0.100 s/sample)
+  val-0000: 900/1000 (0.097 s/sample)
+  train-0005: 800/1000 (0.085 s/sample)
+  train-0004: 800/1000 (0.092 s/sample)
+  test-0000: 900/1000 (0.091 s/sample)
+  train-0000: 1000/1000 (0.090 s/sample)
+wrote dataset/train-0000.h5: 1000 samples, 87 s, 286 MB
+  train-0001: 1000/1000 (0.090 s/sample)
+wrote dataset/train-0001.h5: 1000 samples, 89 s, 286 MB
+  train-0003: 1000/1000 (0.110 s/sample)
+wrote dataset/train-0003.h5: 1000 samples, 91 s, 287 MB
+  train-0007: 1000/1000 (0.086 s/sample)
+wrote dataset/train-0007.h5: 1000 samples, 91 s, 287 MB
+  val-0000: 1000/1000 (0.083 s/sample)
+  train-0002: 1000/1000 (0.085 s/sample)
+  train-0006: 900/1000 (0.119 s/sample)
+wrote dataset/val-0000.h5: 1000 samples, 92 s, 287 MB
+wrote dataset/train-0002.h5: 1000 samples, 92 s, 286 MB
+  train-0005: 900/1000 (0.078 s/sample)
+  train-0004: 900/1000 (0.085 s/sample)
+  test-0000: 1000/1000 (0.081 s/sample)
+wrote dataset/test-0000.h5: 1000 samples, 94 s, 287 MB
+  train-0006: 1000/1000 (0.077 s/sample)
+wrote dataset/train-0006.h5: 1000 samples, 100 s, 287 MB
+  train-0005: 1000/1000 (0.073 s/sample)
+wrote dataset/train-0005.h5: 1000 samples, 101 s, 287 MB
+  train-0004: 1000/1000 (0.074 s/sample)
+wrote dataset/train-0004.h5: 1000 samples, 101 s, 287 MB
+{
+ "samples": 10000,
+ "wall_s": 104.0457694530487,
+ "workers": 10,
+ "samples_per_s": 96.11154833654781,
+ "seconds_per_sample_per_worker": 0.09342246990203859,
+ "bytes_per_sample": 286673.1603,
+ "projected_100k": {
+  "size_gb": 28.66731603,
+  "hours_at_this_parallelism": 0.2890160262584686,
+  "hours_on_32_workers": 0.08109589401218628
+ }
+}

@@ -1,0 +1,560 @@
+{
+ "shards": [
+  "test-0000.h5",
+  "train-0000.h5",
+  "train-0001.h5",
+  "train-0002.h5",
+  "train-0003.h5",
+  "train-0004.h5",
+  "train-0005.h5",
+  "train-0006.h5",
+  "train-0007.h5",
+  "val-0000.h5"
+ ],
+ "reload": {
+  "samples": 10000,
+  "shape_dtype_errors": [],
+  "seeds_unique": true,
+  "split_seed_overlap": false,
+  "per_split": {
+   "train": 8000,
+   "val": 1000,
+   "test": 1000
+  },
+  "read_s": 0.12108993530273438
+ },
+ "statistics": {
+  "per_pose": {
+   "0 (natural, face down: tines curve down onto the table)": 4656,
+   "1 (natural, face up: lying on its back, tines curving up)": 4376,
+   "2 (propped, on its side edge (+y side up))": 499,
+   "3 (propped, on its side edge (-y side up))": 469
+  },
+  "per_type": {
+   "on_fork": 7018,
+   "table": 1967,
+   "hover": 1015
+  },
+  "per_target_part_on_fork": {
+   "tines": 1554,
+   "palm": 1605,
+   "neck": 1603,
+   "handle": 1589,
+   "edge": 667
+  },
+  "per_target_part_by_pose": {
+   "0": {
+    "tines": 808,
+    "palm": 834,
+    "neck": 808,
+    "handle": 834,
+    "edge": 0
+   },
+   "1": {
+    "tines": 746,
+    "palm": 771,
+    "neck": 795,
+    "handle": 755,
+    "edge": 0
+   },
+   "2": {
+    "tines": 0,
+    "palm": 0,
+    "neck": 0,
+    "handle": 0,
+    "edge": 338
+   },
+   "3": {
+    "tines": 0,
+    "palm": 0,
+    "neck": 0,
+    "handle": 0,
+    "edge": 329
+   }
+  },
+  "samples_touching_part": {
+   "tines": 3940,
+   "palm": 2383,
+   "neck": 2542,
+   "handle": 2055,
+   "edge": 1907
+  },
+  "contact_rate": {
+   "on_fork": {
+    "fork_contact": 1.0,
+    "table_contact": 0.05956112852664577,
+    "fork_visible": 1.0,
+    "anything_visible": 1.0
+   },
+   "table": {
+    "fork_contact": 0.0,
+    "table_contact": 1.0,
+    "fork_visible": 0.0,
+    "anything_visible": 1.0
+   },
+   "hover": {
+    "fork_contact": 0.0,
+    "table_contact": 0.0,
+    "fork_visible": 0.0,
+    "anything_visible": 0.0
+   }
+  },
+  "flawed": {
+   "kept_with_flaw": 0,
+   "redrawn": 163,
+   "reasons": {
+    "housing": 162,
+    "unsettled": 10,
+    "fork_touch": 0,
+    "no_free_spot": 0
+   },
+   "saturated_3mm": 1,
+   "static_unsettled": 0
+  },
+  "would_move": {
+   "0": {
+    "all": 0.010738831615120275,
+    "n": 4656,
+    "hover": 0.0,
+    "fork_contact_0.2-0.5N": [
+     0.0012755102040816326,
+     784
+    ],
+    "fork_contact_0.5-1N": [
+     0.012089810017271158,
+     579
+    ],
+    "fork_contact_1-2N": [
+     0.014652014652014652,
+     546
+    ],
+    "fork_contact_2-5N": [
+     0.02423469387755102,
+     784
+    ],
+    "fork_contact_5-10.01N": [
+     0.025380710659898477,
+     591
+    ],
+    "no_fork_contact_presses": 0.0
+   },
+   "1": {
+    "all": 0.3055301645338208,
+    "n": 4376,
+    "hover": 0.0,
+    "fork_contact_0.2-0.5N": [
+     0.35492957746478876,
+     710
+    ],
+    "fork_contact_0.5-1N": [
+     0.45940959409594095,
+     542
+    ],
+    "fork_contact_1-2N": [
+     0.44751381215469616,
+     543
+    ],
+    "fork_contact_2-5N": [
+     0.47960618846694797,
+     711
+    ],
+    "fork_contact_5-10.01N": [
+     0.44919786096256686,
+     561
+    ],
+    "no_fork_contact_presses": 0.0
+   },
+   "2": {
+    "all": 0.24248496993987975,
+    "n": 499,
+    "hover": 0.0,
+    "fork_contact_0.2-0.5N": [
+     0.19696969696969696,
+     66
+    ],
+    "fork_contact_0.5-1N": [
+     0.3584905660377358,
+     53
+    ],
+    "fork_contact_1-2N": [
+     0.31746031746031744,
+     63
+    ],
+    "fork_contact_2-5N": [
+     0.4470588235294118,
+     85
+    ],
+    "fork_contact_5-10.01N": [
+     0.43661971830985913,
+     71
+    ],
+    "no_fork_contact_presses": 0.0
+   },
+   "3": {
+    "all": 0.21748400852878466,
+    "n": 469,
+    "hover": 0.0,
+    "fork_contact_0.2-0.5N": [
+     0.2236842105263158,
+     76
+    ],
+    "fork_contact_0.5-1N": [
+     0.22972972972972974,
+     74
+    ],
+    "fork_contact_1-2N": [
+     0.32727272727272727,
+     55
+    ],
+    "fork_contact_2-5N": [
+     0.40298507462686567,
+     67
+    ],
+    "fork_contact_5-10.01N": [
+     0.40350877192982454,
+     57
+    ],
+    "no_fork_contact_presses": 0.0
+   }
+  },
+  "distance_to_centre_mm": {
+   "com_xy": {
+    "p0": 0.18467384571303683,
+    "p5": 9.994666222956182,
+    "p25": 22.731977934707984,
+    "p50": 35.38717806440176,
+    "p75": 52.49841477880294,
+    "p95": 89.86492383978545,
+    "p100": 101.32385262417952
+   },
+   "bbox_xy": {
+    "p0": 0.12108334130858465,
+    "p5": 9.872535536599495,
+    "p25": 22.491378087149418,
+    "p50": 35.23584118476426,
+    "p75": 52.54427228695846,
+    "p95": 89.93447687483673,
+    "p100": 100.00408106529231
+   },
+   "com_xy_on_fork": {
+    "p0": 0.18467384571303683,
+    "p5": 9.014068737609694,
+    "p25": 20.17411082050373,
+    "p50": 30.345507515371146,
+    "p75": 41.82258741935986,
+    "p95": 59.08033036732002,
+    "p100": 76.63835452150481
+   },
+   "com_xy_table": {
+    "p0": 26.067268082217232,
+    "p5": 40.985057336699505,
+    "p25": 62.09170828977766,
+    "p50": 78.40344228025641,
+    "p75": 90.08037010160044,
+    "p95": 98.10288087414744,
+    "p100": 101.32385262417952
+   }
+  },
+  "force": {
+   "cmd": {
+    "p0": 0.20008295841612392,
+    "p5": 0.24607466701471625,
+    "p25": 0.5384491954722954,
+    "p50": 1.437148936278181,
+    "p75": 3.8727556921639623,
+    "p95": 8.245702618488382,
+    "p100": 9.981959570636324
+   },
+   "touch": {
+    "p0": 0.19416750543904057,
+    "p5": 0.2418591472404123,
+    "p25": 0.5389745267893131,
+    "p50": 1.4533109028533933,
+    "p75": 3.896178055916607,
+    "p95": 8.3301344705702,
+    "p100": 12.120948246068792
+   }
+  },
+  "n_tines_on_pad": {
+   "0": 5714,
+   "1": 521,
+   "2": 704,
+   "3": 1137,
+   "4": 1924
+  },
+  "tilt_deg": {
+   "p0": 0.011597603559494019,
+   "p5": 0.6426578760147095,
+   "p25": 1.4585912227630615,
+   "p50": 2.0592334270477295,
+   "p75": 2.546487808227539,
+   "p95": 2.8906900882720947,
+   "p100": 3.3767282962799072
+  }
+ },
+ "physics": {
+  "sum_contact_normal_vs_touch": {
+   "n": 10000,
+   "max_abs_n": 3.552713678800501e-15,
+   "max_rel_where_touch_gt_0_05N": 5.507536214946855e-16,
+   "median_rel": 0.0
+  },
+  "touch_vs_command_settled": {
+   "n": 8985,
+   "median_rel": 0.0038186813003970865,
+   "p99_rel": 0.16451156904843708,
+   "max_rel": 0.9607086478373223
+  },
+  "vertical_gel_force_vs_command_settled": {
+   "n": 8985,
+   "median_rel": 0.002352681422089553,
+   "p99_rel": 0.02818385772505198,
+   "max_rel": 0.035674177402205576
+  },
+  "free_fork_force_balance_residual_n": {
+   "n": 7252,
+   "median": 1.190666353585383e-05,
+   "p99": 0.08654883298464343,
+   "max": 0.3258938437792766,
+   "p99_relative_to_touch": 0.3932236256717276
+  },
+  "hover_touch_max_n": 0.0
+ },
+ "label_check": {
+  "gallery": "verify/label_gallery.png",
+  "gallery_samples": [
+   {
+    "seed": 2270,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 0.9864288483908492
+   },
+   {
+    "seed": 6004,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 0.993583415597236
+   },
+   {
+    "seed": 1155,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 0.9968341748817825
+   },
+   {
+    "seed": 5478,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 0.9987954916974964
+   },
+   {
+    "seed": 1370,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 0.9994396503418133
+   },
+   {
+    "seed": 7031,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 0.9975528364849833
+   },
+   {
+    "seed": 6935,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 0.9993033439490446
+   },
+   {
+    "seed": 5805,
+    "pose": 0,
+    "type": "on_fork",
+    "iou": 0.993926741317138
+   },
+   {
+    "seed": 1272,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9875
+   },
+   {
+    "seed": 5684,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9754464285714286
+   },
+   {
+    "seed": 5076,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9947901591895804
+   },
+   {
+    "seed": 1499,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9810762862211709
+   },
+   {
+    "seed": 833,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9760765550239234
+   },
+   {
+    "seed": 10000374,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9793701305826841
+   },
+   {
+    "seed": 6060,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9995174618493274
+   },
+   {
+    "seed": 10000111,
+    "pose": 1,
+    "type": "on_fork",
+    "iou": 0.9772727272727273
+   },
+   {
+    "seed": 3672,
+    "pose": 2,
+    "type": "on_fork",
+    "iou": 0.9749192947603675
+   },
+   {
+    "seed": 5984,
+    "pose": 2,
+    "type": "on_fork",
+    "iou": 0.9926217412690606
+   },
+   {
+    "seed": 2275,
+    "pose": 2,
+    "type": "on_fork",
+    "iou": 0.9863013698630136
+   },
+   {
+    "seed": 6312,
+    "pose": 2,
+    "type": "on_fork",
+    "iou": 0.989568649563011
+   },
+   {
+    "seed": 20000735,
+    "pose": 2,
+    "type": "on_fork",
+    "iou": 0.9997610513739545
+   },
+   {
+    "seed": 1067,
+    "pose": 2,
+    "type": "on_fork",
+    "iou": 0.9818036392721455
+   },
+   {
+    "seed": 7707,
+    "pose": 2,
+    "type": "on_fork",
+    "iou": 0.9786729857819905
+   },
+   {
+    "seed": 153,
+    "pose": 2,
+    "type": "on_fork",
+    "iou": 0.983026874115983
+   },
+   {
+    "seed": 3110,
+    "pose": 3,
+    "type": "on_fork",
+    "iou": 0.9870483980913429
+   },
+   {
+    "seed": 3664,
+    "pose": 3,
+    "type": "on_fork",
+    "iou": 0.9751693002257337
+   },
+   {
+    "seed": 3390,
+    "pose": 3,
+    "type": "on_fork",
+    "iou": 0.9929577464788732
+   },
+   {
+    "seed": 5524,
+    "pose": 1,
+    "type": "hover",
+    "iou": 1.0
+   },
+   {
+    "seed": 7063,
+    "pose": 1,
+    "type": "hover",
+    "iou": 1.0
+   },
+   {
+    "seed": 7530,
+    "pose": 3,
+    "type": "table",
+    "iou": 1.0
+   }
+  ],
+  "iou_label_vs_stored_fork_depth": {
+   "n": 1000,
+   "mean": 0.9930330926810975,
+   "p1": 0.9643709823222177,
+   "min": 0.9400599400599401,
+   "below_0_9": 0
+  },
+  "depth_abs_diff_mm_median_of_medians": 0.0011204430026010709
+ },
+ "regeneration": [
+  {
+   "shard": "val-0000.h5",
+   "index": 447,
+   "seed": 10000447,
+   "identical": true,
+   "differing_fields": [],
+   "state_replay": {
+    "img_identical": true,
+    "depth_gel_identical": true,
+    "recon_identical": true,
+    "touch_identical": true,
+    "touch_abs_diff_n": 0.0
+   }
+  },
+  {
+   "shard": "train-0005.h5",
+   "index": 250,
+   "seed": 5250,
+   "identical": true,
+   "differing_fields": [],
+   "state_replay": {
+    "img_identical": true,
+    "depth_gel_identical": true,
+    "recon_identical": true,
+    "touch_identical": true,
+    "touch_abs_diff_n": 0.0
+   }
+  },
+  {
+   "shard": "train-0005.h5",
+   "index": 841,
+   "seed": 5841,
+   "identical": true,
+   "differing_fields": [],
+   "state_replay": {
+    "img_identical": true,
+    "depth_gel_identical": true,
+    "recon_identical": true,
+    "touch_identical": true,
+    "touch_abs_diff_n": 0.0
+   }
+  }
+ ]
+}
