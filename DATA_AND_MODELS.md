@@ -93,4 +93,5 @@ The full SHA-256 of every model is in `MODELS.sha256`.
 
 `python freeze_sim.py --final <model.pt>` writes `results_centre/FROZEN_SIM/`, a copy of the code, the scene, the
 final model(s) and the dataset metadata, with a manifest of SHA-256 hashes and the software environment. It is an
-archive, so it is ignored by git.
+archive, so it is ignored by git. It was made on 2026-11-20 for `results_centre/mini_robust/model_100k_seed0.pt`: 98 copied files, 21 models
+and the 106 `dataset_mini/` shards hashed in place; `python freeze_sim.py --verify` re-hashes all 225.

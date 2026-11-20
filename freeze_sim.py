@@ -21,9 +21,9 @@ import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "results_centre", "FROZEN_SIM")
-CODE = ["*.py", "*.xml", "requirements.txt", "README.md", "REZIME.md", "ForkMilimeter.stl", "meshes/fork_stl/*",
-        "results_centre/**/*.sh", "results_centre/**/diag/*.py", "results_centre/**/checks/*.py",
-        "results_centre/mini/replay_presses.py", "results_centre/v3/cad_k_study.py"]
+CODE = ["*.py", "*.xml", "*.md", "requirements.txt", "MODELS.sha256", "ForkMilimeter.stl", "meshes/fork_stl/*",
+        "results_centre/**/*.sh", "results_centre/**/*.py", "results_centre/*.md", "prezentacija/*.md",
+        "prezentacija/*.sh"]
 META = ["dataset/poses/stable_poses.json", "dataset/metadata.json", "dataset_v3/metadata.json", "dataset_mini/metadata.json",
         "dataset_v3/abs_templates.npz", "results_moving/fork_detector.joblib"]
 

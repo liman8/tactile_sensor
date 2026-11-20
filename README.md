@@ -17,11 +17,10 @@ so `fixed_sensor` still starts with `fork_dinner`.
 
 **Status (2026-11-20).**
 * Everything is simulation; no real sensor has been used yet.
-* The current candidate for the final model is `results_centre/mini_robust/model_100k_seed0.pt`: GelSight Mini field
-  of view, training made robust to the image pipeline. The demo and the viewer use it.
-* The last allowed training variant, `results_centre/mini_robust_aa/`, finished its evaluation. The selection rule
-  was written down before any result (`results_centre/RUN_LOG.md`, 2026-11-19 20:05 and 20:30), but it has not been
-  applied yet.
+* **The final model is `results_centre/mini_robust/model_100k_seed0.pt`** (`results_centre/FINAL_MODEL.md`): GelSight
+  Mini field of view, training made robust to the image pipeline. The demo and the viewer use it.
+* It was chosen on 2026-11-20 by a rule written down before the results (`results_centre/RUN_LOG.md`, 2026-11-19 20:05
+  and 20:30; "v3, Mini", section 11).
 * Large files are not in git: see `DATA_AND_MODELS.md`.
 * A Serbian summary is in `REZIME.md`, and presentation material in `prezentacija/`.
 
@@ -63,18 +62,20 @@ so `fixed_sensor` still starts with `fork_dinner`.
 | `results_centre/mini_exact/` | the Mini 100k retrained with a quarter of the training inputs not resampled (`CENTRE_AUG_EXACT=0.25 CENTRE_MINI_OUT=results_centre/mini_exact`), seeds 0-2: models, `input_scale_sweep*.json`, `input_interp.json`, `input_edge.json`, `seeds_100k.json`, `search/`, `replay/` (world-frame replays of all three sensors' runs), `diag/` (`zoom_slope.py`, `fork_frame_bias.py`, `bias_by_condition.py` and their json), `chain7_exact.sh`, `chain8*.sh`, logs (see "v3, Mini", sections 5-6) |
 | `results_centre/mini_robust/` | the Mini 100k trained to ignore the image pipeline (`CENTRE_AUG_ROBUST=1`, seed 0): model, `input_*.json`, `search/`, `diag/criterion.py` (the pass / fail criterion; `python mini_robust/diag/criterion.py CANDIDATE=PREFIX` from `results_centre/`), `diag/zoom_slope.json`, `checks/` (augmentation, target convention, TTA, gallery), `chain9*.sh` (see "v3, Mini", section 7) |
 | `results_centre/mini_robust_tta/` | the same weights (symlink) with test-time augmentation in the json (`"tta"`), `search/`, `diag/criterion*.json`, `runtime_tta.json` |
-| `results_centre/mini_robust_aa/` | the one extra training change: robust recipe + a fixed Gaussian input blur (`CENTRE_INPUT_BLUR_PX=1.0`), `chain_aa.sh`: model, `input_scale_sweep*.json`, `input_interp.json`, `input_edge.json`, `search/` (9 conditions). The evaluation finished on 2026-11-20 at 00:59; the criterion and the selection rule have not been applied to it yet |
+| `results_centre/mini_robust_aa/` | the one extra training change: robust recipe + a fixed Gaussian input blur (`CENTRE_INPUT_BLUR_PX=1.0`), `chain_aa.sh`: model, `input_scale_sweep*.json`, `input_interp.json`, `input_edge.json`, `search/` (9 conditions). Criterion: FAIL (1 of 3 parts, like every candidate); best clean search but not significantly better than `mini_robust`, so it is the reserve model ("v3, Mini", section 11) |
 | `results_centre/mini_cad/` | the CAD baseline on the Mini sensor: `abs_params.json`, per-condition cache, `compare_cad_vs_net_<model>.json/png` (`compare_model.sh TAG MODEL.pt`), `search/` (CAD in the search loop), `chain_cad.sh` |
-| `results_centre/noise_effect/` | `recon_noise_effect.py/json`: fake height in the reconstructed depth per structured-noise type (drift, texture, marker residue) |
-| `results_centre/taper_test/` | `taper_test.py`, `taper_<model>.json`: the handle widened / narrowed across its axis; how far the estimate moves along the fork |
+| `results_centre/noise_effect/` | `recon_noise_effect.py/json`: fake height in the reconstructed depth per structured-noise type (drift, texture, marker residue) ("v3, Mini", section 9) |
+| `results_centre/taper_test/` | `taper_test.py`, `taper_<model>.json`: the handle widened / narrowed across its axis; how far the estimate moves along the fork ("v3, Mini", section 8) |
 | `search_viz.py`, `search_viewer.py`, `search_video.py` | the estimated fork against the true one: overlays, interactive viewer (F6-F9), headless videos (see "Search viewer and videos") |
 | `results_centre/viz/`, `results_centre/videos/` | `chain_viz.sh` and its per-model outputs (replay check, yaw, viewer self-test); mp4 / gif / key frames per model |
 | `results_centre/autorun/` | `watchdog.sh` (training-log / heartbeat watchdog) and its outputs |
 | `results_centre/RUN_LOG.md` | the running log of the autonomous run: time, what was started, what was decided and why (Serbian) |
-| `results_centre/FINAL_MODEL.md` | the final model: path, recipe, inference, metrics, known limits (Serbian). **Not written yet:** the choice waits for the evaluation of `mini_robust_aa`. Until then the viewer and the demo use `mini_robust/model_100k_seed0.pt` explicitly |
-| `results_centre/final_select/` | `paired_bootstrap.py`: the pre-registered selection rule's paired bootstrap of two models' clean searches on the same 300 starts; `tta_vs_robust.json` |
-| `freeze_sim.py`, `results_centre/FROZEN_SIM/` | the frozen simulation state: copies of the code, the final model, dataset metadata, and a SHA-256 manifest (`--verify` re-hashes). Not run yet (it needs the final model); the folder is an archive and is not versioned |
-| `REZIME.md` | summary in Serbian, in chronological order (v1 to Mini). A self-contained rewrite for the professor is planned for when the final model is chosen; this file will then move to `REZIME_hronologija.md` |
+| `results_centre/FINAL_MODEL.md` | the final model (`mini_robust/model_100k_seed0.pt`): path, SHA-256, recipe, inference, why it was chosen, metrics, known limits (Serbian). `search_viewer.py` reads its `path` line |
+| `results_centre/runtime_mini/` | `runtime_mini.py/json`: time per press on the Mini for mini_robust, mini_robust_aa, TTA and the CAD baseline (CPU 1 / 8 threads, GPU) |
+| `results_centre/videos/mini_robust_s0_gif/` | `make_gifs.py`: a gif of every episode in `videos/mini_robust_s0/`, made from the mp4 |
+| `results_centre/final_select/` | `paired_bootstrap.py`: the pre-registered selection rule's paired bootstrap of two models' clean searches on the same 300 starts; `tta_vs_robust.json`, `aa_vs_robust.json`, `aa_vs_tta.json`, `aa_vs_exact_s*.json`, `robust_vs_exact_s*.json` |
+| `freeze_sim.py`, `results_centre/FROZEN_SIM/` | the frozen simulation state: copies of the code, the final model, dataset metadata, and a SHA-256 manifest (`--verify` re-hashes). Run on 2026-11-20 with the final model: 98 files copied, 21 models and 106 Mini shards hashed in place, `--verify`: 225 hashes match. The folder is a local archive and is not versioned |
+| `REZIME.md`, `REZIME_hronologija.md` | a self-contained summary in Serbian for the professor (goal, setup, data, model, robustness findings, search, choice of the final model, CAD comparison, viewer, limits, what the real sensor needs; every number with its source file); the earlier chronological summary (v1 to Mini) |
 | `prezentacija/` | presentation material in Serbian: `PREZENTACIJA.md` (talk text, demo script, expected questions, sources of every number), `demo.sh` (the MuJoCo demos, `bash prezentacija/demo.sh` lists them), `slike/` and `video/` (copies, in the order of the talk), headless self-test images |
 | `DATA_AND_MODELS.md`, `MODELS.sha256` | what is not in git (datasets, caches, 15 of the 21 model files), with sizes and the commands that rebuild them; SHA-256 of every model file |
 
@@ -2230,9 +2231,156 @@ shift pairs with bilinear and bicubic kernels, zoom 0.99 and 1.01, identity):
 * **TTA FAILS too.** Averaging over ±1 % cannot undo a 2 % scale error.
 * **The clean difference is noise:** −0.009 mm [−0.054, +0.037], paired bootstrap over the same 300
   starts.
-* **TTA costs 12-17 times the network time.** The runtime was measured while other jobs loaded the CPU and
+* **TTA costs 12-17 times the network time** (about 11x on an idle machine, section 11). The runtime was measured while other jobs loaded the CPU and
   GPU; the ratio is the meaningful part.
 * The remaining TTA inputs were run for the record (`mini_robust_tta/search/`).
+
+**The one extra training change: a fixed input blur** (`mini_robust_aa/`):
+* **What it is:** the robust recipe plus a fixed Gaussian blur of the input (sigma 1 px = 0.2 mm), in training and
+  at test time (`CENTRE_INPUT_BLUR_PX=1.0`). `load_net` wraps the model as BorderMasked(InputBlurred(Net)).
+* **Training:** seed 0, 120 epochs, best epoch 119, 15,115 s.
+* **Why it was tried:** the rule allowed one more training change after TTA failed. An anti-aliasing layer was
+  chosen over a coarser input because it changes nothing else (cache, heatmap geometry, CAD comparison).
+* **Expectation, logged before the result:** a blur keeps the handle's absolute width, so it should not remove
+  the scale dependence.
+
+| | robust | robust + input blur |
+|---|---|---|
+| one press, test2 as rendered: median / p90 | 0.89 / 2.16 mm | 0.89 / 2.11 mm |
+| one press p90 at zoom 0.98 / 0.99 / 1.01 / 1.02 | 3.39 / 2.55 / 2.58 / 3.47 mm | 3.24 / 2.46 / 2.51 / 3.34 mm |
+| search as rendered: median, in 90 %, along | 0.62, 95 %, −0.24 | **0.59**, 94 %, −0.21 |
+| search 0.98 / 1.02: median, along | 1.78, −1.72 / 1.29, +1.22 | 1.89, −1.84 / 1.19, +1.14 |
+| search 0.99 / 0.99 edge repeated: median | 1.04 / 1.04 | 1.07 / 1.07 |
+| spread over the 8 inputs (median / along) | 1.16 / 2.95 | 1.30 / 2.98 |
+
+(`mini_robust*/input_*.json`, `mini_robust*/diag/criterion.json`.)
+
+* **The criterion fails again.** The scale moves the estimate along the handle as before, and the border and
+  the resampling still change nothing at net zoom 1.
+* **It reads the handle's width the same way** (taper test below): the median shift is −12.15 / −6.28 / +5.62 /
+  +10.19 mm at s = 0.90 / 0.95 / 1.05 / 1.10. The robust model gives −12.16 / −6.28 / +5.63 / +10.76 mm.
+
+#### 8. What the network reads on the handle: the taper test (`results_centre/taper_test/`)
+
+The handle tapers: from STL sections its width is w(x) = 4.0 − 0.05·x mm. It is 8.0 mm at the end and 5.2 mm at
+the centre of mass. On a Mini press in the middle of the handle the width is the only local cue to where along
+the handle the pad is.
+
+**Test** (`taper_test.py`, CPU, argmax of the heatmap):
+* 509 test2 presses with the handle under the pad, in the middle of the handle (x between −70 and −30 mm), natural
+  poses that would not move;
+* each depth input is stretched across the handle's axis by a factor s, about the handle's centre line
+  (bilinear, edge replicated);
+* the shift of the estimate along the fork is measured.
+* If the network read the width, the shift would be (s − 1) · w / 0.05.
+
+| s | 0.90 | 0.95 | 0.98 | 1.02 | 1.05 | 1.10 |
+|---|---|---|---|---|---|---|
+| expected from the width (median w 6.54 mm) | −13.0 | −6.5 | −2.6 | +2.6 | +6.5 | +13.0 |
+| mini_robust s0, median shift | −12.16 | −6.28 | −1.98 | +1.95 | +5.63 | +10.76 |
+| mini_exact s0 | −11.66 | −6.00 | −1.98 | +1.94 | +5.60 | +10.72 |
+| mini_robust_aa s0 | −12.15 | −6.28 | −1.97 | +1.95 | +5.62 | +10.19 |
+
+(mm, `taper_<model>.json`; the shift across the axis is below 0.06 mm.)
+
+* **Conclusion:** the network measures the handle's absolute width to a fraction of a pixel and reads its
+  position along the handle from it.
+  * The shift is 83-97 % of the geometric prediction at ±5-10 %. At ±2 % it is 75 %, where the 2 mm heatmap
+    cells quantise it.
+  * In simulation this is a valid cue, because the fork is always the same and perfect.
+* **Consequences:**
+  * an mm/px error shifts the estimate along the handle (section 7: about 0.74 mm per 1 % in the search);
+  * a fork with a different taper or a parallel handle needs new training.
+* This confirms the interpretation in section 6, for single presses on the handle.
+
+#### 9. Which noise matters: fake height in the reconstructed depth (`results_centre/noise_effect/`)
+
+`recon_noise_effect.py` applies each structured-noise model (`centre_v2.structured_noise`) to 200 test presses
+of `dataset/test-0000.h5`. It measures the largest per-press difference between the reconstructed height with
+and without the noise:
+
+| noise | max fake height per press, median (p90) |
+|---|---|
+| illumination drift 3 % | 0.11 (0.24) mm |
+| illumination drift 6 % | 0.25 (0.55) mm |
+| illumination drift 8 % | 0.41 (0.81) mm |
+| illumination drift 10 % | 0.58 (1.19) mm |
+| gel texture, 2 / 3 grey levels | 0.012 / 0.017 mm |
+| marker residue, 9 / 12 grey levels | 0.006 / 0.007 mm |
+
+* **Illumination drift is by far the strongest effect.** It is a slow change in the image's brightness that the
+  photometric stereo turns into slope, and Poisson integration then turns into height.
+* **The network was trained with drift and hardly notices it:** with 10 % drift a single press gives 0.89 / 2.46 mm
+  (median / p90), against 0.87 / 2.14 mm clean (`mini_cad/compare_cad_vs_net_mini_robust_s0.json`).
+* **On a real sensor:** renew the reference frame often, and measure the drift first (`measure_noise.py`).
+
+#### 10. The CAD baseline on the Mini (`results_centre/mini_cad/`)
+
+The CAD baseline was rerun on the Mini window, with its own calibrated constants (`abs_params.json`), on the same
+presses and conditions as `mini_robust` s0.
+
+**One press** (1,000 test2 presses, 250 per part, clean; `compare_cad_vs_net_mini_robust_s0.json/png`):
+
+| part | network: median / p90 | CAD: median / p90 | within 5 mm: network / CAD |
+|---|---|---|---|
+| tines | 0.86 / 1.45 mm | 6.82 / 106.7 mm | 99 % / 46 % |
+| palm | 0.83 / 1.26 mm | 1.78 / 72.7 mm | 98 % / 66 % |
+| neck | 0.80 / 1.94 mm | 4.70 / 24.0 mm | 96 % / 52 % |
+| handle | 1.07 / 23.3 mm | 7.03 / 56.5 mm | 82 % / 37 % |
+| all | 0.87 / 2.14 mm | 4.96 / 74.5 mm | 94 % / 50 % |
+
+**Calibration of the region:**
+* the network's 50 / 80 / 95 % regions cover the centre in 85 / 97 / 99 % of the presses (conservative);
+* the CAD's cover it in 70 / 88 / 97 % (`compare_calibration_mini_robust_s0.png`). Its 90 % region has a median of
+  about 12,000 mm², so it says almost nothing.
+* **Under 10 % drift** the CAD falls from 6.8 to 25.8 mm median on the tines.
+
+**Search** (300 episodes, clean; `mini_cad/search/search_metrics.json`):
+
+| first press on | CAD: final median, > 5 mm | network: final median |
+|---|---|---|
+| tines | 3.60 mm, 34 % | 0.60 mm |
+| palm | 2.81 mm, 17 % | 0.65 mm |
+| neck | 6.20 mm, 56 % | 0.65 mm |
+| handle | 5.41 mm, 58 % | 0.63 mm |
+| all | 4.09 / 11.4 mm (median / p90), 41 % | 0.62 / 1.18 mm, 0 % |
+
+* The CAD reaches a 90 % region below 16 mm² in 29 % of the episodes and always uses all 10 presses.
+* With a lateral scale of 0.98 it does better: 3.02 mm final median. Its templates and the reconstructed depth
+  are probably not on the same scale. This was not investigated.
+
+#### 11. Choosing the final model (`results_centre/FINAL_MODEL.md`, `final_select/`, `runtime_mini/`)
+
+**The rule** was written in `RUN_LOG.md` before the results it decides between (2026-11-19 20:05 and 20:30):
+1. The most parts of the criterion met.
+2. On a tie, the better clean search, by its final median. A difference counts only if a paired bootstrap 95 % CI
+   over the same 300 starts excludes 0.
+3. Otherwise, the cheaper inference.
+
+**Applied:**
+* **Criterion:** every candidate meets 1 of the 3 parts (the clean search). mini_exact (3 seeds), mini_robust s0,
+  mini_robust + TTA and mini_robust_aa s0 all fail the two spreads.
+* **Clean search** (`final_select/*.json`, 10,000 resamples):
+  * the best is mini_robust_aa at 0.592 mm;
+  * AA − robust = −0.028 mm [−0.084, +0.018] and AA − TTA = −0.019 mm [−0.079, +0.030], so these are ties;
+  * AA − mini_exact = −0.135 / −0.145 / −0.071 mm for seeds 0 / 1 / 2, and every CI excludes 0, so mini_exact
+    drops out.
+* **Cost** (`runtime_mini/runtime_mini.json`: Mini test2 presses, median per press with softmax, nothing else
+  running):
+
+  | | CPU, 1 thread | CPU, 8 threads | GPU (RTX 4070 Laptop) |
+  |---|---|---|---|
+  | mini_robust | 23.4 ms | 5.45 ms | 1.25 ms |
+  | mini_robust_aa (input blur) | 23.7 ms | 5.57 ms | 1.37 ms |
+  | mini_robust + TTA (11 variants) | 260.7 ms | 62.1 ms | 13.8 ms |
+  | CAD baseline | 1,327 ms | 449 ms | 38.2 ms |
+
+* **Decision: the final model is `mini_robust/model_100k_seed0.pt`.** It ties with AA and TTA, and its inference
+  is the cheapest.
+* **Note:** AA has the better p90 (1.07 vs 1.18 mm, CI [−0.241, +0.000]) and needs 0.19 fewer presses on average
+  (CI [−0.32, −0.05]). The rule decided on the median only, so AA is the reserve, not the final model.
+* **Supersedes an earlier figure:** the TTA runtime in the table above (12-17x) was measured under load. Measured
+  on an idle machine, TTA costs about 11x the plain network: 260.7 / 23.4 ms, 62.1 / 5.45 ms and 13.8 / 1.25 ms.
 
 #### Plainly (Mini)
 
@@ -2260,6 +2408,23 @@ shift pairs with bilinear and bicubic kernels, zoom 0.99 and 1.01, identity):
      +0.66 mm.
    * Without the offset, the final error is about 0.55 mm for every input.
    * The handle tapers only 0.05 mm per mm, so 1/8 pixel of apparent width is worth 0.5 mm along it.
+8. **A model that ignores the image pipeline (section 7):**
+   * Training with random resampling and random image borders makes every input at the true scale give the same
+     search, 0.62-0.65 mm.
+   * What is left is the true scale: about 0.74 mm along the handle per 1 % of mm/px. Neither test-time
+     augmentation nor a fixed input blur removes it.
+9. **Why the scale matters (section 8):** the network reads its position on the handle from the handle's width.
+   Widening the image by 5 % moves the estimate 5.6 mm along the handle, close to the 6.5 mm the taper predicts. So
+   the real sensor's mm/px must be known to about ±0.3 %.
+10. **The final model** (`mini_robust` s0, section 11), clean search over 300 episodes:
+    * final error 0.62 mm median, 1.18 mm p90;
+    * the true centre inside the 90 % region in 95 % of the episodes;
+    * a 90 % region below 16 mm² after a median of 2 presses;
+    * no episode ending more than 5 mm off.
+    * Per press it takes 1.25 ms on the GPU and 23 ms on one CPU thread. The CAD baseline ends more than 5 mm off in
+      41 % of the episodes and takes 38 ms / 1.3 s.
+11. **Noise (section 9):** illumination drift is the noise that matters. The network was trained with it and hardly
+    notices it.
 
 #### What was not verified (Mini)
 
@@ -2278,11 +2443,12 @@ shift pairs with bilinear and bicubic kernels, zoom 0.99 and 1.01, identity):
   * The zoom-1.02 search was run for the Mini models only, not for the standard sensor.
 * **The offset along the handle (section 6)** was measured only where the search ends: near the centre of
   mass, on the handle. Single presses elsewhere on the fork were not checked for a signed bias.
-  * The link to the taper (1/8 pixel of apparent width) is an interpretation. It fits the direction and the
-    size, but it was not tested.
+  * The link to the taper was tested afterwards for single presses in the middle of the handle (section 8). It was
+    not tested at the search's end points one by one.
   * Only bilinear resampling and these few variants were tried. The real camera pipeline's resize (e.g.
     area interpolation) was not tested.
-  * Masking or randomising the outer ring in training, which might remove the dependence, was not tried.
+  * Randomising the outer ring in training was tried afterwards (section 7). It removes the border dependence,
+    but not the scale dependence.
   * Whether real frames, resized from the camera's own mm/px, behave like the training inputs is not known.
 * **The real Mini's gel is not modelled.**
   * The thickness stays 3 mm and the compliance is the standard sensor's.
@@ -2296,6 +2462,12 @@ shift pairs with bilinear and bicubic kernels, zoom 0.99 and 1.01, identity):
 * **The same data vs optimizer-steps confound applies** (120 epochs for every size). The 20k model was
   still improving at epoch 119.
 * **Search rendering:** the episodes ran on the Intel iGPU, like every earlier search.
+* **The final model and the reserve were trained once each (seed 0).** The selection rule compared them on the
+  final median only. With the seed-to-seed std of mini_exact (p90 0.07 mm), the 0.03 mm between them is within
+  noise either way.
+* **The CAD baseline's scale:** it does better on inputs shrunk by 2-5 %. This hints that its templates and the
+  reconstructed depth differ in scale, which was not investigated.
+* **The viewer's DisplayGuard** (F6 also cycles the viewer's frame display) was checked headless only.
 * **Simulation only:** one fork, clamped.
 
 ## Detector results
@@ -2457,6 +2629,8 @@ The viewer's own `T` makes the scene transparent, which helps to see the ghost u
   on tines / palm / neck / handle, plus the worst final error (start 837: 2.18 mm, face wrong).
   * Final errors are 0.21-1.63 mm in the eight regular episodes.
   * Each episode is an mp4 with three key frames as png; the first one is also a gif.
+  * Gifs of all nine episodes are in `results_centre/videos/mini_robust_s0_gif/` (`make_gifs.py`). They are made from
+    the mp4 with the same settings, so they carry its compression.
 
 **In the window** (opened by the user on 2026-11-20): the viewer starts and F6 runs a search step. The first run showed
 that the viewer also acts on F6 itself: it switched "Frame" from None to Body. `DisplayGuard` now undoes that after

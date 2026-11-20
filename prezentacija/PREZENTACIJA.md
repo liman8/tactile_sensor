@@ -5,8 +5,9 @@ Tekst za izlaganje gostujućim profesorima: šta se prikazuje, šta se kaže i o
 - **Trajanje:** oko 20 min izlaganja, 5–10 min demo, zatim pitanja.
 - **Slike i videi:** u `prezentacija/slike/` i `prezentacija/video/`, numerisani redom izlaganja.
 - **Izvori brojeva:** svaki broj potiče iz sačuvanog fajla; spisak je na kraju (odeljak 14).
-- **Konačni model:** stanje na dan 20.11.2026. Trenutni kandidat je `mini_robust` (seed 0). Poslednji dozvoljeni
-  pokušaj poboljšanja (`mini_robust_aa`) se još trenira, pa konačni izbor nije zapisan.
+- **Konačni model** je `mini_robust` (seed 0), izabran 20.11.2026 po pravilu zapisanom unapred
+  (`results_centre/FINAL_MODEL.md`). Poslednji dozvoljeni pokušaj (`mini_robust_aa`, zamućenje ulaza) ima istu
+  tačnost u okviru šuma i ostaje rezervni kandidat.
 
 ---
 
@@ -185,9 +186,8 @@ informaciju.
 
 ### 6.4 Zašto ResNet ove veličine
 
-- Standardna, proverena arhitektura, dovoljno mala za 100k uzoraka. Zaključivanje traje milisekunde: za
-  standardni senzor 1,6 ms na GPU i 69 ms na jednoj CPU niti. Za Mini model vreme nije posebno mereno, a ulaz mu
-  je manji.
+- Standardna, proverena arhitektura, dovoljno mala za 100k uzoraka. Zaključivanje traje milisekunde: konačni
+  Mini model 1,25 ms na GPU i 23 ms na jednoj CPU niti (`results_centre/runtime_mini/runtime_mini.json`).
 - **Kapacitet nije usko grlo.** Preostala greška je fizička dvosmislenost (drška) i razmera slike (odeljak 9).
   Više podataka tu ne pomaže: Mini na 40k ima p90 na dršci 13,7 mm, a na 100k 13,1 mm.
 - **Iskreno:** druge arhitekture nisu sistematski poređene.
@@ -247,7 +247,7 @@ informaciju.
 
 ### 8.1 Jedan pritisak
 
-Konačni kandidat, 1.000 test pritisaka, po 250 po delu, čist ulaz:
+Konačni model, 1.000 test pritisaka, po 250 po delu, čist ulaz:
 
 | deo | medijana greške | p90 | unutar 5 mm |
 |---|---|---|---|
@@ -263,7 +263,7 @@ Veliki p90 na dršci je dvosmislenost duž drške iz odeljka 7. Razrešava se dr
 
 300 epizoda, isti počeci za sve modele:
 
-| | kandidat (`mini_robust`) | prethodni (`mini_exact`, 3 seed-a) |
+| | konačni (`mini_robust`) | prethodni (`mini_exact`, 3 seed-a) |
 |---|---|---|
 | 90 % oblast < 16 mm² | 100 % epizoda, medijana 2 pritiska | 100 %, medijana 2 pritiska |
 | < 16 mm² za najviše 2 / 3 pritiska | 80 % / 97 % | 95 % / 99,7 % |
@@ -343,8 +343,9 @@ Ovo je verovatno najzanimljiviji deo za akademsku publiku.
   - svi načini obrade na razmeri 1 daju istu pretragu, 0,62–0,65 mm;
   - ivica više ništa ne menja.
 - **Šta nije uspelo:**
-  - usrednjavanje na testu (11 varijanti slike) ne menja ništa, a košta 12–17 puta više vremena; odbačeno;
-  - u toku je poslednji dozvoljeni pokušaj (zamućenje ulaza, σ = 1 px).
+  - usrednjavanje na testu (11 varijanti slike) ne menja ništa, a košta oko 11 puta više vremena; odbačeno;
+  - poslednji dozvoljeni pokušaj, fiksno zamućenje ulaza (σ = 1 px), takođe ne prolazi kriterijum. Pretraga mu je
+    0,59 mm, ali razlika od 0,03 mm prema konačnom modelu je u okviru šuma (interval [−0,08, +0,02] mm).
 - **Preostala razlika nije artefakt nego prava razmera** (9.3).
 
 ### 9.3 Razmera mm/px: glavni zahtev za pravi senzor
@@ -394,7 +395,7 @@ Svaki korak je pokrenut merenjem koje je pokazalo konkretan problem.
 - **Pretpostavke bez merenja:**
   - gel pravog Mini-ja (debljina 4,25 mm, mekoća) nije modelovan;
   - modeli šuma su pretpostavke, a ne merenja.
-- **Jedan seed:** kandidat je treniran jednom. Kod prethodnog modela rasipanje p90 između seed-ova je 0,07 mm.
+- **Jedan seed:** konačni model je treniran jednom. Kod prethodnog modela rasipanje p90 između seed-ova je 0,07 mm.
 - **Najgora epizoda** (`slike/12_najgora_epizoda.png`, `video/04_najgora_start837.mp4`): 2,18 mm i pogrešna
   strana.
 
@@ -502,12 +503,19 @@ ostatak raspodele. Posle praznog pritiska senzor se vraća uz poslednji kontakt.
 
 **Koliko traje?**
 - Trening: oko 4,5 h na GPU.
-- Zaključivanje: milisekunde.
+- Zaključivanje jednog pritiska: 1,25 ms na GPU, 23 ms na jednoj CPU niti. CAD metod treba 38 ms, odnosno 1,3 s.
 - Pretraga do 90 % oblasti ispod 16 mm²: medijana 2 pritiska.
+
+**Kako ste izabrali konačni model?**
+- Pravilo je zapisano pre rezultata: prvo broj ispunjenih delova kriterijuma, zatim čista pretraga, ali samo ako
+  upareni bootstrap na istih 300 početaka isključi nulu, i na kraju jeftinije zaključivanje.
+- Svi kandidati su ispunili 1 od 3 dela.
+- Model sa zamućenjem ulaza imao je najbolju pretragu (0,59 mm), ali razlika prema `mini_robust` nije značajna.
+  `mini_robust` je jeftiniji, pa je on konačni model.
 
 **Koliko je rezultat stabilan?**
 - Prethodni model, 3 seed-a: p90 1,84 ± 0,07 mm, konačna greška pretrage 0,71 ± 0,04 mm.
-- Kandidat je treniran samo jednom. To je navedeno kao ograničenje.
+- Konačni model je treniran samo jednom. To je navedeno kao ograničenje.
 
 **Šta je najveći rizik za pravi senzor?**
 Kalibracija mm/px (±0,3 %), drift osvetljenja i razlika između pravog i simuliranog gela.
@@ -522,11 +530,11 @@ Putanje su relativne prema korenu projekta.
 |---|---|
 | fizika, optika, senzor, CAD provere | `README.md` (odeljci „The moving-sensor setup“, „Objects from STL files“), `gelsight_sim.py` |
 | greška rekonstrukcije dubine | `README.md`, „Reconstructed vs ground-truth depth“ |
-| klasični detektor | `README.md`, „Detector results“; `REZIME.md`, odeljak 3 |
+| klasični detektor | `README.md`, „Detector results“; `REZIME_hronologija.md`, odeljak 3 |
 | skup podataka | `dataset_mini/metadata.json`, `dataset_mini/cache_mini.npz` |
 | arhitektura, trening | `train_centre.py` (`Net`), `centre_v3.py` (`train_size`), `results_centre/mini_robust/model_100k_seed0.json` |
 | jedan pritisak po delu, CAD, drift | `results_centre/mini_cad/compare_cad_vs_net_mini_robust_s0.json` |
-| pretraga (kandidat) | `results_centre/mini_robust/search/search_metrics.json` |
+| pretraga (konačni model) | `results_centre/mini_robust/search/search_metrics.json` |
 | pretraga (mini_exact, 3 seed-a) | `results_centre/mini_exact/seeds_100k.json`, `results_centre/mini_robust/diag/criterion.json` |
 | pretraga CAD | `results_centre/mini_cad/search/search_metrics.json` |
 | test suženja drške | `results_centre/taper_test/taper_mini_robust_s0.json` |
@@ -536,5 +544,6 @@ Putanje su relativne prema korenu projekta.
 | drift, tekstura | `results_centre/noise_effect/recon_noise_effect.json` |
 | smer i strana | `results_centre/viz/mini_robust_s0/yaw_search.json`, `yaw_heuristic.json` |
 | videi, kadrovi | `results_centre/videos/mini_robust_s0/index.json` |
-| vreme zaključivanja (standardni senzor) | `results_centre/v3/runtime.json` |
-| istorija v1–v3, Mini | `REZIME.md` |
+| vreme zaključivanja | `results_centre/runtime_mini/runtime_mini.json` (Mini), `results_centre/v3/runtime.json` (standardni) |
+| izbor konačnog modela | `results_centre/FINAL_MODEL.md`, `results_centre/final_select/*.json` |
+| istorija v1–v3, Mini | `REZIME_hronologija.md`; sažetak: `REZIME.md` |
