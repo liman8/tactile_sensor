@@ -1,0 +1,19 @@
+sensor mini: data dataset_mini, results results_centre/mini_robust_aa, input 93 x 72 px, robust augmentation
+val   100k s0 scale 0.960: median 1.062 p90 5.57 hit 0.832 part 0.909 pose 0.862
+val   100k s0 scale 0.970: median 1.012 p90 4.50 hit 0.901 part 0.916 pose 0.868
+val   100k s0 scale 0.980: median 0.990 p90 3.57 hit 0.971 part 0.925 pose 0.864
+val   100k s0 scale 0.990: median 0.947 p90 2.78 hit 0.990 part 0.930 pose 0.865
+val   100k s0 scale 1.000: median 0.895 p90 2.56 hit 0.991 part 0.929 pose 0.864
+val   100k s0 scale 1.010: median 0.919 p90 2.73 hit 0.991 part 0.922 pose 0.857
+val   100k s0 scale 1.020: median 0.987 p90 3.68 hit 0.981 part 0.922 pose 0.855
+val   100k s0 scale 1.030: median 1.034 p90 4.84 hit 0.923 part 0.917 pose 0.849
+val   100k s0 scale 1.040: median 1.089 p90 5.66 hit 0.846 part 0.916 pose 0.851
+test2 100k s0 scale 0.960: median 1.064 p90 5.26 hit 0.822 part 0.922 pose 0.865
+test2 100k s0 scale 0.970: median 1.044 p90 4.19 hit 0.901 part 0.926 pose 0.865
+test2 100k s0 scale 0.980: median 0.998 p90 3.24 hit 0.966 part 0.929 pose 0.863
+test2 100k s0 scale 0.990: median 0.926 p90 2.46 hit 0.986 part 0.934 pose 0.862
+test2 100k s0 scale 1.000: median 0.888 p90 2.11 hit 0.990 part 0.932 pose 0.861
+test2 100k s0 scale 1.010: median 0.917 p90 2.51 hit 0.988 part 0.932 pose 0.859
+test2 100k s0 scale 1.020: median 0.982 p90 3.34 hit 0.978 part 0.931 pose 0.859
+test2 100k s0 scale 1.030: median 1.055 p90 4.58 hit 0.924 part 0.927 pose 0.857
+test2 100k s0 scale 1.040: median 1.089 p90 5.44 hit 0.846 part 0.921 pose 0.859
