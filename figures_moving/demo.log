@@ -1,0 +1,18 @@
+moving_sensor: detector results_moving/fork_detector.joblib -> <project>/figures_moving
+fork_dinner   p_fork=1.00 -> FORK (tines est 4, true 4, depth 0.63 mm, gel force 3.00 N)
+fork_dessert  p_fork=1.00 -> FORK (tines est 3, true 3, depth 0.56 mm, gel force 2.03 N)
+fork_salad    p_fork=1.00 -> FORK (tines est 3, true 3, depth 0.71 mm, gel force 1.00 N)
+fork_wide     p_fork=1.00 -> FORK (tines est 4, true 4, depth 1.03 mm, gel force 4.00 N)
+fork_3wide    p_fork=1.00 -> FORK (tines est 3, true 3, depth 0.58 mm, gel force 2.00 N)
+fork_plastic  p_fork=0.94 -> FORK (tines est 3, true 4, depth 0.74 mm, gel force 3.00 N)
+fork_dinner   p_fork=0.98 -> FORK (tines est 2, true 2, depth 0.76 mm, gel force 1.50 N)
+spoon         p_fork=0.00 -> not fork (tines est 0, true 0, depth 1.27 mm, gel force 2.99 N)
+knife_flat    p_fork=0.01 -> not fork (tines est 0, true 0, depth 1.21 mm, gel force 3.01 N)
+knife_edge    p_fork=0.03 -> not fork (tines est 0, true 0, depth 0.95 mm, gel force 3.01 N)
+pen           p_fork=0.08 -> not fork (tines est 0, true 0, depth 1.10 mm, gel force 3.00 N)
+comb          p_fork=0.48 -> FORK (tines est 2, true 0, depth 0.49 mm, gel force 3.00 N)
+coin          p_fork=0.02 -> not fork (tines est 0, true 0, depth 1.13 mm, gel force 2.01 N)
+cube          p_fork=0.01 -> not fork (tines est 0, true 0, depth 1.33 mm, gel force 4.04 N)
+ball          p_fork=0.00 -> not fork (tines est 0, true 0, depth 1.26 mm, gel force 2.99 N)
+cal_ball      p_fork=0.36 -> not fork (tines est 0, true 0, depth 1.18 mm, gel force 2.08 N)
+wrote <project>/figures_moving

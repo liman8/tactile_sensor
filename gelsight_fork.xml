@@ -1,0 +1,299 @@
+<!--
+  GelSight-like vision-based tactile sensor + utensil indenter (MuJoCo >= 4.0)
+  ===========================================================================
+  Units: metres, kilograms, degrees (compiler angle="degree").
+
+  Sensor (body "gelsight", sits on the table)
+    - aluminium housing, 44 x 36 x 34 mm (front wall drawn semi-transparent so the
+      internals are visible in the viewer)
+    - 4 mm clear acrylic window
+    - 32 x 24 x 3 mm silicone gel pad (geom "gel"); top surface at z = 0.037 m.
+      The gel is modelled as a compliant (soft-constraint) contact surface: objects
+      sink into it by up to ~1.5-2 mm depending on the pressing force.
+    - internal camera "gelsight_cam" looking up through the acrylic/gel,
+      orthographic, 32 x 24 mm field of view (= gel pad), meant to be rendered at
+      320 x 240 px  ->  0.1 mm / px
+    - three RGB LEDs at 120 deg (visual only; the photometric shading of the tactile
+      image is done in gelsight_sim.py)
+    - touch sensor "gel_force" = total normal force on the gel [N]
+
+  Geom groups
+    0  table          1  ACTIVE tool (the only thing the tactile camera sees)
+    2  sensor parts   5  parked (inactive) tools: invisible, no collisions
+  gelsight_sim.GelSightSim.set_tool() moves tools between group 1 and group 5.
+
+  Indenter ("hand" holding the tool)
+    joints: slide_x, slide_y, slide_z, yaw, pitch, roll
+    actuators: x, y (position, m), press (force, N, + = push down), yaw/pitch/roll
+    (position, rad).  Gravity is compensated so "press" is the contact force.
+    Tool frame: origin at the bottom-centre of the contact face, +x towards the
+    tips, so with all joints at 0 the tool's contact face touches the gel surface.
+-->
+<mujoco model="gelsight_fork">
+  <compiler angle="degree" autolimits="true"/>
+  <option timestep="0.0005" integrator="implicitfast" cone="elliptic" impratio="2"/>
+  <statistic center="0 0 0.035" extent="0.15"/>
+
+  <visual>
+    <global offwidth="1280" offheight="960" azimuth="135" elevation="-25"/>
+    <map znear="0.01" zfar="20"/>
+    <quality shadowsize="4096" offsamples="8"/>
+    <headlight ambient="0.35 0.35 0.35" diffuse="0.5 0.5 0.5"/>
+  </visual>
+
+  <asset>
+    <texture name="grid" type="2d" builtin="checker" width="512" height="512"
+             rgb1="0.82 0.82 0.80" rgb2="0.74 0.74 0.72"/>
+    <material name="table" texture="grid" texrepeat="12 12" reflectance="0.05"/>
+    <material name="alu" rgba="0.62 0.64 0.67 1" specular="0.6" shininess="0.6"/>
+    <material name="alu_glass" rgba="0.62 0.64 0.67 0.25"/>
+    <material name="acrylic" rgba="0.80 0.92 1.00 0.35" specular="0.9" shininess="0.9"/>
+    <material name="gel" rgba="0.72 0.73 0.76 1" specular="0.15" shininess="0.1"/>
+    <material name="cam" rgba="0.08 0.08 0.10 1"/>
+    <material name="led_r" rgba="1 0.1 0.1 1" emission="1"/>
+    <material name="led_g" rgba="0.1 1 0.1 1" emission="1"/>
+    <material name="led_b" rgba="0.2 0.3 1 1" emission="1"/>
+    <material name="steel" rgba="0.78 0.79 0.82 1" specular="0.9" shininess="0.9" reflectance="0.15"/>
+    <material name="plastic_white" rgba="0.95 0.95 0.93 1" specular="0.3"/>
+    <material name="handle_black" rgba="0.12 0.12 0.13 1" specular="0.3"/>
+    <material name="blue" rgba="0.15 0.3 0.8 1" specular="0.4"/>
+    <material name="red" rgba="0.8 0.15 0.15 1" specular="0.5"/>
+    <material name="gold" rgba="0.85 0.68 0.25 1" specular="0.8" shininess="0.7"/>
+    <material name="green" rgba="0.2 0.65 0.35 1"/>
+    <material name="comb" rgba="0.15 0.1 0.08 1" specular="0.4"/>
+  </asset>
+
+  <default>
+    <default class="sensor">
+      <geom group="2" contype="1" conaffinity="1" condim="3" material="alu"/>
+      <default class="visual">
+        <geom contype="0" conaffinity="0"/>
+      </default>
+      <!-- the gel: soft, high-friction contact; priority makes its solref/solimp win -->
+      <default class="gel">
+        <geom material="gel" priority="1" friction="1.0 0.01 0.001"
+              solref="0.006 1" solimp="0 0.95 0.003 0.5 1.5"/>
+      </default>
+    </default>
+    <default class="tool">
+      <!-- parked (inactive) tools -->
+      <geom group="5" contype="0" conaffinity="0" condim="3" density="7850"
+            friction="0.8 0.005 0.0001" material="steel"/>
+      <default class="tool_on">
+        <!-- active tool -->
+        <geom group="1" contype="1" conaffinity="1"/>
+      </default>
+    </default>
+    <default class="link">
+      <joint damping="0.002" armature="1e-6"/>
+    </default>
+  </default>
+
+  <worldbody>
+    <light name="key" pos="0.15 -0.2 0.4" dir="-0.35 0.5 -0.8" diffuse="0.7 0.7 0.7" castshadow="true"/>
+    <light name="fill" pos="-0.2 0.1 0.3" dir="0.5 -0.2 -0.8" diffuse="0.3 0.3 0.3" castshadow="false"/>
+    <geom name="table" type="plane" size="0.3 0.3 0.01" material="table" group="0"/>
+
+    <!-- ===================== GelSight-like sensor ===================== -->
+    <body name="gelsight" pos="0 0 0">
+      <geom name="base"       class="sensor" type="box" pos="0 0 0.0015"     size="0.022 0.018 0.0015"/>
+      <geom name="wall_left"  class="sensor" type="box" pos="-0.019 0 0.0185" size="0.003 0.018 0.0155"/>
+      <geom name="wall_right" class="sensor" type="box" pos="0.019 0 0.0185"  size="0.003 0.018 0.0155"/>
+      <geom name="wall_back"  class="sensor" type="box" pos="0 0.015 0.0185"  size="0.016 0.003 0.0155"/>
+      <geom name="wall_front" class="sensor" type="box" pos="0 -0.015 0.0185" size="0.016 0.003 0.0155"
+            material="alu_glass"/>
+      <geom name="acrylic" class="sensor" type="box" pos="0 0 0.032" size="0.016 0.012 0.002" material="acrylic"/>
+      <geom name="gel"     class="gel"    type="box" pos="0 0 0.0355" size="0.016 0.012 0.0015"/>
+      <site name="gel_touch" type="box" pos="0 0 0.037" size="0.0161 0.0121 0.0025" rgba="0 0 0 0" group="4"/>
+
+      <!-- camera module + lens (visual) and the actual MuJoCo camera -->
+      <geom name="cam_board" class="visual" type="box" pos="0 0 0.0045" size="0.008 0.008 0.0015" material="cam"/>
+      <geom name="cam_lens"  class="visual" type="cylinder" pos="0 0 0.008" size="0.004 0.002" material="cam"/>
+      <camera name="gelsight_cam" pos="0 0 0.010" xyaxes="1 0 0 0 -1 0"
+              projection="orthographic" fovy="0.024"/>
+
+      <!-- three RGB LEDs, 120 deg apart (visual only) -->
+      <geom name="led_r" class="visual" type="sphere" pos="0 0.0125 0.027"        size="0.0015" material="led_r"/>
+      <geom name="led_g" class="visual" type="sphere" pos="-0.0108 -0.00625 0.027" size="0.0015" material="led_g"/>
+      <geom name="led_b" class="visual" type="sphere" pos="0.0108 -0.00625 0.027"  size="0.0015" material="led_b"/>
+    </body>
+
+    <!-- ===================== indenter + tool library ===================== -->
+    <body name="indenter" pos="0 0 0.037" gravcomp="1" childclass="link">
+      <inertial pos="0 0 0" mass="0.05" diaginertia="2e-5 2e-5 2e-5"/>
+      <joint name="slide_x" type="slide" axis="1 0 0" range="-0.03 0.03"/>
+      <joint name="slide_y" type="slide" axis="0 1 0" range="-0.03 0.03"/>
+      <joint name="slide_z" type="slide" axis="0 0 1" range="-0.004 0.06" damping="40"/>
+      <body name="yaw_link" gravcomp="1">
+        <inertial pos="0 0 0" mass="0.01" diaginertia="1e-6 1e-6 1e-6"/>
+        <joint name="yaw" type="hinge" axis="0 0 1"/>
+        <body name="pitch_link" gravcomp="1">
+          <inertial pos="0 0 0" mass="0.01" diaginertia="1e-6 1e-6 1e-6"/>
+          <joint name="pitch" type="hinge" axis="0 1 0" range="-30 30"/>
+          <body name="tool_mount" gravcomp="1">
+            <inertial pos="0 0 0" mass="0.01" diaginertia="1e-6 1e-6 1e-6"/>
+            <joint name="roll" type="hinge" axis="1 0 0" range="-30 30"/>
+
+            <!-- ===== FORK: dinner fork, 4 tines (ACTIVE by default) ===== -->
+            <body name="fork_dinner" childclass="tool_on" gravcomp="1">
+              <geom name="fork_dinner_tine0" type="box" pos="-0.001 -0.0096 0.0009" size="0.015 0.0012 0.0009"/>
+              <geom name="fork_dinner_tine1" type="box" pos="-0.001 -0.0032 0.0009" size="0.015 0.0012 0.0009"/>
+              <geom name="fork_dinner_tine2" type="box" pos="-0.001 0.0032 0.0009"  size="0.015 0.0012 0.0009"/>
+              <geom name="fork_dinner_tine3" type="box" pos="-0.001 0.0096 0.0009"  size="0.015 0.0012 0.0009"/>
+              <geom name="fork_dinner_tip0"  type="box" pos="0.017 -0.0096 0.0009"  size="0.003 0.0008 0.0009"/>
+              <geom name="fork_dinner_tip1"  type="box" pos="0.017 -0.0032 0.0009"  size="0.003 0.0008 0.0009"/>
+              <geom name="fork_dinner_tip2"  type="box" pos="0.017 0.0032 0.0009"   size="0.003 0.0008 0.0009"/>
+              <geom name="fork_dinner_tip3"  type="box" pos="0.017 0.0096 0.0009"   size="0.003 0.0008 0.0009"/>
+              <geom name="fork_dinner_palm"  type="box" pos="-0.022 0 0.0009" size="0.006 0.0108 0.0009"/>
+              <geom name="fork_dinner_neck"  type="box" pos="-0.036693 0 0.003229" size="0.009 0.0035 0.0009" euler="0 15 0"/>
+              <geom name="fork_dinner_handle" type="box" pos="-0.093683 0 0.0185" size="0.05 0.0055 0.0013" euler="0 15 0"/>
+            </body>
+
+            <!-- ===== FORK: dessert fork, 3 tines ===== -->
+            <body name="fork_dessert" childclass="tool" gravcomp="1">
+              <geom name="fork_dessert_tine0" type="box" pos="-0.0005 -0.0055 0.0008" size="0.0115 0.001 0.0008"/>
+              <geom name="fork_dessert_tine1" type="box" pos="-0.0005 0 0.0008"      size="0.0115 0.001 0.0008"/>
+              <geom name="fork_dessert_tine2" type="box" pos="-0.0005 0.0055 0.0008"  size="0.0115 0.001 0.0008"/>
+              <geom name="fork_dessert_tip0"  type="box" pos="0.0135 -0.0055 0.0008"  size="0.0025 0.0007 0.0008"/>
+              <geom name="fork_dessert_tip1"  type="box" pos="0.0135 0 0.0008"       size="0.0025 0.0007 0.0008"/>
+              <geom name="fork_dessert_tip2"  type="box" pos="0.0135 0.0055 0.0008"   size="0.0025 0.0007 0.0008"/>
+              <geom name="fork_dessert_palm"  type="box" pos="-0.017 0 0.0008" size="0.005 0.0065 0.0008"/>
+              <geom name="fork_dessert_neck"  type="box" pos="-0.028762 0 0.002612" size="0.007 0.003 0.0008" euler="0 15 0"/>
+              <geom name="fork_dessert_handle" type="box" pos="-0.07416 0 0.014777" size="0.04 0.0045 0.0012" euler="0 15 0"/>
+            </body>
+
+            <!-- ===== FORK: salad fork, 4 narrow tines ===== -->
+            <body name="fork_salad" childclass="tool" gravcomp="1">
+              <geom name="fork_salad_tine0" type="box" pos="-0.003500 -0.007500 0.000800" size="0.012500 0.001000 0.000800"/>
+              <geom name="fork_salad_tine1" type="box" pos="-0.003500 -0.002500 0.000800" size="0.012500 0.001000 0.000800"/>
+              <geom name="fork_salad_tine2" type="box" pos="-0.003500 0.002500 0.000800" size="0.012500 0.001000 0.000800"/>
+              <geom name="fork_salad_tine3" type="box" pos="-0.003500 0.007500 0.000800" size="0.012500 0.001000 0.000800"/>
+              <geom name="fork_salad_tip0" type="box" pos="0.011500 -0.007500 0.000800" size="0.002500 0.000650 0.000800"/>
+              <geom name="fork_salad_tip1" type="box" pos="0.011500 -0.002500 0.000800" size="0.002500 0.000650 0.000800"/>
+              <geom name="fork_salad_tip2" type="box" pos="0.011500 0.002500 0.000800" size="0.002500 0.000650 0.000800"/>
+              <geom name="fork_salad_tip3" type="box" pos="0.011500 0.007500 0.000800" size="0.002500 0.000650 0.000800"/>
+              <geom name="fork_salad_palm" type="box" pos="-0.021000 0 0.000800" size="0.005000 0.008500 0.000800"/>
+              <geom name="fork_salad_neck" type="box" pos="-0.034693 0 0.003129" size="0.009 0.0035 0.000800" euler="0 15 0"/>
+              <geom name="fork_salad_handle" type="box" pos="-0.091683 0 0.018400" size="0.05 0.0055 0.0013" euler="0 15 0"/>
+            </body>
+
+            <!-- ===== FORK: large serving-style fork, 4 wide tines ===== -->
+            <body name="fork_wide" childclass="tool" gravcomp="1">
+              <geom name="fork_wide_tine0" type="box" pos="0.001000 -0.010800 0.001000" size="0.017000 0.001600 0.001000"/>
+              <geom name="fork_wide_tine1" type="box" pos="0.001000 -0.003600 0.001000" size="0.017000 0.001600 0.001000"/>
+              <geom name="fork_wide_tine2" type="box" pos="0.001000 0.003600 0.001000" size="0.017000 0.001600 0.001000"/>
+              <geom name="fork_wide_tine3" type="box" pos="0.001000 0.010800 0.001000" size="0.017000 0.001600 0.001000"/>
+              <geom name="fork_wide_tip0" type="box" pos="0.021000 -0.010800 0.001000" size="0.003000 0.001040 0.001000"/>
+              <geom name="fork_wide_tip1" type="box" pos="0.021000 -0.003600 0.001000" size="0.003000 0.001040 0.001000"/>
+              <geom name="fork_wide_tip2" type="box" pos="0.021000 0.003600 0.001000" size="0.003000 0.001040 0.001000"/>
+              <geom name="fork_wide_tip3" type="box" pos="0.021000 0.010800 0.001000" size="0.003000 0.001040 0.001000"/>
+              <geom name="fork_wide_palm" type="box" pos="-0.022000 0 0.001000" size="0.006000 0.012400 0.001000"/>
+              <geom name="fork_wide_neck" type="box" pos="-0.036693 0 0.003329" size="0.009 0.0035 0.001000" euler="0 15 0"/>
+              <geom name="fork_wide_handle" type="box" pos="-0.093683 0 0.018600" size="0.05 0.0055 0.0013" euler="0 15 0"/>
+            </body>
+
+            <!-- ===== FORK: 3 wide tines ===== -->
+            <body name="fork_3wide" childclass="tool" gravcomp="1">
+              <geom name="fork_3wide_tine0" type="box" pos="-0.001500 -0.006600 0.000900" size="0.014500 0.001400 0.000900"/>
+              <geom name="fork_3wide_tine1" type="box" pos="-0.001500 0.000000 0.000900" size="0.014500 0.001400 0.000900"/>
+              <geom name="fork_3wide_tine2" type="box" pos="-0.001500 0.006600 0.000900" size="0.014500 0.001400 0.000900"/>
+              <geom name="fork_3wide_tip0" type="box" pos="0.015500 -0.006600 0.000900" size="0.002500 0.000910 0.000900"/>
+              <geom name="fork_3wide_tip1" type="box" pos="0.015500 0.000000 0.000900" size="0.002500 0.000910 0.000900"/>
+              <geom name="fork_3wide_tip2" type="box" pos="0.015500 0.006600 0.000900" size="0.002500 0.000910 0.000900"/>
+              <geom name="fork_3wide_palm" type="box" pos="-0.021500 0 0.000900" size="0.005500 0.008000 0.000900"/>
+              <geom name="fork_3wide_neck" type="box" pos="-0.035693 0 0.003229" size="0.009 0.0035 0.000900" euler="0 15 0"/>
+              <geom name="fork_3wide_handle" type="box" pos="-0.092683 0 0.018500" size="0.05 0.0055 0.0013" euler="0 15 0"/>
+            </body>
+
+            <!-- ===== FORK: plastic fork, 4 thick tines curving up 4 deg (held out from training) ===== -->
+            <body name="fork_plastic" childclass="tool" gravcomp="1">
+              <geom name="fork_plastic_tine0" type="box" pos="0.004963 -0.0087 0.002246" size="0.015 0.0015 0.0012" euler="0 -4 0" density="1050" material="plastic_white"/>
+              <geom name="fork_plastic_tine1" type="box" pos="0.004963 -0.0029 0.002246" size="0.015 0.0015 0.0012" euler="0 -4 0" density="1050" material="plastic_white"/>
+              <geom name="fork_plastic_tine2" type="box" pos="0.004963 0.0029 0.002246"  size="0.015 0.0015 0.0012" euler="0 -4 0" density="1050" material="plastic_white"/>
+              <geom name="fork_plastic_tine3" type="box" pos="0.004963 0.0087 0.002246"  size="0.015 0.0015 0.0012" euler="0 -4 0" density="1050" material="plastic_white"/>
+              <geom name="fork_plastic_palm"  type="box" pos="-0.015 0 0.0012" size="0.005 0.0102 0.0012" density="1050" material="plastic_white"/>
+              <geom name="fork_plastic_neck"  type="box" pos="-0.027825 0 0.002863" size="0.008 0.004 0.0012" euler="0 12 0" density="1050" material="plastic_white"/>
+              <geom name="fork_plastic_handle" type="box" pos="-0.079667 0 0.013883" size="0.045 0.006 0.0015" euler="0 12 0" density="1050" material="plastic_white"/>
+            </body>
+
+            <!-- ===== negatives (not forks) ===== -->
+            <body name="spoon" childclass="tool" gravcomp="1">
+              <geom name="spoon_bowl"   type="ellipsoid" pos="0 0 0.005" size="0.021 0.0135 0.005"/>
+              <geom name="spoon_neck"   type="box" pos="-0.028693 0 0.006829" size="0.009 0.003 0.0009" euler="0 15 0"/>
+              <geom name="spoon_handle" type="box" pos="-0.085683 0 0.0221" size="0.05 0.0055 0.0013" euler="0 15 0"/>
+            </body>
+
+            <body name="knife_flat" childclass="tool" gravcomp="1">
+              <geom name="knife_flat_blade"  type="box" pos="0 0 0.0009" size="0.04 0.0095 0.0009"/>
+              <geom name="knife_flat_tip"    type="cylinder" pos="0.04 0 0.0009" size="0.0095 0.0009"/>
+              <geom name="knife_flat_handle" type="box" pos="-0.08924 0 0.013182" size="0.05 0.0075 0.004" euler="0 10 0" material="handle_black" density="1200"/>
+            </body>
+
+            <body name="knife_edge" childclass="tool" gravcomp="1">
+              <geom name="knife_edge_edge"   type="box" pos="0 0 0.0005" size="0.045 0.0003 0.0005"/>
+              <geom name="knife_edge_blade"  type="box" pos="0 0 0.010"  size="0.045 0.0008 0.009"/>
+              <geom name="knife_edge_handle" type="box" pos="-0.095 0 0.0125" size="0.05 0.007 0.0095" material="handle_black" density="1200"/>
+            </body>
+
+            <body name="pen" childclass="tool" gravcomp="1">
+              <geom name="pen_body" type="capsule" fromto="-0.07 0 0.0045 0.07 0 0.0045" size="0.0045" material="blue" density="1200"/>
+            </body>
+
+            <body name="comb" childclass="tool" gravcomp="1">
+              <geom name="comb_spine" type="box" pos="-0.011 0 0.0015" size="0.005 0.0115 0.0015" material="comb" density="1200"/>
+              <geom name="comb_t00" type="box" pos="0.002 -0.0104 0.00075" size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+              <geom name="comb_t01" type="box" pos="0.002 -0.0088 0.00075" size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+              <geom name="comb_t02" type="box" pos="0.002 -0.0072 0.00075" size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+              <geom name="comb_t03" type="box" pos="0.002 -0.0056 0.00075" size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+              <geom name="comb_t04" type="box" pos="0.002 -0.0040 0.00075" size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+              <geom name="comb_t05" type="box" pos="0.002 -0.0024 0.00075" size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+              <geom name="comb_t06" type="box" pos="0.002 -0.0008 0.00075" size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+              <geom name="comb_t07" type="box" pos="0.002 0.0008 0.00075"  size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+              <geom name="comb_t08" type="box" pos="0.002 0.0024 0.00075"  size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+              <geom name="comb_t09" type="box" pos="0.002 0.0040 0.00075"  size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+              <geom name="comb_t10" type="box" pos="0.002 0.0056 0.00075"  size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+              <geom name="comb_t11" type="box" pos="0.002 0.0072 0.00075"  size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+              <geom name="comb_t12" type="box" pos="0.002 0.0088 0.00075"  size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+              <geom name="comb_t13" type="box" pos="0.002 0.0104 0.00075"  size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+            </body>
+
+            <body name="ball" childclass="tool" gravcomp="1">
+              <geom name="ball_geom" type="sphere" pos="0 0 0.008" size="0.008" material="red"/>
+            </body>
+
+            <body name="coin" childclass="tool" gravcomp="1">
+              <geom name="coin_geom" type="cylinder" pos="0 0 0.001" size="0.0125 0.001" material="gold"/>
+            </body>
+
+            <body name="cube" childclass="tool" gravcomp="1">
+              <geom name="cube_geom" type="box" pos="0 0 0.008" size="0.008 0.008 0.008" material="green" density="2700"/>
+            </body>
+
+            <!-- 5 mm calibration ball bearing (used by fork_detector.calibrate) -->
+            <body name="cal_ball" childclass="tool" gravcomp="1">
+              <geom name="cal_ball_geom" type="sphere" pos="0 0 0.0025" size="0.0025"/>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <position name="x"     joint="slide_x" kp="20000" dampratio="1" ctrlrange="-0.03 0.03"/>
+    <position name="y"     joint="slide_y" kp="20000" dampratio="1" ctrlrange="-0.03 0.03"/>
+    <motor    name="press" joint="slide_z" gear="-1" ctrlrange="-2 15"/>
+    <position name="yaw"   joint="yaw"   kp="20" dampratio="1" ctrlrange="-3.1416 3.1416"/>
+    <position name="pitch" joint="pitch" kp="20" dampratio="1" ctrlrange="-0.5 0.5"/>
+    <position name="roll"  joint="roll"  kp="20" dampratio="1" ctrlrange="-0.5 0.5"/>
+  </actuator>
+
+  <sensor>
+    <touch name="gel_force" site="gel_touch"/>
+    <jointpos name="tool_height" joint="slide_z"/>
+  </sensor>
+
+  <keyframe>
+    <key name="home" qpos="0 0 0.012 0 0 0" ctrl="0 0 0 0 0 0"/>
+  </keyframe>
+</mujoco>

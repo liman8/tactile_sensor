@@ -1,0 +1,20 @@
+# Text files are stored with LF line endings
+* text=auto eol=lf
+
+# Binary data: never diffed or merged as text
+*.pt      binary
+*.npz     binary
+*.npy     binary
+*.joblib  binary
+*.h5      binary
+*.pkl     binary
+*.stl     binary
+*.png     binary
+*.gif     binary
+*.mp4     binary
+
+# Results written by the scripts (metrics, per-episode records, logs): collapsed in diffs and left out of
+# GitHub's language statistics
+*.json  linguist-generated
+*.log   linguist-generated
+*.out   linguist-generated

@@ -1,0 +1,400 @@
+<!--
+  GelSight-like tactile sensor on a moving arm, objects lying on the table (MuJoCo >= 4.0)
+  ========================================================================================
+  The inverse of gelsight_fork.xml: the object lies still on the table and the sensor,
+  mounted gel-down under a gravity-compensated arm, presses DOWN onto it.
+  Units: metres, kilograms, degrees (compiler angle="degree").
+
+  Sensor (body "gelsight")
+    Copied verbatim from gelsight_fork.xml (housing, acrylic, gel pad, gel contact
+    parameters, camera "gelsight_cam", LEDs, touch site) and rotated 180 deg about x
+    (quat="0 1 0 0"). Camera xyaxes are in the sensor frame, so the tactile image keeps
+    0.1 mm/px, the LED layout and its handedness: image column = sensor +x, image
+    row = sensor +y, exactly as before, and the old calibration/detector stay valid.
+
+  Arm (holds the sensor)
+    joints: slide_x, slide_y, slide_z, yaw, pitch, roll (same names as the old indenter)
+    actuators: x, y (position, m), press (force, N, + = push the gel down onto the
+    object), yaw/pitch/roll (position, rad). Every arm/sensor body has gravcomp="1", so
+    once static the gel force equals the "press" command.
+    The arm frame origin is the centre of the gel's contact face: slide_z is the height
+    of the (untilted) gel face above the table, and yaw/pitch/roll turn the sensor about
+    that point, just like the old indenter turned the tool about its contact face.
+    Arm inertia: MuJoCo's soft contacts are mass-scaled (the regulariser uses
+    body_invweight0 of the bodies in contact), so the gel's force->indentation law
+    depends on the inertia of whatever carries it. The arm has a stiff 200 g wrist and a
+    body mass chosen so that the gelsight body's invweight0 equals the mean of the old
+    tools' values (2.899 /kg; total moving mass 371 g, old indenter 444 g). Indentation
+    for a given force therefore matches gelsight_fork.xml to within a few percent.
+
+  Objects (one active at a time, all static: no joints)
+    Each body's pos/quat below is its resting pose at the table origin;
+    gelsight_sim.GelSightSim.place_object() moves it at runtime by changing body_pos /
+    body_quat (yaw about the vertical is composed with the resting quat).
+    Geometry within reach of the gel is identical to gelsight_fork.xml; only parts that
+    would float or go through the table were redesigned:
+      face up   (gel touches the old top face; heads are symmetric slabs, same outline):
+                metal forks: head flat on the table, neck rises 15 deg as before, the
+                  handle then comes back down so its end rests on the table (arch)
+                knife_flat: blade flat, handle lying flat on the table
+                pen, ball, coin, cube, cal_ball: unchanged
+      face down (quat="0 1 0 0": the old contact face is up, so the gel sees exactly the
+                surface it saw before):
+                fork_plastic: rests on its tine tips and handle (tines curve down
+                  4 deg), neck shortened so it ends on the table, handle flat
+                spoon: bowl + neck as before, neck shortened 0.1 mm, handle flat
+                comb: rests on its 3 mm spine, teeth cantilevered (flush face up)
+                knife_edge: stands on its spine, edge up, held upright by a wide
+                  flat-bottomed handle (handle 3 mm below the edge, as before)
+    Nothing penetrates the table: every resting body's lowest point is at z = 0
+    (verified numerically, see README).
+    Site "<name>_face" marks the old tool frame (centre of the gel-facing face, +x to the
+    tips, +z into the object). GelSightSim.press_relative() uses it to put the sensor at
+    exactly the relative pose press() means in gelsight_fork.xml, tilt included.
+    gelsight_sim.GelSightSim(free_objects=True) adds a freejoint to every object.
+
+  Mesh objects (included from meshes/<name>/<name>.xml, made by stl_to_mjcf.py)
+    fork_stl: ForkMilimeter.stl, face down on its tine tips and handle end. One body with
+      a visual-only mesh geom (class mesh_visual: rendered, never collides) and convex
+      parts from CoACD (class mesh_collision: collide, never rendered), all in the STL's
+      own frame (mm, mesh scale 0.001), so they line up exactly. Sites fork_stl_face
+      (tines), _tips, _palm, _neck, _handle, _handle_end: surface frames for press_relative().
+      fork_stl is GelSightSim's default object and is drawn as the active one here
+      (--active: class mesh_visual_on). Opened on its own (MuJoCo's simulate) the scene shows
+      it, but its parts collide only after GelSightSim.set_tool(); use live_viewer.py.
+
+  Geom groups
+    0  table          1  ACTIVE object (the only thing the tactile camera renders)
+    2  sensor + arm   3  collision parts of mesh objects (never rendered)
+    5  parked (inactive) objects: invisible, no collisions
+-->
+<mujoco model="gelsight_moving">
+  <compiler angle="degree" autolimits="true"/>
+  <option timestep="0.0005" integrator="implicitfast" cone="elliptic" impratio="2"/>
+  <!-- extent sets the depth camera's near/far planes: keep it equal to gelsight_fork.xml -->
+  <statistic center="0 0 0.04" extent="0.15"/>
+
+  <visual>
+    <global offwidth="1280" offheight="960" azimuth="135" elevation="-25"/>
+    <map znear="0.01" zfar="20"/>
+    <quality shadowsize="4096" offsamples="8"/>
+    <headlight ambient="0.35 0.35 0.35" diffuse="0.5 0.5 0.5"/>
+  </visual>
+
+  <asset>
+    <texture name="grid" type="2d" builtin="checker" width="512" height="512"
+             rgb1="0.82 0.82 0.80" rgb2="0.74 0.74 0.72"/>
+    <material name="table" texture="grid" texrepeat="12 12" reflectance="0.05"/>
+    <material name="alu" rgba="0.62 0.64 0.67 1" specular="0.6" shininess="0.6"/>
+    <material name="alu_glass" rgba="0.62 0.64 0.67 0.25"/>
+    <material name="acrylic" rgba="0.80 0.92 1.00 0.35" specular="0.9" shininess="0.9"/>
+    <material name="gel" rgba="0.72 0.73 0.76 1" specular="0.15" shininess="0.1"/>
+    <material name="cam" rgba="0.08 0.08 0.10 1"/>
+    <material name="led_r" rgba="1 0.1 0.1 1" emission="1"/>
+    <material name="led_g" rgba="0.1 1 0.1 1" emission="1"/>
+    <material name="led_b" rgba="0.2 0.3 1 1" emission="1"/>
+    <material name="steel" rgba="0.78 0.79 0.82 1" specular="0.9" shininess="0.9" reflectance="0.15"/>
+    <material name="plastic_white" rgba="0.95 0.95 0.93 1" specular="0.3"/>
+    <material name="handle_black" rgba="0.12 0.12 0.13 1" specular="0.3"/>
+    <material name="blue" rgba="0.15 0.3 0.8 1" specular="0.4"/>
+    <material name="red" rgba="0.8 0.15 0.15 1" specular="0.5"/>
+    <material name="gold" rgba="0.85 0.68 0.25 1" specular="0.8" shininess="0.7"/>
+    <material name="green" rgba="0.2 0.65 0.35 1"/>
+    <material name="comb" rgba="0.15 0.1 0.08 1" specular="0.4"/>
+    <material name="arm" rgba="0.30 0.32 0.36 1" specular="0.5" shininess="0.5"/>
+    <material name="arm_dark" rgba="0.16 0.17 0.19 1" specular="0.3"/>
+  </asset>
+
+  <default>
+    <default class="sensor">
+      <geom group="2" contype="1" conaffinity="1" condim="3" material="alu"/>
+      <default class="visual">
+        <geom contype="0" conaffinity="0"/>
+      </default>
+      <!-- the gel: soft, high-friction contact; priority makes its solref/solimp win -->
+      <default class="gel">
+        <geom material="gel" priority="1" friction="1.0 0.01 0.001"
+              solref="0.006 1" solimp="0 0.95 0.003 0.5 1.5"/>
+      </default>
+    </default>
+    <default class="tool">
+      <!-- parked (inactive) objects. The stiff solref/solimp only matter for object-table
+           contacts in the freejoint version (gel contacts use the gel's, by priority). -->
+      <geom group="5" contype="0" conaffinity="0" condim="3" density="7850"
+            friction="0.8 0.005 0.0001" material="steel" solref="0.001 1" solimp="0.99 0.999 0.0002"/>
+      <default class="tool_on">
+        <!-- active object -->
+        <geom group="1" contype="1" conaffinity="1"/>
+      </default>
+      <!-- objects made from an STL by stl_to_mjcf.py (see meshes/): the plain mesh is visual
+           only (MuJoCo would collide it through its convex hull, which fills the gaps between
+           tines); a convex decomposition in group 3 does the physics and is never drawn.
+           GelSightSim.set_tool() toggles the visual mesh between groups 1/5 (contype stays 0)
+           and the parts' contype/conaffinity between 1/0 (group stays 3). -->
+      <default class="mesh_visual">
+        <geom type="mesh" contype="0" conaffinity="0"/>
+        <default class="mesh_visual_on">
+          <geom group="1"/>
+        </default>
+      </default>
+      <!-- the parts are contype 0 here even for the active object: MuJoCo builds a mesh's
+           polygon data (multi-point contacts) only if it collides at compile time, which
+           would change the physics that verify_stl.py checked. -->
+      <default class="mesh_collision">
+        <geom type="mesh" group="3" rgba="0 0 0 0"/>
+      </default>
+    </default>
+    <default class="link">
+      <joint damping="0.002" armature="1e-6"/>
+    </default>
+    <!-- arm visuals: drawn in the viewer, never collide, never seen by the tactile camera -->
+    <default class="arm_visual">
+      <geom group="2" contype="0" conaffinity="0" material="arm"/>
+    </default>
+  </default>
+
+  <worldbody>
+    <light name="key" pos="0.15 -0.2 0.4" dir="-0.35 0.5 -0.8" diffuse="0.7 0.7 0.7" castshadow="true"/>
+    <light name="fill" pos="-0.2 0.1 0.3" dir="0.5 -0.2 -0.8" diffuse="0.3 0.3 0.3" castshadow="false"/>
+    <geom name="table" type="plane" size="0.3 0.3 0.01" material="table" group="0"
+          solref="0.001 1" solimp="0.99 0.999 0.0002"/>
+
+    <!-- ===================== arm + GelSight-like sensor ===================== -->
+    <body name="arm" pos="0 0 0" gravcomp="1" childclass="link">
+      <inertial pos="0 0 0.2" mass="0.11433" diaginertia="2e-3 2e-3 2e-4"/>
+      <joint name="slide_x" type="slide" axis="1 0 0" range="-0.15 0.15"/>
+      <joint name="slide_y" type="slide" axis="0 1 0" range="-0.15 0.15"/>
+      <joint name="slide_z" type="slide" axis="0 0 1" range="-0.002 0.08" damping="40"/>
+      <body name="yaw_link" gravcomp="1">
+        <inertial pos="0 0 0" mass="0.01" diaginertia="1e-6 1e-6 1e-6"/>
+        <joint name="yaw" type="hinge" axis="0 0 1"/>
+        <body name="pitch_link" gravcomp="1">
+          <inertial pos="0 0 0" mass="0.01" diaginertia="1e-6 1e-6 1e-6"/>
+          <joint name="pitch" type="hinge" axis="0 1 0" range="-30 30"/>
+          <body name="sensor_mount" gravcomp="1">
+            <!-- wrist; its inertia sets the gel's effective mass (see header) -->
+            <inertial pos="0 0 0.07" mass="0.2" diaginertia="1e-3 1e-3 4e-4"/>
+            <joint name="roll" type="hinge" axis="1 0 0" range="-30 30"/>
+            <geom name="mount_plate" class="arm_visual" type="box" pos="0 0 0.039" size="0.024 0.020 0.002"
+                  material="arm_dark"/>
+            <geom name="wrist" class="arm_visual" type="cylinder" pos="0 0 0.076" size="0.014 0.035"/>
+            <geom name="forearm" class="arm_visual" type="cylinder" pos="0 0 0.191" size="0.018 0.08"/>
+
+            <!-- sensor: identical to gelsight_fork.xml, turned gel-down. Gel face = arm origin. -->
+            <body name="gelsight" pos="0 0 0.037" quat="0 1 0 0" gravcomp="1">
+              <geom name="base"       class="sensor" type="box" pos="0 0 0.0015"     size="0.022 0.018 0.0015"/>
+              <geom name="wall_left"  class="sensor" type="box" pos="-0.019 0 0.0185" size="0.003 0.018 0.0155"/>
+              <geom name="wall_right" class="sensor" type="box" pos="0.019 0 0.0185"  size="0.003 0.018 0.0155"/>
+              <geom name="wall_back"  class="sensor" type="box" pos="0 0.015 0.0185"  size="0.016 0.003 0.0155"/>
+              <geom name="wall_front" class="sensor" type="box" pos="0 -0.015 0.0185" size="0.016 0.003 0.0155"
+                    material="alu_glass"/>
+              <geom name="acrylic" class="sensor" type="box" pos="0 0 0.032" size="0.016 0.012 0.002" material="acrylic"/>
+              <geom name="gel"     class="gel"    type="box" pos="0 0 0.0355" size="0.016 0.012 0.0015"/>
+              <site name="gel_touch" type="box" pos="0 0 0.037" size="0.0161 0.0121 0.0025" rgba="0 0 0 0" group="4"/>
+
+              <!-- camera module + lens (visual) and the actual MuJoCo camera -->
+              <geom name="cam_board" class="visual" type="box" pos="0 0 0.0045" size="0.008 0.008 0.0015" material="cam"/>
+              <geom name="cam_lens"  class="visual" type="cylinder" pos="0 0 0.008" size="0.004 0.002" material="cam"/>
+              <camera name="gelsight_cam" pos="0 0 0.010" xyaxes="1 0 0 0 -1 0"
+                      projection="orthographic" fovy="0.024"/>
+
+              <!-- three RGB LEDs, 120 deg apart (visual only) -->
+              <geom name="led_r" class="visual" type="sphere" pos="0 0.0125 0.027"        size="0.0015" material="led_r"/>
+              <geom name="led_g" class="visual" type="sphere" pos="-0.0108 -0.00625 0.027" size="0.0015" material="led_g"/>
+              <geom name="led_b" class="visual" type="sphere" pos="0.0108 -0.00625 0.027"  size="0.0015" material="led_b"/>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+
+    <!-- ===================== objects on the table (static) ===================== -->
+    <!-- ===== FORK: dinner fork, 4 tines - face up (fork_stl is the active object) ===== -->
+    <body name="fork_dinner" pos="0 0 0" childclass="tool">
+      <site name="fork_dinner_face" pos="0 0 0.0018" quat="0 1 0 0" size="0.001" group="4"/>  <!-- old tool frame -->
+      <geom name="fork_dinner_tine0" type="box" pos="-0.001 -0.0096 0.0009" size="0.015 0.0012 0.0009"/>
+      <geom name="fork_dinner_tine1" type="box" pos="-0.001 -0.0032 0.0009" size="0.015 0.0012 0.0009"/>
+      <geom name="fork_dinner_tine2" type="box" pos="-0.001 0.0032 0.0009"  size="0.015 0.0012 0.0009"/>
+      <geom name="fork_dinner_tine3" type="box" pos="-0.001 0.0096 0.0009"  size="0.015 0.0012 0.0009"/>
+      <geom name="fork_dinner_tip0"  type="box" pos="0.017 -0.0096 0.0009"  size="0.003 0.0008 0.0009"/>
+      <geom name="fork_dinner_tip1"  type="box" pos="0.017 -0.0032 0.0009"  size="0.003 0.0008 0.0009"/>
+      <geom name="fork_dinner_tip2"  type="box" pos="0.017 0.0032 0.0009"   size="0.003 0.0008 0.0009"/>
+      <geom name="fork_dinner_tip3"  type="box" pos="0.017 0.0096 0.0009"   size="0.003 0.0008 0.0009"/>
+      <geom name="fork_dinner_palm"  type="box" pos="-0.022 0 0.0009" size="0.006 0.0108 0.0009"/>
+      <geom name="fork_dinner_neck"  type="box" pos="-0.036693 0 0.003229" size="0.009 0.0035 0.0009" euler="0 15 0"/>
+      <!-- handle arches back down so its end rests on the table -->
+      <geom name="fork_dinner_bend"  type="cylinder" pos="-0.045386 0 0.005558" size="0.0013 0.0055" euler="90 0 0"/>
+      <geom name="fork_dinner_handle" type="box" pos="-0.095341 0 0.003429" size="0.05 0.0055 0.0013" euler="0 -2.4413 0"/>
+    </body>
+
+    <!-- ===== FORK: dessert fork, 3 tines - face up ===== -->
+    <body name="fork_dessert" pos="0 0 0" childclass="tool">
+      <site name="fork_dessert_face" pos="0 0 0.0016" quat="0 1 0 0" size="0.001" group="4"/>  <!-- old tool frame -->
+      <geom name="fork_dessert_tine0" type="box" pos="-0.0005 -0.0055 0.0008" size="0.0115 0.001 0.0008"/>
+      <geom name="fork_dessert_tine1" type="box" pos="-0.0005 0 0.0008"      size="0.0115 0.001 0.0008"/>
+      <geom name="fork_dessert_tine2" type="box" pos="-0.0005 0.0055 0.0008"  size="0.0115 0.001 0.0008"/>
+      <geom name="fork_dessert_tip0"  type="box" pos="0.0135 -0.0055 0.0008"  size="0.0025 0.0007 0.0008"/>
+      <geom name="fork_dessert_tip1"  type="box" pos="0.0135 0 0.0008"       size="0.0025 0.0007 0.0008"/>
+      <geom name="fork_dessert_tip2"  type="box" pos="0.0135 0.0055 0.0008"   size="0.0025 0.0007 0.0008"/>
+      <geom name="fork_dessert_palm"  type="box" pos="-0.017 0 0.0008" size="0.005 0.0065 0.0008"/>
+      <geom name="fork_dessert_neck"  type="box" pos="-0.028762 0 0.002612" size="0.007 0.003 0.0008" euler="0 15 0"/>
+      <geom name="fork_dessert_bend"  type="cylinder" pos="-0.035523 0 0.004424" size="0.0012 0.0045" euler="90 0 0"/>
+      <geom name="fork_dessert_handle" type="box" pos="-0.075491 0 0.0028115" size="0.04 0.0045 0.0012" euler="0 -2.3102 0"/>
+    </body>
+
+    <!-- ===== FORK: salad fork, 4 narrow tines - face up ===== -->
+    <body name="fork_salad" pos="0 0 0" childclass="tool">
+      <site name="fork_salad_face" pos="0 0 0.0016" quat="0 1 0 0" size="0.001" group="4"/>  <!-- old tool frame -->
+      <geom name="fork_salad_tine0" type="box" pos="-0.003500 -0.007500 0.000800" size="0.012500 0.001000 0.000800"/>
+      <geom name="fork_salad_tine1" type="box" pos="-0.003500 -0.002500 0.000800" size="0.012500 0.001000 0.000800"/>
+      <geom name="fork_salad_tine2" type="box" pos="-0.003500 0.002500 0.000800" size="0.012500 0.001000 0.000800"/>
+      <geom name="fork_salad_tine3" type="box" pos="-0.003500 0.007500 0.000800" size="0.012500 0.001000 0.000800"/>
+      <geom name="fork_salad_tip0" type="box" pos="0.011500 -0.007500 0.000800" size="0.002500 0.000650 0.000800"/>
+      <geom name="fork_salad_tip1" type="box" pos="0.011500 -0.002500 0.000800" size="0.002500 0.000650 0.000800"/>
+      <geom name="fork_salad_tip2" type="box" pos="0.011500 0.002500 0.000800" size="0.002500 0.000650 0.000800"/>
+      <geom name="fork_salad_tip3" type="box" pos="0.011500 0.007500 0.000800" size="0.002500 0.000650 0.000800"/>
+      <geom name="fork_salad_palm" type="box" pos="-0.021000 0 0.000800" size="0.005000 0.008500 0.000800"/>
+      <geom name="fork_salad_neck" type="box" pos="-0.034693 0 0.003129" size="0.009 0.0035 0.000800" euler="0 15 0"/>
+      <geom name="fork_salad_bend" type="cylinder" pos="-0.043386 0 0.005458" size="0.0013 0.0055" euler="90 0 0"/>
+      <geom name="fork_salad_handle" type="box" pos="-0.093343 0 0.003379" size="0.05 0.0055 0.0013" euler="0 -2.3839 0"/>
+    </body>
+
+    <!-- ===== FORK: large serving-style fork, 4 wide tines - face up ===== -->
+    <body name="fork_wide" pos="0 0 0" childclass="tool">
+      <site name="fork_wide_face" pos="0 0 0.002" quat="0 1 0 0" size="0.001" group="4"/>  <!-- old tool frame -->
+      <geom name="fork_wide_tine0" type="box" pos="0.001000 -0.010800 0.001000" size="0.017000 0.001600 0.001000"/>
+      <geom name="fork_wide_tine1" type="box" pos="0.001000 -0.003600 0.001000" size="0.017000 0.001600 0.001000"/>
+      <geom name="fork_wide_tine2" type="box" pos="0.001000 0.003600 0.001000" size="0.017000 0.001600 0.001000"/>
+      <geom name="fork_wide_tine3" type="box" pos="0.001000 0.010800 0.001000" size="0.017000 0.001600 0.001000"/>
+      <geom name="fork_wide_tip0" type="box" pos="0.021000 -0.010800 0.001000" size="0.003000 0.001040 0.001000"/>
+      <geom name="fork_wide_tip1" type="box" pos="0.021000 -0.003600 0.001000" size="0.003000 0.001040 0.001000"/>
+      <geom name="fork_wide_tip2" type="box" pos="0.021000 0.003600 0.001000" size="0.003000 0.001040 0.001000"/>
+      <geom name="fork_wide_tip3" type="box" pos="0.021000 0.010800 0.001000" size="0.003000 0.001040 0.001000"/>
+      <geom name="fork_wide_palm" type="box" pos="-0.022000 0 0.001000" size="0.006000 0.012400 0.001000"/>
+      <geom name="fork_wide_neck" type="box" pos="-0.036693 0 0.003329" size="0.009 0.0035 0.001000" euler="0 15 0"/>
+      <geom name="fork_wide_bend" type="cylinder" pos="-0.045386 0 0.005658" size="0.0013 0.0055" euler="90 0 0"/>
+      <geom name="fork_wide_handle" type="box" pos="-0.095339 0 0.003479" size="0.05 0.0055 0.0013" euler="0 -2.4987 0"/>
+    </body>
+
+    <!-- ===== FORK: 3 wide tines - face up ===== -->
+    <body name="fork_3wide" pos="0 0 0" childclass="tool">
+      <site name="fork_3wide_face" pos="0 0 0.0018" quat="0 1 0 0" size="0.001" group="4"/>  <!-- old tool frame -->
+      <geom name="fork_3wide_tine0" type="box" pos="-0.001500 -0.006600 0.000900" size="0.014500 0.001400 0.000900"/>
+      <geom name="fork_3wide_tine1" type="box" pos="-0.001500 0.000000 0.000900" size="0.014500 0.001400 0.000900"/>
+      <geom name="fork_3wide_tine2" type="box" pos="-0.001500 0.006600 0.000900" size="0.014500 0.001400 0.000900"/>
+      <geom name="fork_3wide_tip0" type="box" pos="0.015500 -0.006600 0.000900" size="0.002500 0.000910 0.000900"/>
+      <geom name="fork_3wide_tip1" type="box" pos="0.015500 0.000000 0.000900" size="0.002500 0.000910 0.000900"/>
+      <geom name="fork_3wide_tip2" type="box" pos="0.015500 0.006600 0.000900" size="0.002500 0.000910 0.000900"/>
+      <geom name="fork_3wide_palm" type="box" pos="-0.021500 0 0.000900" size="0.005500 0.008000 0.000900"/>
+      <geom name="fork_3wide_neck" type="box" pos="-0.035693 0 0.003229" size="0.009 0.0035 0.000900" euler="0 15 0"/>
+      <geom name="fork_3wide_bend" type="cylinder" pos="-0.044386 0 0.005558" size="0.0013 0.0055" euler="90 0 0"/>
+      <geom name="fork_3wide_handle" type="box" pos="-0.094341 0 0.003429" size="0.05 0.0055 0.0013" euler="0 -2.4413 0"/>
+    </body>
+
+    <!-- ===== FORK: plastic fork, 4 thick tines curving 4 deg (held out from training) - face down:
+         rests on its tine tips and its handle; neck shortened to end on the table, handle flat ===== -->
+    <body name="fork_plastic" pos="0 0 0.004490" quat="0 1 0 0" childclass="tool">
+      <site name="fork_plastic_face" pos="0 0 0" size="0.001" group="4"/>  <!-- old tool frame -->
+      <geom name="fork_plastic_tine0" type="box" pos="0.004963 -0.0087 0.002246" size="0.015 0.0015 0.0012" euler="0 -4 0" density="1050" material="plastic_white"/>
+      <geom name="fork_plastic_tine1" type="box" pos="0.004963 -0.0029 0.002246" size="0.015 0.0015 0.0012" euler="0 -4 0" density="1050" material="plastic_white"/>
+      <geom name="fork_plastic_tine2" type="box" pos="0.004963 0.0029 0.002246"  size="0.015 0.0015 0.0012" euler="0 -4 0" density="1050" material="plastic_white"/>
+      <geom name="fork_plastic_tine3" type="box" pos="0.004963 0.0087 0.002246"  size="0.015 0.0015 0.0012" euler="0 -4 0" density="1050" material="plastic_white"/>
+      <geom name="fork_plastic_palm"  type="box" pos="-0.015 0 0.0012" size="0.005 0.0102 0.0012" density="1050" material="plastic_white"/>
+      <geom name="fork_plastic_neck"  type="box" pos="-0.024977 0 0.002258" size="0.005089 0.004 0.0012" euler="0 12 0" density="1050" material="plastic_white"/>
+      <geom name="fork_plastic_handle" type="box" pos="-0.074205 0 0.003289" size="0.045 0.006 0.0012" density="1050" material="plastic_white"/>
+    </body>
+
+    <!-- ===== negatives (not forks) ===== -->
+    <!-- spoon - face down: bowl + neck as before (neck 0.1 mm shorter so it ends on the table), handle flat -->
+    <body name="spoon" pos="0 0 0.010" quat="0 1 0 0" childclass="tool">
+      <site name="spoon_face" pos="0 0 0" size="0.001" group="4"/>  <!-- old tool frame -->
+      <geom name="spoon_bowl"   type="ellipsoid" pos="0 0 0.005" size="0.021 0.0135 0.005"/>
+      <geom name="spoon_neck"   type="box" pos="-0.028641 0 0.006815" size="0.008946 0.003 0.0009" euler="0 15 0"/>
+      <geom name="spoon_handle" type="box" pos="-0.0865 0 0.0087" size="0.05 0.0055 0.0013"/>
+    </body>
+
+    <!-- table knife - blade flat, handle lying flat on the table -->
+    <body name="knife_flat" pos="0 0 0" childclass="tool">
+      <site name="knife_flat_face" pos="0 0 0.0018" quat="0 1 0 0" size="0.001" group="4"/>  <!-- old tool frame -->
+      <geom name="knife_flat_blade"  type="box" pos="0 0 0.0009" size="0.04 0.0095 0.0009"/>
+      <geom name="knife_flat_tip"    type="cylinder" pos="0.04 0 0.0009" size="0.0095 0.0009"/>
+      <geom name="knife_flat_handle" type="box" pos="-0.09 0 0.004" size="0.05 0.0075 0.004" material="handle_black" density="1200"/>
+    </body>
+
+    <!-- knife standing on its spine, edge up, kept upright by a wide flat-bottomed handle -->
+    <body name="knife_edge" pos="0 0 0.019" quat="0 1 0 0" childclass="tool">
+      <site name="knife_edge_face" pos="0 0 0" size="0.001" group="4"/>  <!-- old tool frame -->
+      <geom name="knife_edge_edge"   type="box" pos="0 0 0.0005" size="0.045 0.0003 0.0005"/>
+      <geom name="knife_edge_blade"  type="box" pos="0 0 0.010"  size="0.045 0.0008 0.009"/>
+      <geom name="knife_edge_handle" type="box" pos="-0.095 0 0.011" size="0.05 0.007 0.008" material="handle_black" density="1200"/>
+    </body>
+
+    <body name="pen" pos="0 0 0" childclass="tool">
+      <site name="pen_face" pos="0 0 0.009" quat="0 1 0 0" size="0.001" group="4"/>  <!-- old tool frame -->
+      <geom name="pen_body" type="capsule" fromto="-0.07 0 0.0045 0.07 0 0.0045" size="0.0045" material="blue" density="1200"/>
+    </body>
+
+    <!-- comb - rests on its spine, flush face up (teeth cantilevered 1.5 mm above the table) -->
+    <body name="comb" pos="0 0 0.003" quat="0 1 0 0" childclass="tool">
+      <site name="comb_face" pos="0 0 0" size="0.001" group="4"/>  <!-- old tool frame -->
+      <geom name="comb_spine" type="box" pos="-0.011 0 0.0015" size="0.005 0.0115 0.0015" material="comb" density="1200"/>
+      <geom name="comb_t00" type="box" pos="0.002 -0.0104 0.00075" size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+      <geom name="comb_t01" type="box" pos="0.002 -0.0088 0.00075" size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+      <geom name="comb_t02" type="box" pos="0.002 -0.0072 0.00075" size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+      <geom name="comb_t03" type="box" pos="0.002 -0.0056 0.00075" size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+      <geom name="comb_t04" type="box" pos="0.002 -0.0040 0.00075" size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+      <geom name="comb_t05" type="box" pos="0.002 -0.0024 0.00075" size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+      <geom name="comb_t06" type="box" pos="0.002 -0.0008 0.00075" size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+      <geom name="comb_t07" type="box" pos="0.002 0.0008 0.00075"  size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+      <geom name="comb_t08" type="box" pos="0.002 0.0024 0.00075"  size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+      <geom name="comb_t09" type="box" pos="0.002 0.0040 0.00075"  size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+      <geom name="comb_t10" type="box" pos="0.002 0.0056 0.00075"  size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+      <geom name="comb_t11" type="box" pos="0.002 0.0072 0.00075"  size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+      <geom name="comb_t12" type="box" pos="0.002 0.0088 0.00075"  size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+      <geom name="comb_t13" type="box" pos="0.002 0.0104 0.00075"  size="0.008 0.0004 0.00075" material="comb" density="1200"/>
+    </body>
+
+    <body name="ball" pos="0 0 0" childclass="tool">
+      <site name="ball_face" pos="0 0 0.016" quat="0 1 0 0" size="0.001" group="4"/>  <!-- old tool frame -->
+      <geom name="ball_geom" type="sphere" pos="0 0 0.008" size="0.008" material="red"/>
+    </body>
+
+    <body name="coin" pos="0 0 0" childclass="tool">
+      <site name="coin_face" pos="0 0 0.002" quat="0 1 0 0" size="0.001" group="4"/>  <!-- old tool frame -->
+      <geom name="coin_geom" type="cylinder" pos="0 0 0.001" size="0.0125 0.001" material="gold"/>
+    </body>
+
+    <body name="cube" pos="0 0 0" childclass="tool">
+      <site name="cube_face" pos="0 0 0.016" quat="0 1 0 0" size="0.001" group="4"/>  <!-- old tool frame -->
+      <geom name="cube_geom" type="box" pos="0 0 0.008" size="0.008 0.008 0.008" material="green" density="2700"/>
+    </body>
+
+    <!-- 5 mm calibration ball bearing (used by fork_detector.calibrate) -->
+    <body name="cal_ball" pos="0 0 0" childclass="tool">
+      <site name="cal_ball_face" pos="0 0 0.005" quat="0 1 0 0" size="0.001" group="4"/>  <!-- old tool frame -->
+      <geom name="cal_ball_geom" type="sphere" pos="0 0 0.0025" size="0.0025"/>
+    </body>
+  </worldbody>
+
+  <!-- ===== FORK from ForkMilimeter.stl (mm): visual mesh + 17 CoACD convex parts, lying on its
+       tine tips and handle end (face down, tilted 1.67 deg). Generated by stl_to_mjcf.py. ===== -->
+  <include file="meshes/fork_stl/fork_stl.xml"/>
+
+  <actuator>
+    <position name="x"     joint="slide_x" kp="20000" dampratio="1" ctrlrange="-0.15 0.15"/>
+    <position name="y"     joint="slide_y" kp="20000" dampratio="1" ctrlrange="-0.15 0.15"/>
+    <motor    name="press" joint="slide_z" gear="-1" ctrlrange="-2 15"/>
+    <position name="yaw"   joint="yaw"   kp="20" dampratio="1" ctrlrange="-3.1416 3.1416"/>
+    <position name="pitch" joint="pitch" kp="20" dampratio="1" ctrlrange="-0.5 0.5"/>
+    <position name="roll"  joint="roll"  kp="20" dampratio="1" ctrlrange="-0.5 0.5"/>
+  </actuator>
+
+  <sensor>
+    <touch name="gel_force" site="gel_touch"/>
+    <jointpos name="gel_height" joint="slide_z"/>
+  </sensor>
+
+  <keyframe>
+    <key name="home" qpos="0 0 0.04 0 0 0" ctrl="0 0 0 0 0 0"/>
+  </keyframe>
+</mujoco>

@@ -1,0 +1,42 @@
+# ---------------------------------------------------------------------------------------------------------------
+# What stays out of git, and why. DATA_AND_MODELS.md lists every excluded item with its size, its SHA-256 (models)
+# and the command that regenerates it.
+# ---------------------------------------------------------------------------------------------------------------
+
+# Python environment and caches
+.venv/
+__pycache__/
+*.pyc
+
+# MuJoCo's own log file
+MUJOCO_LOG.TXT
+
+# Datasets: the HDF5 shards (51 GB) and the training caches built from them. Every sample is regenerated
+# bit-identically from its seed (collect_dataset.py). Their metadata, stable poses and verification figures ARE
+# versioned (dataset*/metadata.json, dataset*/poses/, dataset*/verify/).
+dataset*/**/*.h5
+dataset*/cache_*
+# CAD baseline raw match caches (542 MB each), rebuilt by abs_baseline.py / centre_v3.py compare
+abs_raw_*
+
+# Training checkpoints and liveness files (only needed while a training runs)
+*.ckpt
+*.heartbeat
+results_centre/v3/.watch_state/
+
+# Detector evaluation sample cache (18.7 MB), rebuilt by train_detector.py
+results_moving/eval_samples.npz
+
+# Trained networks: 20 files of 38-45 MB. Only the five that the demo and the current conclusions rest on are
+# versioned (plus mini_robust_tta/model_100k_seed0.pt, a relative symlink to the mini_robust model); the others
+# are listed with their SHA-256 and training command in DATA_AND_MODELS.md and MODELS.sha256.
+*.pt
+!results_centre/mini_robust/model_100k_seed0.pt
+!results_centre/mini_robust_aa/model_100k_seed0.pt
+!results_centre/mini_exact/model_100k_seed0.pt
+!results_centre/mini_exact/model_100k_seed1.pt
+!results_centre/mini_exact/model_100k_seed2.pt
+!results_centre/mini_robust_tta/model_100k_seed0.pt
+
+# A frozen copy of the simulation (freeze_sim.py) is an archive, not source
+results_centre/FROZEN_SIM/

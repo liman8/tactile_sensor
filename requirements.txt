@@ -1,0 +1,19 @@
+mujoco>=4.0
+numpy
+scipy
+opencv-python
+scikit-learn
+joblib
+imageio
+# STL objects: stl_to_mjcf.py, verify_stl.py
+trimesh
+coacd
+rtree
+networkx
+fast-simplification
+# optional, more robust decimation of STL files > 100k triangles: vtk
+# dataset: collect_dataset.py
+h5py
+matplotlib
+# baseline model: train_centre.py (CUDA build from PyPI; CPU works too, slowly)
+torch

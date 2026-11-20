@@ -1,0 +1,151 @@
+moving sensor: d0 = 27.000 mm (fixed: 27.000), 0.1 mm/px, gel invweight0 2.899
+
+1. resting poses (object alone on the table)
+  fork_dinner   face up   lowest point  +0.00 um   top  6.86 mm   CoM inside support by  +8.9 mm  ok
+  fork_dessert  face up   lowest point  +0.00 um   top  5.62 mm   CoM inside support by  +5.7 mm  ok
+  fork_salad    face up   lowest point  +0.00 um   top  6.76 mm   CoM inside support by  +7.2 mm  ok
+  fork_wide     face up   lowest point  +0.00 um   top  6.96 mm   CoM inside support by +10.4 mm  ok
+  fork_3wide    face up   lowest point  +0.00 um   top  6.86 mm   CoM inside support by  +7.0 mm  ok
+  fork_plastic  face down lowest point  +0.16 um   top  4.49 mm   CoM inside support by  +8.1 mm  ok
+  spoon         face down lowest point  +0.00 um   top 10.00 mm   CoM inside support by  +4.3 mm  ok
+  knife_flat    face up   lowest point  +0.00 um   top  8.00 mm   CoM inside support by  +9.5 mm  ok
+  knife_edge    face down lowest point  +0.00 um   top 19.00 mm   CoM inside support by  +7.0 mm  ok
+  pen           face up   lowest point  +0.17 um   top  9.00 mm   CoM inside support by  +0.1 mm  ok
+  comb          face down lowest point  +0.00 um   top  3.00 mm   CoM inside support by  +1.4 mm  ok
+  ball          face up   lowest point  +0.00 um   top 16.00 mm   CoM inside support by  +0.1 mm  ok
+  coin          face up   lowest point  +0.00 um   top  2.00 mm   CoM inside support by +12.5 mm  ok
+  cube          face up   lowest point  +0.00 um   top 16.00 mm   CoM inside support by  +8.0 mm  ok
+  cal_ball      face up   lowest point  +0.00 um   top  5.00 mm   CoM inside support by  +0.1 mm  ok
+
+2. force sweep (relative pose x=y=yaw=0; object placed at random on the table)
+  object            F  touch  depth  fixed settled steps  gel z house z table/housing contact
+  fork_dinner     0.5   0.49   0.37   0.37    True   380   1.43    4.42 0/0  ok
+  fork_dinner     2.0   2.00   0.54   0.54    True   240   1.26    4.26 0/0  ok
+  fork_dinner     5.0   5.00   0.69   0.69    True   160   1.11    4.10 0/0  ok
+  fork_dinner    10.0  10.00   0.83   0.83    True   120   0.97    3.96 0/0  ok
+  fork_dessert    0.5   0.49   0.39   0.37    True   380   1.21    4.21 0/0  ok
+  fork_dessert    2.0   2.00   0.55   0.53    True   240   1.05    4.05 0/0  ok
+  fork_dessert    5.0   5.00   0.69   0.67    True   160   0.91    3.90 0/0  ok
+  fork_dessert   10.0  10.00   0.82   0.80    True   120   0.78    3.77 0/0  ok
+  fork_salad      0.5   0.49   0.37   0.38    True   380   1.23    4.23 0/0  ok
+  fork_salad      2.0   2.00   0.53   0.54    True   240   1.07    4.06 0/0  ok
+  fork_salad      5.0   5.00   0.67   0.69    True   160   0.93    3.92 0/0  ok
+  fork_salad     10.0  10.00   0.80   0.82    True   120   0.80    3.79 0/0  ok
+  fork_wide       0.5   0.49   0.44   0.43    True   360   1.56    4.56 0/0  ok
+  fork_wide       2.0   2.00   0.62   0.61    True   200   1.38    4.38 0/0  ok
+  fork_wide       5.0   5.00   0.77   0.76    True   140   1.23    4.23 0/0  ok
+  fork_wide      10.0  10.00   0.91   0.89    True   120   1.09    4.09 0/0  ok
+  fork_3wide      0.5   0.49   0.40   0.41    True   360   1.40    4.40 0/0  ok
+  fork_3wide      2.0   2.00   0.58   0.58    True   220   1.22    4.22 0/0  ok
+  fork_3wide      5.0   5.00   0.73   0.74    True   160   1.07    4.06 0/0  ok
+  fork_3wide     10.0  10.00   0.88   0.89    True   120   0.92    3.91 0/0  ok
+  fork_plastic    0.5   0.50   0.48   0.46    True   360   4.01    7.00 0/0  ok
+  fork_plastic    2.0   2.00   0.67   0.65    True   200   3.79    6.79 0/0  ok
+  fork_plastic    5.0   5.00   0.83   0.80    True   120   3.59    6.57 0/0  ok
+  fork_plastic   10.0  10.00   0.98   0.94    True   120   3.37    6.34 0/0  ok
+  spoon           0.5   0.50   0.86   0.83    True   340   9.14   12.14 0/0  ok
+  spoon           2.0   2.08   1.18   1.16    True   120   8.81   11.81 0/0  ok
+  spoon           5.0   5.01   1.41   1.37    True   160   8.59   11.59 0/0  ok
+  spoon          10.0  10.03   1.61   1.56    True   120   8.39   11.39 0/0  ok
+  knife_flat      0.5   0.50   0.62   0.59    True   340   1.18    4.18 0/0  ok
+  knife_flat      2.0   2.00   0.86   0.83    True   160   0.94    3.94 0/0  ok
+  knife_flat      5.0   4.99   1.06   1.01    True   120   0.74    3.74 0/0  ok
+  knife_flat     10.0  10.00   1.23   1.18    True   120   0.57    3.57 0/0  ok
+  knife_edge      0.5   0.50   0.62   0.60    True   340  18.38   21.38 0/0  ok
+  knife_edge      2.0   2.00   0.86   0.84    True   160  18.14   21.14 0/0  ok
+  knife_edge      5.0   4.99   1.06   1.03    True   120  17.94   20.94 0/0  ok
+  knife_edge     10.0  10.00   1.23   1.19    True   120  17.77   20.77 0/0  ok
+  pen             0.5   0.50   0.72   0.74    True   340   8.27   11.27 0/0  ok
+  pen             2.0   2.01   1.00   1.02    True   140   7.99   10.99 0/0  ok
+  pen             5.0   4.98   1.22   1.24    True   120   7.77   10.77 0/0  ok
+  pen            10.0  10.01   1.40   1.43    True   120   7.59   10.59 0/0  ok
+  comb            0.5   0.49   0.31   0.32    True   400   2.69    5.69 0/0  ok
+  comb            2.0   1.99   0.45   0.45    True   260   2.55    5.55 0/0  ok
+  comb            5.0   5.00   0.57   0.57    True   200   2.43    5.43 0/0  ok
+  comb           10.0  10.00   0.68   0.68    True   140   2.32    5.32 0/0  ok
+  ball            0.5   0.50   0.85   0.89    True   340  15.14   18.14 0/0  ok
+  ball            2.0   2.08   1.18   1.20    True   120  14.81   17.81 0/0  ok
+  ball            5.0   5.01   1.40   1.45    True   160  14.59   17.59 0/0  ok
+  ball           10.0  10.03   1.60   1.65    True   120  14.39   17.39 0/0  ok
+  coin            0.5   0.50   0.62   0.64    True   340   1.38    4.38 0/0  ok
+  coin            2.0   2.00   0.87   0.89    True   160   1.13    4.13 0/0  ok
+  coin            5.0   4.99   1.06   1.08    True   120   0.93    3.93 0/0  ok
+  coin           10.0  10.00   1.24   1.26    True   120   0.76    3.76 0/0  ok
+  cube            0.5   0.50   0.62   0.65    True   340  15.38   18.38 0/0  ok
+  cube            2.0   2.00   0.86   0.90    True   160  15.14   18.14 0/0  ok
+  cube            5.0   4.99   1.06   1.10    True   120  14.94   17.94 0/0  ok
+  cube           10.0  10.00   1.23   1.27    True   120  14.77   17.77 0/0  ok
+  cal_ball        0.5   0.50   0.85   0.86    True   340   4.14    7.14 0/0  ok
+  cal_ball        2.0   2.08   1.18   1.17    True   120   3.81    6.81 0/0  ok
+  cal_ball        5.0   5.01   1.40   1.42    True   160   3.59    6.59 0/0  ok
+  cal_ball       10.0  10.03   1.60   1.62    True   120   3.39    6.39 0/0  ok
+  depth moving / fixed: median 0.996, range 0.955 - 1.050
+
+3. same relative pose -> same tactile image (gallery poses; raw object depth)
+  fork_dinner   contact IoU 1.000  |dh| mean   1.6 um, p99   8.2 um  peak 0.63 -> 0.63 mm  tines 4 -> 4  ok
+  fork_dessert  contact IoU 1.000  |dh| mean   4.7 um, p99  19.5 um  peak 0.54 -> 0.56 mm  tines 3 -> 3  ok
+  fork_salad    contact IoU 0.981  |dh| mean   3.8 um, p99  12.2 um  peak 0.73 -> 0.71 mm  tines 2 -> 3  ok
+  fork_wide     contact IoU 0.974  |dh| mean   6.0 um, p99  22.9 um  peak 1.01 -> 1.03 mm  tines 4 -> 4  ok
+  fork_3wide    contact IoU 1.000  |dh| mean   1.7 um, p99   8.9 um  peak 0.58 -> 0.58 mm  tines 3 -> 3  ok
+  fork_plastic  contact IoU 0.985  |dh| mean   7.2 um, p99  29.3 um  peak 0.72 -> 0.74 mm  tines 3 -> 4  ok
+  fork_dinner   contact IoU 0.993  |dh| mean   2.7 um, p99  16.6 um  peak 0.77 -> 0.76 mm  tines 2 -> 2  ok
+  spoon         contact IoU 0.971  |dh| mean  19.5 um, p99  39.9 um  peak 1.23 -> 1.27 mm  tines 0 -> 0  ok
+  knife_flat    contact IoU 0.945  |dh| mean  25.6 um, p99  51.8 um  peak 1.16 -> 1.21 mm  tines 0 -> 0  ok
+  knife_edge    contact IoU 1.000  |dh| mean   0.9 um, p99  31.3 um  peak 0.92 -> 0.95 mm  tines 0 -> 0  ok
+  pen           contact IoU 0.994  |dh| mean   3.5 um, p99  16.3 um  peak 1.11 -> 1.10 mm  tines 0 -> 0  ok
+  comb          contact IoU 1.000  |dh| mean   1.0 um, p99   2.3 um  peak 0.50 -> 0.49 mm  tines 0 -> 0  ok
+  coin          contact IoU 0.960  |dh| mean  21.1 um, p99  42.9 um  peak 1.16 -> 1.13 mm  tines 0 -> 0  ok
+  cube          contact IoU 0.942  |dh| mean   5.6 um, p99  42.7 um  peak 1.37 -> 1.33 mm  tines 0 -> 0  ok
+  ball          contact IoU 0.956  |dh| mean   3.9 um, p99  51.7 um  peak 1.31 -> 1.26 mm  tines 0 -> 0  ok
+  cal_ball      contact IoU 0.996  |dh| mean   0.0 um, p99   1.8 um  peak 1.17 -> 1.18 mm  tines 0 -> 0  ok
+
+4. handedness: every contact pixel, mapped back to the world, lands on the fork (a mirrored image would not)
+  fork_dinner   contact pixels on the fork: 100.0% (mirrored image:  33.6%)   tine heading error  0.4 deg (mirrored image:  89.3 deg)  ok
+  fork_dessert  contact pixels on the fork: 100.0% (mirrored image:  39.0%)   tine heading error  0.1 deg (mirrored image:  16.3 deg)  ok
+  fork_wide     contact pixels on the fork: 100.0% (mirrored image:  40.6%)   tine heading error  0.1 deg (mirrored image:  51.0 deg)  ok
+  fork_3wide    contact pixels on the fork: 100.0% (mirrored image:  27.7%)   tine heading error  0.8 deg (mirrored image:  83.2 deg)  ok
+  fork_dinner   contact pixels on the fork: 100.0% (mirrored image:  24.9%)   tine heading error  0.0 deg (mirrored image:  18.9 deg)  ok
+  fork_dessert  contact pixels on the fork: 100.0% (mirrored image:  26.7%)   tine heading error  0.0 deg (mirrored image:  50.5 deg)  ok
+  fork_wide     contact pixels on the fork: 100.0% (mirrored image:  41.4%)   tine heading error  0.6 deg (mirrored image:  14.3 deg)  ok
+  fork_3wide    contact pixels on the fork: 100.0% (mirrored image:  46.1%)   tine heading error  0.9 deg (mirrored image:  27.9 deg)  ok
+  fork_dinner   contact pixels on the fork: 100.0% (mirrored image:  31.9%)   tine heading error  0.5 deg (mirrored image:  27.3 deg)  ok
+  fork_dessert  contact pixels on the fork: 100.0% (mirrored image:  32.4%)   tine heading error  0.7 deg (mirrored image:  51.5 deg)  ok
+  fork_wide     contact pixels on the fork: 100.0% (mirrored image:  41.5%)   tine heading error  0.3 deg (mirrored image:  40.7 deg)  ok
+  fork_3wide    contact pixels on the fork: 100.0% (mirrored image:  27.8%)   tine heading error  0.5 deg (mirrored image:  57.2 deg)  ok
+
+5. freejoint version: rest 1 s on the table, then presses
+  fork_dinner   at rest: drift   0.09 um, turn 0.0002 deg, final speed 0.0000 mm/s, lowest  -0.0 um | pressed: moved <= 0.000 mm, turned <= 0.00 deg, lowest >=  -0.0 um, depth 0.38 0.55 0.69 0.83 mm  ok
+                60 random tilted presses: settled 100%, object shift median 0.000 mm, max   0.00 mm, > 2 mm in   0%, lowest point  -0.8 um
+  fork_dessert  at rest: drift   0.02 um, turn 0.0001 deg, final speed 0.0000 mm/s, lowest  -0.0 um | pressed: moved <= 0.000 mm, turned <= 0.00 deg, lowest >=  -0.0 um, depth 0.39 0.56 0.70 0.83 mm  ok
+                60 random tilted presses: settled 100%, object shift median 0.000 mm, max   0.01 mm, > 2 mm in   0%, lowest point  -1.7 um
+  fork_salad    at rest: drift   0.08 um, turn 0.0002 deg, final speed 0.0000 mm/s, lowest  -0.0 um | pressed: moved <= 0.000 mm, turned <= 0.00 deg, lowest >=  -0.0 um, depth 0.38 0.54 0.68 0.81 mm  ok
+                60 random tilted presses: settled 100%, object shift median 0.001 mm, max   0.01 mm, > 2 mm in   0%, lowest point  -2.0 um
+  fork_wide     at rest: drift   0.10 um, turn 0.0002 deg, final speed 0.0000 mm/s, lowest  -0.0 um | pressed: moved <= 0.000 mm, turned <= 0.00 deg, lowest >=  -0.0 um, depth 0.45 0.63 0.78 0.92 mm  ok
+                60 random tilted presses: settled 100%, object shift median 0.000 mm, max   0.00 mm, > 2 mm in   0%, lowest point  -1.5 um
+  fork_3wide    at rest: drift   0.09 um, turn 0.0002 deg, final speed 0.0000 mm/s, lowest  -0.0 um | pressed: moved <= 0.000 mm, turned <= 0.00 deg, lowest >=  -0.0 um, depth 0.41 0.58 0.74 0.89 mm  ok
+                60 random tilted presses: settled 100%, object shift median 0.000 mm, max   0.01 mm, > 2 mm in   0%, lowest point  -3.1 um
+  fork_plastic  at rest: drift   0.13 um, turn 0.0005 deg, final speed 0.0000 mm/s, lowest  -0.0 um | pressed: moved <= 0.000 mm, turned <= 0.00 deg, lowest >=  -0.0 um, depth 0.48 0.68 0.84 0.99 mm  ok
+                60 random tilted presses: settled 100%, object shift median 0.001 mm, max   0.52 mm, > 2 mm in   0%, lowest point  -0.7 um
+  spoon         at rest: drift   0.00 um, turn 0.0000 deg, final speed 0.0000 mm/s, lowest  -0.0 um | pressed: moved <= 0.000 mm, turned <= 0.00 deg, lowest >=  -0.0 um, depth 0.87 1.18 1.42 1.62 mm  ok
+                60 random tilted presses: settled  95%, object shift median 0.000 mm, max  15.82 mm, > 2 mm in   7%, lowest point  -0.5 um
+  knife_flat    at rest: drift   0.00 um, turn 0.0000 deg, final speed 0.0000 mm/s, lowest  -0.0 um | pressed: moved <= 0.000 mm, turned <= 0.00 deg, lowest >=  -0.0 um, depth 0.63 0.87 1.07 1.24 mm  ok
+                60 random tilted presses: settled  98%, object shift median 0.000 mm, max   0.06 mm, > 2 mm in   0%, lowest point  -2.0 um
+  knife_edge    at rest: drift   0.00 um, turn 0.0000 deg, final speed 0.0000 mm/s, lowest  -0.0 um | pressed: moved <= 0.000 mm, turned <= 0.00 deg, lowest >=  -0.0 um, depth 0.63 0.87 1.07 1.24 mm  ok
+                60 random tilted presses: settled 100%, object shift median 0.000 mm, max   0.00 mm, > 2 mm in   0%, lowest point  -0.1 um
+  pen           at rest: drift   0.00 um, turn 0.0000 deg, final speed 0.0000 mm/s, lowest  +0.2 um | pressed: moved <= 0.000 mm, turned <= 0.00 deg, lowest >=  +0.2 um, depth 0.73 1.02 1.23 1.42 mm  ok
+                60 random tilted presses: settled  95%, object shift median 0.006 mm, max   1.05 mm, > 2 mm in   0%, lowest point  -0.2 um
+  comb          at rest: drift   0.00 um, turn 0.0000 deg, final speed 0.0000 mm/s, lowest  -0.0 um | pressed: moved <= 0.153 mm, turned <= 1.31 deg, lowest >=  -0.0 um, depth 0.46 0.65 0.80 0.95 mm  ok
+                60 random tilted presses: settled  98%, object shift median 0.139 mm, max   0.38 mm, > 2 mm in   0%, lowest point  -2.5 um
+  ball          at rest: drift   0.00 um, turn 0.0000 deg, final speed 0.0000 mm/s, lowest  -0.0 um | pressed: moved <= 0.000 mm, turned <= 0.00 deg, lowest >=  -0.0 um, depth 0.86 1.17 1.41 1.61 mm  ok
+                60 random tilted presses: settled  98%, object shift median 0.013 mm, max   0.63 mm, > 2 mm in   0%, lowest point  -0.0 um
+  coin          at rest: drift   0.00 um, turn 0.0000 deg, final speed 0.0000 mm/s, lowest  -0.0 um | pressed: moved <= 0.000 mm, turned <= 0.00 deg, lowest >=  -0.6 um, depth 0.62 0.87 1.08 1.25 mm  ok
+                60 random tilted presses: settled  68%, object shift median 0.006 mm, max  19.49 mm, > 2 mm in   2%, lowest point -118.3 um
+  cube          at rest: drift   0.00 um, turn 0.0000 deg, final speed 0.0000 mm/s, lowest  -0.0 um | pressed: moved <= 0.000 mm, turned <= 0.00 deg, lowest >=  -0.0 um, depth 0.63 0.87 1.07 1.24 mm  ok
+                60 random tilted presses: settled 100%, object shift median 0.000 mm, max   0.01 mm, > 2 mm in   0%, lowest point  -0.5 um
+  cal_ball      at rest: drift   0.00 um, turn 0.0000 deg, final speed 0.0000 mm/s, lowest  -0.0 um | pressed: moved <= 0.000 mm, turned <= 0.00 deg, lowest >=  -0.0 um, depth 0.86 1.17 1.41 1.61 mm  ok
+                60 random tilted presses: settled  90%, object shift median 0.012 mm, max   0.83 mm, > 2 mm in   0%, lowest point  -0.0 um
+
+0 failed checks
+1 known issue(s), see README:
+  free coin: tilted presses: max shift 19.5 mm, lowest -118.3 um  [known issue: a tilted gel edge over the thin coin's rim makes MuJoCo's box-cylinder convex collision report a sideways penetration; in ~2-4 % of tilted presses the free coin is pushed away (up to ~3 cm). Static objects: the press does not settle and is re-drawn by train_detector.py]
+wrote <project>/figures_moving/fixed_vs_moving.png and verify_report.json
