@@ -1,0 +1,37 @@
+sensor mini: data dataset_mini, results results_centre/mini_exact, input 93 x 72 px
+val   100k s0 as rendered                        median 0.875 p90 2.00 | p90 - as rendered +0.00 [+0.00, +0.00] | p90 - zoom 0.99 +0.12 [-0.04, +0.30] | handle p90 20.98
+val   100k s0 zoom 0.99                          median 0.871 p90 1.88 | p90 - as rendered -0.12 [-0.30, +0.04] | p90 - zoom 0.99 +0.00 [+0.00, +0.00] | handle p90 18.00
+val   100k s0 zoom 0.98                          median 0.880 p90 2.01 | p90 - as rendered +0.01 [-0.16, +0.20] | p90 - zoom 0.99 +0.13 [+0.00, +0.31] | handle p90 19.65
+val   100k s0 zoom 1.02                          median 0.931 p90 2.43 | p90 - as rendered +0.43 [+0.16, +0.90] | p90 - zoom 0.99 +0.55 [+0.24, +1.00] | handle p90 28.89
+val   100k s0 zoom 1.02, outer ring dimmed as by zoom 0.98 median 1.083 p90 4.84 | p90 - as rendered +2.84 [+2.49, +3.36] | p90 - zoom 0.99 +2.96 [+2.56, +3.46] | handle p90 26.73
+val   100k s0 zoom 0.98, edge repeated (ring not dimmed) median 0.990 p90 3.35 | p90 - as rendered +1.35 [+1.10, +1.90] | p90 - zoom 0.99 +1.47 [+1.15, +1.97] | handle p90 19.85
+val   100k s1 as rendered                        median 0.889 p90 1.96 | p90 - as rendered +0.00 [+0.00, +0.00] | p90 - zoom 0.99 -0.03 [-0.24, +0.24] | handle p90 24.66
+val   100k s1 zoom 0.99                          median 0.889 p90 1.99 | p90 - as rendered +0.03 [-0.24, +0.24] | p90 - zoom 0.99 +0.00 [+0.00, +0.00] | handle p90 21.71
+val   100k s1 zoom 0.98                          median 0.884 p90 1.93 | p90 - as rendered -0.02 [-0.33, +0.23] | p90 - zoom 0.99 -0.06 [-0.19, +0.14] | handle p90 24.39
+val   100k s1 zoom 1.02                          median 0.932 p90 2.49 | p90 - as rendered +0.53 [+0.18, +0.83] | p90 - zoom 0.99 +0.50 [+0.26, +0.83] | handle p90 24.39
+val   100k s1 zoom 1.02, outer ring dimmed as by zoom 0.98 median 1.098 p90 5.21 | p90 - as rendered +3.26 [+2.79, +3.65] | p90 - zoom 0.99 +3.22 [+2.78, +3.64] | handle p90 24.66
+val   100k s1 zoom 0.98, edge repeated (ring not dimmed) median 0.990 p90 3.42 | p90 - as rendered +1.47 [+1.05, +1.86] | p90 - zoom 0.99 +1.44 [+1.07, +1.88] | handle p90 19.85
+val   100k s2 as rendered                        median 0.887 p90 2.04 | p90 - as rendered +0.00 [+0.00, +0.00] | p90 - zoom 0.99 +0.06 [-0.23, +0.19] | handle p90 19.65
+val   100k s2 zoom 0.99                          median 0.879 p90 1.98 | p90 - as rendered -0.06 [-0.19, +0.23] | p90 - zoom 0.99 +0.00 [+0.00, +0.00] | handle p90 18.92
+val   100k s2 zoom 0.98                          median 0.884 p90 1.99 | p90 - as rendered -0.05 [-0.26, +0.13] | p90 - zoom 0.99 +0.01 [-0.28, +0.13] | handle p90 18.90
+val   100k s2 zoom 1.02                          median 0.967 p90 2.48 | p90 - as rendered +0.44 [+0.16, +0.73] | p90 - zoom 0.99 +0.50 [+0.11, +0.76] | handle p90 23.30
+val   100k s2 zoom 1.02, outer ring dimmed as by zoom 0.98 median 1.107 p90 5.40 | p90 - as rendered +3.36 [+2.81, +3.64] | p90 - zoom 0.99 +3.42 [+2.79, +3.65] | handle p90 31.30
+val   100k s2 zoom 0.98, edge repeated (ring not dimmed) median 1.002 p90 3.51 | p90 - as rendered +1.47 [+1.04, +1.79] | p90 - zoom 0.99 +1.53 [+1.01, +1.81] | handle p90 21.00
+test2 100k s0 as rendered                        median 0.873 p90 1.79 | p90 - as rendered +0.00 [+0.00, +0.00] | p90 - zoom 0.99 +0.07 [-0.02, +0.14] | handle p90 13.94
+test2 100k s0 zoom 0.99                          median 0.869 p90 1.72 | p90 - as rendered -0.07 [-0.14, +0.02] | p90 - zoom 0.99 +0.00 [+0.00, +0.00] | handle p90 14.72
+test2 100k s0 zoom 0.98                          median 0.876 p90 1.80 | p90 - as rendered +0.00 [-0.09, +0.08] | p90 - zoom 0.99 +0.08 [-0.01, +0.14] | handle p90 14.88
+test2 100k s0 zoom 1.02                          median 0.931 p90 2.40 | p90 - as rendered +0.60 [+0.48, +0.73] | p90 - zoom 0.99 +0.68 [+0.54, +0.80] | handle p90 16.33
+test2 100k s0 zoom 1.02, outer ring dimmed as by zoom 0.98 median 1.086 p90 4.89 | p90 - as rendered +3.09 [+2.94, +3.31] | p90 - zoom 0.99 +3.17 [+3.00, +3.36] | handle p90 18.88
+test2 100k s0 zoom 0.98, edge repeated (ring not dimmed) median 0.998 p90 3.07 | p90 - as rendered +1.28 [+1.13, +1.41] | p90 - zoom 0.99 +1.35 [+1.20, +1.48] | handle p90 16.64
+test2 100k s1 as rendered                        median 0.890 p90 1.92 | p90 - as rendered +0.00 [+0.00, +0.00] | p90 - zoom 0.99 +0.10 [+0.01, +0.17] | handle p90 15.00
+test2 100k s1 zoom 0.99                          median 0.879 p90 1.82 | p90 - as rendered -0.10 [-0.17, -0.01] | p90 - zoom 0.99 +0.00 [+0.00, +0.00] | handle p90 16.93
+test2 100k s1 zoom 0.98                          median 0.889 p90 1.89 | p90 - as rendered -0.03 [-0.12, +0.06] | p90 - zoom 0.99 +0.07 [-0.01, +0.14] | handle p90 14.71
+test2 100k s1 zoom 1.02                          median 0.928 p90 2.47 | p90 - as rendered +0.55 [+0.39, +0.67] | p90 - zoom 0.99 +0.65 [+0.48, +0.77] | handle p90 16.73
+test2 100k s1 zoom 1.02, outer ring dimmed as by zoom 0.98 median 1.074 p90 5.04 | p90 - as rendered +3.12 [+2.93, +3.25] | p90 - zoom 0.99 +3.22 [+3.01, +3.35] | handle p90 17.85
+test2 100k s1 zoom 0.98, edge repeated (ring not dimmed) median 0.999 p90 3.17 | p90 - as rendered +1.25 [+1.13, +1.39] | p90 - zoom 0.99 +1.36 [+1.21, +1.49] | handle p90 15.06
+test2 100k s2 as rendered                        median 0.878 p90 1.81 | p90 - as rendered +0.00 [+0.00, +0.00] | p90 - zoom 0.99 +0.00 [-0.08, +0.08] | handle p90 14.47
+test2 100k s2 zoom 0.99                          median 0.876 p90 1.81 | p90 - as rendered -0.00 [-0.08, +0.08] | p90 - zoom 0.99 +0.00 [+0.00, +0.00] | handle p90 14.47
+test2 100k s2 zoom 0.98                          median 0.877 p90 1.86 | p90 - as rendered +0.05 [-0.06, +0.11] | p90 - zoom 0.99 +0.05 [-0.03, +0.11] | handle p90 13.48
+test2 100k s2 zoom 1.02                          median 0.934 p90 2.52 | p90 - as rendered +0.70 [+0.57, +0.79] | p90 - zoom 0.99 +0.71 [+0.57, +0.80] | handle p90 17.78
+test2 100k s2 zoom 1.02, outer ring dimmed as by zoom 0.98 median 1.089 p90 5.10 | p90 - as rendered +3.28 [+3.10, +3.47] | p90 - zoom 0.99 +3.29 [+3.10, +3.47] | handle p90 18.51
+test2 100k s2 zoom 0.98, edge repeated (ring not dimmed) median 0.999 p90 3.08 | p90 - as rendered +1.26 [+1.11, +1.36] | p90 - zoom 0.99 +1.26 [+1.12, +1.37] | handle p90 18.05

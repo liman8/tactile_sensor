@@ -1,0 +1,285 @@
+sensor mini: data dataset_mini, results results_centre/mini_exact, input 93 x 72 px, un-resampled training fraction 0.25
+v2_100k_s0     clean          <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.6 mm) | <4 mm2: success 69 % (reached 83 %, 8.0 presses) | final err 0.73/1.3 mm, >5 mm 0.0 % | 0.34 s/press (64 s)
+v2_100k_s0     noise_0.05mm   <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.7 mm) | <4 mm2: success 69 % (reached 79 %, 8.0 presses) | final err 0.63/1.1 mm, >5 mm 0.0 % | 0.34 s/press (129 s)
+v2_100k_s0     lateral_0.98   <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.6 mm) | <4 mm2: success 71 % (reached 80 %, 7.0 presses) | final err 0.57/1.1 mm, >5 mm 0.0 % | 0.34 s/press (194 s)
+v2_100k_s0     resampled_0.99 <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.6 mm) | <4 mm2: success 70 % (reached 80 %, 7.0 presses) | final err 0.59/1.1 mm, >5 mm 0.0 % | 0.35 s/press (260 s)
+{
+ "v2_100k_s0_clean": {
+  "success_16mm2_within_2_presses": 0.96,
+  "final": {
+   "err_mm_median": 0.7264224950377045,
+   "err_mm_p90": 1.2931864418867796,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.8266666666666667,
+   "presses_mean": 8.066666666666666
+  },
+  "seconds_per_press": 0.3397549043849662
+ },
+ "v2_100k_s0_lateral_0.98": {
+  "success_16mm2_within_2_presses": 0.97,
+  "final": {
+   "err_mm_median": 0.5708515931331877,
+   "err_mm_p90": 1.0752606193087997,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.8966666666666666,
+   "presses_mean": 8.04
+  },
+  "seconds_per_press": 0.3433701332306105
+ },
+ "v2_100k_s0_noise_0.05mm": {
+  "success_16mm2_within_2_presses": 0.95,
+  "final": {
+   "err_mm_median": 0.6268869649613855,
+   "err_mm_p90": 1.1485423080545059,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.8833333333333333,
+   "presses_mean": 8.12
+  },
+  "seconds_per_press": 0.3382009234554553
+ },
+ "v2_100k_s0_resampled_0.99": {
+  "success_16mm2_within_2_presses": 0.97,
+  "final": {
+   "err_mm_median": 0.5909625855412026,
+   "err_mm_p90": 1.0665574941570346,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.8966666666666666,
+   "presses_mean": 8.013333333333334
+  },
+  "seconds_per_press": 0.3503285165990471
+ }
+}
+sensor mini: data dataset_mini, results results_centre/mini_exact, input 93 x 72 px, un-resampled training fraction 0.25
+v2_100k_s1     clean          <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.7 mm) | <4 mm2: success 68 % (reached 86 %, 7.0 presses) | final err 0.74/1.3 mm, >5 mm 0.0 % | 0.34 s/press (63 s)
+v2_100k_s1     noise_0.05mm   <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.7 mm) | <4 mm2: success 70 % (reached 84 %, 7.0 presses) | final err 0.69/1.3 mm, >5 mm 0.0 % | 0.34 s/press (127 s)
+v2_100k_s1     lateral_0.98   <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.6 mm) | <4 mm2: success 66 % (reached 80 %, 7.0 presses) | final err 0.63/1.1 mm, >5 mm 0.0 % | 0.35 s/press (192 s)
+v2_100k_s1     resampled_0.99 <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.6 mm) | <4 mm2: success 73 % (reached 79 %, 8.0 presses) | final err 0.57/1.1 mm, >5 mm 0.0 % | 0.35 s/press (259 s)
+{
+ "v2_100k_s0_clean": {
+  "success_16mm2_within_2_presses": 0.96,
+  "final": {
+   "err_mm_median": 0.7264224950377045,
+   "err_mm_p90": 1.2931864418867796,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.8266666666666667,
+   "presses_mean": 8.066666666666666
+  },
+  "seconds_per_press": 0.3397549043849662
+ },
+ "v2_100k_s0_lateral_0.98": {
+  "success_16mm2_within_2_presses": 0.97,
+  "final": {
+   "err_mm_median": 0.5708515931331877,
+   "err_mm_p90": 1.0752606193087997,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.8966666666666666,
+   "presses_mean": 8.04
+  },
+  "seconds_per_press": 0.3433701332306105
+ },
+ "v2_100k_s0_noise_0.05mm": {
+  "success_16mm2_within_2_presses": 0.95,
+  "final": {
+   "err_mm_median": 0.6268869649613855,
+   "err_mm_p90": 1.1485423080545059,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.8833333333333333,
+   "presses_mean": 8.12
+  },
+  "seconds_per_press": 0.3382009234554553
+ },
+ "v2_100k_s0_resampled_0.99": {
+  "success_16mm2_within_2_presses": 0.97,
+  "final": {
+   "err_mm_median": 0.5909625855412026,
+   "err_mm_p90": 1.0665574941570346,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.8966666666666666,
+   "presses_mean": 8.013333333333334
+  },
+  "seconds_per_press": 0.3503285165990471
+ },
+ "v2_100k_s1_clean": {
+  "success_16mm2_within_2_presses": 0.9566666666666667,
+  "final": {
+   "err_mm_median": 0.7361846303813816,
+   "err_mm_p90": 1.3490785261539038,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.7966666666666666,
+   "presses_mean": 7.903333333333333
+  },
+  "seconds_per_press": 0.3396099583225906
+ },
+ "v2_100k_s1_lateral_0.98": {
+  "success_16mm2_within_2_presses": 0.9866666666666667,
+  "final": {
+   "err_mm_median": 0.6282463889575314,
+   "err_mm_p90": 1.129375249327314,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.85,
+   "presses_mean": 7.976666666666667
+  },
+  "seconds_per_press": 0.3527156892986525
+ },
+ "v2_100k_s1_noise_0.05mm": {
+  "success_16mm2_within_2_presses": 0.9533333333333334,
+  "final": {
+   "err_mm_median": 0.6925042975990671,
+   "err_mm_p90": 1.280977534697369,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.8533333333333334,
+   "presses_mean": 7.98
+  },
+  "seconds_per_press": 0.34070375833530275
+ },
+ "v2_100k_s1_resampled_0.99": {
+  "success_16mm2_within_2_presses": 0.9633333333333334,
+  "final": {
+   "err_mm_median": 0.574966365601693,
+   "err_mm_p90": 1.0759106255889133,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.9266666666666666,
+   "presses_mean": 8.08
+  },
+  "seconds_per_press": 0.3536256598439166
+ }
+}
+sensor mini: data dataset_mini, results results_centre/mini_exact, input 93 x 72 px, un-resampled training fraction 0.25
+v2_100k_s2     clean          <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.7 mm) | <4 mm2: success 72 % (reached 84 %, 7.0 presses) | final err 0.66/1.1 mm, >5 mm 0.0 % | 0.34 s/press (64 s)
+v2_100k_s2     noise_0.05mm   <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.6 mm) | <4 mm2: success 71 % (reached 81 %, 8.0 presses) | final err 0.63/1.1 mm, >5 mm 0.0 % | 0.34 s/press (130 s)
+v2_100k_s2     lateral_0.98   <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.7 mm) | <4 mm2: success 70 % (reached 79 %, 7.0 presses) | final err 0.57/1.0 mm, >5 mm 0.0 % | 0.35 s/press (196 s)
+v2_100k_s2     resampled_0.99 <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.6 mm) | <4 mm2: success 75 % (reached 81 %, 7.0 presses) | final err 0.52/1.0 mm, >5 mm 0.0 % | 0.35 s/press (262 s)
+{
+ "v2_100k_s0_clean": {
+  "success_16mm2_within_2_presses": 0.96,
+  "final": {
+   "err_mm_median": 0.7264224950377045,
+   "err_mm_p90": 1.2931864418867796,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.8266666666666667,
+   "presses_mean": 8.066666666666666
+  },
+  "seconds_per_press": 0.3397549043849662
+ },
+ "v2_100k_s0_lateral_0.98": {
+  "success_16mm2_within_2_presses": 0.97,
+  "final": {
+   "err_mm_median": 0.5708515931331877,
+   "err_mm_p90": 1.0752606193087997,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.8966666666666666,
+   "presses_mean": 8.04
+  },
+  "seconds_per_press": 0.3433701332306105
+ },
+ "v2_100k_s0_noise_0.05mm": {
+  "success_16mm2_within_2_presses": 0.95,
+  "final": {
+   "err_mm_median": 0.6268869649613855,
+   "err_mm_p90": 1.1485423080545059,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.8833333333333333,
+   "presses_mean": 8.12
+  },
+  "seconds_per_press": 0.3382009234554553
+ },
+ "v2_100k_s0_resampled_0.99": {
+  "success_16mm2_within_2_presses": 0.97,
+  "final": {
+   "err_mm_median": 0.5909625855412026,
+   "err_mm_p90": 1.0665574941570346,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.8966666666666666,
+   "presses_mean": 8.013333333333334
+  },
+  "seconds_per_press": 0.3503285165990471
+ },
+ "v2_100k_s1_clean": {
+  "success_16mm2_within_2_presses": 0.9566666666666667,
+  "final": {
+   "err_mm_median": 0.7361846303813816,
+   "err_mm_p90": 1.3490785261539038,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.7966666666666666,
+   "presses_mean": 7.903333333333333
+  },
+  "seconds_per_press": 0.3396099583225906
+ },
+ "v2_100k_s1_lateral_0.98": {
+  "success_16mm2_within_2_presses": 0.9866666666666667,
+  "final": {
+   "err_mm_median": 0.6282463889575314,
+   "err_mm_p90": 1.129375249327314,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.85,
+   "presses_mean": 7.976666666666667
+  },
+  "seconds_per_press": 0.3527156892986525
+ },
+ "v2_100k_s1_noise_0.05mm": {
+  "success_16mm2_within_2_presses": 0.9533333333333334,
+  "final": {
+   "err_mm_median": 0.6925042975990671,
+   "err_mm_p90": 1.280977534697369,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.8533333333333334,
+   "presses_mean": 7.98
+  },
+  "seconds_per_press": 0.34070375833530275
+ },
+ "v2_100k_s1_resampled_0.99": {
+  "success_16mm2_within_2_presses": 0.9633333333333334,
+  "final": {
+   "err_mm_median": 0.574966365601693,
+   "err_mm_p90": 1.0759106255889133,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.9266666666666666,
+   "presses_mean": 8.08
+  },
+  "seconds_per_press": 0.3536256598439166
+ },
+ "v2_100k_s2_clean": {
+  "success_16mm2_within_2_presses": 0.9466666666666667,
+  "final": {
+   "err_mm_median": 0.6626712799268302,
+   "err_mm_p90": 1.1291133273442082,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.8666666666666667,
+   "presses_mean": 8.01
+  },
+  "seconds_per_press": 0.34309947333544016
+ },
+ "v2_100k_s2_lateral_0.98": {
+  "success_16mm2_within_2_presses": 0.96,
+  "final": {
+   "err_mm_median": 0.5723149031768354,
+   "err_mm_p90": 1.0468437435814393,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.9,
+   "presses_mean": 8.053333333333333
+  },
+  "seconds_per_press": 0.3489829530719096
+ },
+ "v2_100k_s2_noise_0.05mm": {
+  "success_16mm2_within_2_presses": 0.9466666666666667,
+  "final": {
+   "err_mm_median": 0.6278252369560406,
+   "err_mm_p90": 1.0958635912382038,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.88,
+   "presses_mean": 8.04
+  },
+  "seconds_per_press": 0.3365462193457538
+ },
+ "v2_100k_s2_resampled_0.99": {
+  "success_16mm2_within_2_presses": 0.9633333333333334,
+  "final": {
+   "err_mm_median": 0.524317146785036,
+   "err_mm_p90": 0.9936921581176383,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.9366666666666666,
+   "presses_mean": 8.09
+  },
+  "seconds_per_press": 0.35266707388969953
+ }
+}

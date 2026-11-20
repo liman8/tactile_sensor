@@ -1,0 +1,13 @@
+=== 2026-11-19 13:13:28 wide sweep: mini-exact
+=== 2026-11-19 13:17:40 wide sweep: mini (old recipe)
+=== 2026-11-19 13:21:44 wide sweep: standard
+=== 2026-11-19 13:28:39 input-interp: mini-exact
+FAILED: interp-exact
+=== 2026-11-19 13:29:31 input-interp: mini-exact (rerun)
+=== 2026-11-19 13:36:04 input-interp: mini (old recipe)
+=== 2026-11-19 13:42:28 input-interp: standard
+=== 2026-11-19 13:50:17 SINGLE_DONE_2
+=== 2026-11-19 13:50:49 edge: mini-exact
+=== 2026-11-19 13:56:16 edge: mini (old recipe)
+=== 2026-11-19 14:01:20 edge: standard
+=== 2026-11-19 14:08:19 EDGE_DONE

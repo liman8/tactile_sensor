@@ -1,0 +1,15 @@
+sensor mini: data dataset_mini, results results_centre/mini_exact, input 93 x 72 px, un-resampled training fraction 0.25
+val   100k s0 scale 0.980: median 0.880 p90 2.01 hit 0.980 part 0.929 pose 0.865
+val   100k s0 scale 0.990: median 0.871 p90 1.88 hit 0.983 part 0.929 pose 0.865
+val   100k s0 scale 0.995: median 0.870 p90 1.99 hit 0.984 part 0.928 pose 0.867
+val   100k s0 scale 1.000: median 0.875 p90 2.00 hit 0.986 part 0.928 pose 0.865
+val   100k s0 scale 1.005: median 0.878 p90 1.99 hit 0.988 part 0.930 pose 0.867
+val   100k s0 scale 1.010: median 0.875 p90 1.99 hit 0.990 part 0.928 pose 0.867
+val   100k s0 scale 1.020: median 0.931 p90 2.43 hit 0.980 part 0.928 pose 0.865
+test2 100k s0 scale 0.980: median 0.876 p90 1.80 hit 0.982 part 0.934 pose 0.867
+test2 100k s0 scale 0.990: median 0.869 p90 1.72 hit 0.986 part 0.935 pose 0.866
+test2 100k s0 scale 0.995: median 0.866 p90 1.73 hit 0.988 part 0.936 pose 0.864
+test2 100k s0 scale 1.000: median 0.873 p90 1.79 hit 0.987 part 0.934 pose 0.867
+test2 100k s0 scale 1.005: median 0.867 p90 1.73 hit 0.988 part 0.935 pose 0.867
+test2 100k s0 scale 1.010: median 0.872 p90 1.78 hit 0.985 part 0.935 pose 0.866
+test2 100k s0 scale 1.020: median 0.931 p90 2.40 hit 0.973 part 0.933 pose 0.860

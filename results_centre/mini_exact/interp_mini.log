@@ -1,0 +1,43 @@
+sensor mini: data dataset_mini, results results_centre/mini, input 93 x 72 px
+val    20k s0 as rendered                        median 1.014 p90 2.69 | p90 - as rendered +0.00 [+0.00, +0.00] | p90 - zoom 0.99 +0.17 [-0.01, +0.58] | handle p90 24.26
+val    20k s0 zoom 0.99                          median 0.986 p90 2.52 | p90 - as rendered -0.17 [-0.58, +0.01] | p90 - zoom 0.99 +0.00 [+0.00, +0.00] | handle p90 23.99
+val    20k s0 1.00: half-pixel shift and back    median 1.012 p90 2.76 | p90 - as rendered +0.07 [-0.32, +0.42] | p90 - zoom 0.99 +0.24 [+0.00, +0.60] | handle p90 23.76
+val    20k s0 1.00: zoom 0.99 and back           median 0.988 p90 2.43 | p90 - as rendered -0.26 [-0.65, +0.01] | p90 - zoom 0.99 -0.09 [-0.27, +0.12] | handle p90 23.76
+val    20k s0 1.00: half-pixel shift (one pass)  median 1.009 p90 2.64 | p90 - as rendered -0.05 [-0.41, +0.31] | p90 - zoom 0.99 +0.12 [-0.22, +0.57] | handle p90 28.73
+val    20k s0 1.00: only the outer ring dimmed as by zoom 0.99 median 1.040 p90 2.88 | p90 - as rendered +0.19 [-0.17, +0.56] | p90 - zoom 0.99 +0.36 [+0.09, +0.77] | handle p90 23.99
+val    20k s0 zoom 0.99, edge repeated (ring not dimmed) median 1.091 p90 3.57 | p90 - as rendered +0.87 [+0.36, +1.05] | p90 - zoom 0.99 +1.05 [+0.62, +1.31] | handle p90 20.98
+val    40k s0 as rendered                        median 0.962 p90 2.74 | p90 - as rendered +0.00 [+0.00, +0.00] | p90 - zoom 0.99 +0.51 [+0.23, +0.88] | handle p90 24.35
+val    40k s0 zoom 0.99                          median 0.917 p90 2.23 | p90 - as rendered -0.51 [-0.88, -0.23] | p90 - zoom 0.99 +0.00 [+0.00, +0.00] | handle p90 24.32
+val    40k s0 1.00: half-pixel shift and back    median 0.954 p90 2.46 | p90 - as rendered -0.28 [-0.62, +0.00] | p90 - zoom 0.99 +0.23 [+0.03, +0.53] | handle p90 27.50
+val    40k s0 1.00: zoom 0.99 and back           median 0.921 p90 2.41 | p90 - as rendered -0.33 [-0.69, -0.08] | p90 - zoom 0.99 +0.18 [+0.00, +0.40] | handle p90 27.50
+val    40k s0 1.00: half-pixel shift (one pass)  median 0.934 p90 2.35 | p90 - as rendered -0.39 [-0.75, -0.09] | p90 - zoom 0.99 +0.12 [-0.09, +0.40] | handle p90 27.71
+val    40k s0 1.00: only the outer ring dimmed as by zoom 0.99 median 0.990 p90 2.67 | p90 - as rendered -0.07 [-0.47, +0.17] | p90 - zoom 0.99 +0.44 [+0.16, +0.65] | handle p90 27.50
+val    40k s0 zoom 0.99, edge repeated (ring not dimmed) median 1.045 p90 3.38 | p90 - as rendered +0.64 [+0.29, +0.99] | p90 - zoom 0.99 +1.15 [+0.75, +1.55] | handle p90 24.35
+val   100k s0 as rendered                        median 0.922 p90 2.48 | p90 - as rendered +0.00 [+0.00, +0.00] | p90 - zoom 0.99 +0.67 [+0.29, +0.96] | handle p90 22.57
+val   100k s0 zoom 0.99                          median 0.868 p90 1.81 | p90 - as rendered -0.67 [-0.96, -0.29] | p90 - zoom 0.99 +0.00 [+0.00, +0.00] | handle p90 23.46
+val   100k s0 1.00: half-pixel shift and back    median 0.879 p90 2.05 | p90 - as rendered -0.43 [-0.69, +0.00] | p90 - zoom 0.99 +0.24 [+0.03, +0.58] | handle p90 28.49
+val   100k s0 1.00: zoom 0.99 and back           median 0.873 p90 1.96 | p90 - as rendered -0.52 [-0.85, -0.19] | p90 - zoom 0.99 +0.15 [-0.05, +0.28] | handle p90 28.03
+val   100k s0 1.00: half-pixel shift (one pass)  median 0.912 p90 2.08 | p90 - as rendered -0.40 [-0.66, +0.00] | p90 - zoom 0.99 +0.27 [+0.02, +0.59] | handle p90 26.93
+val   100k s0 1.00: only the outer ring dimmed as by zoom 0.99 median 0.929 p90 2.38 | p90 - as rendered -0.11 [-0.41, +0.26] | p90 - zoom 0.99 +0.56 [+0.29, +0.85] | handle p90 28.86
+val   100k s0 zoom 0.99, edge repeated (ring not dimmed) median 0.990 p90 3.28 | p90 - as rendered +0.79 [+0.56, +1.23] | p90 - zoom 0.99 +1.47 [+1.15, +1.84] | handle p90 20.98
+test2  20k s0 as rendered                        median 0.969 p90 2.86 | p90 - as rendered +0.00 [+0.00, +0.00] | p90 - zoom 0.99 +0.26 [+0.09, +0.42] | handle p90 18.29
+test2  20k s0 zoom 0.99                          median 0.950 p90 2.60 | p90 - as rendered -0.26 [-0.42, -0.09] | p90 - zoom 0.99 +0.00 [+0.00, +0.00] | handle p90 18.25
+test2  20k s0 1.00: half-pixel shift and back    median 0.973 p90 2.85 | p90 - as rendered -0.01 [-0.19, +0.18] | p90 - zoom 0.99 +0.25 [+0.11, +0.39] | handle p90 18.72
+test2  20k s0 1.00: zoom 0.99 and back           median 0.959 p90 2.71 | p90 - as rendered -0.15 [-0.32, +0.01] | p90 - zoom 0.99 +0.11 [+0.00, +0.22] | handle p90 18.77
+test2  20k s0 1.00: half-pixel shift (one pass)  median 0.992 p90 2.90 | p90 - as rendered +0.03 [-0.12, +0.23] | p90 - zoom 0.99 +0.29 [+0.15, +0.47] | handle p90 21.48
+test2  20k s0 1.00: only the outer ring dimmed as by zoom 0.99 median 1.003 p90 3.13 | p90 - as rendered +0.27 [+0.07, +0.45] | p90 - zoom 0.99 +0.53 [+0.35, +0.67] | handle p90 20.40
+test2  20k s0 zoom 0.99, edge repeated (ring not dimmed) median 1.056 p90 3.40 | p90 - as rendered +0.54 [+0.35, +0.69] | p90 - zoom 0.99 +0.80 [+0.59, +0.96] | handle p90 18.05
+test2  40k s0 as rendered                        median 0.945 p90 2.45 | p90 - as rendered +0.00 [+0.00, +0.00] | p90 - zoom 0.99 +0.27 [+0.16, +0.40] | handle p90 15.87
+test2  40k s0 zoom 0.99                          median 0.910 p90 2.18 | p90 - as rendered -0.27 [-0.40, -0.16] | p90 - zoom 0.99 +0.00 [+0.00, +0.00] | handle p90 13.65
+test2  40k s0 1.00: half-pixel shift and back    median 0.932 p90 2.40 | p90 - as rendered -0.05 [-0.17, +0.09] | p90 - zoom 0.99 +0.22 [+0.13, +0.36] | handle p90 17.87
+test2  40k s0 1.00: zoom 0.99 and back           median 0.921 p90 2.32 | p90 - as rendered -0.13 [-0.25, -0.02] | p90 - zoom 0.99 +0.13 [+0.07, +0.24] | handle p90 16.76
+test2  40k s0 1.00: half-pixel shift (one pass)  median 0.948 p90 2.35 | p90 - as rendered -0.10 [-0.20, +0.03] | p90 - zoom 0.99 +0.16 [+0.09, +0.31] | handle p90 17.61
+test2  40k s0 1.00: only the outer ring dimmed as by zoom 0.99 median 0.963 p90 2.70 | p90 - as rendered +0.25 [+0.10, +0.39] | p90 - zoom 0.99 +0.52 [+0.38, +0.66] | handle p90 17.64
+test2  40k s0 zoom 0.99, edge repeated (ring not dimmed) median 1.028 p90 3.20 | p90 - as rendered +0.74 [+0.60, +0.87] | p90 - zoom 0.99 +1.01 [+0.89, +1.15] | handle p90 17.22
+test2 100k s0 as rendered                        median 0.915 p90 2.23 | p90 - as rendered +0.00 [+0.00, +0.00] | p90 - zoom 0.99 +0.49 [+0.35, +0.59] | handle p90 14.02
+test2 100k s0 zoom 0.99                          median 0.866 p90 1.73 | p90 - as rendered -0.49 [-0.59, -0.35] | p90 - zoom 0.99 +0.00 [+0.00, +0.00] | handle p90 13.11
+test2 100k s0 1.00: half-pixel shift and back    median 0.879 p90 2.00 | p90 - as rendered -0.23 [-0.32, -0.12] | p90 - zoom 0.99 +0.27 [+0.16, +0.36] | handle p90 14.41
+test2 100k s0 1.00: zoom 0.99 and back           median 0.876 p90 1.89 | p90 - as rendered -0.33 [-0.46, -0.24] | p90 - zoom 0.99 +0.16 [+0.05, +0.24] | handle p90 14.41
+test2 100k s0 1.00: half-pixel shift (one pass)  median 0.910 p90 2.18 | p90 - as rendered -0.05 [-0.16, +0.06] | p90 - zoom 0.99 +0.45 [+0.32, +0.56] | handle p90 14.39
+test2 100k s0 1.00: only the outer ring dimmed as by zoom 0.99 median 0.916 p90 2.30 | p90 - as rendered +0.08 [-0.04, +0.19] | p90 - zoom 0.99 +0.57 [+0.44, +0.67] | handle p90 14.48
+test2 100k s0 zoom 0.99, edge repeated (ring not dimmed) median 0.985 p90 3.03 | p90 - as rendered +0.81 [+0.70, +0.92] | p90 - zoom 0.99 +1.30 [+1.15, +1.43] | handle p90 13.26

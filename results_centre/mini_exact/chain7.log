@@ -1,0 +1,12 @@
+=== 2026-11-18 23:45:50 train 100k seed 0
+=== 2026-11-19 02:49:03 input-scale (seed 0)
+=== 2026-11-19 02:49:46 search seed 0
+=== 2026-11-19 02:54:07 SEED0_EVAL_DONE
+=== 2026-11-19 02:54:07 train 100k seed 1
+=== 2026-11-19 05:56:29 train 100k seed 2
+=== 2026-11-19 08:58:55 input-scale (seeds 0-2)
+=== 2026-11-19 09:00:53 search seed 1
+=== 2026-11-19 09:05:13 search seed 2
+=== 2026-11-19 09:09:35 seeds report
+=== 2026-11-19 09:09:50 fov-compare
+=== 2026-11-19 09:10:15 EXACT_CHAIN_DONE
