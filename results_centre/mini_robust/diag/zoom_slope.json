@@ -1,0 +1,293 @@
+{
+ "note": "Does the network read the input zoom from the dimmed border and rescale its answer?\n\nThe training zoom (0.97-1.03) acts on the image only; the target (centre offset, mm) is not scaled. So the right\nanswer for an input zoomed by z is the un-zoomed offset t, while the image shows z * t. A network that knows z\noutputs t; one that does not outputs (z / z_guess) * t. Shrinking (z < 1) leaves a dimmed band at the edge whose\nwidth gives z; enlarging (z > 1) cuts the edge off and leaves no such clue.\n\nFor each model and input zoom: the slope k of the predicted offset against the true one (least squares through\nthe origin, fork presses with |t| > 5 mm and an error < 5 mm), from the argmax and from a 5 x 5 soft-argmax\naround it. k = 1: the network undid the zoom; k = z: it ignored it.\n\n    GELSIGHT_SENSOR=mini python results_centre/mini_exact/diag/zoom_slope.py OUT.json NAME=MODEL.pt ...\n",
+ "results": {
+  "robust_s0|zoom 0.98": {
+   "argmax": {
+    "slope": 0.9928685766248644,
+    "ci": [
+     0.9917486156701456,
+     0.993982576430358
+    ],
+    "n": 3226
+   },
+   "soft": {
+    "slope": 0.99209732216238,
+    "ci": [
+     0.9910972881053733,
+     0.9931134730635948
+    ],
+    "n": 3240
+   }
+  },
+  "robust_s0|zoom 0.99": {
+   "argmax": {
+    "slope": 0.9960242770666294,
+    "ci": [
+     0.9952395048730164,
+     0.9969452825320831
+    ],
+    "n": 3223
+   },
+   "soft": {
+    "slope": 0.995611046288919,
+    "ci": [
+     0.9949670479172288,
+     0.9962255192989695
+    ],
+    "n": 3228
+   }
+  },
+  "robust_s0|zoom 1": {
+   "argmax": {
+    "slope": 0.9991179643119923,
+    "ci": [
+     0.9983111523349654,
+     0.9998847567139552
+    ],
+    "n": 3219
+   },
+   "soft": {
+    "slope": 0.9989374742299754,
+    "ci": [
+     0.9983108997762516,
+     0.9995108472231222
+    ],
+    "n": 3223
+   }
+  },
+  "robust_s0|zoom 1.01": {
+   "argmax": {
+    "slope": 1.0017679054336521,
+    "ci": [
+     1.0009184134399634,
+     1.0025579309972086
+    ],
+    "n": 3215
+   },
+   "soft": {
+    "slope": 1.0015402969996852,
+    "ci": [
+     1.0009033419194275,
+     1.0022407730200054
+    ],
+    "n": 3221
+   }
+  },
+  "robust_s0|zoom 1.02": {
+   "argmax": {
+    "slope": 1.0043630801489225,
+    "ci": [
+     1.0033896808473355,
+     1.0054197546102028
+    ],
+    "n": 3181
+   },
+   "soft": {
+    "slope": 1.0040478505847794,
+    "ci": [
+     1.0031301155811116,
+     1.0050153070516787
+    ],
+    "n": 3197
+   }
+  },
+  "robust_s0|zoom 0.99, edge repeated (ring not dimmed)": {
+   "argmax": {
+    "slope": 0.9960242770666294,
+    "ci": [
+     0.9951869647650496,
+     0.9967931083932519
+    ],
+    "n": 3223
+   },
+   "soft": {
+    "slope": 0.995611046288919,
+    "ci": [
+     0.994882417525484,
+     0.9963464195095608
+    ],
+    "n": 3228
+   }
+  },
+  "robust_s0|1.00: only the outer ring dimmed as by zoom 0.99": {
+   "argmax": {
+    "slope": 0.9991179643119923,
+    "ci": [
+     0.998290620159847,
+     0.9998715492179638
+    ],
+    "n": 3219
+   },
+   "soft": {
+    "slope": 0.9989374742299754,
+    "ci": [
+     0.9983996391859316,
+     0.9994955400489125
+    ],
+    "n": 3223
+   }
+  },
+  "robust_s0|zoom 1.02, outer ring dimmed as by zoom 0.98": {
+   "argmax": {
+    "slope": 1.0043630801489225,
+    "ci": [
+     1.003450139237049,
+     1.0054266745235971
+    ],
+    "n": 3181
+   },
+   "soft": {
+    "slope": 1.0040478505847794,
+    "ci": [
+     1.0031096302740092,
+     1.0050400963750334
+    ],
+    "n": 3197
+   }
+  },
+  "exact_s0|zoom 0.98": {
+   "argmax": {
+    "slope": 0.9983884030730016,
+    "ci": [
+     0.997617001019862,
+     0.9991221535985977
+    ],
+    "n": 3254
+   },
+   "soft": {
+    "slope": 0.9984353111202343,
+    "ci": [
+     0.9978999263553958,
+     0.998929816845993
+    ],
+    "n": 3257
+   }
+  },
+  "exact_s0|zoom 0.99": {
+   "argmax": {
+    "slope": 0.9992499414723922,
+    "ci": [
+     0.9984826694299,
+     1.0000485438204132
+    ],
+    "n": 3258
+   },
+   "soft": {
+    "slope": 0.9990752683210206,
+    "ci": [
+     0.9984831243160592,
+     0.9995659627856075
+    ],
+    "n": 3262
+   }
+  },
+  "exact_s0|zoom 1": {
+   "argmax": {
+    "slope": 0.9974104613710164,
+    "ci": [
+     0.996715063082279,
+     0.9981491514022492
+    ],
+    "n": 3256
+   },
+   "soft": {
+    "slope": 0.9972990078880711,
+    "ci": [
+     0.9966865575098078,
+     0.9978876977664335
+    ],
+    "n": 3260
+   }
+  },
+  "exact_s0|zoom 1.01": {
+   "argmax": {
+    "slope": 0.9998312325883453,
+    "ci": [
+     0.9991155477034694,
+     1.000571231975028
+    ],
+    "n": 3250
+   },
+   "soft": {
+    "slope": 0.9999705645951502,
+    "ci": [
+     0.9993428988686982,
+     1.0005082712099411
+    ],
+    "n": 3255
+   }
+  },
+  "exact_s0|zoom 1.02": {
+   "argmax": {
+    "slope": 1.0026605368011134,
+    "ci": [
+     1.0018424031606157,
+     1.0035843661158195
+    ],
+    "n": 3237
+   },
+   "soft": {
+    "slope": 1.002652636768746,
+    "ci": [
+     1.0018716312047982,
+     1.0033886580081726
+    ],
+    "n": 3245
+   }
+  },
+  "exact_s0|zoom 0.99, edge repeated (ring not dimmed)": {
+   "argmax": {
+    "slope": 0.9946320655937673,
+    "ci": [
+     0.9938343746648515,
+     0.9954737690912291
+    ],
+    "n": 3252
+   },
+   "soft": {
+    "slope": 0.994592557075524,
+    "ci": [
+     0.9939164882835814,
+     0.9953251424011832
+    ],
+    "n": 3255
+   }
+  },
+  "exact_s0|1.00: only the outer ring dimmed as by zoom 0.99": {
+   "argmax": {
+    "slope": 1.0016707376308653,
+    "ci": [
+     1.0008497105527148,
+     1.0025107290861257
+    ],
+    "n": 3245
+   },
+   "soft": {
+    "slope": 1.0017725938052982,
+    "ci": [
+     1.0010432211438849,
+     1.002432335272347
+    ],
+    "n": 3252
+   }
+  },
+  "exact_s0|zoom 1.02, outer ring dimmed as by zoom 0.98": {
+   "argmax": {
+    "slope": 1.0031675309674528,
+    "ci": [
+     1.0020069081610818,
+     1.004356407003663
+    ],
+    "n": 3091
+   },
+   "soft": {
+    "slope": 1.0044952008311803,
+    "ci": [
+     1.0034045035097112,
+     1.0057898303428379
+    ],
+    "n": 3136
+   }
+  }
+ }
+}

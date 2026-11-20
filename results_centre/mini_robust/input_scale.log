@@ -1,0 +1,15 @@
+sensor mini: data dataset_mini, results results_centre/mini_robust, input 93 x 72 px, robust augmentation
+val   100k s0 scale 0.980: median 0.983 p90 3.50 hit 0.977 part 0.914 pose 0.849
+val   100k s0 scale 0.990: median 0.932 p90 2.63 hit 0.990 part 0.919 pose 0.855
+val   100k s0 scale 0.995: median 0.909 p90 2.45 hit 0.993 part 0.920 pose 0.855
+val   100k s0 scale 1.000: median 0.902 p90 2.35 hit 0.996 part 0.919 pose 0.858
+val   100k s0 scale 1.005: median 0.902 p90 2.35 hit 0.996 part 0.917 pose 0.859
+val   100k s0 scale 1.010: median 0.931 p90 2.59 hit 0.994 part 0.913 pose 0.865
+val   100k s0 scale 1.020: median 0.991 p90 3.52 hit 0.981 part 0.909 pose 0.859
+test2 100k s0 scale 0.980: median 0.989 p90 3.39 hit 0.969 part 0.927 pose 0.867
+test2 100k s0 scale 0.990: median 0.929 p90 2.55 hit 0.985 part 0.930 pose 0.862
+test2 100k s0 scale 0.995: median 0.903 p90 2.29 hit 0.988 part 0.929 pose 0.862
+test2 100k s0 scale 1.000: median 0.894 p90 2.16 hit 0.990 part 0.927 pose 0.862
+test2 100k s0 scale 1.005: median 0.899 p90 2.29 hit 0.989 part 0.926 pose 0.861
+test2 100k s0 scale 1.010: median 0.915 p90 2.58 hit 0.990 part 0.927 pose 0.860
+test2 100k s0 scale 1.020: median 0.986 p90 3.47 hit 0.980 part 0.923 pose 0.861

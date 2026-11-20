@@ -1,0 +1,111 @@
+sensor mini: data dataset_mini, results results_centre/mini_robust, input 93 x 72 px, robust augmentation
+v2_100k_s0     clean          <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.7 mm) | <4 mm2: success 49 % (reached 54 %, 9.0 presses) | final err 0.62/1.2 mm, >5 mm 0.0 % | 0.72 s/press (162 s)
+v2_100k_s0     resampled_0.99 <16 mm2: success 99 % (reached 100 %, 2.0 presses, err 0.8 mm) | <4 mm2: success 31 % (reached 59 %, 8.0 presses) | final err 1.04/2.0 mm, >5 mm 0.0 % | 0.69 s/press (302 s)
+v2_100k_s0     resampled_1.00_rt0.99 <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.7 mm) | <4 mm2: success 47 % (reached 53 %, 9.0 presses) | final err 0.65/1.3 mm, >5 mm 0.0 % | 0.47 s/press (410 s)
+v2_100k_s0     resampled_1.00_shift <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.7 mm) | <4 mm2: success 47 % (reached 53 %, 8.0 presses) | final err 0.65/1.3 mm, >5 mm 0.0 % | 0.69 s/press (576 s)
+v2_100k_s0     border_0.99    <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.7 mm) | <4 mm2: success 49 % (reached 54 %, 9.0 presses) | final err 0.62/1.2 mm, >5 mm 0.0 % | 0.67 s/press (734 s)
+v2_100k_s0     resampled_0.99_repl <16 mm2: success 99 % (reached 100 %, 2.0 presses, err 0.8 mm) | <4 mm2: success 31 % (reached 59 %, 8.0 presses) | final err 1.04/2.0 mm, >5 mm 0.0 % | 0.69 s/press (892 s)
+v2_100k_s0     lateral_0.98   <16 mm2: success 86 % (reached 100 %, 2.0 presses, err 1.0 mm) | <4 mm2: success 10 % (reached 58 %, 8.0 presses) | final err 1.78/2.7 mm, >5 mm 0.0 % | 0.67 s/press (1038 s)
+v2_100k_s0     lateral_1.02   <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.9 mm) | <4 mm2: success 28 % (reached 64 %, 8.0 presses) | final err 1.29/2.1 mm, >5 mm 0.0 % | 0.64 s/press (1187 s)
+v2_100k_s0     noise_0.05mm   <16 mm2: success 100 % (reached 100 %, 2.0 presses, err 0.7 mm) | <4 mm2: success 51 % (reached 55 %, 9.0 presses) | final err 0.60/1.2 mm, >5 mm 0.0 % | 0.69 s/press (1353 s)
+{
+ "v2_100k_s0_border_0.99": {
+  "success_16mm2_within_2_presses": 0.8,
+  "final": {
+   "err_mm_median": 0.6196078913489689,
+   "err_mm_p90": 1.1784039490415879,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.9466666666666667,
+   "presses_mean": 9.243333333333334
+  },
+  "seconds_per_press": 0.6665264709796855
+ },
+ "v2_100k_s0_clean": {
+  "success_16mm2_within_2_presses": 0.8,
+  "final": {
+   "err_mm_median": 0.6196078913489689,
+   "err_mm_p90": 1.1784039490415879,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.9466666666666667,
+   "presses_mean": 9.243333333333334
+  },
+  "seconds_per_press": 0.7234522968552731
+ },
+ "v2_100k_s0_lateral_0.98": {
+  "success_16mm2_within_2_presses": 0.7933333333333333,
+  "final": {
+   "err_mm_median": 1.784516943187162,
+   "err_mm_p90": 2.689232613446923,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.21333333333333335,
+   "presses_mean": 8.726666666666667
+  },
+  "seconds_per_press": 0.673151996972069
+ },
+ "v2_100k_s0_lateral_1.02": {
+  "success_16mm2_within_2_presses": 0.81,
+  "final": {
+   "err_mm_median": 1.285853573038881,
+   "err_mm_p90": 2.1424171563165633,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.51,
+   "presses_mean": 8.86
+  },
+  "seconds_per_press": 0.6430389509062288
+ },
+ "v2_100k_s0_noise_0.05mm": {
+  "success_16mm2_within_2_presses": 0.7666666666666667,
+  "final": {
+   "err_mm_median": 0.596495147421122,
+   "err_mm_p90": 1.156040413529269,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.95,
+   "presses_mean": 9.286666666666667
+  },
+  "seconds_per_press": 0.6925396611718905
+ },
+ "v2_100k_s0_resampled_0.99": {
+  "success_16mm2_within_2_presses": 0.82,
+  "final": {
+   "err_mm_median": 1.0386947675054494,
+   "err_mm_p90": 1.9533488636869187,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.6233333333333333,
+   "presses_mean": 8.936666666666667
+  },
+  "seconds_per_press": 0.6859954285735176
+ },
+ "v2_100k_s0_resampled_0.99_repl": {
+  "success_16mm2_within_2_presses": 0.82,
+  "final": {
+   "err_mm_median": 1.0386947675054494,
+   "err_mm_p90": 1.9533488636869187,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.6233333333333333,
+   "presses_mean": 8.936666666666667
+  },
+  "seconds_per_press": 0.6902584620468201
+ },
+ "v2_100k_s0_resampled_1.00_rt0.99": {
+  "success_16mm2_within_2_presses": 0.8066666666666666,
+  "final": {
+   "err_mm_median": 0.6503922591099363,
+   "err_mm_p90": 1.331149841719595,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.91,
+   "presses_mean": 9.266666666666667
+  },
+  "seconds_per_press": 0.4708440796937892
+ },
+ "v2_100k_s0_resampled_1.00_shift": {
+  "success_16mm2_within_2_presses": 0.8133333333333334,
+  "final": {
+   "err_mm_median": 0.654559289624397,
+   "err_mm_p90": 1.3092928620333384,
+   "err_gt5mm": 0.0,
+   "truth_in_90": 0.9133333333333333,
+   "presses_mean": 9.183333333333334
+  },
+  "seconds_per_press": 0.693015831160167
+ }
+}
