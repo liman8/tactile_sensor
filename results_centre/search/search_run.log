@@ -1,0 +1,13 @@
+rendering on EGL device 2
+clean                  map : converged 30 %, presses median 10 (mean 9.55), final error median 0.7 mm p90 1.4 max 119, > 5 mm 5.7 %, truth in final 90 % region 93 %  (179 s)
+clean                  info: converged 72 %, presses median 9 (mean 8.46), final error median 0.5 mm p90 1.1 max 117, > 5 mm 2.7 %, truth in final 90 % region 91 %  (581 s)
+noise_0.05mm           map : converged 28 %, presses median 10 (mean 9.51), final error median 0.8 mm p90 92.4 max 139, > 5 mm 17.0 %, truth in final 90 % region 75 %  (761 s)
+noise_0.05mm           info: converged 63 %, presses median 9 (mean 8.69), final error median 0.8 mm p90 92.7 max 135, > 5 mm 15.7 %, truth in final 90 % region 64 %  (1084 s)
+lateral_0.98           map : converged 45 %, presses median 10 (mean 8.71), final error median 2.3 mm p90 3.4 max 118, > 5 mm 5.7 %, truth in final 90 % region 4 %  (1280 s)
+lateral_0.98           info: converged 72 %, presses median 8 (mean 8.26), final error median 1.8 mm p90 2.7 max 115, > 5 mm 3.7 %, truth in final 90 % region 9 %  (1765 s)
+clean/map                    converged  30.0 % | presses median 10 mean 9.55 | final err median 0.68 p90 1.40 max 119 mm, >5 mm 5.7 % | truth in 90 % 93 % | <16 mm2 in median 2.0 presses (93 %) | err after 1/2/3/5/10: 1.1/0.7/0.7/0.8/0.7
+clean/info                   converged  71.7 % | presses median 9 mean 8.46 | final err median 0.53 p90 1.15 max 117 mm, >5 mm 2.7 % | truth in 90 % 91 % | <16 mm2 in median 2.0 presses (97 %) | err after 1/2/3/5/10: 1.1/0.8/0.7/0.6/0.5
+lateral_0.98/map             converged  45.3 % | presses median 10 mean 8.71 | final err median 2.35 p90 3.36 max 118 mm, >5 mm 5.7 % | truth in 90 % 4 % | <16 mm2 in median 2.0 presses (94 %) | err after 1/2/3/5/10: 1.5/1.7/2.1/2.3/2.3
+lateral_0.98/info            converged  72.3 % | presses median 8 mean 8.26 | final err median 1.79 p90 2.69 max 115 mm, >5 mm 3.7 % | truth in 90 % 9 % | <16 mm2 in median 2.0 presses (96 %) | err after 1/2/3/5/10: 1.5/1.6/1.7/1.7/1.8
+noise_0.05mm/map             converged  28.3 % | presses median 10 mean 9.51 | final err median 0.79 p90 92.39 max 139 mm, >5 mm 17.0 % | truth in 90 % 75 % | <16 mm2 in median 2.0 presses (83 %) | err after 1/2/3/5/10: 1.7/1.0/0.8/0.8/0.8
+noise_0.05mm/info            converged  63.3 % | presses median 9 mean 8.69 | final err median 0.77 p90 92.71 max 135 mm, >5 mm 15.7 % | truth in 90 % 64 % | <16 mm2 in median 2.0 presses (84 %) | err after 1/2/3/5/10: 1.7/1.0/0.9/0.8/0.8
