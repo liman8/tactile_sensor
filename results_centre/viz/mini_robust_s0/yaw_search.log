@@ -1,0 +1,5 @@
+yaw at the end of the search (300 episodes; centre errors equal to the stored ones: 100 %): median 0.4 deg, p90 1.4, flipped 4.0 %, face 90.7 %
+   first press on the tines  (n 115): yaw median 0.3 deg, flipped 0.0 %
+   first press on the palm   (n  54): yaw median 0.6 deg, flipped 0.0 %
+   first press on the neck   (n  39): yaw median 0.3 deg, flipped 2.6 %
+   first press on the handle (n  92): yaw median 0.3 deg, flipped 12.0 %

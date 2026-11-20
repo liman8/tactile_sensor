@@ -1,0 +1,5 @@
+  all     n 3473: yaw error median   3.2 deg [3.0, 3.4], p90  11.4, flipped (> 90)  8.4 % | axis (mod 180) median  2.7, p90  8.0 | structure tensor alone  1.9 | edges rule   9 % | face 86.7 %
+  tines   n 1367: yaw error median   4.5 deg [4.3, 4.7], p90   9.0, flipped (> 90)  0.3 % | axis (mod 180) median  4.5, p90  8.9 | structure tensor alone  2.6 | edges rule   0 % | face 99.5 %
+  palm    n  603: yaw error median   3.9 deg [3.5, 4.1], p90   9.4, flipped (> 90)  1.2 % | axis (mod 180) median  3.9, p90  9.3 | structure tensor alone  8.3 | edges rule   0 % | face 96.2 %
+  neck    n  548: yaw error median   2.1 deg [1.9, 2.3], p90  10.5, flipped (> 90)  9.5 % | axis (mod 180) median  1.9, p90  5.5 | structure tensor alone  1.2 | edges rule  17 % | face 74.6 %
+  handle  n  955: yaw error median   1.5 deg [1.4, 1.7], p90 178.7, flipped (> 90) 24.0 % | axis (mod 180) median  1.1, p90  4.3 | structure tensor alone  0.9 | edges rule  22 % | face 69.4 %

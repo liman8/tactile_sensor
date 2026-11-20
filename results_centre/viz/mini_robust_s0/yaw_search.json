@@ -1,0 +1,5814 @@
+{
+ "net": "results_centre/mini_robust/model_100k_seed0.pt",
+ "episodes": "results_centre/mini_robust/search/episodes_v2_100k_s0_clean.json",
+ "summary": {
+  "n": 300,
+  "centre_errors_equal_to_stored": 1.0,
+  "yaw_median": 0.36464956187364805,
+  "yaw_p90": 1.4335952932651446,
+  "flipped_gt90": 0.04,
+  "face_acc": 0.9066666666666666,
+  "by_first_part": {
+   "tines": {
+    "n": 115,
+    "yaw_median": 0.3179632694006434,
+    "flipped_gt90": 0.0
+   },
+   "palm": {
+    "n": 54,
+    "yaw_median": 0.602364432128,
+    "flipped_gt90": 0.0
+   },
+   "neck": {
+    "n": 39,
+    "yaw_median": 0.2957392531366736,
+    "flipped_gt90": 0.02564102564102564
+   },
+   "handle": {
+    "n": 92,
+    "yaw_median": 0.3388182466289891,
+    "flipped_gt90": 0.11956521739130435
+   }
+  },
+  "by_pose": {
+   "face down": {
+    "face_acc": 0.8503401360544217,
+    "yaw_median": 0.35712301574159255
+   },
+   "face up": {
+    "face_acc": 0.9607843137254902,
+    "yaw_median": 0.37535260966870965
+   }
+  }
+ },
+ "episodes_out": [
+  {
+   "index": 4,
+   "final_err_mm": 1.177439416259016,
+   "yaw_err_deg": 0.20985269554822586,
+   "face_ok": true,
+   "presses": 7,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 10,
+   "final_err_mm": 0.5196096447048789,
+   "yaw_err_deg": 1.3799895759978147,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 11,
+   "final_err_mm": 1.6331195753292491,
+   "yaw_err_deg": 0.08652691577373162,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 13,
+   "final_err_mm": 1.0499855081720124,
+   "yaw_err_deg": 179.93709134560353,
+   "face_ok": true,
+   "presses": 6,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 15,
+   "final_err_mm": 0.20853171318788116,
+   "yaw_err_deg": 1.4869020504541481,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 16,
+   "final_err_mm": 0.5028676132976785,
+   "yaw_err_deg": 0.5228791676274227,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 18,
+   "final_err_mm": 0.6603757142393486,
+   "yaw_err_deg": 0.44460109148610627,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 24,
+   "final_err_mm": 0.5679288571926536,
+   "yaw_err_deg": 1.1382124112594092,
+   "face_ok": true,
+   "presses": 7,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 25,
+   "final_err_mm": 1.3921173403090035,
+   "yaw_err_deg": 0.2220882510688997,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 27,
+   "final_err_mm": 0.51252351685264,
+   "yaw_err_deg": 0.2058048285214895,
+   "face_ok": true,
+   "presses": 7,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 29,
+   "final_err_mm": 0.6053295148376625,
+   "yaw_err_deg": 0.6058649359503795,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 31,
+   "final_err_mm": 0.6715365413534291,
+   "yaw_err_deg": 0.3054492269008849,
+   "face_ok": true,
+   "presses": 6,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 33,
+   "final_err_mm": 1.116723017754826,
+   "yaw_err_deg": 1.545017069240516,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 39,
+   "final_err_mm": 0.14193715876091026,
+   "yaw_err_deg": 0.04854184556383342,
+   "face_ok": true,
+   "presses": 7,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 42,
+   "final_err_mm": 0.733018157352827,
+   "yaw_err_deg": 1.4414831563343569,
+   "face_ok": true,
+   "presses": 7,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 45,
+   "final_err_mm": 0.5855191247470374,
+   "yaw_err_deg": 0.04994001081337709,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 52,
+   "final_err_mm": 1.0540331033689607,
+   "yaw_err_deg": 0.1490783390102024,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 53,
+   "final_err_mm": 0.9044765969293236,
+   "yaw_err_deg": 0.9445221448992658,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 61,
+   "final_err_mm": 1.0681486186854763,
+   "yaw_err_deg": 0.47330629105465505,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 64,
+   "final_err_mm": 0.6150941936809209,
+   "yaw_err_deg": 0.5184266964412245,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 66,
+   "final_err_mm": 0.5622300755339911,
+   "yaw_err_deg": 0.04755158684059779,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 67,
+   "final_err_mm": 1.1870847440847316,
+   "yaw_err_deg": 0.2488582000291899,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 69,
+   "final_err_mm": 0.19493394287010393,
+   "yaw_err_deg": 179.67561628423476,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 71,
+   "final_err_mm": 1.0186093638831648,
+   "yaw_err_deg": 0.291194238067936,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 72,
+   "final_err_mm": 0.33040651685068084,
+   "yaw_err_deg": 179.84456838480784,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 77,
+   "final_err_mm": 0.14776703159208027,
+   "yaw_err_deg": 0.07928410329467185,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 79,
+   "final_err_mm": 0.26226090468691315,
+   "yaw_err_deg": 0.26126539833700235,
+   "face_ok": false,
+   "presses": 8,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 83,
+   "final_err_mm": 0.24311680398323826,
+   "yaw_err_deg": 0.18578291201849706,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 85,
+   "final_err_mm": 0.7184010590998792,
+   "yaw_err_deg": 0.10920954342634559,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 90,
+   "final_err_mm": 0.7583323900186644,
+   "yaw_err_deg": 0.8786772945631469,
+   "face_ok": true,
+   "presses": 7,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 98,
+   "final_err_mm": 0.3006028159267977,
+   "yaw_err_deg": 0.7818799160370583,
+   "face_ok": false,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 101,
+   "final_err_mm": 0.8114705605897106,
+   "yaw_err_deg": 0.9921493229174416,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 107,
+   "final_err_mm": 0.4468232346923091,
+   "yaw_err_deg": 0.6345529550947049,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 110,
+   "final_err_mm": 0.54651998328458,
+   "yaw_err_deg": 1.634113269828275,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 112,
+   "final_err_mm": 0.6213697855166775,
+   "yaw_err_deg": 0.047493493400867434,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 113,
+   "final_err_mm": 0.8406282132652585,
+   "yaw_err_deg": 0.09668493328097932,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 115,
+   "final_err_mm": 0.13167918767251885,
+   "yaw_err_deg": 0.6085249998269853,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 116,
+   "final_err_mm": 0.22435867098891232,
+   "yaw_err_deg": 0.18330728698970233,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 117,
+   "final_err_mm": 1.7345659307604666,
+   "yaw_err_deg": 0.2968972742366741,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 120,
+   "final_err_mm": 0.5191139013120933,
+   "yaw_err_deg": 0.6553345986953172,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 122,
+   "final_err_mm": 0.5724246072893694,
+   "yaw_err_deg": 0.21848133858780386,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 124,
+   "final_err_mm": 0.3545124494512227,
+   "yaw_err_deg": 0.0846723161748173,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 127,
+   "final_err_mm": 0.4019936023964828,
+   "yaw_err_deg": 0.29323915163722863,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 129,
+   "final_err_mm": 0.7944754532129165,
+   "yaw_err_deg": 5.131791341869839,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 136,
+   "final_err_mm": 0.17133609727514457,
+   "yaw_err_deg": 0.4182178066075699,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 137,
+   "final_err_mm": 1.0873556184354705,
+   "yaw_err_deg": 0.3789801673579265,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 138,
+   "final_err_mm": 0.49621241466800114,
+   "yaw_err_deg": 0.11323871470074809,
+   "face_ok": false,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 139,
+   "final_err_mm": 0.6608860862943999,
+   "yaw_err_deg": 0.5842255548231743,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 142,
+   "final_err_mm": 0.8246776928793956,
+   "yaw_err_deg": 0.3754811840356638,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 143,
+   "final_err_mm": 0.2636927747204181,
+   "yaw_err_deg": 0.1835901991785586,
+   "face_ok": false,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 153,
+   "final_err_mm": 0.30745166039446753,
+   "yaw_err_deg": 0.0850087464987284,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 154,
+   "final_err_mm": 1.2916233565720712,
+   "yaw_err_deg": 0.170748816949299,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 158,
+   "final_err_mm": 0.283203421599658,
+   "yaw_err_deg": 0.11890477896374048,
+   "face_ok": false,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 162,
+   "final_err_mm": 0.8195481627421253,
+   "yaw_err_deg": 0.1365233500749241,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 163,
+   "final_err_mm": 1.0119094996470919,
+   "yaw_err_deg": 0.8224866342441715,
+   "face_ok": false,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 164,
+   "final_err_mm": 0.7724794382161168,
+   "yaw_err_deg": 0.7008383251256305,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 169,
+   "final_err_mm": 0.24386008070183263,
+   "yaw_err_deg": 2.701027319930907,
+   "face_ok": true,
+   "presses": 7,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 170,
+   "final_err_mm": 0.8155209172398347,
+   "yaw_err_deg": 0.22152042084629114,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 177,
+   "final_err_mm": 1.2240867514408913,
+   "yaw_err_deg": 0.155917260202159,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 178,
+   "final_err_mm": 1.0450052527698572,
+   "yaw_err_deg": 0.15970954961824246,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 179,
+   "final_err_mm": 0.3370039660457495,
+   "yaw_err_deg": 0.28380385812425857,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 181,
+   "final_err_mm": 0.49442498599773316,
+   "yaw_err_deg": 0.22369646600674287,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 184,
+   "final_err_mm": 0.7191739445781582,
+   "yaw_err_deg": 0.16431089410890184,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 189,
+   "final_err_mm": 1.615766446408492,
+   "yaw_err_deg": 0.2855256414090377,
+   "face_ok": false,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 192,
+   "final_err_mm": 1.073641045697244,
+   "yaw_err_deg": 0.5144033228809803,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 195,
+   "final_err_mm": 0.9322987045117325,
+   "yaw_err_deg": 0.5439720690958805,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 196,
+   "final_err_mm": 0.967546866133225,
+   "yaw_err_deg": 0.864286996565852,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 197,
+   "final_err_mm": 0.790088844009627,
+   "yaw_err_deg": 1.2576328549201317,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 198,
+   "final_err_mm": 0.9671739003303009,
+   "yaw_err_deg": 0.5185044314479228,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 203,
+   "final_err_mm": 0.49959629100041286,
+   "yaw_err_deg": 0.12919380372971181,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 210,
+   "final_err_mm": 1.139186432008359,
+   "yaw_err_deg": 0.08324474266672943,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 211,
+   "final_err_mm": 0.2808760928401807,
+   "yaw_err_deg": 1.7996279718159371,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 220,
+   "final_err_mm": 0.7489577897394596,
+   "yaw_err_deg": 0.225433755406641,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 222,
+   "final_err_mm": 0.2908647543271277,
+   "yaw_err_deg": 0.40407956225533553,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 230,
+   "final_err_mm": 1.0244073281583483,
+   "yaw_err_deg": 0.34696133977997695,
+   "face_ok": false,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 232,
+   "final_err_mm": 0.2902213814411131,
+   "yaw_err_deg": 0.23350989748477838,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 233,
+   "final_err_mm": 0.2352238882694391,
+   "yaw_err_deg": 0.733995310465275,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 234,
+   "final_err_mm": 0.47602692409140196,
+   "yaw_err_deg": 0.007304052242316024,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 236,
+   "final_err_mm": 0.362909130561963,
+   "yaw_err_deg": 0.3168854441475446,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 238,
+   "final_err_mm": 1.109968856871037,
+   "yaw_err_deg": 0.2301882170678738,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 241,
+   "final_err_mm": 0.6464269570735289,
+   "yaw_err_deg": 0.6821962069551065,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 246,
+   "final_err_mm": 0.2757215017576638,
+   "yaw_err_deg": 0.002275816503981787,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 248,
+   "final_err_mm": 1.1146219522454306,
+   "yaw_err_deg": 0.0033708939825487505,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 252,
+   "final_err_mm": 1.4346988532492708,
+   "yaw_err_deg": 0.5248602540923457,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 259,
+   "final_err_mm": 0.04909614338770133,
+   "yaw_err_deg": 0.15551871221395402,
+   "face_ok": true,
+   "presses": 7,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 265,
+   "final_err_mm": 1.0430838837621752,
+   "yaw_err_deg": 0.46700319540431234,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 266,
+   "final_err_mm": 0.853674006856845,
+   "yaw_err_deg": 0.5378537358233757,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 280,
+   "final_err_mm": 1.300382106764724,
+   "yaw_err_deg": 0.3170655579291256,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 282,
+   "final_err_mm": 1.0312634967693306,
+   "yaw_err_deg": 0.08330838348445013,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 289,
+   "final_err_mm": 0.4166574835484003,
+   "yaw_err_deg": 0.12231744618839002,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 293,
+   "final_err_mm": 1.2003283428433,
+   "yaw_err_deg": 0.2524243518182907,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 308,
+   "final_err_mm": 1.3489255493376608,
+   "yaw_err_deg": 0.14241461404498068,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 310,
+   "final_err_mm": 0.22228727673502105,
+   "yaw_err_deg": 0.17205111933537864,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 314,
+   "final_err_mm": 0.3005243414576749,
+   "yaw_err_deg": 1.1768358777762309,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 316,
+   "final_err_mm": 0.6088028749090412,
+   "yaw_err_deg": 179.50383243635326,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 322,
+   "final_err_mm": 0.3591014645192776,
+   "yaw_err_deg": 0.13067215799971665,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 325,
+   "final_err_mm": 0.6726602414830284,
+   "yaw_err_deg": 1.0198486850550772,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 327,
+   "final_err_mm": 0.9173046070104698,
+   "yaw_err_deg": 0.2146266309706919,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 334,
+   "final_err_mm": 1.3072542097191522,
+   "yaw_err_deg": 0.005991237752141387,
+   "face_ok": false,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 337,
+   "final_err_mm": 0.8237297930780846,
+   "yaw_err_deg": 0.6829525272394221,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 339,
+   "final_err_mm": 0.8039655604958094,
+   "yaw_err_deg": 0.04219947787515821,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 340,
+   "final_err_mm": 1.036795693640554,
+   "yaw_err_deg": 0.6106232755348628,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 354,
+   "final_err_mm": 0.5409671660981318,
+   "yaw_err_deg": 0.6208695954711629,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 355,
+   "final_err_mm": 0.35348802756602277,
+   "yaw_err_deg": 0.8999782841775325,
+   "face_ok": true,
+   "presses": 7,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 357,
+   "final_err_mm": 0.21910978226108593,
+   "yaw_err_deg": 0.5155788464169291,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 361,
+   "final_err_mm": 0.5522418999557277,
+   "yaw_err_deg": 0.07734745054163968,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 362,
+   "final_err_mm": 0.80936477768928,
+   "yaw_err_deg": 0.7835371235678394,
+   "face_ok": true,
+   "presses": 6,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 363,
+   "final_err_mm": 0.42378195395287366,
+   "yaw_err_deg": 1.113899325048913,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 374,
+   "final_err_mm": 0.8232002265878787,
+   "yaw_err_deg": 0.1935014461102469,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 376,
+   "final_err_mm": 1.073038826531904,
+   "yaw_err_deg": 0.11488815861987914,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 379,
+   "final_err_mm": 0.8477916781140244,
+   "yaw_err_deg": 0.7053286027573336,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 385,
+   "final_err_mm": 0.2108360650220912,
+   "yaw_err_deg": 0.5347757145520973,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 390,
+   "final_err_mm": 0.40608394947275867,
+   "yaw_err_deg": 0.18434441182864703,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 395,
+   "final_err_mm": 0.3766751621772602,
+   "yaw_err_deg": 0.5962038644290146,
+   "face_ok": false,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 409,
+   "final_err_mm": 0.4063420041195126,
+   "yaw_err_deg": 0.214743828206565,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 410,
+   "final_err_mm": 0.6547610181024504,
+   "yaw_err_deg": 0.14419171477129566,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 412,
+   "final_err_mm": 0.5422785642683959,
+   "yaw_err_deg": 0.6610399292565112,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 414,
+   "final_err_mm": 0.26560659160548283,
+   "yaw_err_deg": 0.11532350601544646,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 418,
+   "final_err_mm": 0.3814171546163908,
+   "yaw_err_deg": 0.0026855299586691565,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 421,
+   "final_err_mm": 1.2942599632450016,
+   "yaw_err_deg": 0.0912183980374266,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 423,
+   "final_err_mm": 0.28355900821302626,
+   "yaw_err_deg": 0.16874476863597465,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 424,
+   "final_err_mm": 0.744565463253009,
+   "yaw_err_deg": 0.060000446550589004,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 426,
+   "final_err_mm": 0.6972310649166357,
+   "yaw_err_deg": 0.06018794988040099,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 428,
+   "final_err_mm": 0.7680871284796448,
+   "yaw_err_deg": 0.36763996767581375,
+   "face_ok": false,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 430,
+   "final_err_mm": 0.5624131202087986,
+   "yaw_err_deg": 0.29474253977504394,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 431,
+   "final_err_mm": 0.1637238760123831,
+   "yaw_err_deg": 0.5789713317220235,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 432,
+   "final_err_mm": 0.5300226174665107,
+   "yaw_err_deg": 0.20350643074493746,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 437,
+   "final_err_mm": 0.6428001882866744,
+   "yaw_err_deg": 179.69500840840013,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 440,
+   "final_err_mm": 1.5942931773511935,
+   "yaw_err_deg": 0.6737272152965943,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 441,
+   "final_err_mm": 0.5758197292348439,
+   "yaw_err_deg": 0.07208286292262756,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 443,
+   "final_err_mm": 0.7335595910051782,
+   "yaw_err_deg": 1.5576488407314173,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 447,
+   "final_err_mm": 0.38538400907392384,
+   "yaw_err_deg": 0.28440563082540393,
+   "face_ok": true,
+   "presses": 6,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 458,
+   "final_err_mm": 0.6167174094610376,
+   "yaw_err_deg": 0.45325757482163453,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 462,
+   "final_err_mm": 0.361933878151407,
+   "yaw_err_deg": 0.029940153793234003,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 465,
+   "final_err_mm": 0.4221475453481934,
+   "yaw_err_deg": 179.84153339220063,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 467,
+   "final_err_mm": 0.4916829190807623,
+   "yaw_err_deg": 0.49281906575197354,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 468,
+   "final_err_mm": 0.6924994738733197,
+   "yaw_err_deg": 0.7453551010439128,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 474,
+   "final_err_mm": 0.6710556345219255,
+   "yaw_err_deg": 0.39010062194728334,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 481,
+   "final_err_mm": 0.17028814499262632,
+   "yaw_err_deg": 0.10516948210103624,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 484,
+   "final_err_mm": 0.10768676923632253,
+   "yaw_err_deg": 0.37535260966870965,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 485,
+   "final_err_mm": 1.3361798430110376,
+   "yaw_err_deg": 0.00034500341683951774,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 488,
+   "final_err_mm": 0.6911740350399317,
+   "yaw_err_deg": 1.0572015449050696,
+   "face_ok": true,
+   "presses": 7,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 492,
+   "final_err_mm": 0.24423453602142647,
+   "yaw_err_deg": 0.8932471447241284,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 494,
+   "final_err_mm": 0.7590842709100377,
+   "yaw_err_deg": 0.28420022197058326,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 495,
+   "final_err_mm": 0.8842535104260877,
+   "yaw_err_deg": 0.22708751642216535,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 496,
+   "final_err_mm": 1.1638859247986744,
+   "yaw_err_deg": 0.21938730525397432,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 503,
+   "final_err_mm": 1.07462141579101,
+   "yaw_err_deg": 0.9215005147695479,
+   "face_ok": true,
+   "presses": 7,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 505,
+   "final_err_mm": 0.19012902160822068,
+   "yaw_err_deg": 0.16384566256567343,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 508,
+   "final_err_mm": 0.6755780131750516,
+   "yaw_err_deg": 1.136571106542533,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 510,
+   "final_err_mm": 0.8296039858368408,
+   "yaw_err_deg": 0.15719508879709565,
+   "face_ok": false,
+   "presses": 8,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 513,
+   "final_err_mm": 0.4879919839463858,
+   "yaw_err_deg": 0.18847337215879634,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 521,
+   "final_err_mm": 0.6384290448048712,
+   "yaw_err_deg": 0.059850630271375396,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 524,
+   "final_err_mm": 0.13498370079250427,
+   "yaw_err_deg": 179.16586448820576,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 527,
+   "final_err_mm": 0.8608286049674653,
+   "yaw_err_deg": 0.13194968606080693,
+   "face_ok": true,
+   "presses": 7,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 532,
+   "final_err_mm": 0.7528253119014578,
+   "yaw_err_deg": 0.5424076445585333,
+   "face_ok": false,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 533,
+   "final_err_mm": 0.6033830485373255,
+   "yaw_err_deg": 0.44565522892615195,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 536,
+   "final_err_mm": 0.5321426989077012,
+   "yaw_err_deg": 0.5180631533962878,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 537,
+   "final_err_mm": 0.6848356215066511,
+   "yaw_err_deg": 0.31524143104837776,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 538,
+   "final_err_mm": 0.25748452322498305,
+   "yaw_err_deg": 0.485314643045921,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 539,
+   "final_err_mm": 1.2417758774325502,
+   "yaw_err_deg": 0.7263021120871826,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 541,
+   "final_err_mm": 0.6033790621614836,
+   "yaw_err_deg": 0.9287062436757644,
+   "face_ok": false,
+   "presses": 8,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 543,
+   "final_err_mm": 0.7276554901449837,
+   "yaw_err_deg": 0.780147707042164,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 546,
+   "final_err_mm": 0.690957101428299,
+   "yaw_err_deg": 0.04799061272569115,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 550,
+   "final_err_mm": 0.8531649298334214,
+   "yaw_err_deg": 0.0500404589313348,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 551,
+   "final_err_mm": 0.42687742826053904,
+   "yaw_err_deg": 0.4693357781570518,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 555,
+   "final_err_mm": 0.6007927682878066,
+   "yaw_err_deg": 2.0101409003083233,
+   "face_ok": true,
+   "presses": 7,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 559,
+   "final_err_mm": 0.8320505550190714,
+   "yaw_err_deg": 0.1546920614222813,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 560,
+   "final_err_mm": 0.37021238015089003,
+   "yaw_err_deg": 0.13281493037936798,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 563,
+   "final_err_mm": 0.6273312017669892,
+   "yaw_err_deg": 0.2773699541757416,
+   "face_ok": false,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 565,
+   "final_err_mm": 0.031020565764611423,
+   "yaw_err_deg": 0.295108778317001,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 570,
+   "final_err_mm": 0.5094512729479901,
+   "yaw_err_deg": 1.3477710309876443,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 578,
+   "final_err_mm": 1.4036932324232867,
+   "yaw_err_deg": 0.4283369982579188,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 581,
+   "final_err_mm": 0.4886183247033453,
+   "yaw_err_deg": 0.7817604804316798,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 583,
+   "final_err_mm": 0.4314753142041344,
+   "yaw_err_deg": 0.04807961660787187,
+   "face_ok": false,
+   "presses": 8,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 585,
+   "final_err_mm": 0.23222019764459031,
+   "yaw_err_deg": 0.5110868165745615,
+   "face_ok": true,
+   "presses": 7,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 590,
+   "final_err_mm": 0.423367435283732,
+   "yaw_err_deg": 0.7532639160192445,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 593,
+   "final_err_mm": 0.7276808961976066,
+   "yaw_err_deg": 0.7099292728104274,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 596,
+   "final_err_mm": 0.3718842956094202,
+   "yaw_err_deg": 0.12951536187637203,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 599,
+   "final_err_mm": 0.5694450445486537,
+   "yaw_err_deg": 0.47441970476791084,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 601,
+   "final_err_mm": 0.023840846571283138,
+   "yaw_err_deg": 0.20099013121988507,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 603,
+   "final_err_mm": 0.6806739624297544,
+   "yaw_err_deg": 0.955148666035048,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 610,
+   "final_err_mm": 0.574113001968542,
+   "yaw_err_deg": 0.061309920774021975,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 611,
+   "final_err_mm": 0.4877867464285015,
+   "yaw_err_deg": 0.2280041253971917,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 612,
+   "final_err_mm": 0.7451686814186608,
+   "yaw_err_deg": 179.35647193454957,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 614,
+   "final_err_mm": 0.6849264526784536,
+   "yaw_err_deg": 0.36165915607148236,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 615,
+   "final_err_mm": 1.3665734798970284,
+   "yaw_err_deg": 0.3179632694006434,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 617,
+   "final_err_mm": 0.7422250438282655,
+   "yaw_err_deg": 0.2761943204164402,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 620,
+   "final_err_mm": 0.7590549805112746,
+   "yaw_err_deg": 0.695312900696579,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 621,
+   "final_err_mm": 0.6062121856379116,
+   "yaw_err_deg": 0.025319496069357683,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 622,
+   "final_err_mm": 1.1536627465592966,
+   "yaw_err_deg": 2.320473127479545,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 624,
+   "final_err_mm": 0.6194775329429137,
+   "yaw_err_deg": 1.5041202989494877,
+   "face_ok": true,
+   "presses": 6,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 628,
+   "final_err_mm": 0.8758749441866688,
+   "yaw_err_deg": 0.5468542553371887,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 631,
+   "final_err_mm": 0.40267638851157217,
+   "yaw_err_deg": 0.1435234204471385,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 634,
+   "final_err_mm": 0.07002349104925534,
+   "yaw_err_deg": 0.2897231510362532,
+   "face_ok": true,
+   "presses": 7,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 637,
+   "final_err_mm": 0.2535475071930218,
+   "yaw_err_deg": 0.020024606573258552,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 643,
+   "final_err_mm": 0.2447337307829589,
+   "yaw_err_deg": 0.8505718391406942,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 645,
+   "final_err_mm": 1.4741650480924702,
+   "yaw_err_deg": 1.3218138804642194,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 655,
+   "final_err_mm": 0.07320738678192382,
+   "yaw_err_deg": 0.07103829929633321,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 661,
+   "final_err_mm": 0.7812241574311902,
+   "yaw_err_deg": 0.3057678409540472,
+   "face_ok": false,
+   "presses": 7,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 663,
+   "final_err_mm": 0.24603964000310624,
+   "yaw_err_deg": 0.9154718017054506,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 665,
+   "final_err_mm": 0.4395204381502707,
+   "yaw_err_deg": 0.46729776467930123,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 668,
+   "final_err_mm": 1.0170380238935415,
+   "yaw_err_deg": 0.5309062106016621,
+   "face_ok": true,
+   "presses": 7,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 672,
+   "final_err_mm": 0.6925091213248145,
+   "yaw_err_deg": 0.3097016155442702,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 676,
+   "final_err_mm": 0.9290455028779396,
+   "yaw_err_deg": 0.12478382566058599,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 684,
+   "final_err_mm": 1.0968541694120713,
+   "yaw_err_deg": 0.4266661909031768,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 691,
+   "final_err_mm": 0.9737111882189834,
+   "yaw_err_deg": 1.2080498187390556,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 695,
+   "final_err_mm": 0.511085298193839,
+   "yaw_err_deg": 0.7148009406704432,
+   "face_ok": false,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 699,
+   "final_err_mm": 0.08908295291689601,
+   "yaw_err_deg": 0.3332493959612748,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 703,
+   "final_err_mm": 0.4967439695930757,
+   "yaw_err_deg": 0.35712301574159255,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 704,
+   "final_err_mm": 0.2423586321634724,
+   "yaw_err_deg": 0.21330685926233406,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 716,
+   "final_err_mm": 0.3755753360224052,
+   "yaw_err_deg": 0.09591244498596013,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 727,
+   "final_err_mm": 0.6158130767196078,
+   "yaw_err_deg": 0.16825460301336573,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 728,
+   "final_err_mm": 0.1652501220144784,
+   "yaw_err_deg": 0.5632412982979378,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 734,
+   "final_err_mm": 0.49513635027823866,
+   "yaw_err_deg": 1.494944438611526,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 737,
+   "final_err_mm": 0.3638302973379607,
+   "yaw_err_deg": 0.10690800345567751,
+   "face_ok": true,
+   "presses": 7,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 738,
+   "final_err_mm": 1.1484843129017952,
+   "yaw_err_deg": 0.20316102492248547,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 742,
+   "final_err_mm": 0.32897776320625893,
+   "yaw_err_deg": 0.7897657317551534,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 745,
+   "final_err_mm": 1.050072851096424,
+   "yaw_err_deg": 0.7139182862977088,
+   "face_ok": false,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 746,
+   "final_err_mm": 0.8701371562612442,
+   "yaw_err_deg": 0.5019974999061674,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 747,
+   "final_err_mm": 0.14933194016771045,
+   "yaw_err_deg": 0.5612374812914541,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 749,
+   "final_err_mm": 0.5832128662710577,
+   "yaw_err_deg": 0.8990608349905619,
+   "face_ok": true,
+   "presses": 7,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 750,
+   "final_err_mm": 0.3570433806788436,
+   "yaw_err_deg": 0.46185455458874003,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 754,
+   "final_err_mm": 0.38360361840513674,
+   "yaw_err_deg": 0.7969572940215812,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 761,
+   "final_err_mm": 1.2432667645371338,
+   "yaw_err_deg": 1.8609293824300153,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 763,
+   "final_err_mm": 0.5475663341740902,
+   "yaw_err_deg": 0.2715152207047901,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 768,
+   "final_err_mm": 0.4119779180384068,
+   "yaw_err_deg": 179.48264832071007,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 771,
+   "final_err_mm": 0.6316120463816737,
+   "yaw_err_deg": 0.19805390994019112,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 773,
+   "final_err_mm": 1.0015691671097038,
+   "yaw_err_deg": 0.10421521205893214,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 775,
+   "final_err_mm": 1.054277600949526,
+   "yaw_err_deg": 0.09178494371150236,
+   "face_ok": false,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 776,
+   "final_err_mm": 0.45966722178072733,
+   "yaw_err_deg": 0.34438709729670336,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 780,
+   "final_err_mm": 0.4031037126175968,
+   "yaw_err_deg": 0.07822061829328182,
+   "face_ok": true,
+   "presses": 6,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 785,
+   "final_err_mm": 0.6872308028621568,
+   "yaw_err_deg": 1.7303839052289618,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 788,
+   "final_err_mm": 0.45866142307160357,
+   "yaw_err_deg": 0.40967881691820135,
+   "face_ok": false,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 791,
+   "final_err_mm": 0.6283192721450922,
+   "yaw_err_deg": 0.33945738484019017,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 793,
+   "final_err_mm": 0.32244808545595355,
+   "yaw_err_deg": 0.29544091011030105,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 794,
+   "final_err_mm": 0.30499698382628304,
+   "yaw_err_deg": 1.6640722751954513,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 798,
+   "final_err_mm": 0.7457077929122637,
+   "yaw_err_deg": 0.9096060978920278,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 799,
+   "final_err_mm": 0.6985540020678345,
+   "yaw_err_deg": 179.30229099834443,
+   "face_ok": false,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 803,
+   "final_err_mm": 0.6309828527309528,
+   "yaw_err_deg": 0.2504681349895995,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 804,
+   "final_err_mm": 0.014159368077133002,
+   "yaw_err_deg": 179.63377924416469,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 805,
+   "final_err_mm": 0.3030534318812616,
+   "yaw_err_deg": 0.35056616403977614,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 812,
+   "final_err_mm": 1.486252038378042,
+   "yaw_err_deg": 0.35166361688197867,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 816,
+   "final_err_mm": 0.7276984577691996,
+   "yaw_err_deg": 0.4575121409306131,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 817,
+   "final_err_mm": 1.2804628905323239,
+   "yaw_err_deg": 1.2878349615564275,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 819,
+   "final_err_mm": 0.9509313478829251,
+   "yaw_err_deg": 0.6652357430102143,
+   "face_ok": false,
+   "presses": 8,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 823,
+   "final_err_mm": 0.7595107267004936,
+   "yaw_err_deg": 0.06156572325857981,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 828,
+   "final_err_mm": 0.048979230494045976,
+   "yaw_err_deg": 0.5385601618683609,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 829,
+   "final_err_mm": 0.5370320709671231,
+   "yaw_err_deg": 0.17295218037622817,
+   "face_ok": true,
+   "presses": 7,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 832,
+   "final_err_mm": 0.31397298677759883,
+   "yaw_err_deg": 0.22918679424304855,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 833,
+   "final_err_mm": 1.0679358873644542,
+   "yaw_err_deg": 0.21415695036114357,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 836,
+   "final_err_mm": 1.0468748263645156,
+   "yaw_err_deg": 1.1371074798344125,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 837,
+   "final_err_mm": 2.177335869517906,
+   "yaw_err_deg": 2.1997113523938765,
+   "face_ok": false,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 839,
+   "final_err_mm": 0.4165377999133874,
+   "yaw_err_deg": 0.6098426789894802,
+   "face_ok": false,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 842,
+   "final_err_mm": 1.351968552672509,
+   "yaw_err_deg": 0.1355089514055904,
+   "face_ok": false,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 843,
+   "final_err_mm": 0.3814593520492381,
+   "yaw_err_deg": 1.0050792371749253,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 846,
+   "final_err_mm": 1.141805651839415,
+   "yaw_err_deg": 0.7189046199761719,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 859,
+   "final_err_mm": 0.5913897122969616,
+   "yaw_err_deg": 0.7784200513992665,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 862,
+   "final_err_mm": 0.9742059218104595,
+   "yaw_err_deg": 0.31880686594161034,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 865,
+   "final_err_mm": 0.8805276765430056,
+   "yaw_err_deg": 1.7141970391190853,
+   "face_ok": true,
+   "presses": 7,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 866,
+   "final_err_mm": 0.11338616759736882,
+   "yaw_err_deg": 0.5633641753897386,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 875,
+   "final_err_mm": 1.065770432874789,
+   "yaw_err_deg": 1.3086831474510063,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 876,
+   "final_err_mm": 0.6197382497550239,
+   "yaw_err_deg": 179.5511360693796,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 877,
+   "final_err_mm": 0.5962315850672557,
+   "yaw_err_deg": 0.3746186897357541,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 879,
+   "final_err_mm": 0.7467448822743561,
+   "yaw_err_deg": 0.2957392531366736,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 882,
+   "final_err_mm": 0.7261564919071138,
+   "yaw_err_deg": 0.0699839541489416,
+   "face_ok": false,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 884,
+   "final_err_mm": 0.30767812083432433,
+   "yaw_err_deg": 0.19454271374652932,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 889,
+   "final_err_mm": 0.41469034624382056,
+   "yaw_err_deg": 1.432718864035232,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 891,
+   "final_err_mm": 0.908879205873025,
+   "yaw_err_deg": 0.5884157626402384,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 907,
+   "final_err_mm": 0.3086571743603875,
+   "yaw_err_deg": 0.31039496834670316,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 911,
+   "final_err_mm": 0.6354561553565476,
+   "yaw_err_deg": 0.13692770532787515,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 914,
+   "final_err_mm": 0.33080849158033154,
+   "yaw_err_deg": 0.22064514506922464,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 915,
+   "final_err_mm": 0.6543575611463437,
+   "yaw_err_deg": 0.714930219480171,
+   "face_ok": false,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 917,
+   "final_err_mm": 1.0630215359186592,
+   "yaw_err_deg": 0.21866050322421243,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 920,
+   "final_err_mm": 1.4906611600312603,
+   "yaw_err_deg": 0.7991855225433824,
+   "face_ok": true,
+   "presses": 7,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 924,
+   "final_err_mm": 0.8697234418289489,
+   "yaw_err_deg": 0.8169527805442333,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 927,
+   "final_err_mm": 0.16894191573468975,
+   "yaw_err_deg": 0.27219122868825707,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 928,
+   "final_err_mm": 0.28679526969956026,
+   "yaw_err_deg": 0.13459214536604436,
+   "face_ok": true,
+   "presses": 6,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 931,
+   "final_err_mm": 0.36696607985962576,
+   "yaw_err_deg": 0.2888798128553276,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 932,
+   "final_err_mm": 0.2835641209727889,
+   "yaw_err_deg": 0.0910774176132962,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 935,
+   "final_err_mm": 0.7114490010963462,
+   "yaw_err_deg": 0.026838511975565138,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 938,
+   "final_err_mm": 0.6228501846355781,
+   "yaw_err_deg": 0.5152454606539022,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 940,
+   "final_err_mm": 0.7936394315826286,
+   "yaw_err_deg": 1.3113304821250362,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 942,
+   "final_err_mm": 0.20066249208803508,
+   "yaw_err_deg": 0.2795994651403848,
+   "face_ok": true,
+   "presses": 7,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 945,
+   "final_err_mm": 0.6683328371524188,
+   "yaw_err_deg": 0.4504411712711872,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 946,
+   "final_err_mm": 0.38129899771600295,
+   "yaw_err_deg": 0.7700188816809727,
+   "face_ok": true,
+   "presses": 8,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 947,
+   "final_err_mm": 0.8305337329040208,
+   "yaw_err_deg": 0.18873918400208822,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 948,
+   "final_err_mm": 0.4279865272311507,
+   "yaw_err_deg": 0.38582995104962947,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 951,
+   "final_err_mm": 1.4797677211420721,
+   "yaw_err_deg": 0.27984605100904475,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 952,
+   "final_err_mm": 0.1878789984040133,
+   "yaw_err_deg": 0.07289853784936895,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 953,
+   "final_err_mm": 1.3572055904395528,
+   "yaw_err_deg": 0.5118215095798178,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 954,
+   "final_err_mm": 0.47801160741508325,
+   "yaw_err_deg": 0.12666964869389896,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 958,
+   "final_err_mm": 0.3320075662515016,
+   "yaw_err_deg": 0.4895332767907803,
+   "face_ok": true,
+   "presses": 7,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 967,
+   "final_err_mm": 1.3133406864202937,
+   "yaw_err_deg": 0.605581941302013,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 972,
+   "final_err_mm": 1.4535158590162416,
+   "yaw_err_deg": 0.9460429949300946,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 981,
+   "final_err_mm": 0.325806601958317,
+   "yaw_err_deg": 0.10521297187568734,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 982,
+   "final_err_mm": 0.5821868682310124,
+   "yaw_err_deg": 0.21446131405150481,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 984,
+   "final_err_mm": 1.2552966459712978,
+   "yaw_err_deg": 0.9198634135998986,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 985,
+   "final_err_mm": 0.4764184602467307,
+   "yaw_err_deg": 0.3186850004766484,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 991,
+   "final_err_mm": 0.3202465144996154,
+   "yaw_err_deg": 0.8324058661220306,
+   "face_ok": true,
+   "presses": 9,
+   "pose": 1,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  },
+  {
+   "index": 994,
+   "final_err_mm": 0.6634344051782914,
+   "yaw_err_deg": 1.8119487731448114,
+   "face_ok": true,
+   "presses": 10,
+   "pose": 0,
+   "rules": [
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line",
+    "edges, signed by the line"
+   ]
+  }
+ ]
+}

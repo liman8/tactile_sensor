@@ -1,0 +1,123 @@
+{
+ "net": "results_centre/mini_robust/model_100k_seed0.pt",
+ "near_mm": 10.0,
+ "contact_mm": 0.05,
+ "summary": {
+  "all": {
+   "n": 3473,
+   "n_with_yaw": 3473,
+   "yaw_median": 3.1653708953446227,
+   "yaw_median_ci": [
+    2.963870824223142,
+    3.338821348970482
+   ],
+   "yaw_p90": 11.697955399041728,
+   "flipped_gt90": 0.08753239274402534,
+   "axis_median": 2.533330921615006,
+   "axis_p90": 8.021788408543534,
+   "structure_tensor_axis_median": 1.9227906947182511,
+   "rule_edges_share": 0.08695652173913043,
+   "face_acc": 0.8620788943276706,
+   "rule_B": {
+    "yaw_median": 2.497644534281278,
+    "yaw_p90": 41.313257175087365,
+    "flipped_gt90": 0.08782032824647279,
+    "axis_median": 1.8343404830176961,
+    "axis_p90": 15.673954327355165
+   }
+  },
+  "tines": {
+   "n": 1367,
+   "n_with_yaw": 1367,
+   "yaw_median": 4.440627174365261,
+   "yaw_median_ci": [
+    4.228576255121823,
+    4.659736237508642
+   ],
+   "yaw_p90": 8.993070103301507,
+   "flipped_gt90": 0.0043891733723482075,
+   "axis_median": 4.440627174365261,
+   "axis_p90": 8.96138622856754,
+   "structure_tensor_axis_median": 2.5988399066497436,
+   "rule_edges_share": 0.0,
+   "face_acc": 0.9926847110460864,
+   "rule_B": {
+    "yaw_median": 2.5113462079033506,
+    "yaw_p90": 15.214829364279337,
+    "flipped_gt90": 0.0043891733723482075,
+    "axis_median": 2.502680332728165,
+    "axis_p90": 14.614193001655092
+   }
+  },
+  "palm": {
+   "n": 603,
+   "n_with_yaw": 603,
+   "yaw_median": 3.7649277934153558,
+   "yaw_median_ci": [
+    3.4582175825760046,
+    4.070217527833349
+   ],
+   "yaw_p90": 9.273381946268941,
+   "flipped_gt90": 0.008291873963515755,
+   "axis_median": 3.742689765762293,
+   "axis_p90": 9.055963115105884,
+   "structure_tensor_axis_median": 8.270168803556913,
+   "rule_edges_share": 0.0,
+   "face_acc": 0.9601990049751243,
+   "rule_B": {
+    "yaw_median": 7.167811664635735,
+    "yaw_p90": 34.67868260996378,
+    "flipped_gt90": 0.008291873963515755,
+    "axis_median": 7.146677607625946,
+    "axis_p90": 33.65494083621249
+   }
+  },
+  "neck": {
+   "n": 548,
+   "n_with_yaw": 548,
+   "yaw_median": 2.1377500915301058,
+   "yaw_median_ci": [
+    1.7737120038545178,
+    2.3372259739159045
+   ],
+   "yaw_p90": 58.39241802966679,
+   "flipped_gt90": 0.10036496350364964,
+   "axis_median": 1.6889927061787233,
+   "axis_p90": 5.381849180399048,
+   "structure_tensor_axis_median": 1.1799709539711118,
+   "rule_edges_share": 0.18065693430656934,
+   "face_acc": 0.75,
+   "rule_B": {
+    "yaw_median": 1.902961199072164,
+    "yaw_p90": 83.00562762034204,
+    "flipped_gt90": 0.10036496350364964,
+    "axis_median": 1.1594918535959806,
+    "axis_p90": 11.30525467835685
+   }
+  },
+  "handle": {
+   "n": 955,
+   "n_with_yaw": 955,
+   "yaw_median": 1.494704129122921,
+   "yaw_median_ci": [
+    1.3779185479272087,
+    1.6644455399456362
+   ],
+   "yaw_p90": 178.92676918781675,
+   "flipped_gt90": 0.24921465968586387,
+   "axis_median": 1.0726076947279353,
+   "axis_p90": 3.8471520552905427,
+   "structure_tensor_axis_median": 0.8808452743949715,
+   "rule_edges_share": 0.21256544502617802,
+   "face_acc": 0.6774869109947644,
+   "rule_B": {
+    "yaw_median": 1.3290726587899258,
+    "yaw_p90": 179.2779693936412,
+    "flipped_gt90": 0.25026178010471206,
+    "axis_median": 0.8677436554112603,
+    "axis_p90": 3.6253731258974264
+   }
+  }
+ },
+ "note": "single test2 fork presses, sensor frame; yaw error 0-180 deg (direction of the tines), axis error 0-90 deg (the line only)"
+}

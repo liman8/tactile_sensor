@@ -1,0 +1,12 @@
+after F6: 1 presses, error 1.33 mm, region 16 mm2
+after F6: 2 presses, error 0.59 mm, region 11 mm2
+after F8: 0 presses, estimate none
+after F9: fork at [3.7 0.7] mm, face face down
+after F7: 7 presses, done True, error 0.11 mm, yaw error 1 deg, face face down (true face down)
+  centre error     0.11 mm
+  yaw error        1 deg
+  90% region       3 mm2
+  presses          7  (stopped)
+  part (last)      neck 97%
+  face             face down 51%
+  keys             F6 step, F7 run, F8 reset belief, F9 new fork

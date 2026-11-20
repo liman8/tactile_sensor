@@ -1,0 +1,9 @@
+episode_00_start18: face down, first press on the tines: 9 presses, final error 0.66 mm, yaw error 0 deg, face face down (true face down), 405 frames
+episode_01_start15: face down, first press on the palm: 10 presses, final error 0.21 mm, yaw error 1 deg, face face down (true face down), 445 frames
+episode_02_start170: face down, first press on the neck: 10 presses, final error 0.82 mm, yaw error 0 deg, face face down (true face down), 445 frames
+episode_03_start25: face down, first press on the handle: 10 presses, final error 1.39 mm, yaw error 0 deg, face face down (true face down), 445 frames
+episode_04_start4: face up, first press on the tines: 7 presses, final error 1.18 mm, yaw error 0 deg, face face up (true face up), 325 frames
+episode_05_start27: face up, first press on the palm: 7 presses, final error 0.51 mm, yaw error 0 deg, face face up (true face up), 325 frames
+episode_06_start10: face up, first press on the neck: 9 presses, final error 0.52 mm, yaw error 1 deg, face face up (true face up), 405 frames
+episode_07_start11: face up, first press on the handle: 9 presses, final error 1.63 mm, yaw error 0 deg, face face up (true face up), 405 frames
+episode_08_start837: worst final error (2.18 mm) - failure case: 10 presses, final error 2.18 mm, yaw error 2 deg, face face up (true face down), 445 frames
