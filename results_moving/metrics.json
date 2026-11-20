@@ -1,0 +1,261 @@
+{
+  "mode": "moving_sensor",
+  "free_objects": false,
+  "calibration_rms": 8.832171342667761,
+  "n_train": 3729,
+  "threshold": 0.4,
+  "config": {
+    "rel_thr": 0.3,
+    "count_feature": true
+  },
+  "contact_detection": {
+    "accuracy": 1.0,
+    "n": 2000,
+    "n_no_contact_frames": 112,
+    "missed_touches": 0,
+    "false_contacts": 0
+  },
+  "hover_frames": {
+    "description": "moving part held 0.2-3 mm above its first-contact height; must read 'no contact'",
+    "n": 140,
+    "read_no_contact": 140,
+    "false_contacts": 0
+  },
+  "test": {
+    "n": 1855,
+    "accuracy": 0.984366576819407,
+    "precision": 0.9931350114416476,
+    "recall": 0.9741863075196409,
+    "roc_auc": 0.9974048926331084,
+    "confusion": {
+      "tn": 958,
+      "fp": 6,
+      "fn": 23,
+      "tp": 868
+    }
+  },
+  "test_per_object": {
+    "fork_dinner": {
+      "n": 124,
+      "called_fork": 0.967741935483871
+    },
+    "fork_dessert": {
+      "n": 171,
+      "called_fork": 0.9941520467836257
+    },
+    "fork_salad": {
+      "n": 155,
+      "called_fork": 0.9612903225806452
+    },
+    "fork_wide": {
+      "n": 139,
+      "called_fork": 0.935251798561151
+    },
+    "fork_3wide": {
+      "n": 149,
+      "called_fork": 0.9865771812080537
+    },
+    "fork_stl": {
+      "n": 153,
+      "called_fork": 0.9934640522875817
+    },
+    "spoon": {
+      "n": 123,
+      "called_fork": 0.0
+    },
+    "knife_flat": {
+      "n": 134,
+      "called_fork": 0.014925373134328358
+    },
+    "knife_edge": {
+      "n": 116,
+      "called_fork": 0.0
+    },
+    "pen": {
+      "n": 127,
+      "called_fork": 0.0
+    },
+    "comb": {
+      "n": 112,
+      "called_fork": 0.026785714285714284
+    },
+    "ball": {
+      "n": 116,
+      "called_fork": 0.0
+    },
+    "coin": {
+      "n": 102,
+      "called_fork": 0.0
+    },
+    "cube": {
+      "n": 134,
+      "called_fork": 0.007462686567164179
+    }
+  },
+  "test_fork_recall_by_visible_tines": {
+    "0": {
+      "n": 6,
+      "recall": 0.3333333333333333
+    },
+    "1": {
+      "n": 27,
+      "recall": 0.4444444444444444
+    },
+    "2": {
+      "n": 195,
+      "recall": 0.8974358974358975
+    },
+    "3": {
+      "n": 460,
+      "recall": 0.9956521739130435
+    },
+    "4": {
+      "n": 236,
+      "recall": 0.9957627118644068
+    }
+  },
+  "tine_count_exact": 0.6970046082949308,
+  "tine_count_within_1": 0.9827188940092166,
+  "heldout_plastic_fork": {
+    "recall_tines>=2": 0.9520958083832335,
+    "n_tines>=2": 501,
+    "by_visible_tines": {
+      "0": {
+        "n": 29,
+        "recall": 0.4827586206896552
+      },
+      "1": {
+        "n": 42,
+        "recall": 0.40476190476190477
+      },
+      "2": {
+        "n": 122,
+        "recall": 0.8524590163934426
+      },
+      "3": {
+        "n": 185,
+        "recall": 0.972972972972973
+      },
+      "4": {
+        "n": 194,
+        "recall": 0.9948453608247423
+      }
+    }
+  },
+  "threshold_sweep": {
+    "0.3": {
+      "precision": 0.9887005649717514,
+      "recall": 0.9820426487093153,
+      "heldout_recall": 0.9640718562874252
+    },
+    "0.4": {
+      "precision": 0.9931350114416476,
+      "recall": 0.9741863075196409,
+      "heldout_recall": 0.9520958083832335
+    },
+    "0.5": {
+      "precision": 0.9953863898500577,
+      "recall": 0.9685746352413019,
+      "heldout_recall": 0.936127744510978
+    },
+    "0.6": {
+      "precision": 0.9964912280701754,
+      "recall": 0.9562289562289562,
+      "heldout_recall": 0.9201596806387226
+    },
+    "0.7": {
+      "precision": 0.9988109393579072,
+      "recall": 0.9427609427609428,
+      "heldout_recall": 0.9001996007984032
+    }
+  },
+  "press_quality": {
+    "settled": 1.0,
+    "gel_force_rel_error_median": 0.0038703387481601736,
+    "gel_force_rel_error_p95": 0.025698292724206373,
+    "max_indent_mm_p50_p99_max": [
+      0.9312939345836602,
+      1.5507083646953062,
+      1.8030230402946434
+    ],
+    "presses_redrawn": 0.0973076923076923,
+    "redraws_per_press": 0.14,
+    "redraw_reasons": {
+      "table": 297,
+      "housing": 64,
+      "unsettled": 3,
+      "displaced": 0
+    },
+    "object_shift_mm_p50_p99_max": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "kept_with_flaw": 0,
+    "mean_abs_tilt_rad": {
+      "nominal": {
+        "pitch": 0.075,
+        "roll": 0.05
+      },
+      "all": {
+        "pitch": 0.07448698812787939,
+        "roll": 0.04911362025284375
+      },
+      "thin_objects": {
+        "pitch": 0.07325025253862433,
+        "roll": 0.048706780158385185
+      }
+    }
+  },
+  "top_features": [
+    [
+      "c_pitch_med",
+      0.15654992880622787
+    ],
+    [
+      "c_g_med",
+      0.14053394178856596
+    ],
+    [
+      "c_run_len_mm",
+      0.10369734154601178
+    ],
+    [
+      "c_len_k2_mm",
+      0.09217603972711956
+    ],
+    [
+      "solidity",
+      0.08415223236328967
+    ],
+    [
+      "n_tines_lowthr",
+      0.06037810204097763
+    ],
+    [
+      "c_w_med",
+      0.054323552821980654
+    ],
+    [
+      "c_frac_k2",
+      0.04999229134785183
+    ],
+    [
+      "c_w_cv",
+      0.049548086078257385
+    ],
+    [
+      "n_comp",
+      0.03535815148781672
+    ],
+    [
+      "c_g_cv",
+      0.02846257742387837
+    ],
+    [
+      "c_n_lines",
+      0.016052062572185263
+    ]
+  ],
+  "elapsed_s": 67.31310653686523
+}

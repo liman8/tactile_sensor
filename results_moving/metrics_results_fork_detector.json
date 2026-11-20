@@ -1,0 +1,206 @@
+{
+  "evaluated_model": "results/fork_detector.joblib",
+  "mode": "moving_sensor",
+  "free_objects": false,
+  "threshold": 0.45,
+  "contact_detection": {
+    "accuracy": 1.0,
+    "n": 2000,
+    "n_no_contact_frames": 112,
+    "missed_touches": 0,
+    "false_contacts": 0
+  },
+  "hover_frames": {
+    "description": "moving part held 0.2-3 mm above its first-contact height; must read 'no contact'",
+    "n": 140,
+    "read_no_contact": 140,
+    "false_contacts": 0
+  },
+  "test": {
+    "n": 1855,
+    "accuracy": 0.9832884097035041,
+    "precision": 0.9976851851851852,
+    "recall": 0.9674523007856342,
+    "roc_auc": 0.997406056880469,
+    "confusion": {
+      "tn": 962,
+      "fp": 2,
+      "fn": 29,
+      "tp": 862
+    }
+  },
+  "test_per_object": {
+    "fork_dinner": {
+      "n": 124,
+      "called_fork": 0.967741935483871
+    },
+    "fork_dessert": {
+      "n": 171,
+      "called_fork": 0.9941520467836257
+    },
+    "fork_salad": {
+      "n": 155,
+      "called_fork": 0.9612903225806452
+    },
+    "fork_wide": {
+      "n": 139,
+      "called_fork": 0.9568345323741008
+    },
+    "fork_3wide": {
+      "n": 149,
+      "called_fork": 0.9731543624161074
+    },
+    "fork_stl": {
+      "n": 153,
+      "called_fork": 0.9477124183006536
+    },
+    "spoon": {
+      "n": 123,
+      "called_fork": 0.0
+    },
+    "knife_flat": {
+      "n": 134,
+      "called_fork": 0.007462686567164179
+    },
+    "knife_edge": {
+      "n": 116,
+      "called_fork": 0.0
+    },
+    "pen": {
+      "n": 127,
+      "called_fork": 0.0
+    },
+    "comb": {
+      "n": 112,
+      "called_fork": 0.008928571428571428
+    },
+    "ball": {
+      "n": 116,
+      "called_fork": 0.0
+    },
+    "coin": {
+      "n": 102,
+      "called_fork": 0.0
+    },
+    "cube": {
+      "n": 134,
+      "called_fork": 0.0
+    }
+  },
+  "test_fork_recall_by_visible_tines": {
+    "0": {
+      "n": 6,
+      "recall": 0.3333333333333333
+    },
+    "1": {
+      "n": 27,
+      "recall": 0.37037037037037035
+    },
+    "2": {
+      "n": 195,
+      "recall": 0.882051282051282
+    },
+    "3": {
+      "n": 460,
+      "recall": 0.9956521739130435
+    },
+    "4": {
+      "n": 236,
+      "recall": 0.9830508474576272
+    }
+  },
+  "tine_count_exact": 0.6960556844547564,
+  "tine_count_within_1": 0.9825986078886311,
+  "heldout_plastic_fork": {
+    "recall_tines>=2": 0.9600798403193613,
+    "n_tines>=2": 501,
+    "by_visible_tines": {
+      "0": {
+        "n": 29,
+        "recall": 0.4482758620689655
+      },
+      "1": {
+        "n": 42,
+        "recall": 0.40476190476190477
+      },
+      "2": {
+        "n": 122,
+        "recall": 0.8770491803278688
+      },
+      "3": {
+        "n": 185,
+        "recall": 0.9783783783783784
+      },
+      "4": {
+        "n": 194,
+        "recall": 0.9948453608247423
+      }
+    }
+  },
+  "threshold_sweep": {
+    "0.3": {
+      "precision": 0.9865168539325843,
+      "recall": 0.9854096520763187,
+      "heldout_recall": 0.9740518962075848
+    },
+    "0.4": {
+      "precision": 0.9965675057208238,
+      "recall": 0.9775533108866442,
+      "heldout_recall": 0.9680638722554891
+    },
+    "0.5": {
+      "precision": 0.9988290398126464,
+      "recall": 0.957351290684624,
+      "heldout_recall": 0.9580838323353293
+    },
+    "0.6": {
+      "precision": 0.9987775061124694,
+      "recall": 0.9169472502805837,
+      "heldout_recall": 0.9441117764471058
+    },
+    "0.7": {
+      "precision": 0.998730964467005,
+      "recall": 0.8832772166105499,
+      "heldout_recall": 0.9161676646706587
+    }
+  },
+  "press_quality": {
+    "settled": 1.0,
+    "gel_force_rel_error_median": 0.0038703387481601736,
+    "gel_force_rel_error_p95": 0.025698292724206373,
+    "max_indent_mm_p50_p99_max": [
+      0.9312939345836602,
+      1.5507083646953062,
+      1.8030230402946434
+    ],
+    "presses_redrawn": 0.0973076923076923,
+    "redraws_per_press": 0.14,
+    "redraw_reasons": {
+      "table": 297,
+      "housing": 64,
+      "unsettled": 3,
+      "displaced": 0
+    },
+    "object_shift_mm_p50_p99_max": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "kept_with_flaw": 0,
+    "mean_abs_tilt_rad": {
+      "nominal": {
+        "pitch": 0.075,
+        "roll": 0.05
+      },
+      "all": {
+        "pitch": 0.07448698812787939,
+        "roll": 0.04911362025284375
+      },
+      "thin_objects": {
+        "pitch": 0.07325025253862433,
+        "roll": 0.048706780158385185
+      }
+    }
+  },
+  "elapsed_s": 27.370568990707397
+}

@@ -1,0 +1,208 @@
+scoring results_moving/fork_detector.joblib on moving_sensor presses: 2000 test + 600 held-out ...
+{
+  "evaluated_model": "results_moving/fork_detector.joblib",
+  "mode": "moving_sensor",
+  "free_objects": true,
+  "threshold": 0.4,
+  "contact_detection": {
+    "accuracy": 1.0,
+    "n": 2000,
+    "n_no_contact_frames": 112,
+    "missed_touches": 0,
+    "false_contacts": 0
+  },
+  "hover_frames": {
+    "description": "moving part held 0.2-3 mm above its first-contact height; must read 'no contact'",
+    "n": 140,
+    "read_no_contact": 140,
+    "false_contacts": 0
+  },
+  "test": {
+    "n": 1851,
+    "accuracy": 0.9821717990275527,
+    "precision": 0.9797525309336333,
+    "recall": 0.9830699774266366,
+    "roc_auc": 0.9976192704008233,
+    "confusion": {
+      "tn": 947,
+      "fp": 18,
+      "fn": 15,
+      "tp": 871
+    }
+  },
+  "test_per_object": {
+    "fork_dinner": {
+      "n": 120,
+      "called_fork": 0.9916666666666667
+    },
+    "fork_dessert": {
+      "n": 165,
+      "called_fork": 0.9939393939393939
+    },
+    "fork_salad": {
+      "n": 156,
+      "called_fork": 0.9807692307692307
+    },
+    "fork_wide": {
+      "n": 145,
+      "called_fork": 0.9517241379310345
+    },
+    "fork_3wide": {
+      "n": 148,
+      "called_fork": 0.9864864864864865
+    },
+    "fork_stl": {
+      "n": 152,
+      "called_fork": 0.993421052631579
+    },
+    "spoon": {
+      "n": 132,
+      "called_fork": 0.0
+    },
+    "knife_flat": {
+      "n": 130,
+      "called_fork": 0.03076923076923077
+    },
+    "knife_edge": {
+      "n": 95,
+      "called_fork": 0.0
+    },
+    "pen": {
+      "n": 129,
+      "called_fork": 0.0
+    },
+    "comb": {
+      "n": 125,
+      "called_fork": 0.096
+    },
+    "ball": {
+      "n": 128,
+      "called_fork": 0.0
+    },
+    "coin": {
+      "n": 109,
+      "called_fork": 0.01834862385321101
+    },
+    "cube": {
+      "n": 117,
+      "called_fork": 0.0
+    }
+  },
+  "test_fork_recall_by_visible_tines": {
+    "0": {
+      "n": 8,
+      "recall": 0.375
+    },
+    "1": {
+      "n": 29,
+      "recall": 0.4827586206896552
+    },
+    "2": {
+      "n": 196,
+      "recall": 0.9336734693877551
+    },
+    "3": {
+      "n": 441,
+      "recall": 0.9954648526077098
+    },
+    "4": {
+      "n": 249,
+      "recall": 1.0
+    }
+  },
+  "tine_count_exact": 0.7060849598163031,
+  "tine_count_within_1": 0.9862227324913893,
+  "heldout_plastic_fork": {
+    "recall_tines>=2": 0.9508840864440079,
+    "n_tines>=2": 509,
+    "by_visible_tines": {
+      "0": {
+        "n": 29,
+        "recall": 0.4482758620689655
+      },
+      "1": {
+        "n": 34,
+        "recall": 0.38235294117647056
+      },
+      "2": {
+        "n": 115,
+        "recall": 0.8260869565217391
+      },
+      "3": {
+        "n": 196,
+        "recall": 0.9795918367346939
+      },
+      "4": {
+        "n": 198,
+        "recall": 0.9949494949494949
+      }
+    }
+  },
+  "threshold_sweep": {
+    "0.3": {
+      "precision": 0.9711751662971175,
+      "recall": 0.9887133182844243,
+      "heldout_recall": 0.9685658153241651
+    },
+    "0.4": {
+      "precision": 0.9797525309336333,
+      "recall": 0.9830699774266366,
+      "heldout_recall": 0.9508840864440079
+    },
+    "0.5": {
+      "precision": 0.9896432681242808,
+      "recall": 0.9706546275395034,
+      "heldout_recall": 0.9332023575638507
+    },
+    "0.6": {
+      "precision": 0.9988249118683902,
+      "recall": 0.9593679458239278,
+      "heldout_recall": 0.9174852652259332
+    },
+    "0.7": {
+      "precision": 1.0,
+      "recall": 0.945823927765237,
+      "heldout_recall": 0.899803536345776
+    }
+  },
+  "press_quality": {
+    "settled": 1.0,
+    "gel_force_rel_error_median": 0.004933940474868392,
+    "gel_force_rel_error_p95": 0.12082588651210853,
+    "max_indent_mm_p50_p99_max": [
+      0.9449657499790154,
+      1.5681466907262764,
+      2.2366077154874766
+    ],
+    "presses_redrawn": 0.13,
+    "redraws_per_press": 0.235,
+    "redraw_reasons": {
+      "table": 375,
+      "housing": 83,
+      "unsettled": 133,
+      "displaced": 20
+    },
+    "object_shift_mm_p50_p99_max": [
+      0.0005628878004085001,
+      0.21451509187672588,
+      1.0985828571550604
+    ],
+    "kept_with_flaw": 0,
+    "mean_abs_tilt_rad": {
+      "nominal": {
+        "pitch": 0.075,
+        "roll": 0.05
+      },
+      "all": {
+        "pitch": 0.07327386916937911,
+        "roll": 0.04893944137044136
+      },
+      "thin_objects": {
+        "pitch": 0.07374551539352107,
+        "roll": 0.04815021321373408
+      }
+    }
+  },
+  "elapsed_s": 32.96139717102051
+}
+wrote results_moving/free_objects/metrics_results_moving_fork_detector.json
