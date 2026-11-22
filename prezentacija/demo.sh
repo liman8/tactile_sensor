@@ -8,6 +8,9 @@
 #   3   pretraga, start 18: licem nadole, prvi pritisak na zupcima
 #   4   pretraga, start 10: licem nagore, prvi pritisak na vratu
 #   5   pretraga, nasumična poza (F9 u prozoru daje novu)
+#   6   više predmeta, model A: predmet je nepoznat pretrazi (verovatnoće predmeta u tekstu, senka najverovatnijeg);
+#       Page Down / Page Up = sledeći / prethodni predmet (viljuška, Fork.stl, nož, kašika)
+#   7   model B na viljušci Fork.stl, koju nikad nije video u treningu
 #   t   provera bez prozora (isti tasteri F6 F6 F8 F9 F7), piše prezentacija/selftest_<vreme>.png
 #
 # Tasteri u pretrazi: F6 jedan pritisak, F7 do kraja, F8 briše verovanje, F9 nova viljuška.
@@ -27,7 +30,11 @@ case "${1:-}" in
   3) exec env GELSIGHT_SENSOR=mini $PY search_viewer.py --net "$NET" --start 18 ;;
   4) exec env GELSIGHT_SENSOR=mini $PY search_viewer.py --net "$NET" --start 10 ;;
   5) exec env GELSIGHT_SENSOR=mini $PY search_viewer.py --net "$NET" --seed "${2:-7}" ;;
+  6) [ -f results_multi/multi_all/model_seed0.pt ] || { echo "nema modela results_multi/multi_all/model_seed0.pt"; exit 1; }
+     exec env GELSIGHT_SENSOR=mini $PY search_viewer.py --model A --object "${2:-knife_stl}" --seed 3 ;;
+  7) [ -f results_multi/multi_holdout/model_seed0.pt ] || { echo "nema modela results_multi/multi_holdout/model_seed0.pt"; exit 1; }
+     exec env GELSIGHT_SENSOR=mini $PY search_viewer.py --model B --object fork2_stl --seed 3 ;;
   t) out=prezentacija/selftest_$(date +%H%M%S).png
      MUJOCO_GL=egl GELSIGHT_SENSOR=mini $PY search_viewer.py --net "$NET" --selftest "$out" ;;
-  *) sed -n '2,17p' "$0"; exit 1 ;;
+  *) sed -n '2,20p' "$0"; exit 1 ;;
 esac
