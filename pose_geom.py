@@ -145,6 +145,34 @@ class ObjectPose:
             self._hits[k] = cv2.dilate(m, ker).astype(bool)               # pad centre offset d = q - c with a hit
         return self._hits[k]
 
+    def height_hits(self, k):
+        """(221, 221) float32: the highest top-surface point (mm above the table) of the object under a pad centred at
+        CoM offset d = q - c (sensor frame, 1 mm), yaw bin k; 0 where the pad misses the object (the table). The CAD's
+        top height is sampled every 0.5 mm (max of 4 sub-samples per 1 mm cell) and max-filtered over the pad."""
+        if not hasattr(self, "_hh"):
+            self._hh = {}
+            f = os.path.join(HERE, "results_multi", "pose_cache", f"height_hits_{self.name}_{self.pose_id}.npy")
+            if os.path.exists(f):
+                arr = np.load(f)
+                self._hh = {kk: arr[kk] for kk in range(YAW_BINS)}
+        if k not in self._hh:
+            psi = bin_centre(k)
+            g = np.arange(2 * HIT_HALF + 1) - HIT_HALF
+            gx, gy = np.meshgrid(g, g)
+            z = np.zeros(gx.shape, np.float32)
+            for ox, oy in ((-0.25, -0.25), (0.25, -0.25), (-0.25, 0.25), (0.25, 0.25)):
+                u = np.stack([gx + ox, gy + oy], -1)
+                z = np.maximum(z, self.height_at(u @ M(psi).T).astype(np.float32))
+            ker = np.ones((2 * int(round(PAD_HALF_MM[1])) + 1, 2 * int(round(PAD_HALF_MM[0])) + 1), np.uint8)
+            self._hh[k] = cv2.dilate(z, ker)
+        return self._hh[k]
+
+    def cache_height_hits(self):
+        f = os.path.join(HERE, "results_multi", "pose_cache", f"height_hits_{self.name}_{self.pose_id}.npy")
+        if not os.path.exists(f):
+            os.makedirs(os.path.dirname(f), exist_ok=True)
+            np.save(f, np.stack([self.height_hits(k) for k in range(YAW_BINS)]).astype(np.float32))
+
     def points(self, c_xy, psi_w, gamma=None):
         """CAD points (mm) in the table frame: canonical points turned to world yaw psi_w, CoM at c_xy."""
         P = self.add_pts @ rz(psi_w).T

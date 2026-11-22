@@ -58,3 +58,33 @@ pritisaka. Svaki korak, odluka i broj ima red u `results_multi/RUN_LOG.md` (na e
   identitet (pritisak tamo gde bi pod nekom hipotezom bila glava predmeta: zupci / sečivo / kutlača).
 - Zaustavljanje: najverovatniji predmet ≥ 95 % i njegova 90 % oblast < 16 mm², ili 10 pritisaka.
 - Poređenje: isti početni pritisci sa **poznatim** predmetom ("oracle"), da se vidi koliko košta nepoznat predmet.
+
+### 11.5 Puna poza (dodatak): konvencije, glave, zajedničko verovanje, provera CAD-om
+
+Cilj je postala puna poza predmeta na stolu: težište (x, y), yaw, id stabilne poze i koji je predmet. Težište ostaje
+referentna tačka, jer je to i mesto gde robot treba da uhvati predmet.
+
+- **Geometrija = štampana geometrija.** Vizuelne mreže imaju tačno trouglove originalnih STL fajlova; najveće odstupanje
+  je 2,9·10⁻⁶ mm. Popravka, decimacija i zaglađivanje nisu bili potrebni. SHA-256 svakog originala je u `objects.json`.
+  **Fork, Knife i Spoon.stl su u metrima**: pri štampi ih treba skalirati ×1000 ili štampati mm kopije iz
+  `results_multi/objects/source_mm/`.
+- **Štampljivost** (geometrija nije menjana): najtanje je ForkMilimeter.stl, 0,91 mm (lim na zupcima, x 15-33 mm);
+  Fork.stl 1,02 mm (krajevi zubaca), Knife.stl 1,24 mm (zaobljen vrh), Spoon.stl 2,0 mm. Ništa nije tanje od 0,8 mm.
+- **Konvencije** su u `objects.json`: koordinatni sistem predmeta u težištu, +x duž predmeta prema glavi; yaw je ugao
+  ose +x. Poze koje se ne mogu razlikovati: Fork.stl 0/1 i Spoon.stl 0/1 (ravni i simetrični, pa je licem nagore isto
+  što i licem nadole) i Spoon.stl 2/3. Provera: CAD obris postavljen samo iz označene poze leži na slici dubine
+  (30 primera po predmetu).
+- **Nove glave mreže:** yaw (72 polja po 5°) i stabilna poza (blok za svaki predmet). Prvi model A, bez tih glava,
+  prekinut je u epohi 10 i sačuvan.
+- **Zajedničko verovanje na GPU-u:** (predmet, poza) × 72 yaw-a × mreža centra 201 × 201 mm, 140 MB; po procesu
+  najviše 0,5 GB. Glave mreže se množe kao nezavisne. To je pretpostavka, jer sve vide istu sliku. Pritisak proverava i
+  stvarni otisak predmeta u toj pozi u odnosu na jastučić. Dobitak informacije meri se za celu pozu, ne samo za
+  težište.
+- **Provera CAD-om:** za 64 najverovatnije hipoteze iscrtava se očekivana dubina iz CAD-a i poredi sa
+  rekonstruisanom. Na kraju se poza fino dorađuje (neprekidni x, y, yaw).
+  - Prva temperatura (0,033) bila je preoštra: posle jednog pritiska na sečivo verovanje je otišlo na preslikanu pozu
+    noža sa P = 1,0, i pretraga je stala pogrešno.
+  - Pravilom zapisanim pre rezultata, temperatura provere izabrana je na 160 validacionih pretraga: τ = 1,0
+    (94,4 % uspeha pri ADD < 5 mm, 0,6 % pogrešnih sigurnih zaustavljanja).
+  - Završna dorada koristi τ = 0,027 (kalibrisano za poređenje bliskih poza uz mrežu). Ta odluka je doneta posle
+    validacionih rezultata i tako je i zapisana.

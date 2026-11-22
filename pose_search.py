@@ -69,6 +69,11 @@ N_CAND = 600
 STOP_ID, STOP_AREA, STOP_YAW_HALF_DEG, STOP_POSE = 0.95, 16.0, 3.0, 0.95
 MAX_PRESSES = 10
 CALIB = os.path.join(HERE, "results_multi", "pose_calib.json")
+# contact height (--height, the user's request after the spoon analysis): measured first-contact height above the table
+HEIGHT_NOISE_MM = 0.3          # assumed z accuracy of the arm (added to the simulated measurement)
+HEIGHT_SIGMA_MM = 0.5          # likelihood width (noise + the tilt of the first press, <= 0.5 mm over the pad)
+HEIGHT_CONTACT_MM = 0.5        # above this the press touched an object (every object is >= 2 mm tall)
+HEIGHT_RANGE_MM = 30.0         # the uniform part of the mixture (1 % of the mass)
 UV = np.stack(np.meshgrid((np.arange(tc.W_IN) - (tc.W_IN - 1) / 2) * tc.MM_PER_PX_IN,
                           (np.arange(tc.H_IN) - (tc.H_IN - 1) / 2) * tc.MM_PER_PX_IN), -1)       # (72, 93, 2) pad pixels, mm
 
@@ -101,7 +106,8 @@ def cad_error(G, psi, c, presses):
 
 
 class PoseSearcher:
-    def __init__(self, model_key="A", seed=0, cad_extra=(), perturb=None, threads=2, device=None, ghost=False):
+    def __init__(self, model_key="A", seed=0, cad_extra=(), perturb=None, threads=2, device=None, ghost=False,
+                 use_height=False):
         import torch
         from gelsight_sim import GelSightSim
         from fork_detector import ForkDetector, PhotometricModel
@@ -129,6 +135,15 @@ class PoseSearcher:
                 hits[i, k] = G.footprint_hits(k)
         self.hits = torch.tensor(hits, device=self.dev)
         self.labels = torch.tensor(np.stack([G.labels for G in self.G]), device=self.dev)
+        self.use_height = use_height
+        if use_height:                      # the highest CAD point under the pad, per (hypothesis, yaw bin, CoM offset)
+            hh = np.zeros(hits.shape, np.float16)
+            for i, G in enumerate(self.G):
+                G.cache_height_hits()
+                for k in range(pg.YAW_BINS):
+                    hh[i, k] = G.height_hits(k)
+            self.hh = torch.tensor(hh, device=self.dev)
+        self._z_table = {}
         self.cls_pairs = []                                       # indistinguishable pose pairs, per object
         for o in self.names:
             for a, b in objects.get(o).get("indistinguishable_pose_pairs", []):
@@ -169,6 +184,24 @@ class PoseSearcher:
         sim.set_tool(self.obj_name)
         m.body_pos[self.ob], m.body_quat[self.ob] = cur["fork_body_pos"], cur["fork_body_quat"]
         mujoco.mj_forward(m, d)
+        if self.use_height:
+            # contact height (robot proprioception): first-contact slide height minus the bare table's at the same tilt,
+            # plus N(0, HEIGHT_NOISE_MM) (an assumed z accuracy of the arm)
+            z_c = sim.contact_height(x, y, yaw, pitch, roll)
+            key = (round(float(yaw), 4), round(float(pitch), 4), round(float(roll), 4))
+            if key not in self._z_table:
+                bp = m.body_pos[self.ob].copy()
+                m.body_pos[self.ob] = (0.6, 0.6, bp[2])
+                mujoco.mj_forward(m, d)
+                self._z_table[key] = sim.contact_height(0.0, 0.0, yaw, pitch, roll)
+                m.body_pos[self.ob] = bp
+                mujoco.mj_forward(m, d)
+            hn = np.random.default_rng([int(cur["noise_seed"]), int(k), 99]).normal(0, HEIGHT_NOISE_MM)
+            self.last_height = float((z_c - self._z_table[key]) * 1000.0 + hn)
+            mujoco.mj_resetDataKeyframe(m, d, 0)
+            sim.set_tool(self.obj_name)
+            m.body_pos[self.ob], m.body_quat[self.ob] = cur["fork_body_pos"], cur["fork_body_quat"]
+            mujoco.mj_forward(m, d)
         info = sim.press(force, x=x, y=y, yaw=yaw, pitch=pitch, roll=roll)
         o, R = sim.sensor_frame()
         h = sim.gel_surface(sim.indentation_mm(raw=True, table=True))
@@ -200,6 +233,19 @@ class PoseSearcher:
         grid = torch.stack([gx, gy], -1)[None].expand(len(hm), -1, -1, -1)
         out = F.grid_sample(hm[:, None], grid, mode="bilinear", padding_mode="zeros", align_corners=False)[:, 0]
         return out / (tc.CELL_MM ** 2)
+
+    def _height_pred(self, q):
+        """(HS, 72, NG, NG) float16: the predicted contact height (mm) of every cell for a pad at q; 0 = the table."""
+        import torch
+        qi = np.round(q).astype(int)
+        ry = qi[1] - (np.arange(NG) - GRID) + pg.HIT_HALF
+        rx = qi[0] - (np.arange(NG) - GRID) + pg.HIT_HALF
+        vy, vx = (ry >= 0) & (ry <= 2 * pg.HIT_HALF), (rx >= 0) & (rx <= 2 * pg.HIT_HALF)
+        ty = torch.tensor(np.clip(ry, 0, 2 * pg.HIT_HALF), device=self.dev)
+        tx = torch.tensor(np.clip(rx, 0, 2 * pg.HIT_HALF), device=self.dev)
+        Hp = self.hh.index_select(2, ty).index_select(3, tx)
+        Hp *= (torch.tensor(vy, device=self.dev)[None, None, :, None] & torch.tensor(vx, device=self.dev)[None, None, None, :]).half()
+        return Hp
 
     def _touch(self, q):
         """(HS, 72, NG, NG) bool: the object at that pose touches the pad centred at q (sensor mm, relative to the start)."""
@@ -506,6 +552,13 @@ class PoseEpisode:
         q = self.to_s(np.array([x, y]) * 1000)
         out = S.infer(X)
         contact = out["pa"][2] >= 0.5
+        if S.use_height:                                 # the contact decision comes from the measured height
+            contact = S.last_height > HEIGHT_CONTACT_MM
+            Hp = S._height_pred(q)
+            for j in range(len(S.hyps)):
+                g = torch.exp(-0.5 * ((S.last_height - Hp[j].float()) / HEIGHT_SIGMA_MM) ** 2) / (HEIGHT_SIGMA_MM * np.sqrt(2 * np.pi))
+                S.L[j] += torch.log((1 - EPS) * g + EPS / HEIGHT_RANGE_MM)
+            del Hp
         T = S._touch(q)
         if contact:
             heat = S._heat_on_grid(out["hm"], q)                                  # (n_h, NG, NG)
@@ -529,6 +582,7 @@ class PoseEpisode:
                 S.L[j] += torch.where(T[j], float(np.log(EPS)), 0.0)
         del T
         rec = dict(k=kp, q=q, X=X, contact=bool(contact), delta=float(X.max()), pid=out["pid"], pa=out["pa"],
+                   height=getattr(S, "last_height", None) if S.use_height else None,
                    pyaw=out["pyaw"].cpu().numpy(), o=o, R=R, x=x, y=y, yaw=yaw,
                    img=S.last_img if self.record else None,
                    qpos=S.sim.data.qpos[S.arm].copy() if self.record else None)
@@ -541,6 +595,7 @@ class PoseEpisode:
         est = S.summary(P)
         ev = S.evaluate(est, self.truth, self.to_w, self.gam)
         ev.update(press=kp + 1, x_mm=float(x * 1000), y_mm=float(y * 1000), contact=bool(contact),
+                  height_mm=rec["height"], p_contact_image=float(out["pa"][2]),
                   p_contact=float(out["pa"][2]), w=est["w"], area90_mm2=est["area90"], yaw_half_deg=est["yaw_half_deg"],
                   p_pose_cls=est["p_pose_cls"], housing=bool(info.housing_contact), backtrack=False,
                   seconds=time.time() - t0)
@@ -598,7 +653,8 @@ def starts(name, n=300, seed=2028, shard="test-0000.h5"):
 def _worker(args):
     key, name, idx, opts, seed = args
     import torch
-    S = PoseSearcher(key, seed, cad_extra=opts.get("cad", ()), perturb=cs.PERTURB[opts.get("cond", "clean")])
+    S = PoseSearcher(key, seed, cad_extra=opts.get("cad", ()), perturb=cs.PERTURB[opts.get("cond", "clean")],
+                     use_height=opts.get("height", False))
     if opts.get("tau") is not None:
         S.tau = opts["tau"]
     S.load_starts(name, opts.get("shard", "test-0000.h5"))
@@ -614,22 +670,23 @@ def _worker(args):
 
 
 def run(key, names, ig="full", verify=True, oracle=False, cad=(), n=300, workers=4, seed=0, tag=None, cond="clean",
-        split="test", tau=None, out_sub=None):
+        split="test", tau=None, out_sub=None, height=False):
     from concurrent.futures import ProcessPoolExecutor
     from multiprocessing import get_context
     d = os.path.join(cm.model_dir(key), out_sub or ("pose_search" + ("" if seed == 0 else f"_seed{seed}")))
     os.makedirs(d, exist_ok=True)
-    tag = tag or f"{ig}{'' if verify else '_noverify'}{'_oracle' if oracle else ''}{'_cad-' + '-'.join(cad) if cad else ''}{'' if cond == 'clean' else '_' + cond}"
+    tag = tag or (f"{ig}{'' if verify else '_noverify'}{'_oracle' if oracle else ''}{'_height' if height else ''}"
+                  f"{'_cad-' + '-'.join(cad) if cad else ''}{'' if cond == 'clean' else '_' + cond}")
     for name in names:
         fn = os.path.join(d, f"episodes_{tag}_{name}.json")
         if os.path.exists(fn):
-            print("exists:", fn)
+            print("exists:", os.path.relpath(fn, HERE))
             continue
         shard = f"{split}-0000.h5"
         idx = starts(name, n, shard=shard)
         chunks = [list(idx[k::workers]) for k in range(workers)]
         t0 = time.time()
-        opts = dict(ig=ig, verify=verify, oracle=oracle, cad=tuple(cad), cond=cond, shard=shard, tau=tau)
+        opts = dict(ig=ig, verify=verify, oracle=oracle, cad=tuple(cad), cond=cond, shard=shard, tau=tau, height=height)
         with ProcessPoolExecutor(workers, mp_context=get_context("spawn")) as ex:
             eps = sum(ex.map(_worker, [(key, name, c, opts, seed) for c in chunks]), [])
         eps.sort(key=lambda e: e["index"])
@@ -661,9 +718,10 @@ def main():
     ap.add_argument("--tau", type=float, default=None, help="override the CAD temperature (calibration runs)")
     ap.add_argument("--tag", default=None)
     ap.add_argument("--out-sub", default=None, help="results folder under the model (default pose_search)")
+    ap.add_argument("--height", action="store_true", help="use the measured contact height (proprioception) and the CAD")
     a = ap.parse_args()
     run(a.model, a.objects or cm.MODELS[a.model]["objects"], a.ig, not a.no_verify, a.oracle, a.cad, a.n, a.workers,
-        a.seed, tag=a.tag, cond=a.cond, split=a.split, tau=a.tau, out_sub=a.out_sub)
+        a.seed, tag=a.tag, cond=a.cond, split=a.split, tau=a.tau, out_sub=a.out_sub, height=a.height)
 
 
 if __name__ == "__main__":

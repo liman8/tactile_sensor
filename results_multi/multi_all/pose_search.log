@@ -44,3 +44,51 @@ Traceback (most recent call last):
   File "/usr/lib64/python3.14/concurrent/futures/_base.py", line 395, in __get_result
     raise self._exception
 torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 134.00 MiB. GPU 0 has a total capacity of 7.62 GiB of which 149.69 MiB is free. Process 1337934 has 3.38 GiB memory in use. Including non-PyTorch memory, this process has 1.16 GiB memory in use. Process 1347531 has 1.25 GiB memory in use. Process 1347532 has 1.69 GiB memory in use. Of the allocated memory 1016.86 MiB is allocated by PyTorch, and 7.14 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
+A full fork_stl: id 100.0 %, presses 2.26, stopped 100 % | binned: centre 0.75 mm, yaw 1.3 deg | refined: centre 0.50, yaw 0.5, ADD median 0.58, ADD<2 99 % (109 s, GPU peak 501 MB)
+A full fork2_stl: id 99.7 %, presses 2.27, stopped 99 % | binned: centre 0.75 mm, yaw 1.3 deg | refined: centre 0.42, yaw 0.3, ADD median 0.55, ADD<2 99 % (107 s, GPU peak 501 MB)
+A full knife_stl: id 99.7 %, presses 3.76, stopped 93 % | binned: centre 0.83 mm, yaw 1.3 deg | refined: centre 0.35, yaw 0.2, ADD median 0.44, ADD<2 94 % (164 s, GPU peak 501 MB)
+A full spoon_stl: id 95.3 %, presses 4.06, stopped 90 % | binned: centre 0.75 mm, yaw 1.2 deg | refined: centre 0.29, yaw 0.4, ADD median 0.64, ADD<2 92 % (205 s, GPU peak 501 MB)
+A centre fork_stl: id 77.3 %, presses 5.27, stopped 71 % | binned: centre 0.79 mm, yaw 1.3 deg | refined: centre 0.58, yaw 0.7, ADD median 0.66, ADD<2 77 % (242 s, GPU peak 421 MB)
+A centre fork2_stl: id 92.7 %, presses 5.02, stopped 75 % | binned: centre 0.65 mm, yaw 1.3 deg | refined: centre 0.40, yaw 0.5, ADD median 0.58, ADD<2 92 % (225 s, GPU peak 421 MB)
+A centre knife_stl: id 97.3 %, presses 3.53, stopped 91 % | binned: centre 0.63 mm, yaw 1.3 deg | refined: centre 0.29, yaw 0.3, ADD median 0.49, ADD<2 93 % (144 s, GPU peak 421 MB)
+A centre spoon_stl: id 93.7 %, presses 3.28, stopped 92 % | binned: centre 0.72 mm, yaw 1.2 deg | refined: centre 0.21, yaw 0.4, ADD median 0.63, ADD<2 92 % (135 s, GPU peak 421 MB)
+A full_noverify fork_stl: id 100.0 %, presses 2.27, stopped 99 % | binned: centre 0.75 mm, yaw 1.3 deg | refined: centre 0.50, yaw 0.5, ADD median 0.60, ADD<2 100 % (88 s, GPU peak 501 MB)
+A full_noverify fork2_stl: id 100.0 %, presses 2.21, stopped 98 % | binned: centre 0.78 mm, yaw 1.3 deg | refined: centre 0.44, yaw 0.3, ADD median 0.56, ADD<2 99 % (80 s, GPU peak 501 MB)
+A full_noverify knife_stl: id 99.7 %, presses 4.38, stopped 88 % | binned: centre 0.81 mm, yaw 1.3 deg | refined: centre 0.39, yaw 0.2, ADD median 0.50, ADD<2 94 % (140 s, GPU peak 501 MB)
+A full_noverify spoon_stl: id 95.0 %, presses 4.14, stopped 90 % | binned: centre 0.78 mm, yaw 1.2 deg | refined: centre 0.28, yaw 0.4, ADD median 0.63, ADD<2 93 % (168 s, GPU peak 501 MB)
+A full_oracle fork_stl: id 100.0 %, presses 2.35, stopped 100 % | binned: centre 0.75 mm, yaw 1.3 deg | refined: centre 0.49, yaw 0.5, ADD median 0.57, ADD<2 99 % (107 s, GPU peak 501 MB)
+A full_oracle fork2_stl: id 100.0 %, presses 1.78, stopped 100 % | binned: centre 0.77 mm, yaw 1.3 deg | refined: centre 0.41, yaw 0.6, ADD median 0.57, ADD<2 99 % (82 s, GPU peak 501 MB)
+A full_oracle knife_stl: id 100.0 %, presses 3.60, stopped 95 % | binned: centre 0.77 mm, yaw 1.3 deg | refined: centre 0.33, yaw 0.2, ADD median 0.42, ADD<2 96 % (160 s, GPU peak 501 MB)
+A full_oracle spoon_stl: id 100.0 %, presses 3.48, stopped 95 % | binned: centre 0.74 mm, yaw 1.2 deg | refined: centre 0.27, yaw 0.4, ADD median 0.63, ADD<2 98 % (160 s, GPU peak 501 MB)
+exists: results_multi/multi_all/pose_search/episodes_full_fork_stl.json
+exists: results_multi/multi_all/pose_search/episodes_full_fork2_stl.json
+exists: results_multi/multi_all/pose_search/episodes_full_knife_stl.json
+exists: results_multi/multi_all/pose_search/episodes_full_spoon_stl.json
+exists: results_multi/multi_all/pose_search/episodes_centre_fork_stl.json
+exists: results_multi/multi_all/pose_search/episodes_centre_fork2_stl.json
+exists: results_multi/multi_all/pose_search/episodes_centre_knife_stl.json
+exists: results_multi/multi_all/pose_search/episodes_centre_spoon_stl.json
+exists: results_multi/multi_all/pose_search/episodes_full_noverify_fork_stl.json
+exists: results_multi/multi_all/pose_search/episodes_full_noverify_fork2_stl.json
+exists: results_multi/multi_all/pose_search/episodes_full_noverify_knife_stl.json
+exists: results_multi/multi_all/pose_search/episodes_full_noverify_spoon_stl.json
+exists: results_multi/multi_all/pose_search/episodes_full_oracle_fork_stl.json
+exists: results_multi/multi_all/pose_search/episodes_full_oracle_fork2_stl.json
+exists: results_multi/multi_all/pose_search/episodes_full_oracle_knife_stl.json
+exists: results_multi/multi_all/pose_search/episodes_full_oracle_spoon_stl.json
+exists: results_multi/multi_all/pose_search/episodes_full_fork_stl.json
+exists: results_multi/multi_all/pose_search/episodes_full_fork2_stl.json
+exists: results_multi/multi_all/pose_search/episodes_full_knife_stl.json
+exists: results_multi/multi_all/pose_search/episodes_full_spoon_stl.json
+exists: results_multi/multi_all/pose_search/episodes_centre_fork_stl.json
+exists: results_multi/multi_all/pose_search/episodes_centre_fork2_stl.json
+exists: results_multi/multi_all/pose_search/episodes_centre_knife_stl.json
+exists: results_multi/multi_all/pose_search/episodes_centre_spoon_stl.json
+exists: results_multi/multi_all/pose_search/episodes_full_noverify_fork_stl.json
+exists: results_multi/multi_all/pose_search/episodes_full_noverify_fork2_stl.json
+exists: results_multi/multi_all/pose_search/episodes_full_noverify_knife_stl.json
+exists: results_multi/multi_all/pose_search/episodes_full_noverify_spoon_stl.json
+exists: results_multi/multi_all/pose_search/episodes_full_oracle_fork_stl.json
+exists: results_multi/multi_all/pose_search/episodes_full_oracle_fork2_stl.json
+exists: results_multi/multi_all/pose_search/episodes_full_oracle_knife_stl.json
+exists: results_multi/multi_all/pose_search/episodes_full_oracle_spoon_stl.json

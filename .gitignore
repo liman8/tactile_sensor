@@ -40,3 +40,6 @@ results_moving/eval_samples.npz
 
 # A frozen copy of the simulation (freeze_sim.py) is an archive, not source
 results_centre/FROZEN_SIM/
+
+# Full-pose search: per-(object, pose) CAD contact-height maps (162 MB), rebuilt by pose_geom.ObjectPose.cache_height_hits
+results_multi/pose_cache/

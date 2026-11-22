@@ -1,0 +1,4 @@
+fork_stl {'ghost_identical': '2/2', 'replay': '1/4'}
+fork2_stl {'ghost_identical': '5/5', 'replay': '2/4'}
+knife_stl {'ghost_identical': '6/6', 'replay': '4/4'}
+spoon_stl {'ghost_identical': '5/5', 'replay': '2/4'}

@@ -79,11 +79,11 @@ def main():
     S = dict(one_press_A=load("multi_all/pose_eval_single.json"), fork_vs_final=load("multi_all/pose_eval_fork_vs_final.json"),
              holdout=load("multi_holdout/pose_eval_holdout_fork2.json"), robust=load("multi_all/pose_eval_robust.json"),
              calib=load("pose_calib.json"))
-    S["search_A"] = {t: search_block("multi_all", t, OBJ) for t in ("full", "centre", "full_noverify", "full_oracle")}
+    S["search_A"] = {t: search_block("multi_all", t, OBJ) for t in ("full", "centre", "full_noverify", "full_oracle", "full_height")}
     S["search_B"] = {t: search_block("multi_holdout", t, ["fork2_stl"]) for t in ("full_cad-fork2_stl", "full")}
     S["search_B_own"] = search_block("multi_holdout", "full", ["fork_stl", "knife_stl", "spoon_stl"])
     # paired comparisons
-    S["ablation_centre_vs_full"], S["cost_unknown_identity"], S["cad_verification"] = {}, {}, {}
+    S["ablation_centre_vs_full"], S["cost_unknown_identity"], S["cad_verification"], S["height_vs_full"] = {}, {}, {}, {}
     for n in OBJ:
         F, Cn, NV, O = (load(f"multi_all/pose_search/episodes_{t}_{n}.json") for t in ("full", "centre", "full_noverify", "full_oracle"))
         if F and Cn:
@@ -92,6 +92,15 @@ def main():
                 presses_centre_minus_full=paired(np.array([e["presses"] for e in Cn], float), np.array([e["presses"] for e in F], float), lambda x: x.mean(-1)),
                 add_median_centre_minus_full=paired(addv(Cn), addv(F), lambda x: np.median(x, -1)),
                 success_add5_centre_minus_full=paired((addv(Cn) < 5).astype(float), (addv(F) < 5).astype(float), lambda x: x.mean(-1)))
+        Hh = load(f"multi_all/pose_search/episodes_full_height_{n}.json")
+        if F and Hh:
+            assert [e["index"] for e in F] == [e["index"] for e in Hh]
+            S["height_vs_full"][n] = dict(
+                presses_height_minus_full=paired(np.array([e["presses"] for e in Hh], float), np.array([e["presses"] for e in F], float), lambda x: x.mean(-1)),
+                add_median_height_minus_full=paired(addv(Hh), addv(F), lambda x: np.median(x, -1)),
+                success_add5_height_minus_full=paired((addv(Hh) < 5).astype(float), (addv(F) < 5).astype(float), lambda x: x.mean(-1)),
+                identity_height_minus_full=paired(np.array([e["refined"]["identity_ok"] for e in Hh], float),
+                                                  np.array([e["refined"]["identity_ok"] for e in F], float), lambda x: x.mean(-1)))
         if F and O:
             S["cost_unknown_identity"][n] = dict(
                 presses_full_minus_oracle=paired(np.array([e["presses"] for e in F], float), np.array([e["presses"] for e in O], float), lambda x: x.mean(-1)),
@@ -134,7 +143,8 @@ def main():
                          fmt(s["add_median_mm"]), fmt(s["adds_median_mm"]), f"{fmt(s['success_add_lt2'], 2, True)} / {fmt(s['success_add_lt5'], 2, True)}",
                          fmt(s["grasp_err_median_mm"]), "1", f"{fmt(s['centre_in90'], 2, True)} / {fmt(s['yaw_in90'], 2, True)}"])
         for tag, lab in (("full", "A, search (full-pose IG + CAD)"), ("centre", "A, search, centre-only IG"),
-                         ("full_noverify", "A, search, no CAD check"), ("full_oracle", "A, search, object given")):
+                         ("full_noverify", "A, search, no CAD check"), ("full_oracle", "A, search, object given"),
+                         ("full_height", "A, search + contact height")):
             b = S["search_A"][tag].get(n)
             if b:
                 s = b["refined"]
@@ -156,6 +166,12 @@ def main():
                       f"{v['add_median_centre_minus_full'][0]:+.2f} [{v['add_median_centre_minus_full'][1]:+.2f}, {v['add_median_centre_minus_full'][2]:+.2f}]",
                       f"{v['success_add5_centre_minus_full'][0] * 100:+.1f} [{v['success_add5_centre_minus_full'][1] * 100:+.1f}, {v['success_add5_centre_minus_full'][2] * 100:+.1f}]"]
                      for n, v in S["ablation_centre_vs_full"].items()], ["object", "presses", "ADD median mm", "ADD < 5 mm, points"]))
+    if S["height_vs_full"]:
+        md.append("\n## Contact height added (search + height minus search), same starts\n")
+        f3 = lambda d, k=1: f"{d[0] * k:+.2f} [{d[1] * k:+.2f}, {d[2] * k:+.2f}]"
+        md.append(table([[SHORT[n], f3(v["presses_height_minus_full"]), f3(v["add_median_height_minus_full"]),
+                          f3(v["success_add5_height_minus_full"], 100), f3(v["identity_height_minus_full"], 100)]
+                         for n, v in S["height_vs_full"].items()], ["object", "presses", "ADD median mm", "ADD < 5 mm, points", "identity, points"]))
     md.append("\n## CAD verification and refinement (C4)\n")
     md.append(table([[SHORT[n], " / ".join(f"{x:.2f}" for x in v["refine_centre_median"]),
                       " / ".join(f"{x:.2f}" for x in v["refine_yaw_median"]), " / ".join(f"{x * 100:.0f}" for x in v["refine_add_lt5"]),

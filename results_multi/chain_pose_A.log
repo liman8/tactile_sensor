@@ -1,3 +1,26 @@
 === 2026-11-22 20:13:25 pose eval single A
 === 2026-11-22 20:13:25 pose eval fork vs final
 === 2026-11-22 20:13:25 pose search A --ig full
+=== 2026-11-22 20:23:11 pose search A --ig centre
+=== 2026-11-22 20:35:39 pose search A --ig full --no-verify
+=== 2026-11-22 20:43:36 pose search A --ig full --oracle
+=== 2026-11-22 20:52:05 pose robust A
+=== 2026-11-22 21:12:03 viewer checks A
+=== 2026-11-22 21:59:07 pose eval single A
+=== 2026-11-22 21:59:07 pose eval fork vs final
+=== 2026-11-22 21:59:07 pose search A --ig full
+=== 2026-11-22 21:59:08 pose search A --ig centre
+=== 2026-11-22 21:59:10 pose search A --ig full --no-verify
+=== 2026-11-22 21:59:11 pose search A --ig full --oracle
+=== 2026-11-22 21:59:12 pose robust A
+=== 2026-11-22 21:59:12 viewer checks A
+=== 2026-11-22 22:20:06 pose eval single A
+=== 2026-11-22 22:20:06 pose eval fork vs final
+=== 2026-11-22 22:20:06 pose search A --ig full
+=== 2026-11-22 22:20:07 pose search A --ig centre
+=== 2026-11-22 22:20:08 pose search A --ig full --no-verify
+=== 2026-11-22 22:20:09 pose search A --ig full --oracle
+=== 2026-11-22 22:20:10 pose robust A
+=== 2026-11-22 22:20:10 viewer checks A
+=== 2026-11-22 22:20:31 videos A
+=== 2026-11-22 22:21:03 POSE_A_DONE

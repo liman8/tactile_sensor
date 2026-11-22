@@ -41,8 +41,8 @@ def pose_desc(name, pid):
 
 
 class PoseVizSession:
-    def __init__(self, model_key="A", obj="knife_stl", ig="full", verify=True, ghost=True, seed=0, cad=()):
-        self.S = ps.PoseSearcher(model_key, seed, cad_extra=cad, ghost=ghost)
+    def __init__(self, model_key="A", obj="knife_stl", ig="full", verify=True, ghost=True, seed=0, cad=(), height=False):
+        self.S = ps.PoseSearcher(model_key, seed, cad_extra=cad, ghost=ghost, use_height=height)
         S = self.S
         m = S.sim.model
         S.ghost = ghost
@@ -114,8 +114,8 @@ class PoseVizSession:
     def step(self):
         if self.done:
             return None
-        rec = self.ep.step()
-        rec["q"] = rec["qpos"]
+        rec = dict(self.ep.step())           # a copy: the episode keeps "q" = the pad position (sensor frame) for the CAD check
+        rec["q"] = rec["qpos"]               # the viewer's "q" = the arm joints after the press
         self.presses.append(rec)
         self.rows = self.ep.rows
         self.done, self.next = self.ep.done, self.ep.next
@@ -193,12 +193,30 @@ class PoseVizSession:
                 f"stable pose   {e['pose']} {pose_desc(e['object'], e['pose'])} {e['p_pose'] * 100:.0f}%"
                 + ("" if ok and e["pose"] == e["true_pose"] else " (true " + str(e["true_pose"]) + ")"),
                 f"yaw           {np.degrees(e['yaw']) % 360:.1f} deg (true {np.degrees(e['true_yaw']) % 360:.1f}), bin {e['p_yaw_bin'] * 100:.0f}%, 90% +-{e['yaw_half_deg']:.1f}",
-                f"centre error  {e['err']:.2f} mm" + ("  (CAD-refined)" if e["refined"] else ""),
-                f"yaw error     {e['yaw_err']:.1f} deg",
-                f"ADD / ADD-S   {add} / {e['adds']:.2f} mm",
+                f"error         {e['err']:.2f} mm, {e['yaw_err']:.1f} deg" + ("  (CAD-refined)" if e["refined"] else ""),
+                f"ADD / ADD-S   {add} / {e['adds']:.2f} mm"] + (
+               [f"height        {self.presses[-1]['height']:.1f} mm (last press)"] if self.S.use_height and self.presses else []) + [
                 f"90% region    {e['area']:.0f} mm2",
                 f"presses       {e['n']}" + ("  (stopped)" if self.done and self.ep.stop else ("  (10, no stop)" if self.done else "")),
                 (f"last press    contact (p {e['p_contact']:.2f})" if e["contact"] else f"last press    no contact (p {e['p_contact']:.2f})")]
+
+
+def free(*sessions):
+    """Release sessions' GPU tensors now: an episode's lambdas close over it (a reference cycle), so without this the
+    belief tensors of every session stay allocated until the cyclic garbage collector runs."""
+    import gc
+    import torch
+    for s_ in sessions:
+        if getattr(s_, "ep", None) is not None:
+            s_.ep.P = None
+            s_.ep = None
+        for k in ("L", "hits", "labels", "hh", "_Lnp"):
+            if hasattr(s_.S, k):
+                setattr(s_.S, k, None)
+        s_.S.sim.close()
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
 
 
 def check(key="A", n=4):
@@ -222,42 +240,47 @@ def check(key="A", n=4):
         if os.path.exists(fn):
             E = {e["index"]: e for e in json.load(open(fn))}
             ok = 0
-            for i in [int(j) for j in idx if int(j) in E][:n]:
+            comp = list(E)[:n]                  # the first n stored episodes (ps.starts(name, n) is a different subset)
+            for i in comp:
                 b.start_stored(i)
                 while not b.done:
                     b.step()
                 ok += len(b.rows) == len(E[i]["trace"]) and all(
                     r["obj_est"] == s["obj_est"] and np.isclose(r["centre_err_mm"], s["centre_err_mm"]) and
                     np.isclose(r["yaw_err_deg"], s["yaw_err_deg"]) for r, s in zip(b.rows, E[i]["trace"]))
-            rep = f"{ok}/{min(n, len(E))}"
+            rep = f"{ok}/{len(comp)}"
         out[name] = dict(ghost_identical=f"{sum(same)}/{len(same)}", replay=rep)
         print(name, out[name], flush=True)
+        free(a, b)
     return out
 
 
-def videos(key, out, names=None, cad=()):
+def videos(key, out, names=None, cad=(), height=False, start=None):
     import multi_viz as mv
     os.makedirs(out, exist_ok=True)
     names = names or cm.MODELS[key]["objects"]
     idx = []
     for name in names:
-        tag = "full" + (f"_cad-{'-'.join(cad)}" if cad else "")
+        tag = "full" + ("_height" if height else "") + (f"_cad-{'-'.join(cad)}" if cad else "")
         fn = os.path.join(cm.model_dir(key), "pose_search", f"episodes_{tag}_{name}.json")
         E = json.load(open(fn))
         # the first stored episode whose first press is on the handle (identity unknown at the start), else the first
         hl = len(objects.part_names(name)) - 1
-        e0 = ([e for e in E if e["first_part"] == hl] or E)[0]
-        sess = PoseVizSession(key, name, cad=tuple(cad))
+        e0 = ([e for e in E if e["first_part"] == hl] or E)[0] if start is None else [e for e in E if e["index"] == start][0]
+        sess = PoseVizSession(key, name, cad=tuple(cad), height=height)
         title = (f"model {key} ({cm.MODELS[key]['name']}), {name}: start {e0['index']} (first press on the "
-                 f"{objects.part_names(name)[e0['first_part']]}), full-pose search")
-        r = mv.record(sess, e0["index"], os.path.join(out, f"{name}_{e0['index']}.mp4"), title,
+                 f"{objects.part_names(name)[e0['first_part']]}), " + ("full pose + height" if height else "full-pose search"))
+        r = mv.record(sess, e0["index"], os.path.join(out, f"{name}_{e0['index']}{'_height' if height else ''}.mp4"), title,
                       frames_dir=os.path.join(out, "frames"))
         e = sess.estimate()
         r.update(estimate=e["object"], pose=e["pose"], yaw_err_deg=e["yaw_err"], add_mm=e["add"], adds_mm=e["adds"],
                  stored=dict(obj=e0["final"]["obj_est"], presses=e0["presses"], add=e0.get("refined", e0["final"])["add_mm"]))
         idx.append(r)
         print(r, flush=True)
-    json.dump(idx, open(os.path.join(out, "index.json"), "w"), indent=1, default=float)
+        free(sess)
+    fi = os.path.join(out, "index.json")
+    old = [r for r in (json.load(open(fi)) if os.path.exists(fi) else []) if r["mp4"] not in {x["mp4"] for x in idx}]
+    json.dump(old + idx, open(fi, "w"), indent=1, default=float)
 
 
 def main():
@@ -267,11 +290,13 @@ def main():
     ap.add_argument("--objects", nargs="+", default=None)
     ap.add_argument("--cad", nargs="*", default=[])
     ap.add_argument("--out", default=None)
+    ap.add_argument("--height", action="store_true", help="videos: the contact-height variant (episodes_full_height_*)")
+    ap.add_argument("--start", type=int, default=None, help="videos: this stored start instead of the first handle start")
     a = ap.parse_args()
     if a.cmd == "check":
         check(a.model)
     else:
-        videos(a.model, a.out, a.objects, a.cad)
+        videos(a.model, a.out, a.objects, a.cad, a.height, a.start)
 
 
 if __name__ == "__main__":

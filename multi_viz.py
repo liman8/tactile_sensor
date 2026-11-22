@@ -471,6 +471,8 @@ def record(sess, start_index, path_mp4, title, fps=15, frames_dir=None):
     S = sess.S
     sess.start_stored(start_index)
     rec = svid.Recorder(sess)
+    rec.legend = ["green ghost / sphere: estimate", "red sphere: true centre of mass", "orange: 90 % region",
+                  "blue / grey discs: presses (contact / none)"]
     W3, H3, WR = svid.W3, svid.H3, svid.WR
     m, d = S.sim.model, S.sim.data
     mujoco.mj_resetDataKeyframe(m, d, 0)

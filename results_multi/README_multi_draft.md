@@ -98,3 +98,57 @@ an active multi-press search. Every step, decision and number has a line in `res
 * **Oracle**: the same loop with only the true object's hypothesis (the identity given). **Generic** (model B on the
   unseen fork): one pseudo-hypothesis, the identity-weighted mixture.
 * Starts: 300 per object, on-object test presses with contact (all parts), from `dataset_multi/<object>/test-0000.h5`.
+
+### 5. The full pose (pose addendum): conventions, heads, joint belief, CAD check
+
+The goal became the full pose of the object on the table: centre of mass (x, y), yaw, stable-pose id, and which object.
+The centre of mass stays the reference point (it is also where a robot should grasp).
+
+**Geometry and printing** (`results_multi/objects/geometry_check.py`, `printability.py`):
+* The trained geometry is the printed geometry: the visual meshes have exactly the original STL triangles (matched one by
+  one, no flipped faces); the largest vertex deviation is 2.9e-6 mm (float32 rounding of the mm copy), MuJoCo's compiled
+  mesh is within 5.9e-6 mm. No repair, decimation or smoothing was needed (all four are watertight, 152-986 triangles).
+  `objects.json` holds the SHA-256 of every original STL and of the mm copies.
+* **Fork.stl, Knife.stl and Spoon.stl are in metres**: a slicer that assumes mm prints them 1000 times too small. The
+  trained size is the file x 1000 (120 / 144 / 129 mm); the mm copies in `results_multi/objects/source_mm/` can be
+  printed as they are.
+* Printability (geometry not modified): thinnest features ForkMilimeter.stl 0.91 mm (the sheet on the tines, x 15-33 mm),
+  Fork.stl 1.02 mm (tine ends), Knife.stl 1.24 mm (rounded tip), Spoon.stl 2.0 mm. Nothing under 0.8 mm.
+
+**Conventions** (`objects.json` "conventions"): object frame at the centre of mass, +x along the long axis towards the
+head; yaw = the angle of +x about the vertical (table frame; the network predicts it in the sensor frame); stable-pose ids
+= the object's own. Indistinguishable pose pairs: Fork.stl 0 / 1 and Spoon.stl 0 / 1 (flat, symmetric about the long axis
+and the mid-plane: face up = face down), Spoon.stl 2 / 3 (either edge). The label check
+(`results_multi/data_check/pose_label_check.py`): the CAD outline placed only from the labelled pose lies on the depth for
+30 presses per object; the yaw label agrees with the image's axis to 0.9 deg (1.9 deg after augmentation; 45.6 deg if
+the mirror were left out of the label transform).
+
+**Heads** (`centre_multi.py`): yaw = 72 bins of 5 deg in the sensor frame (cross-entropy; the label is transformed by the
+augmentation's rotation / mirror like the image); stable pose = one block of logits per object over its natural poses.
+The first model A (no pose heads) was stopped at epoch 10 and kept in `results_multi/superseded/`.
+
+**Joint belief on the GPU** (`pose_search.py`): (object, stable pose) x 72 yaw bins x a 201 x 201 mm centre grid (1 mm)
+in the episode's sensor frame: 140 MB float32 for model A's 12 (object, pose) pairs, plus 42 MB of touch masks; measured
+peak 0.50 GB per search process (three run next to a training). The yaw grid is the head's own (5 deg). The heads are
+combined as a factorised likelihood - **this assumes they are independent given the pose**, which they are not exactly
+(they share the image). A press also tests the object's real footprint at each pose against the pad (contact needs a
+touch; an empty press rules out every pose that would have been touched). Information gain is over the whole pose: 2,048
+states sampled from the belief predict what the pad would see at each candidate press (nothing, or which region of which
+object; the shared handle of Fork / Knife / Spoon is one region class), and the gain is the entropy of those outcomes.
+Stop: object >= 95 %, centre 90 % region < 16 mm², yaw 90 % interval within +-3 deg, stable pose >= 95 % (an
+indistinguishable pair counts as one); or 10 presses.
+
+**CAD check and refinement** (C4, no training): the top 64 cells after each contact press are rendered from the CAD
+(expected indentation from the top-surface height at that pose) and compared with the reconstructed depth (masked mean
+squared error, summed over the presses). At the end the best pose is refined continuously (x, y, yaw).
+* A first temperature (tau = 0.033, calibrated on the CAD error alone) was far too sharp: after one press on the knife's
+  blade the belief went to the mirrored stable pose with P = 1.0 and the search stopped wrong. Calibrated GIVEN the network
+  (`pose_calib_given_net.py`) the CAD still adds sub-bin information (log-probability of the true pose among 25 nearby
+  candidates -2.13 with the network alone, -1.23 with the CAD at tau = 0.027), but this does not see the search's selection
+  bias (the best of 64 cells from a large grid can beat the truth by chance).
+* By a rule written before the results, the check's temperature was chosen on 160 validation searches
+  (`choose_tau.py`): **tau_search = 1.0** (94.4 % success at ADD < 5 mm, 0.6 % confidently wrong stops; tau 0.1: 95.0 % /
+  3.1 %).
+* The final refinement uses tau = 0.027 with the network belief as prior: a decision taken after seeing the validation runs
+  (stated as such in the run log): the refinement is a local comparison of nearby poses given the network, which is what
+  that calibration measured. The refinement on the CAD match alone is kept per episode for comparison.

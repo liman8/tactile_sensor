@@ -88,8 +88,8 @@ class Recorder:
                 g.rgba[3] = min(g.rgba[3], 0.25)
         sv.add_overlays(scn, self.sess, e)
         img = self.r.render()[..., ::-1].copy()                      # RGB -> BGR
-        leg = ["green ghost / sphere: estimate", "red sphere: true centre of mass", "orange: 90 % region",
-               "blue / grey discs: presses (fork / none)"]
+        leg = getattr(self, "legend", None) or ["green ghost / sphere: estimate", "red sphere: true centre of mass",
+                                                 "orange: 90 % region", "blue / grey discs: presses (fork / none)"]
         shade = img.copy()
         cv2.rectangle(shade, (0, 0), (W3, 36), (0, 0, 0), -1)
         cv2.rectangle(shade, (0, H3 - 20 * len(leg) - 16), (330, H3), (0, 0, 0), -1)
