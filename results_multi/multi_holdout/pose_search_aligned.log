@@ -1,0 +1,2 @@
+B full_cad-fork2_stl_aligned fork2_stl: id 58.0 %, presses 9.07, stopped 19 % | binned: centre 0.90 mm, yaw 1.3 deg | refined: centre 0.47, yaw 0.1, ADD median 0.53, ADD<2 58 % (1047 s, GPU peak 512 MB)
+B full_height_cad-fork2_stl_aligned fork2_stl: id 100.0 %, presses 3.60, stopped 98 % | binned: centre 0.63 mm, yaw 1.3 deg | refined: centre 0.26, yaw 0.2, ADD median 0.53, ADD<2 100 % (233 s, GPU peak 608 MB)

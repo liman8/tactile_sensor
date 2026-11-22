@@ -30,3 +30,4 @@ multi A (multi_all): objects ['fork_stl', 'fork2_stl', 'knife_stl', 'spoon_stl']
   [A s1] epoch   5: train d 4.165 yaw 1.682 | val a 0.158 id 0.917 b 0.552 pose 0.707 d 3.708 yaw 1.498 (1103 s)
   [A s1] epoch  10: train d 3.664 yaw 1.370 | val a 0.175 id 0.876 b 0.506 pose 0.681 d 3.339 yaw 1.236 (2130 s)
   [A s1] epoch  15: train d 3.356 yaw 1.205 | val a 0.138 id 0.817 b 0.429 pose 0.654 d 2.962 yaw 1.039 (3061 s)
+  [A s1] epoch  20: train d 3.106 yaw 1.079 | val a 0.120 id 0.784 b 0.388 pose 0.625 d 2.727 yaw 0.954 (3796 s)

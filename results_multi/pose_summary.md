@@ -30,9 +30,15 @@ ADD uses corresponding body points also for a wrong stable pose; ADD-S only for 
 | Spoon.stl | A, search + contact height | 99.3 | 50.3 (99.3) | 0.29 / 1.01 | 0.4 / 1.4 | 0.64 | 0.63 | 97.0 / 98.3 | 0.29 | 3.74 | 95.3 / 96.3 |
 | Fork.stl | B (never saw Fork.stl), search with Fork.stl's CAD (pre-planned C8) | 8.3 | 4.3 (8.3) | 2.73 / 3.12 | 0.2 / 1.1 | 0.80 | 0.82 | 6.0 / 8.3 | 2.73 | 8.17 | 0.0 / 8.3 |
 | Fork.stl | B, search without Fork.stl's CAD | 0.0 | 0.0 (0.0) | 2.82 / 3.27 | 0.4 / 1.6 | - | 0.85 | 0.0 / 0.0 | 2.83 | 2.53 | 0.0 / 0.0 |
+| Fork.stl | B, with its CAD, aligned CAD-only hypothesis (post hoc) | 58.0 | 26.7 (58.0) | 0.47 / 2.96 | 0.1 / 0.8 | 0.53 | 0.55 | 58.0 / 58.0 | 0.47 | 9.07 | 54.7 / 57.0 |
+| Fork.stl | B, with its CAD + contact height | 92.0 | 42.0 (92.0) | 2.10 / 3.09 | 0.2 / 1.3 | 0.69 | 0.61 | 70.7 / 91.7 | 2.10 | 3.92 | 1.3 / 88.3 |
+| Fork.stl | B, with its CAD, aligned (post hoc) + contact height | 100.0 | 51.7 (100.0) | 0.26 / 0.96 | 0.2 / 1.1 | 0.53 | 0.53 | 99.7 / 100.0 | 0.26 | 3.60 | 97.0 / 96.3 |
 | fork_stl | B, search (own object) | 100.0 | 100.0 (100.0) | 0.50 / 1.13 | 0.6 / 1.7 | 0.60 | 0.41 | 98.3 / 100.0 | 0.50 | 2.30 | 99.0 / 96.3 |
 | Knife.stl | B, search (own object) | 100.0 | 96.7 (96.7) | 0.35 / 1.24 | 0.2 / 1.3 | 0.46 | 0.39 | 92.3 / 94.3 | 0.35 | 3.62 | 87.7 / 93.7 |
 | Spoon.stl | B, search (own object) | 95.3 | 41.3 (94.7) | 0.27 / 1.11 | 0.4 / 1.4 | 0.64 | 0.63 | 94.7 / 94.7 | 0.27 | 4.15 | 92.0 / 93.0 |
+| fork_stl | B, search + contact height (own object) | 100.0 | 100.0 (100.0) | 0.50 / 1.12 | 0.5 / 1.7 | 0.58 | 0.40 | 99.0 / 100.0 | 0.50 | 2.10 | 98.7 / 95.3 |
+| Knife.stl | B, search + contact height (own object) | 100.0 | 98.3 (98.3) | 0.36 / 1.24 | 0.2 / 1.2 | 0.46 | 0.39 | 93.7 / 97.0 | 0.36 | 3.20 | 87.7 / 94.0 |
+| Spoon.stl | B, search + contact height (own object) | 100.0 | 47.7 (100.0) | 0.27 / 1.06 | 0.4 / 1.3 | 0.63 | 0.63 | 97.0 / 98.3 | 0.27 | 3.77 | 96.0 / 97.0 |
 
 
 ## Centre-only vs full-pose information gain (C7): centre-only minus full, same starts

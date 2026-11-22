@@ -152,3 +152,95 @@ squared error, summed over the presses). At the end the best pose is refined con
 * The final refinement uses tau = 0.027 with the network belief as prior: a decision taken after seeing the validation runs
   (stated as such in the run log): the refinement is a local comparison of nearby poses given the network, which is what
   that calibration measured. The refinement on the CAD match alone is kept per episode for comparison.
+
+**Contact height** (`pose_search.py --height`, added after the spoon failure analysis, a separate variant): the arm's
+first-contact height above the table (simulated: the first-contact slide height minus the bare table's at the same
+tilt, plus N(0, 0.3 mm) as an assumed arm z accuracy) against the CAD: the highest top-surface point under the pad, per
+hypothesis, yaw bin and centre offset (`pose_geom.height_hits`, cached in `results_multi/pose_cache/`, not in git).
+Likelihood N(h; prediction, 0.5 mm) with 1 % uniform mixing over 30 mm; the contact decision comes from the height
+(> 0.5 mm). Measured minus CAD at the true pose: median -0.34 to +0.09 mm, |error| p90 0.48-0.76 mm. **The sensor
+housing is not in the prediction**: when the housing hits a tall object (standing on its edge) before the gel does, the
+image is dark and the height is the housing's (knife 41 / 973 presses, spoon 17 / 1123); the mixture absorbs them, and 5
+of the 10 remaining knife / spoon failures contain one.
+
+**Unseen object with its CAD (C8)**: model B has no class for Fork.stl. Each of Fork.stl's stable poses is a CAD-only
+hypothesis that borrows the closest class (fork_stl) for the identity and the heatmap, and is checked against its own
+CAD (footprint, CAD check, refinement, contact height). The pre-planned version gave it a uniform stable-pose term. The
+post-hoc `--cad-align` (decided after the first C8 result; 100 validation starts first, then the test) reads the proxy's
+heatmap shifted by the centre-of-mass offset (object frame, per yaw bin: the two STL frames coincide) and credits the
+proxy's best stable-pose probability.
+
+### 6. Results (`results_multi/pose_summary.md`, recomputed from the saved episodes by `pose_summary.py`)
+
+300 test starts per object (on-object test presses with contact, every part), the same starts for every variant;
+paired bootstrap intervals (95 %). Search rows are the refined final pose. ADD with corresponding body points also for a
+wrong stable pose; ADD-S only for the indistinguishable pairs (Fork.stl 0/1, Spoon.stl 0/1 and 2/3); a wrong object
+fails the ADD success rates.
+
+**Model A (all four objects), one press vs the search:**
+
+| object | variant | identity | centre median | yaw median | ADD median | ADD < 2 / < 5 mm | presses |
+|---|---|---|---|---|---|---|---|
+| fork_stl | one press | 64.3 % | 1.25 mm | 1.3 deg | 1.69 mm | 55.0 / 60.3 % | 1 |
+| fork_stl | search | 100 % | 0.50 mm | 0.5 deg | 0.58 mm | 99.3 / 100 % | 2.26 |
+| fork_stl | search + height | 99.7 % | 0.50 mm | 0.5 deg | 0.59 mm | 98.7 / 99.7 % | 2.17 |
+| Fork.stl | one press | 60.2 % | 1.19 mm | 1.3 deg | 1.32 mm | 59.3 / 59.9 % | 1 |
+| Fork.stl | search | 99.7 % | 0.42 mm | 0.3 deg | 0.55 mm | 98.7 / 99.7 % | 2.27 |
+| Fork.stl | search + height | 100 % | 0.43 mm | 0.3 deg | 0.56 mm | 98.3 / 100 % | 2.11 |
+| Knife.stl | one press | 74.6 % | 4.01 mm | 1.6 deg | 13.7 mm | 27.1 / 36.4 % | 1 |
+| Knife.stl | search | 99.7 % | 0.35 mm | 0.2 deg | 0.44 mm | 91.3 / 93.0 % | 3.76 |
+| Knife.stl | search + height | 100 % | 0.35 mm | 0.1 deg | 0.44 mm | 95.7 / 98.3 % | 3.24 |
+| Spoon.stl | one press | 70.5 % | 2.17 mm | 1.7 deg | 4.63 mm | 45.7 / 50.2 % | 1 |
+| Spoon.stl | search | 95.3 % | 0.29 mm | 0.4 deg | 0.64 mm | 92.3 / 93.7 % | 4.06 |
+| Spoon.stl | search + height | 99.3 % | 0.29 mm | 0.4 deg | 0.64 mm | 97.0 / 98.3 % | 3.74 |
+
+* **One press is not enough**: on the shared handle the identity is a guess (handle presses named right 5-52 %;
+  fork_stl's handle is mostly taken for the knife or the spoon), the knife and the spoon flip by 180 deg in 16-17 % of
+  presses, and a flat face up / face down pair cannot be told apart. The heads are well separated: tines of Fork.stl vs
+  fork_stl are named right 708 / 736 and 752 / 794, blade 815 / 858, bowl 819 / 861.
+* **The search finds the full pose**: identity 95-100 %, centre 0.29-0.50 mm, yaw 0.2-0.5 deg (medians), in 2.3-4.1
+  presses; the true centre is inside the final 90 % region in 88-99 % and the true yaw inside the 90 % interval in
+  92-98 % of episodes. Grasp-point error (the CoM in 3-D) = the centre error (flat objects).
+* **Stable pose**: fork_stl and the knife 96-100 %; Fork.stl and the spoon ~50 % strict because face up and face down
+  are the same shape, 94-100 % counting those pairs as one.
+* **Cost of the unknown identity** (search minus the same search with the object given): presses +0.49 [0.34, 0.65]
+  for Fork.stl and +0.58 [0.37, 0.78] for the spoon, none for fork_stl and the knife; ADD < 5 mm 0-1.3 points lower,
+  spoon 4.6 points (93.7 vs 98.3 %). With the contact height the spoon matches the object-given search (98.3 %).
+* **Full-pose vs centre-only information gain (C7)**: for the forks the full-pose gain matters: centre-only needs +3.0
+  [2.6, 3.4] (fork_stl) and +2.8 [2.4, 3.2] (Fork.stl) more presses and loses 23.7 and 7.0 points of ADD < 5 mm (it
+  keeps pressing near the centre on the shared handle and never checks the tines, where the two forks differ). For the
+  knife and the spoon no significant difference.
+* **CAD check and refinement (C4)**: the check during the search (tau = 1.0) changes the final ADD by -0.06 to +0.01 mm
+  (not significant except +0.01 mm for the spoon); the final refinement is what helps: centre 0.75-0.83 -> 0.29-0.50 mm,
+  yaw 1.2-1.3 -> 0.2-0.5 deg. Refining on the CAD match alone gives lower medians (yaw 0.06-0.18 deg) but drifts
+  sometimes (ADD < 5 mm 1-4 points lower); the reported pose combines the CAD match with the network belief.
+* **Contact height**: spoon identity +4.0 [2.0, 6.3] points, ADD < 5 mm +4.7 [2.3, 7.3]; knife ADD < 5 mm +5.3
+  [2.3, 8.3], stable pose 96.3 -> 100 %, -0.51 [-0.72, -0.31] presses; forks unchanged. The flat-bowl failures (dark
+  image: the network says "no contact" and the search removes the true place) are gone.
+* **A vs the fork-only final model** (same 5,000 dataset_mini test2 presses, object given): centre median +0.022 mm
+  [0.011, 0.039], p90 +0.20 mm; with the predicted identity p90 +19 mm (the handle).
+* **Robustness** (one press, 600 per object): noise 0.02-0.05 mm and blur 1-2 px change nothing material; lateral
+  scale 0.98 / 1.02 hurts the knife and the spoon most (centre median knife 3.57 -> 2.73 / 4.63 mm, spoon 1.97 -> 3.59 /
+  2.73 mm; forks within 0.15 mm); drift 0.03 / 0.08 mm: knife 3.62 / 3.76, spoon 1.91 / 2.33 mm.
+
+**Model B (never saw Fork.stl) on Fork.stl:**
+
+| variant | identity | centre median | ADD median | ADD < 2 / < 5 mm | presses |
+|---|---|---|---|---|---|
+| one press (fork_stl heatmap, Fork.stl's CAD) | - | 3.12 mm | 3.26 mm | 6.2 / 91.9 % | 1 |
+| search without its CAD | 0 % | 2.82 mm | - | 0 / 0 % | 2.53 |
+| **search with its CAD (pre-planned C8)** | **8.3 %** | **2.73 mm** | 0.80 mm | 6.0 / 8.3 % | 8.17 |
+| with its CAD + contact height | 92.0 % | 2.10 mm | 0.69 mm | 70.7 / 91.7 % | 3.92 |
+| with its CAD, aligned (post hoc) | 58.0 % | 0.47 mm | 0.53 mm | 58.0 / 58.0 % | 9.07 |
+| with its CAD, aligned (post hoc) + contact height | 100 % | 0.26 mm | 0.53 mm | 99.7 / 100 % | 3.60 |
+| (model A, which trained on Fork.stl) | 99.7 % | 0.42 mm | 0.55 mm | 98.7 / 99.7 % | 2.27 |
+
+* **As pre-planned, the CAD does not bring Fork.stl back**: B names it fork_stl (the bent fork with the same outline)
+  in 92 % of the searches. The outline pose is right (ADD-S median 0.82 mm), the centre is off by the two forks'
+  centre-of-mass offset (2.96 mm).
+* Two reasons (found after the result): the CAD-only hypothesis lost ~0.6 nats per press against the confident proxy
+  through the stable-pose term, and it read the proxy's heatmap, which points at fork_stl's centre.
+* The contact height alone fixes the identity (flat 2 mm vs fork_stl's 5 mm head); the alignment fixes the centre;
+  together B recovers the unseen fork's full pose as well as A, which trained on it. Both are post hoc.
+* B on its own objects matches A (fork_stl 100 %, 0.50 mm; knife 100 %, 0.35 mm; spoon 95.3 %, 0.27 mm); with the
+  contact height the spoon reaches 100 % identity and 98.3 % ADD < 5 mm, the knife 97.0 %.
