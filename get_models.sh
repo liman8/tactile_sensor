@@ -3,6 +3,7 @@
 #
 #     bash get_models.sh                  # the models prezentacija/demo.sh uses (default set)
 #     bash get_models.sh --all            # every model listed in MODELS.sha256
+#     bash get_models.sh --multi          # the multi-object models A and B (prezentacija/demo.sh 6, 7, 8; not in git)
 #     bash get_models.sh --from DIR|URL   # where the files come from (default: $MODELS_URL, see below)
 #     bash get_models.sh --check          # only verify what is already there, download nothing
 #
@@ -20,10 +21,12 @@ set -euo pipefail
 cd "$(dirname "$(readlink -f "$0")")"
 SRC=${MODELS_URL:-https://github.com/liman8/tactile_sensor/releases/download/models-v1}
 DEMO_MODELS=(results_centre/mini_robust/model_100k_seed0.pt)      # NET in prezentacija/demo.sh, FINAL_MODEL.md
-MODE=get; ALL=0; EXPORT=""
+MULTI_MODELS=(results_multi/multi_all/model_seed0.pt results_multi/multi_holdout/model_seed0.pt)   # demo 6 / 7 / 8
+MODE=get; ALL=0; MULTI=0; EXPORT=""
 while [ $# -gt 0 ]; do
   case "$1" in
     --all) ALL=1 ;;
+    --multi) MULTI=1 ;;
     --from) SRC=$2; shift ;;
     --check) MODE=check ;;
     --export) MODE=export; EXPORT=$2; shift ;;
@@ -35,6 +38,8 @@ done
 [ -f MODELS.sha256 ] || { echo "MODELS.sha256 not found" >&2; exit 1; }
 if [ $ALL = 1 ]; then
   mapfile -t LIST < <(awk '{print $2}' MODELS.sha256 | sort -u)
+elif [ $MULTI = 1 ]; then
+  LIST=("${MULTI_MODELS[@]}")
 else
   LIST=("${DEMO_MODELS[@]}")
 fi

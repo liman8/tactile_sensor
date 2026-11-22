@@ -76,15 +76,19 @@ an active multi-press search. Every step, decision and number has a line in `res
 * **The final fork model's recipe**: the same backbone, training (120 epochs, AdamW, OneCycle, bf16), inputs (X + the
   bank), robust augmentation and test border. Mirror augmentation only for presses of mirror-symmetric objects.
 * **Heads**: contact (hover / table / object); identity (softmax over the model's objects); part (one block of logits
-  per object, the loss uses the true object's block); face (only where defined); the centre-of-mass heatmap (150 x 150
-  cells of 2 mm, as before).
+  per object, the loss uses the true object's block); the centre-of-mass heatmap (150 x 150 cells of 2 mm, as before);
+  yaw and stable pose (section 5; the stable-pose head replaced a face head).
 * **One heatmap decoder shared by all objects, conditioned on the object hypothesis**: it is fed the 512-d code plus a
   learned embedding of the object. Training uses the true object; inference runs the decoder once per hypothesis, so
   the search gets P(centre | press, object = h) for every h. A single unconditioned heatmap could not give a belief per
   hypothesis: on the shared handle it would mix the four objects' centres. The identity-weighted mixture of the
   hypotheses' heatmaps is the "generic" heatmap.
 
-### 4. Search with an unknown object (`search_multi.py`)
+### 4. The first search with an unknown object (`search_multi.py`; superseded by the full-pose search, section 5)
+
+This was the search before the pose addendum (identity and centre only). Its code and logs are kept; every result
+below comes from the full-pose search (`pose_search.py`).
+
 
 * The v2 loop of the fork search (level sensor after the first press, backtracking after an empty press), with a
   **joint belief over identity and centre**: log P(h, c) = log w_h + the sum of each contact press's heatmap for
@@ -244,3 +248,17 @@ fails the ADD success rates.
   together B recovers the unseen fork's full pose as well as A, which trained on it. Both are post hoc.
 * B on its own objects matches A (fork_stl 100 %, 0.50 mm; knife 100 %, 0.35 mm; spoon 95.3 %, 0.27 mm); with the
   contact height the spoon reaches 100 % identity and 98.3 % ADD < 5 mm, the knife 97.0 %.
+
+**Viewer, demo and videos** (`search_viewer.py`, `pose_viz.py`, `prezentacija/demo.sh`):
+* `GELSIGHT_SENSOR=mini python search_viewer.py --model A --object knife_stl [--mode full|centre] [--height]`: the
+  full-pose search on the chosen object, unknown to the search; Page Down / Page Up switch the object; the ghost is the
+  most likely object at its estimated full pose (stable pose, yaw, centre); the panel shows the object probabilities,
+  the stable pose, the yaw with its 90 % interval, the errors, ADD / ADD-S and, with `--height`, the contact height.
+* `--model B --object fork2_stl` adds Fork.stl's CAD (C8); `--height --cad-align` is the post-hoc variant.
+* `demo.sh 6` (A), `7` (B on Fork.stl, pre-planned), `8` (B on Fork.stl, aligned + height). The models are not in git:
+  `bash get_models.sh --multi --from DIR|URL`.
+* Videos (`results_multi/videos/`, key frames in `frames/`): one per object with A, the spoon start 2 without and with
+  the contact height (named the knife after 10 presses / the spoon after 4), and B on Fork.stl start 13 pre-planned (the
+  bent fork_stl ghost on the flat Fork.stl, 2.90 mm) and aligned + height (Fork.stl 99 % after 2 presses).
+* Checks (`pose_viz.py check`): the ghost bodies change no tactile image; stored episodes replay press by press with
+  zero difference (4 / 4 per object). The interactive window itself was not opened in this run.
