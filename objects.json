@@ -64,7 +64,23 @@
      2,
      3
     ]
-   }
+   },
+   "stl_sha256": "407920ee0d98a4cf51bf7eda87367162675af2ecc928a579f475b46dd872da98",
+   "geometry_check": {
+    "rule": "visual mesh = the original STL (unit scaling + rigid transforms only); deviation < 0.02 mm",
+    "triangles": 986,
+    "same_triangles": true,
+    "max_vertex_dev_mm": 0.0,
+    "winding_flipped": 0,
+    "surface_hausdorff_mm": 4.4193885373470584e-11,
+    "mujoco_compiled_dev_mm": 3.713432989250162e-06,
+    "visual_mesh_changes": [
+     "merged duplicate vertices: 2958 -> 495 (STL stores 3 per triangle; geometry unchanged)"
+    ],
+    "passes": true,
+    "file": "results_multi/objects/geometry_check.json"
+   },
+   "printing_note": "ForkMilimeter.stl is in mm (120.3 x 16.3 x 5.0 mm); trained as is"
   },
   "fork2_stl": {
    "class": "fork",
@@ -141,6 +157,31 @@
     },
     "face_down_pose": 1,
     "face_up_pose": 0
+   },
+   "stl_sha256": "95b93ad392913fc14a998627e6508fffa6df44655a12be79fd96db6e9d8dc8a6",
+   "geometry_check": {
+    "rule": "visual mesh = the original STL (unit scaling + rigid transforms only); deviation < 0.02 mm",
+    "triangles": 188,
+    "same_triangles": true,
+    "max_vertex_dev_mm": 2.8632200511237667e-06,
+    "winding_flipped": 0,
+    "surface_hausdorff_mm": 2.4614092112360396e-06,
+    "mujoco_compiled_dev_mm": 2.070443469477139e-06,
+    "visual_mesh_changes": [
+     "merged duplicate vertices: 564 -> 96 (STL stores 3 per triangle; geometry unchanged)"
+    ],
+    "passes": true,
+    "file": "results_multi/objects/geometry_check.json"
+   },
+   "source_mm": {
+    "path": "results_multi/objects/source_mm/Fork_mm.stl",
+    "sha256": "7e8c642b1600c552b24f1835909a089d531869ccbd516ae65830424dea0cfd78",
+    "note": "the original STL x 1000 (float32 STL), the same triangles (max vertex deviation 2.9e-6 mm): the geometry the models were trained on, in mm; the original file is in metres, so a slicer that assumes mm must scale it by 1000 (or print this copy)",
+    "extent_mm": [
+     120.26,
+     16.254,
+     2.0
+    ]
    }
   },
   "knife_stl": {
@@ -211,6 +252,31 @@
     },
     "face_down_pose": 0,
     "face_up_pose": 1
+   },
+   "stl_sha256": "f92151127f5aeb4aabddaae1615291eec5d3efdae2901dc23a63b1472ab5aec0",
+   "geometry_check": {
+    "rule": "visual mesh = the original STL (unit scaling + rigid transforms only); deviation < 0.02 mm",
+    "triangles": 152,
+    "same_triangles": true,
+    "max_vertex_dev_mm": 2.8632200511237667e-06,
+    "winding_flipped": 0,
+    "surface_hausdorff_mm": 2.4532496528159674e-06,
+    "mujoco_compiled_dev_mm": 5.460032803223741e-06,
+    "visual_mesh_changes": [
+     "merged duplicate vertices: 456 -> 78 (STL stores 3 per triangle; geometry unchanged)"
+    ],
+    "passes": true,
+    "file": "results_multi/objects/geometry_check.json"
+   },
+   "source_mm": {
+    "path": "results_multi/objects/source_mm/Knife_mm.stl",
+    "sha256": "ad70ade2a6ebd36e89255d338091a11791a485527e296a35c4c9b067484ad6b6",
+    "note": "the original STL x 1000 (float32 STL), the same triangles (max vertex deviation 2.9e-6 mm): the geometry the models were trained on, in mm; the original file is in metres, so a slicer that assumes mm must scale it by 1000 (or print this copy)",
+    "extent_mm": [
+     144.133,
+     13.925,
+     2.0
+    ]
    }
   },
   "spoon_stl": {
@@ -284,6 +350,31 @@
     },
     "face_down_pose": 1,
     "face_up_pose": 0
+   },
+   "stl_sha256": "fc896050ba09f097d3f198ffab4dd615af63d75f6aba460c655a9a0aff519cda",
+   "geometry_check": {
+    "rule": "visual mesh = the original STL (unit scaling + rigid transforms only); deviation < 0.02 mm",
+    "triangles": 176,
+    "same_triangles": true,
+    "max_vertex_dev_mm": 2.8632200511237667e-06,
+    "winding_flipped": 0,
+    "surface_hausdorff_mm": 2.454988249091029e-06,
+    "mujoco_compiled_dev_mm": 5.889825677543372e-06,
+    "visual_mesh_changes": [
+     "merged duplicate vertices: 528 -> 90 (STL stores 3 per triangle; geometry unchanged)"
+    ],
+    "passes": true,
+    "file": "results_multi/objects/geometry_check.json"
+   },
+   "source_mm": {
+    "path": "results_multi/objects/source_mm/Spoon_mm.stl",
+    "sha256": "55334b86885f5e23ff399a94e531b54fdf6910072add0bac1ada618f4209fc37",
+    "note": "the original STL x 1000 (float32 STL), the same triangles (max vertex deviation 2.9e-6 mm): the geometry the models were trained on, in mm; the original file is in metres, so a slicer that assumes mm must scale it by 1000 (or print this copy)",
+    "extent_mm": [
+     128.684,
+     24.854,
+     2.0
+    ]
    }
   }
  }

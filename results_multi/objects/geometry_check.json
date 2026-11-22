@@ -1,0 +1,130 @@
+{
+ "fork_stl": {
+  "stl": "ForkMilimeter.stl",
+  "sha256": "407920ee0d98a4cf51bf7eda87367162675af2ecc928a579f475b46dd872da98",
+  "units": "mm",
+  "scale_to_mm": 1.0,
+  "triangles_original": 986,
+  "triangles_visual": 986,
+  "original_watertight": true,
+  "original_extent_in_file_units": [
+   120.281853,
+   16.253538,
+   5.0
+  ],
+  "printed_size_mm_if_slicer_assumes_mm": [
+   120.2819,
+   16.2535,
+   5.0
+  ],
+  "triangle_match_max_vertex_dev_mm": 0.0,
+  "triangles_winding_flipped": 0,
+  "surface_dev_mm": {
+   "visual_to_original_max": 3.0095614786734685e-11,
+   "original_to_visual_max": 4.4193885373470584e-11,
+   "hausdorff_sampled": 4.4193885373470584e-11
+  },
+  "mujoco_compiled_vertex_dev_mm": 3.713432989250162e-06,
+  "mujoco_vertices": 495,
+  "visual_mesh_changes": [
+   "merged duplicate vertices: 2958 -> 495 (STL stores 3 per triangle; geometry unchanged)"
+  ],
+  "passes": true
+ },
+ "fork2_stl": {
+  "stl": "Fork.stl",
+  "sha256": "95b93ad392913fc14a998627e6508fffa6df44655a12be79fd96db6e9d8dc8a6",
+  "units": "m",
+  "scale_to_mm": 1000.0,
+  "triangles_original": 188,
+  "triangles_visual": 188,
+  "original_watertight": true,
+  "original_extent_in_file_units": [
+   0.12026,
+   0.016254,
+   0.002
+  ],
+  "printed_size_mm_if_slicer_assumes_mm": [
+   0.1203,
+   0.0163,
+   0.002
+  ],
+  "triangle_match_max_vertex_dev_mm": 2.8632200511237667e-06,
+  "triangles_winding_flipped": 0,
+  "surface_dev_mm": {
+   "visual_to_original_max": 2.4614092112360396e-06,
+   "original_to_visual_max": 2.4405711831686965e-06,
+   "hausdorff_sampled": 2.4614092112360396e-06
+  },
+  "mujoco_compiled_vertex_dev_mm": 2.070443469477139e-06,
+  "mujoco_vertices": 96,
+  "visual_mesh_changes": [
+   "merged duplicate vertices: 564 -> 96 (STL stores 3 per triangle; geometry unchanged)"
+  ],
+  "passes": true
+ },
+ "knife_stl": {
+  "stl": "Knife.stl",
+  "sha256": "f92151127f5aeb4aabddaae1615291eec5d3efdae2901dc23a63b1472ab5aec0",
+  "units": "m",
+  "scale_to_mm": 1000.0,
+  "triangles_original": 152,
+  "triangles_visual": 152,
+  "original_watertight": true,
+  "original_extent_in_file_units": [
+   0.144133,
+   0.013925,
+   0.002
+  ],
+  "printed_size_mm_if_slicer_assumes_mm": [
+   0.1441,
+   0.0139,
+   0.002
+  ],
+  "triangle_match_max_vertex_dev_mm": 2.8632200511237667e-06,
+  "triangles_winding_flipped": 0,
+  "surface_dev_mm": {
+   "visual_to_original_max": 2.4532496528159674e-06,
+   "original_to_visual_max": 2.446970080309736e-06,
+   "hausdorff_sampled": 2.4532496528159674e-06
+  },
+  "mujoco_compiled_vertex_dev_mm": 5.460032803223741e-06,
+  "mujoco_vertices": 78,
+  "visual_mesh_changes": [
+   "merged duplicate vertices: 456 -> 78 (STL stores 3 per triangle; geometry unchanged)"
+  ],
+  "passes": true
+ },
+ "spoon_stl": {
+  "stl": "Spoon.stl",
+  "sha256": "fc896050ba09f097d3f198ffab4dd615af63d75f6aba460c655a9a0aff519cda",
+  "units": "m",
+  "scale_to_mm": 1000.0,
+  "triangles_original": 176,
+  "triangles_visual": 176,
+  "original_watertight": true,
+  "original_extent_in_file_units": [
+   0.128684,
+   0.024854,
+   0.002
+  ],
+  "printed_size_mm_if_slicer_assumes_mm": [
+   0.1287,
+   0.0249,
+   0.002
+  ],
+  "triangle_match_max_vertex_dev_mm": 2.8632200511237667e-06,
+  "triangles_winding_flipped": 0,
+  "surface_dev_mm": {
+   "visual_to_original_max": 2.4344248834625673e-06,
+   "original_to_visual_max": 2.454988249091029e-06,
+   "hausdorff_sampled": 2.454988249091029e-06
+  },
+  "mujoco_compiled_vertex_dev_mm": 5.889825677543372e-06,
+  "mujoco_vertices": 90,
+  "visual_mesh_changes": [
+   "merged duplicate vertices: 528 -> 90 (STL stores 3 per triangle; geometry unchanged)"
+  ],
+  "passes": true
+ }
+}
