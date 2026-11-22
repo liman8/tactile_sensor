@@ -90,6 +90,7 @@ studies:
 These are in `results_centre/v3/seeds_40k.json`, `results_centre/mini_exact/seeds_100k.json` and `results_centre/mini_robust/seeds_100k.json`.
 
 The full SHA-256 of every model is in `MODELS.sha256`.
+`bash get_models.sh --all --check` lists which of them are present and correct; `get_models.sh` fetches a missing one from a folder or URL (`--from`) and checks it (README, "The demo on a fresh machine").
 
 ## 4. Frozen copies
 

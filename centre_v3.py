@@ -1112,7 +1112,7 @@ class SearcherV3(v2.SearcherV2):
     def __init__(self, perturb=None, provider="net", net_path=None, threads=2, shard="test2-0000.h5"):
         import h5py
         import torch
-        cs.Searcher.__init__(self, perturb, threads)            # sim, photometric model, grid
+        cs.Searcher.__init__(self, perturb, threads, starts=False)   # sim, photometric model, grid (starts: below)
         with h5py.File(os.path.join(D3, shard)) as f:
             self.ref = f["reference_image"][()]
             self.st = {k: f[k][()] for k in ["fork_body_pos", "fork_body_quat", "arm_cmd", "force_cmd", "com_w",

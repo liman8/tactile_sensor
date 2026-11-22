@@ -79,6 +79,7 @@ so `fixed_sensor` still starts with `fork_dinner`.
 | `freeze_sim.py`, `results_centre/FROZEN_SIM/` | the frozen simulation state: copies of the code, the final model, dataset metadata, and a SHA-256 manifest (`--verify` re-hashes). Run on 2026-11-20 with the final model: 98 files copied, 21 models and 106 Mini shards hashed in place, `--verify`: 225 hashes match. The folder is a local archive and is not versioned |
 | `REZIME.md`, `REZIME_hronologija.md` | a self-contained summary in Serbian for the professor (goal, setup, data, model, robustness findings, search, choice of the final model, CAD comparison, viewer, limits, what the real sensor needs; every number with its source file); the earlier chronological summary (v1 to Mini) |
 | `prezentacija/` | presentation material in Serbian: `PREZENTACIJA.md` (talk text, demo script, expected questions, sources of every number), `demo.sh` (the MuJoCo demos, `bash prezentacija/demo.sh` lists them), `slike/` and `video/` (copies, in the order of the talk), headless self-test images |
+| `get_models.sh` | puts the models `prezentacija/demo.sh` uses in place and checks them against `MODELS.sha256` (`--all`, `--check`, `--from DIR|URL`, `--export DIR`); see "The demo on a fresh machine" |
 | `DATA_AND_MODELS.md`, `MODELS.sha256` | what is not in git (datasets, caches, 17 of the 23 model files), with sizes and the commands that rebuild them; SHA-256 of every model file |
 
 ## Setup
@@ -96,6 +97,38 @@ On Linux every script makes the offscreen tactile renderer use EGL (`MUJOCO_GL=e
 at the top (before, `live_viewer.py` and `demo.py` imported `mujoco` first, and the old rule only
 applied when `DISPLAY` was unset, which it never is in a Wayland session with XWayland). The
 viewer window itself always uses GLFW. To use another backend: `MUJOCO_GL=glfw python ...`.
+
+### The demo on a fresh machine
+
+```bash
+git clone git@github.com:liman8/tactile_sensor.git && cd tactile_sensor
+python -m venv .venv && .venv/bin/pip install -r requirements.txt
+bash get_models.sh                     # the demo's model: present (versioned) -> "ok"; else fetched and checked
+GELSIGHT_SENSOR=mini .venv/bin/python collect_dataset.py collect --sensor mini --only-split test2 --n 1000 \
+    --out dataset_mini                 # regenerate only test2-0000.h5 (the search starts), ~30 s, 112 MB
+bash prezentacija/demo.sh t            # headless self-test -> prezentacija/selftest_<time>.png
+bash prezentacija/demo.sh 2            # the main demo (opens the MuJoCo window)
+```
+
+* **`get_models.sh`** checks the models `prezentacija/demo.sh` uses against `MODELS.sha256`. A model that is
+  present with the right SHA-256 is kept. A missing one is fetched from `--from DIR|URL` (or `$MODELS_URL`) under
+  its flat asset name and checked before it is moved into place. `--all --check` lists which of the 23 models are
+  present. `--export DIR` writes a copy for another machine.
+  * The demo's model is in git, so a fresh clone needs no download.
+  * A GitHub Release with the models was planned, but it does not exist: the repository is public, and the
+    multi-object run was told not to upload anything to a public repository (`results_multi/RUN_LOG.md`).
+* **`test2-0000.h5` is regenerated bit-identically** from its seeds: tested on 2026-11-22 in a clean clone in a
+  temporary folder. All 66 datasets of the shard were equal to the original's, and it took 27 s.
+  * The rendered images are bit-identical only on the same EGL device. The shards were rendered on the NVIDIA GPU
+    (the default device here). On the Intel iGPU, the physics and labels still agree, but the images differ in the
+    last bits.
+* **What the clean-clone test showed:**
+  * `demo.sh t` ran headless: 7 presses, 0.11 mm.
+  * `demo.sh 2` built its scene and search session (start 25) in 1.2 s. The window itself was not opened in the test.
+  * Before a fix, both crashed on a fresh clone: `centre_study.Searcher` always read the old standard-sensor
+    `dataset/test-0000.h5`, which `SearcherV3` then replaced with the Mini starts. It no longer reads it for the Mini
+    (`starts=False`); the final model's stored search episodes are reproduced exactly with and without the fix.
+  * The test reused this machine's Python environment instead of a new `pip install`.
 
 ## Quick start
 

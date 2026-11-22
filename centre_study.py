@@ -219,7 +219,9 @@ def infer(model, x):
 class Searcher:
     """One simulator + model; runs search episodes on stored test presses (fork welded in place)."""
 
-    def __init__(self, perturb=None, threads=2):
+    def __init__(self, perturb=None, threads=2, starts=True):
+        """starts=False: do not read the v1 starts from dataset/test-0000.h5 (subclasses that bring their own, e.g.
+        centre_v3.SearcherV3 on the Mini; a fresh clone has no dataset/ shards)."""
         import torch
         import h5py
         from gelsight_sim import GelSightSim
@@ -234,10 +236,11 @@ class Searcher:
         A = det.pm.A * np.asarray(self.perturb.get("A_mult", np.ones((3, 3))))
         self.pm = PhotometricModel(A, det.pm.b)
         self.post = None
-        with h5py.File(os.path.join(tc.DATA, "test-0000.h5")) as f:
-            self.ref = f["reference_image"][()]
-            self.st = {k: f[k][()] for k in ["fork_body_pos", "fork_body_quat", "arm_cmd", "force_cmd", "com_w",
-                                              "fork_pos_w", "fork_quat_w", "pose_id", "would_move", "n_tines"]}
+        if starts:
+            with h5py.File(os.path.join(tc.DATA, "test-0000.h5")) as f:
+                self.ref = f["reference_image"][()]
+                self.st = {k: f[k][()] for k in ["fork_body_pos", "fork_body_quat", "arm_cmd", "force_cmd", "com_w",
+                                                  "fork_pos_w", "fork_quat_w", "pose_id", "would_move", "n_tines"]}
         g = WORLD_CELL * (np.arange(NW) + 0.5) - WORLD_HALF
         self.gx, self.gy = np.meshgrid(g, g)              # world offsets from the grid centre
 
