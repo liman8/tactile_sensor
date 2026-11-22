@@ -45,9 +45,9 @@ OUT = os.path.join(ROOT, "results_multi", "objects")
 SRC_MM = os.path.join(OUT, "source_mm")
 CUTLERY_MM = (120.0, 250.0)
 THRESHOLDS = (0.01, 0.005, 0.0025, 0.00125)
-# Rule history (results_multi/RUN_LOG.md): v1 a priori 0.10 / 0.10 mm; v2 (15:05) 0.20 / 0.15 mm plus the open-slot
+# Rule history (results_multi/RUN_LOG.md): v1 a priori 0.10 / 0.10 mm; v2 (14:36) 0.20 / 0.15 mm plus the open-slot
 # check, because the 2-D check is quantised to the 0.05 mm raster, fork_stl itself was accepted with 0.45 mm, and on
-# Fork.stl a residual 0.14 mm at the concave slot roots does not shrink from 32 to 311 parts; v3 (15:25): v2's 0.0025
+# Fork.stl a residual 0.14 mm at the concave slot roots does not shrink from 32 to 311 parts; v3 (14:40): v2's 0.0025
 # decomposition of Fork.stl failed the static force sweep (handle presses 17 % over the command: 9-14 contacts on a
 # handle cut differently from Knife's and Spoon's), so contact physics became part of the rule, and the 2-D tolerance
 # is 0.25 mm at concave corners (neck / palm junction, slot roots, start of the blade) but 0.15 mm along the knife's

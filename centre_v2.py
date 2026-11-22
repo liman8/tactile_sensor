@@ -230,7 +230,7 @@ def input_blur(x, sigma_px):
     return torch.cat([d, x[:, 1:]], 1)
 
 
-def augment_robust(x, vec, gen, p_untouched=0.25, p_test_border=0.3, params=None):
+def augment_robust(x, vec, gen, p_untouched=0.25, p_test_border=0.3, params=None, allow_mirror=None):
     """Augmentation meant to make the network insensitive to the image pipeline (mini_robust).
 
     Geometry, per sample: rotation / mirror as in augment_v2 (image AND target); lateral zoom 0.97-1.03 (image only);
@@ -241,7 +241,9 @@ def augment_robust(x, vec, gen, p_untouched=0.25, p_test_border=0.3, params=None
     Then blur and noise as in augment_v2. Then the border, independently of the zoom: with p_test_border the test
     treatment (outer TEST_BORDER_PX px set to 0 on all sides); otherwise, for each side on its own, one of none /
     mask (0) / darken (x U(0, 1)) / brighten (x U(1, 1.5)) / replicate (the next inner row repeated), over 1-4 px.
-    `params` overrides draws (tests only). Returns the input and the target, and the draws as a dict."""
+    `params` overrides draws (tests only). allow_mirror (bool tensor, one per sample; None = all allowed, the original
+    behaviour): samples where it is False are never mirrored (objects that are not mirror-symmetric, centre_multi.py);
+    the random draws are the same either way. Returns the input and the target, and the draws as a dict."""
     import torch
     import torch.nn.functional as F
     B, dev = len(x), x.device
@@ -251,6 +253,8 @@ def augment_robust(x, vec, gen, p_untouched=0.25, p_test_border=0.3, params=None
     th = u() * 2 * np.pi
     th = torch.where(u() < 0.5, torch.round(th / np.pi) * np.pi, th)
     mir = torch.where(u() < 0.5, -1.0, 1.0)
+    if allow_mirror is not None:
+        mir = torch.where(allow_mirror, mir, torch.ones_like(mir))
     sc = 0.97 + 0.06 * u()
     shift = torch.stack([u(), u()], 1)                                   # px, image x (column) and y (row)
     kern = torch.randint(0, len(ROBUST_KERNELS), (B,), generator=gen, device=dev)

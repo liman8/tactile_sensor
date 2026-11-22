@@ -1,0 +1,11 @@
+{
+ "wall_s": 1371.2138741016388,
+ "workers": 24,
+ "shards": 140,
+ "presses": 140000,
+ "mb_per_10k_presses": {
+  "val / test": 109.79298849999998,
+  "train (with bank)": 544.9007420833334
+ },
+ "seconds_per_press_per_worker": 0.21841631655693053
+}

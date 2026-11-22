@@ -1,0 +1,1 @@
+multi A (multi_all): objects ['fork_stl', 'fork2_stl', 'knife_stl', 'spoon_stl'], 120000 train / 8000 val presses, seed 0, 120 epochs, robust augmentation (mirror only for ['fork_stl', 'fork2_stl', 'spoon_stl']), test border 2 px -> results_multi/multi_all/model_seed0.pt
