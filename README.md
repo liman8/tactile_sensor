@@ -2612,6 +2612,24 @@ Fork.stl does not recover it with its CAD as planned (8 %), and does (100 %) wit
   density (steel 7850 kg/m³; no part of any mesh suggests another material: each is one solid of uniform thickness),
   the mass and centre of mass computed from the mesh, the CoACD threshold, the mirror symmetry, whether "face up /
   down" means anything, the parts along the long axis and the stable poses. Order = the object id of the models.
+* **`objects.json` fields** (per object under `"objects"`; the order is the models' object id):
+
+  | field | meaning |
+  |---|---|
+  | `class`, `stl`, `units`, `units_note` | object class (fork / knife / spoon), the original STL, its units and why |
+  | `scene`, `mesh_dir`, `import_command` | the scene that holds it, the imported mesh folder, the exact import command |
+  | `coacd_threshold`, `convex_parts` | the collision decomposition chosen by the rule, number of convex parts |
+  | `material`, `density_kg_m3`, `material_note`, `volume_mm3`, `mass_g`, `com_mm`, `bbox_mm`, `shape` | physical properties computed from the mesh (mm, STL frame) |
+  | `symmetric`, `mirror_hausdorff_mm`, `mirror_note` | outline vs its mirror image (mirror augmentation only if symmetric) |
+  | `face_defined`, `face_note` | whether face up / face down are different shapes |
+  | `parts` | `names`, `x_starts_mm` (part boundaries along STL x), `edge_nz` |
+  | `poses` | `mini` (the stable-pose file), `natural` / `propped` ids, `descriptions`, `face_up_pose` / `face_down_pose` |
+  | `stl_sha256`, `source_mm`, `geometry_check` | SHA-256 of the original STL; the mm copy (path, SHA-256); the printed-geometry check (largest deviation) |
+  | `indistinguishable_pose_pairs` | stable poses that are the same shape on the table (ADD-S is used between them) |
+
+  Top level: `"conventions"` (`object_frame`, `table_frame`, `sensor_frame`, `yaw`, `stable_pose`,
+  `indistinguishable_pose_pairs`, `label_check`). `objects.py` reads it: `names()`, `get()`, `object_id()`,
+  `part_names()`, `part_starts_mm()`, `part_of()`, `scene_xml()`, `mesh_dir()`.
 * **fork_stl moved into the registry first.** `collect_dataset.py` (new `use_object(name, scene)`) and
   `train_centre.py` read its name, mesh folder and part boundaries from it. Check before and after
   (`results_multi/registry_check/`): 40 regenerated dataset_mini presses and the final model's 20 stored search
