@@ -80,7 +80,8 @@
     "passes": true,
     "file": "results_multi/objects/geometry_check.json"
    },
-   "printing_note": "ForkMilimeter.stl is in mm (120.3 x 16.3 x 5.0 mm); trained as is"
+   "printing_note": "ForkMilimeter.stl is in mm (120.3 x 16.3 x 5.0 mm); trained as is",
+   "indistinguishable_pose_pairs": []
   },
   "fork2_stl": {
    "class": "fork",
@@ -182,7 +183,13 @@
      16.254,
      2.0
     ]
-   }
+   },
+   "indistinguishable_pose_pairs": [
+    [
+     0,
+     1
+    ]
+   ]
   },
   "knife_stl": {
    "class": "knife",
@@ -277,7 +284,8 @@
      13.925,
      2.0
     ]
-   }
+   },
+   "indistinguishable_pose_pairs": []
   },
   "spoon_stl": {
    "class": "spoon",
@@ -375,7 +383,26 @@
      24.854,
      2.0
     ]
-   }
+   },
+   "indistinguishable_pose_pairs": [
+    [
+     0,
+     1
+    ],
+    [
+     2,
+     3
+    ]
+   ]
   }
+ },
+ "conventions": {
+  "object_frame": "origin = the object's centre of mass (com_mm in the STL frame), axes = the STL axes; +x = the long axis towards the head (tines / blade tip / bowl), +z = the STL +z",
+  "table_frame": "world W: table top z = 0, +z up (collect_dataset CONVENTIONS)",
+  "sensor_frame": "S: x = image column, y = image row, z = into the object (down for a level sensor); left-handed in x-y as seen from above, because the image y points the other way than the world y",
+  "yaw": "rotation of the object's +x axis about the vertical: in the table frame atan2(y, x) of +x projected on the table; the network predicts it in the sensor frame (atan2(row, col) of +x projected on the sensor x-y plane), 72 bins of 5 deg, bin k = [5k, 5k + 5) deg. Mirror symmetry about the long axis does not make yaw ambiguous; the 180 deg ambiguity is only about which side the head is on",
+  "stable_pose": "the object's own stable-pose ids (dataset_multi/poses/<name>/stable_poses.json; fork_stl: dataset_mini/poses); only natural poses are sampled. Full pose = (object, centre x, y, yaw, stable-pose id)",
+  "indistinguishable_pose_pairs": "poses that occupy the same space: fork2_stl 0 / 1 and spoon_stl 0 / 1 (flat, mirror-symmetric about the long axis and the mid-plane: face up = face down turned 180 deg about x), spoon_stl 2 / 3 (standing on either edge); ADD-S is reported for them",
+  "label_check": "results_multi/data_check/pose_label_check.py: CAD outline at the labelled pose vs the depth, 30 presses per object (looked at); yaw label vs the image axis before / after augmentation"
  }
 }

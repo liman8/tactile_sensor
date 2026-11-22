@@ -17,7 +17,11 @@ Heads (on the shared 512-d code z):
   id object identity: softmax over the model's objects                     (presses with object contact)
   b  part: one block of logits per object (its own parts, objects.json); the loss uses the true object's block only
      (the other objects' logits are masked out), so part classes of different objects never compete
-  c  face down / up: only where the object and the pose define a face (fork_stl, knife flat poses; label -1 elsewhere)
+  c  stable pose: one block of logits per object over its NATURAL stable-pose ids (objects.json); the loss uses the true
+     object's block (pose addendum C: the stable-pose id replaces the earlier face up / down head)
+  yaw the object's yaw in the sensor frame: the direction of its +x axis (towards the head), 72 bins of 5 deg, cross-entropy
+     (pose addendum C2). Rotation / mirror augmentation transform the yaw label with the same matrix as the image and the
+     centre (mirror only for mirror-symmetric objects, as before)
   d  centre-of-mass heatmap: ONE decoder shared by all objects (train_centre's decoder, 150 x 150 cells of 2 mm),
      fed z + e_obj, a learned 512-d embedding of the object hypothesis. Training uses the true object's embedding;
      inference evaluates the decoder once per hypothesis, so the search gets P(centre | press, object = h) for every
@@ -67,7 +71,36 @@ def part_layout(objs):
     return off, mask, names
 
 
-def build_model(n_obj, n_part):
+YAW_BINS = 72
+YAW_BIN = 2 * np.pi / YAW_BINS                      # 5 deg
+
+
+def pose_layout(objs):
+    """Global stable-pose index = offset[object] + position of the pose id in the object's natural poses."""
+    ids = [natural_poses(o) for o in objs]
+    off = np.concatenate([[0], np.cumsum([len(i) for i in ids])[:-1]]).astype(int)
+    mask = np.zeros((len(objs), sum(len(i) for i in ids)), bool)
+    for k, (o, i) in enumerate(zip(off, ids)):
+        mask[k, o:o + len(i)] = True
+    names = [f"{o}:{p}" for o, i in zip(objs, ids) for p in i]
+    return off, mask, names, ids
+
+
+def natural_poses(name):
+    return list(objects.get(name)["poses"]["natural"])
+
+
+def yaw_bin(u):
+    """Unit vectors (..., 2) in the sensor frame -> yaw bin (0..71), angle atan2(y, x) in [0, 2 pi)."""
+    import torch
+    if isinstance(u, torch.Tensor):
+        a = torch.remainder(torch.atan2(u[..., 1], u[..., 0]), 2 * np.pi)
+        return torch.clamp((a / YAW_BIN).long(), 0, YAW_BINS - 1)
+    a = np.mod(np.arctan2(u[..., 1], u[..., 0]), 2 * np.pi)
+    return np.clip((a / YAW_BIN).astype(int), 0, YAW_BINS - 1)
+
+
+def build_model(n_obj, n_part, n_pose=2):
     import torch
     import torch.nn as nn
 
@@ -78,7 +111,9 @@ def build_model(n_obj, n_part):
             super().__init__()
             self.base = tc.build_model()
             self.base.head_b = nn.Linear(512, n_part)
+            self.base.head_c = nn.Linear(512, n_pose)
             self.head_id = nn.Linear(512, n_obj)
+            self.head_yaw = nn.Linear(512, YAW_BINS)
             self.obj_emb = nn.Embedding(n_obj, 512)
             nn.init.normal_(self.obj_emb.weight, std=0.1)
             self.n_obj = n_obj
@@ -101,7 +136,7 @@ def build_model(n_obj, n_part):
                                   for k in range(self.n_obj)], 1)
             else:
                 hm = self.heat(z, obj)
-            return b.head_a(z), b.head_b(z), b.head_c(z), hm, self.head_id(z)
+            return b.head_a(z), b.head_b(z), b.head_c(z), hm, self.head_id(z), self.head_yaw(z)
 
     return MultiNet()
 
@@ -112,7 +147,8 @@ def load_net(path, device="cpu"):
     import torch
     meta = json.load(open(path.replace(".pt", ".json")))
     _, mask, _ = part_layout(meta["objects"])
-    net = build_model(len(meta["objects"]), mask.shape[1]).to(device)
+    _, pmask, _, _ = pose_layout(meta["objects"])
+    net = build_model(len(meta["objects"]), mask.shape[1], pmask.shape[1]).to(device)
     net.load_state_dict(torch.load(path, map_location=device))
     net.eval()
 
@@ -144,6 +180,26 @@ def rows(C, objs, split):
     return np.nonzero((C["split"] == {"train": 0, "val": 1, "test": 2}[split]) & np.isin(C["object"], objs))[0]
 
 
+def yaw_vectors(C, sel):
+    """The object's +x axis (towards the head) in the sensor frame, projected on the sensor x-y plane, unit length."""
+    q = C["fork_quat_s"][sel]
+    w, x, y, z = q[:, 0], q[:, 1], q[:, 2], q[:, 3]
+    u = np.stack([1 - 2 * (y * y + z * z), 2 * (x * y + w * z)], 1)          # first column of R, x and y rows
+    return u / np.maximum(np.linalg.norm(u, axis=1, keepdims=True), 1e-12)
+
+
+def pose_index(C, sel, objs):
+    """Global stable-pose index (pose_layout) of each press, -1 for objects outside the model or non-natural poses."""
+    off, _, _, ids = pose_layout(objs)
+    om = {o: i for i, o in enumerate(objs)}
+    out = np.full(len(sel), -1)
+    for j, (o, p) in enumerate(zip(C["object"][sel], C["pose_id"][sel])):
+        k = om.get(o, -1)
+        if k >= 0 and int(p) in ids[k]:
+            out[j] = off[k] + ids[k].index(int(p))
+    return out
+
+
 def labels(C, sel, objs):
     off, _, _ = part_layout(objs)
     om = {o: i for i, o in enumerate(objs)}
@@ -151,23 +207,26 @@ def labels(C, sel, objs):
     part = C["part"][sel]
     pg = np.where((part >= 0) & (obj >= 0), off[np.maximum(obj, 0)] + np.maximum(part, 0), -1)
     sym = np.array([objects.get(o)["symmetric"] for o in objs])
-    return dict(cls=C["cls"][sel], obj=obj, part=pg, face=C["face"][sel], vec=C["vec_mm"][sel],
-                mirror_ok=np.where(obj >= 0, sym[np.maximum(obj, 0)], True))
+    u = yaw_vectors(C, sel)
+    return dict(cls=C["cls"][sel], obj=obj, part=pg, pose=pose_index(C, sel, objs), vec=C["vec_mm"][sel],
+                yaw_u=u, yaw=yaw_bin(u), mirror_ok=np.where(obj >= 0, sym[np.maximum(obj, 0)], True))
 
 
 def _tensors(lab, dev):
     import torch
     return dict(cls=torch.tensor(lab["cls"], device=dev), obj=torch.tensor(lab["obj"], device=dev),
-                part=torch.tensor(lab["part"], device=dev), face=torch.tensor(lab["face"], device=dev),
+                part=torch.tensor(lab["part"], device=dev), pose=torch.tensor(lab["pose"], device=dev),
                 vec=torch.tensor(lab["vec"], dtype=torch.float32, device=dev),
-                mirror_ok=torch.tensor(lab["mirror_ok"], device=dev))
+                yaw_u=torch.tensor(lab["yaw_u"], dtype=torch.float32, device=dev),
+                yaw=torch.tensor(lab["yaw"], device=dev), mirror_ok=torch.tensor(lab["mirror_ok"], device=dev))
 
 
-def losses(out, lab, vec, part_mask):
-    """a contact (all), id identity, b part (true object's block), c face (where defined), d heatmap (true object)."""
+def losses(out, lab, vec, part_mask, pose_mask, yaw=None):
+    """a contact (all), id identity, b part (true object's block), c stable pose (true object's block), d heatmap (true
+    object), yaw (72 bins). Everything but a only on presses with object contact. yaw: the (augmented) yaw bins."""
     import torch
     import torch.nn.functional as F
-    la, lb, lc, hm, li = out
+    la, lb, lc, hm, li, ly = out
     on = lab["cls"] == 2
     z = torch.zeros((), device=la.device)
     L = dict(a=F.cross_entropy(la, lab["cls"]))
@@ -175,16 +234,30 @@ def losses(out, lab, vec, part_mask):
     pm = on & (lab["part"] >= 0)
     L["b"] = (F.cross_entropy(lb[pm].masked_fill(~part_mask[lab["obj"][pm]], -1e4), lab["part"][pm])
               if pm.any() else z)
-    fm = on & (lab["face"] >= 0)
-    L["c"] = F.cross_entropy(lc[fm], lab["face"][fm]) if fm.any() else z
+    fm = on & (lab["pose"] >= 0)
+    L["c"] = (F.cross_entropy(lc[fm].masked_fill(~pose_mask[lab["obj"][fm]], -1e4), lab["pose"][fm])
+              if fm.any() else z)
     L["d"] = F.cross_entropy(hm[on], tc.heat_index(vec[on])) if on.any() else z
+    yb = lab["yaw"] if yaw is None else yaw
+    L["yaw"] = F.cross_entropy(ly[on], yb[on]) if on.any() else z
     return L
 
 
-KEYS = ("a", "id", "b", "c", "d")
+KEYS = ("a", "id", "b", "c", "d", "yaw")
 
 
-def evaluate_loss(net, X, L, coords, part_mask, bs=256):
+def augment_yaw(u, draws):
+    """The yaw vectors under augment_robust's target transform Mv = R(th) @ diag(mir, 1) (the same as the centre's)."""
+    import torch
+    th, mir = draws["th"], draws["mir"]
+    c, s = torch.cos(th), torch.sin(th)
+    c = torch.where(draws["untouched"], torch.round(c), c)
+    s = torch.where(draws["untouched"], torch.round(s), s)
+    ux = mir * u[:, 0]
+    return torch.stack([c * ux - s * u[:, 1], s * ux + c * u[:, 1]], 1)
+
+
+def evaluate_loss(net, X, L, coords, part_mask, pose_mask, bs=256):
     import torch
     net.eval()
     tot, n = {k: 0.0 for k in KEYS}, len(X)
@@ -194,7 +267,7 @@ def evaluate_loss(net, X, L, coords, part_mask, bs=256):
             lb = {k: v[i:i + bs] for k, v in L.items()}
             with torch.autocast(device_type=x.device.type, dtype=torch.bfloat16):
                 out = net(x, lb["obj"].clamp(min=0))
-            Ls = losses([o.float() for o in out], lb, lb["vec"], part_mask)
+            Ls = losses([o.float() for o in out], lb, lb["vec"], part_mask, pose_mask)
             for k in KEYS:
                 tot[k] += Ls[k].item() * len(x)
     return {k: v / n for k, v in tot.items()}
@@ -229,8 +302,10 @@ def train(key, seed=0, epochs=120, bs=64, lr=2e-3):
     Xva = v2.mask_border(torch.tensor(C["X"][va].astype(np.float32), device=dev)[:, None])
     _, pmask_np, pnames = part_layout(objs)
     pmask = torch.tensor(pmask_np, device=dev)
+    _, smask_np, snames, _ = pose_layout(objs)
+    smask = torch.tensor(smask_np, device=dev)
     coords = tc.coord_channels(dev)
-    net = build_model(len(objs), pmask_np.shape[1]).to(dev).to(memory_format=torch.channels_last)
+    net = build_model(len(objs), pmask_np.shape[1], smask_np.shape[1]).to(dev).to(memory_format=torch.channels_last)
     opt = torch.optim.AdamW(net.parameters(), lr=lr, weight_decay=1e-4)
     steps = epochs * int(np.ceil(n / bs))
     sched = torch.optim.lr_scheduler.OneCycleLR(opt, max_lr=lr, total_steps=steps, pct_start=0.15)
@@ -262,11 +337,12 @@ def train(key, seed=0, epochs=120, bs=64, lr=2e-3):
             x = torch.tensor(xb.astype(np.float32), device=dev)[:, None]
             it = torch.tensor(idx, device=dev)
             lb = {k: t[it] for k, t in Ltr.items()}
-            x, vr, _ = v2.augment_robust(x, lb["vec"], gen, allow_mirror=lb["mirror_ok"])
+            x, vr, draws = v2.augment_robust(x, lb["vec"], gen, allow_mirror=lb["mirror_ok"])
+            yb = yaw_bin(augment_yaw(lb["yaw_u"], draws))
             x = torch.cat([x, coords.expand(len(x), -1, -1, -1)], 1).contiguous(memory_format=torch.channels_last)
             with torch.autocast(device_type=dev, dtype=torch.bfloat16):
                 out = net(x, lb["obj"].clamp(min=0))
-            L = losses([o.float() for o in out], lb, vr, pmask)
+            L = losses([o.float() for o in out], lb, vr, pmask, smask, yb)
             loss = sum(L[k] for k in KEYS)
             opt.zero_grad(set_to_none=True)
             loss.backward()
@@ -274,15 +350,15 @@ def train(key, seed=0, epochs=120, bs=64, lr=2e-3):
             sched.step()
             for k in KEYS:
                 tot[k] += L[k].item() * len(idx)
-        vl = evaluate_loss(net, Xva, Lva, coords, pmask)
+        vl = evaluate_loss(net, Xva, Lva, coords, pmask, smask)
         hist.append(dict(epoch=ep + 1, train={k: tot[k] / n for k in KEYS}, val=vl))
         score = sum(vl.values())
         if best is None or score < best[0]:
             best = (score, ep + 1)
             torch.save(net.state_dict(), path)
         if (ep + 1) % 5 == 0 or ep == 0:
-            log(f"  [{key} s{seed}] epoch {ep + 1:3d}: train d {tot['d'] / n:.3f} | val a {vl['a']:.3f} id {vl['id']:.3f} "
-                f"b {vl['b']:.3f} c {vl['c']:.3f} d {vl['d']:.3f} ({time.time() - t0:.0f} s)")
+            log(f"  [{key} s{seed}] epoch {ep + 1:3d}: train d {tot['d'] / n:.3f} yaw {tot['yaw'] / n:.3f} | val a {vl['a']:.3f} "
+                f"id {vl['id']:.3f} b {vl['b']:.3f} pose {vl['c']:.3f} d {vl['d']:.3f} yaw {vl['yaw']:.3f} ({time.time() - t0:.0f} s)")
         with open(path.replace(".pt", ".heartbeat"), "w") as f:
             f.write(f"{ep + 1} {time.time() - t0:.0f}\n")
         if (ep + 1) % CKPT_EVERY == 0 and ep + 1 < epochs:
@@ -292,7 +368,11 @@ def train(key, seed=0, epochs=120, bs=64, lr=2e-3):
             os.replace(ckpt + ".tmp", ckpt)
     log(f"  [{key} s{seed}] best epoch {best[1]} (val loss {best[0]:.3f}), {time.time() - t0:.0f} s")
     with open(path.replace(".pt", ".json"), "w") as f:
-        json.dump(dict(model=key, name=MODELS[key]["name"], objects=objs, part_names=pnames, seed=seed, n=n,
+        json.dump(dict(model=key, name=MODELS[key]["name"], objects=objs, part_names=pnames, pose_names=snames,
+                       natural_poses={o: natural_poses(o) for o in objs}, yaw_bins=YAW_BINS,
+                       yaw_convention="sensor frame (x = image column, y = image row), angle of the object's +x axis "
+                                      "(towards the head) projected on the sensor x-y plane, atan2(y, x) in [0, 360) deg, "
+                                      "bin k = [5k, 5k + 5) deg", seed=seed, n=n,
                        n_val=int(len(va)), best_epoch=best[1], best_val_loss=best[0], epochs=epochs, resumed_from=ep0,
                        aug_robust=True, mirror_objects=[o for o in objs if objects.get(o)["symmetric"]],
                        test_border_px=TEST_BORDER_PX, seconds=time.time() - t0, history=hist), f, indent=1)

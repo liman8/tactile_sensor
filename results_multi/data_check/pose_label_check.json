@@ -1,0 +1,36 @@
+{
+ "fork_stl": {
+  "n": 30,
+  "footprint_iou_min": 0.9316205218223889,
+  "footprint_iou_mean": 0.9917988510641951,
+  "max_vertex_dist_mm": 0.13162309328876484
+ },
+ "fork2_stl": {
+  "n": 30,
+  "footprint_iou_min": 0.9437712673250892,
+  "footprint_iou_mean": 0.994762821658595,
+  "max_vertex_dist_mm": 0.06221698785139314
+ },
+ "knife_stl": {
+  "n": 30,
+  "footprint_iou_min": 0.9762297788048862,
+  "footprint_iou_mean": 0.9942425168467957,
+  "max_vertex_dist_mm": 0.0879223165144002
+ },
+ "spoon_stl": {
+  "n": 30,
+  "footprint_iou_min": 0.8211889737628695,
+  "footprint_iou_mean": 0.9914870189341727,
+  "max_vertex_dist_mm": 0.37374516558149373
+ },
+ "yaw_augmentation": {
+  "n_coherent": 1948,
+  "median_axis_vs_label_deg_before": 0.9355066079104855,
+  "median_axis_vs_label_deg_after": 1.9033779501914978,
+  "p90_before": 10.146824048325,
+  "p90_after": 13.860197448730467,
+  "mirrored": 1154,
+  "mirrored_only_symmetric": true,
+  "control_mirror_ignored_median_deg": 45.56413650512695
+ }
+}
