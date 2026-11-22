@@ -41,8 +41,9 @@ def pose_desc(name, pid):
 
 
 class PoseVizSession:
-    def __init__(self, model_key="A", obj="knife_stl", ig="full", verify=True, ghost=True, seed=0, cad=(), height=False):
-        self.S = ps.PoseSearcher(model_key, seed, cad_extra=cad, ghost=ghost, use_height=height)
+    def __init__(self, model_key="A", obj="knife_stl", ig="full", verify=True, ghost=True, seed=0, cad=(), height=False,
+                 cad_align=False):
+        self.S = ps.PoseSearcher(model_key, seed, cad_extra=cad, ghost=ghost, use_height=height, cad_align=cad_align)
         S = self.S
         m = S.sim.model
         S.ghost = ghost
@@ -255,22 +256,24 @@ def check(key="A", n=4):
     return out
 
 
-def videos(key, out, names=None, cad=(), height=False, start=None):
+def videos(key, out, names=None, cad=(), height=False, start=None, cad_align=False):
     import multi_viz as mv
     os.makedirs(out, exist_ok=True)
     names = names or cm.MODELS[key]["objects"]
     idx = []
     for name in names:
-        tag = "full" + ("_height" if height else "") + (f"_cad-{'-'.join(cad)}" if cad else "")
+        tag = "full" + ("_height" if height else "") + (f"_cad-{'-'.join(cad)}" if cad else "") + ("_aligned" if cad_align else "")
         fn = os.path.join(cm.model_dir(key), "pose_search", f"episodes_{tag}_{name}.json")
         E = json.load(open(fn))
         # the first stored episode whose first press is on the handle (identity unknown at the start), else the first
         hl = len(objects.part_names(name)) - 1
         e0 = ([e for e in E if e["first_part"] == hl] or E)[0] if start is None else [e for e in E if e["index"] == start][0]
-        sess = PoseVizSession(key, name, cad=tuple(cad), height=height)
-        title = (f"model {key} ({cm.MODELS[key]['name']}), {name}: start {e0['index']} (first press on the "
-                 f"{objects.part_names(name)[e0['first_part']]}), " + ("full pose + height" if height else "full-pose search"))
-        r = mv.record(sess, e0["index"], os.path.join(out, f"{name}_{e0['index']}{'_height' if height else ''}.mp4"), title,
+        sess = PoseVizSession(key, name, cad=tuple(cad), height=height, cad_align=cad_align)
+        fp = objects.part_names(name)[e0["first_part"]]
+        title = (f"model {key} ({cm.MODELS[key]['name']}), {name}: start {e0['index']} "
+                 + (f"(first press on the {fp}), full-pose search" if not (height or cad_align) else
+                    f"({fp}), " + ("aligned CAD" if cad_align else "full pose") + (" + height" if height else "")))
+        r = mv.record(sess, e0["index"], os.path.join(out, f"{name}_{e0['index']}{'_height' if height else ''}{'_aligned' if cad_align else ''}.mp4"), title,
                       frames_dir=os.path.join(out, "frames"))
         e = sess.estimate()
         r.update(estimate=e["object"], pose=e["pose"], yaw_err_deg=e["yaw_err"], add_mm=e["add"], adds_mm=e["adds"],
@@ -292,11 +295,12 @@ def main():
     ap.add_argument("--out", default=None)
     ap.add_argument("--height", action="store_true", help="videos: the contact-height variant (episodes_full_height_*)")
     ap.add_argument("--start", type=int, default=None, help="videos: this stored start instead of the first handle start")
+    ap.add_argument("--cad-align", action="store_true", help="videos: the aligned CAD-only hypothesis (episodes_*_aligned)")
     a = ap.parse_args()
     if a.cmd == "check":
         check(a.model)
     else:
-        videos(a.model, a.out, a.objects, a.cad, a.height, a.start)
+        videos(a.model, a.out, a.objects, a.cad, a.height, a.start, a.cad_align)
 
 
 if __name__ == "__main__":

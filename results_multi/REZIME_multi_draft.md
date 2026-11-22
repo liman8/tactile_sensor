@@ -88,3 +88,59 @@ referentna tačka, jer je to i mesto gde robot treba da uhvati predmet.
     (94,4 % uspeha pri ADD < 5 mm, 0,6 % pogrešnih sigurnih zaustavljanja).
   - Završna dorada koristi τ = 0,027 (kalibrisano za poređenje bliskih poza uz mrežu). Ta odluka je doneta posle
     validacionih rezultata i tako je i zapisana.
+- **Visina dodira** (posebna varijanta, dodata posle analize grešaka kašike): robot zna na kojoj visini je jastučić
+  prvi put naišao na otpor. U simulaciji je to visina prvog dodira u odnosu na sto, uz šum od 0,3 mm (pretpostavljena
+  tačnost ruke). Predviđanje iz CAD-a je najviša tačka predmeta ispod jastučića. Izmereno minus predviđeno pri tačnoj
+  pozi: medijana od -0,34 do +0,09 mm. **Kućište senzora nije u predviđanju**: kad kućište udari u predmet koji stoji na
+  ivici pre nego što ga gel dodirne, slika je tamna, a visina je visina kućišta (nož 41 od 973 pritiska, kašika 17 od
+  1.123). U polovini preostalih grešaka noža i kašike postoji takav pritisak.
+- **Neviđeni predmet sa CAD-om (C8)**: model B nema klasu za Fork.stl. Svaka stabilna poza Fork.stl je hipoteza koju
+  podržava samo CAD: identitet i mapu težišta pozajmljuje od najsličnije poznate klase (fork_stl), a proverava se
+  svojim CAD-om. Naknadna varijanta `--cad-align` (odlučena posle prvog rezultata, prvo proverena na validaciji) čita
+  pozajmljenu mapu pomerenu za razliku težišta i ne kažnjava hipotezu kroz glavu stabilne poze.
+
+### 11.6 Rezultati (`results_multi/pose_summary.md`, ponovo izračunato iz sačuvanih epizoda)
+
+300 test početaka po predmetu, isti za svaku varijantu. ADD koristi iste tačke tela i kad je stabilna poza pogrešna;
+ADD-S samo za parove poza koje se ne mogu razlikovati. Pogrešan predmet je neuspeh.
+
+**Model A (sva četiri predmeta):**
+
+| predmet | jedan pritisak: ADD < 5 mm | pretraga: predmet / težište / yaw / ADD < 5 mm / pritisaka | + visina: predmet / ADD < 5 mm / pritisaka |
+|---|---|---|---|
+| ForkMilimeter | 60,3 % | 100 % / 0,50 mm / 0,5° / 100 % / 2,26 | 99,7 % / 99,7 % / 2,17 |
+| Fork.stl | 59,9 % | 99,7 % / 0,42 mm / 0,3° / 99,7 % / 2,27 | 100 % / 100 % / 2,11 |
+| Knife.stl | 36,4 % | 99,7 % / 0,35 mm / 0,2° / 93,0 % / 3,76 | 100 % / 98,3 % / 3,24 |
+| Spoon.stl | 50,2 % | 95,3 % / 0,29 mm / 0,4° / 93,7 % / 4,06 | 99,3 % / 98,3 % / 3,74 |
+
+- Jedan pritisak nije dovoljan: na zajedničkoj dršci predmet se pogađa, a nož i kašika se okrenu za 180° u 16-17 %
+  pritisaka. Glave predmeta mreža razlikuje dobro (zupci, sečivo, kutlača: 90-95 %).
+- Pretraga nalazi celu pozu: težište 0,3-0,5 mm, yaw 0,2-0,5°, u 2,3-4,1 pritiska. Kalibracija je dobra (pravo težište
+  u 90 % oblasti u 88-99 %, pravi yaw u 90 % intervalu u 92-98 % epizoda).
+- Nepoznat predmet košta malo: u odnosu na pretragu kojoj je predmet rečen, kašika gubi 4,6 poena i treba joj 0,6
+  pritiska više; ostali do 1,3 poena. Sa visinom kašika dostiže pretragu sa poznatim predmetom (98,3 %).
+- Dobitak informacije za celu pozu je bitan za viljuške: pretraga samo za težište treba 3 pritiska više i gubi 24 /
+  7 poena, jer ne proverava zupce, a samo po njima se dve viljuške razlikuju. Za nož i kašiku razlike nema.
+- Provera CAD-om tokom pretrage skoro ništa ne menja; završna dorada spušta grešku težišta sa 0,75-0,83 na 0,29-0,50 mm
+  i yaw sa 1,2-1,3° na 0,2-0,5°.
+- Visina dodira: kašika +4,7 poena, nož +5,3 poena, nestaju greške "ravna kutlača, nema dodira".
+- Model A prema modelu samo za viljušku, sa poznatim predmetom: medijana greške težišta +0,02 mm, p90 +0,2 mm.
+- Robusnost (jedan pritisak): šum, zamućenje i drift skoro ništa ne menjaju; skala ±2 % najviše smeta nožu i kašiki.
+
+**Model B (Fork.stl nikad viđen) na Fork.stl:**
+
+| varijanta | predmet | težište | ADD < 5 mm | pritisaka |
+|---|---|---|---|---|
+| sa CAD-om, kako je planirano (C8) | **8,3 %** | **2,73 mm** | 8,3 % | 8,17 |
+| sa CAD-om + visina | 92,0 % | 2,10 mm | 91,7 % | 3,92 |
+| sa CAD-om, poravnato (naknadno) | 58,0 % | 0,47 mm | 58,0 % | 9,07 |
+| sa CAD-om, poravnato (naknadno) + visina | 100 % | 0,26 mm | 100 % | 3,60 |
+| (model A, koji je Fork.stl video) | 99,7 % | 0,42 mm | 99,7 % | 2,27 |
+
+- **Kako je planirano, CAD ne vraća neviđenu viljušku**: B je u 92 % pretraga nazove ForkMilimeter (isti obris, ali
+  savijen). Obris nađe tačno (ADD-S 0,82 mm), a težište promaši za razliku težišta dve viljuške (2,96 mm).
+- Dva uzroka, nađena posle rezultata: hipoteza samo sa CAD-om gubila je ~0,6 nats po pritisku kroz glavu stabilne poze,
+  a mapa težišta pokazuje težište ForkMilimeter-a.
+- Visina sama popravlja identitet (ravna 2 mm prema savijenoj 5 mm), poravnanje popravlja težište; zajedno B nalazi pozu
+  neviđene viljuške jednako dobro kao A, koji je na njoj treniran. Oba sastojka su naknadna.
+- B na sopstvenim predmetima je kao A; sa visinom kašika 100 % / 98,3 %.

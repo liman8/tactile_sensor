@@ -3,7 +3,8 @@ Interactive search demo in the MuJoCo viewer: the fork's estimated pose (green g
 
     GELSIGHT_SENSOR=mini python search_viewer.py [--net MODEL.pt] [--start 16] [--seed N]   # no --start: a random natural pose
     (--net defaults to the final model named in results_centre/FINAL_MODEL.md, else the retrained Mini model)
-    GELSIGHT_SENSOR=mini python search_viewer.py --model A --object knife_stl [--start 5] [--mode joint|oracle|generic]
+    GELSIGHT_SENSOR=mini python search_viewer.py --model A --object knife_stl [--start 5] [--mode full|centre] [--height]
+    GELSIGHT_SENSOR=mini python search_viewer.py --model B --object fork2_stl --height --cad-align
     (multi-object run: the object is unknown to the search, which estimates the full pose - object, centre, yaw and
     stable pose (pose_search.py); Page Down / Page Up = next / previous object (a new random pose); the text gives the
     object, yaw and stable pose with their probabilities and the centre / yaw error and ADD; the ghost is the most likely
@@ -217,13 +218,13 @@ class MultiViewerApp(ViewerApp):
     """The same viewer loop on multi_viz.MultiSession: the object is unknown to the search (joint belief over identity
     and centre); Page Down / Page Up switch the object."""
 
-    def __init__(self, model="A", obj="knife_stl", start=None, seed=0, mode="full"):
+    def __init__(self, model="A", obj="knife_stl", start=None, seed=0, mode="full", height=False, cad_align=False):
         import multi_viz as mv
         import pose_viz as pv
         self.mv = mv
         # the full-pose search (pose_viz / pose_search); model B also carries Fork.stl's CAD (never seen in training, C8)
         self.sess = pv.PoseVizSession(model, obj, ig="centre" if mode == "centre" else "full",
-                                      cad=("fork2_stl",) if model == "B" else ())
+                                      cad=("fork2_stl",) if model == "B" else (), height=height, cad_align=cad_align)
         self.S = self.sess.S
         self.objs = list(mv.objects.names()) if model == "A" else list(mv.cm.MODELS[model]["objects"]) + ["fork2_stl"]
         self.m, self.d = self.S.sim.model, self.S.sim.data
@@ -363,6 +364,8 @@ def main():
     ap.add_argument("--model", default=None, choices=["A", "B"], help="multi-object model (results_multi/): object unknown")
     ap.add_argument("--object", default="knife_stl", help="multi-object mode: the object on the table")
     ap.add_argument("--mode", default="full", choices=["full", "centre"], help="multi-object search: information gain over the full pose or the centre only")
+    ap.add_argument("--height", action="store_true", help="multi-object search: use the contact height (arm proprioception)")
+    ap.add_argument("--cad-align", action="store_true", help="model B: the aligned CAD-only hypothesis for Fork.stl (post hoc)")
     a = ap.parse_args()
     net = a.net or default_net()
     if a.selftest:
@@ -370,7 +373,7 @@ def main():
         return
     import mujoco.viewer
     app = (ViewerApp(net, start=a.start, seed=a.seed) if a.model is None else
-           MultiViewerApp(a.model, a.object, start=a.start, seed=a.seed, mode=a.mode))
+           MultiViewerApp(a.model, a.object, start=a.start, seed=a.seed, mode=a.mode, height=a.height, cad_align=a.cad_align))
     m, d = app.m, app.d
     frame_dt = 1.0 / 60.0
     n_sub = max(1, int(round(frame_dt / m.opt.timestep)))
