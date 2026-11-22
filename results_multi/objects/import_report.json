@@ -1,0 +1,877 @@
+{
+ "fork2_stl": {
+  "file": "Fork.stl",
+  "kind": "fork",
+  "longest_extent_in_file_units": 0.12025994062423706,
+  "unit_candidates_mm": {
+   "m": 120.25994062423706
+  },
+  "units": "m",
+  "source_mm": "results_multi/objects/source_mm/Fork_mm.stl",
+  "repair": [
+   "merged duplicate vertices: 564 -> 96 (STL stores 3 per triangle; geometry unchanged)"
+  ],
+  "mesh": {
+   "triangles": 188,
+   "vertices": 96,
+   "watertight": true,
+   "winding_consistent": true,
+   "is_volume": true,
+   "bodies": 1,
+   "euler_number": 2,
+   "degenerate_faces": 0,
+   "boundary_edges": 0,
+   "nonmanifold_edges": 0,
+   "bbox_min": [
+    -83.9781,
+    -8.1268,
+    0.0
+   ],
+   "bbox_max": [
+    36.2819,
+    8.1268,
+    2.0
+   ],
+   "extents": [
+    120.2599,
+    16.2535,
+    2.0
+   ],
+   "volume": 1708.058836448491,
+   "area": 2577.9093697605076
+  },
+  "threshold_search": [
+   {
+    "threshold": 0.01,
+    "parts": 7,
+    "max_outside_visual_mm": 0.18084947601588475,
+    "top_view_iou": 0.9956611802396435,
+    "top_view_outside_mm": 0.20984499156475067,
+    "top_view_outside_edge_mm": 0.15000000596046448,
+    "tines_found": 4,
+    "parts_on_tines": 2,
+    "columns_with_4_pieces": 1.0,
+    "max_slot_narrowing_mm": 0.1,
+    "geometry_passed": true,
+    "force_sweep_passed": true,
+    "force_sweep": [
+     {
+      "site": "face",
+      "force": 0.5,
+      "gel_force": 0.4980126894282788,
+      "depth_mm": 0.564460873603817,
+      "contacts": 6,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "face",
+      "force": 2.0,
+      "gel_force": 2.0092826583857506,
+      "depth_mm": 0.7896546721458397,
+      "contacts": 6,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "face",
+      "force": 5.0,
+      "gel_force": 4.888457547034156,
+      "depth_mm": 0.9757068455219231,
+      "contacts": 6,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "face",
+      "force": 10.0,
+      "gel_force": 9.763566771660592,
+      "depth_mm": 1.1360228508710823,
+      "contacts": 6,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "tips",
+      "force": 0.5,
+      "gel_force": 0.49799236028485705,
+      "depth_mm": 0.6229050904512368,
+      "contacts": 4,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "tips",
+      "force": 2.0,
+      "gel_force": 2.012437777024984,
+      "depth_mm": 0.8668631762266121,
+      "contacts": 4,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "tips",
+      "force": 5.0,
+      "gel_force": 5.039700677788458,
+      "depth_mm": 1.0654267370700798,
+      "contacts": 4,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "tips",
+      "force": 10.0,
+      "gel_force": 10.072024257250844,
+      "depth_mm": 1.2375388741493187,
+      "contacts": 4,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "palm",
+      "force": 0.5,
+      "gel_force": 0.4959538627243435,
+      "depth_mm": 0.5428355634212456,
+      "contacts": 7,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "palm",
+      "force": 2.0,
+      "gel_force": 2.0052286682231384,
+      "depth_mm": 0.7598076462745629,
+      "contacts": 7,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "palm",
+      "force": 5.0,
+      "gel_force": 5.010710599463531,
+      "depth_mm": 0.9403203129768334,
+      "contacts": 7,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "palm",
+      "force": 10.0,
+      "gel_force": 10.035544761540075,
+      "depth_mm": 1.0952737629413567,
+      "contacts": 7,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "neck",
+      "force": 0.5,
+      "gel_force": 0.49511841900007614,
+      "depth_mm": 0.5428355634212456,
+      "contacts": 7,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "neck",
+      "force": 2.0,
+      "gel_force": 1.9987279519396395,
+      "depth_mm": 0.7612381577491723,
+      "contacts": 7,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "neck",
+      "force": 5.0,
+      "gel_force": 5.000337071074985,
+      "depth_mm": 0.9449657499790154,
+      "contacts": 7,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "neck",
+      "force": 10.0,
+      "gel_force": 9.998386686269999,
+      "depth_mm": 1.1052817553281746,
+      "contacts": 7,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle",
+      "force": 0.5,
+      "gel_force": 0.4965217412839874,
+      "depth_mm": 0.8638252019882164,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle",
+      "force": 2.0,
+      "gel_force": 2.0822380294336007,
+      "depth_mm": 1.1942863911390267,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle",
+      "force": 5.0,
+      "gel_force": 5.0070314633360775,
+      "depth_mm": 1.4241274893283806,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle",
+      "force": 10.0,
+      "gel_force": 10.035749668582683,
+      "depth_mm": 1.628945812582966,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle_end",
+      "force": 0.5,
+      "gel_force": 0.49370895601772075,
+      "depth_mm": 0.8623946905136071,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle_end",
+      "force": 2.0,
+      "gel_force": 2.090341812185242,
+      "depth_mm": 1.191248416900631,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle_end",
+      "force": 5.0,
+      "gel_force": 5.038851926717907,
+      "depth_mm": 1.4184073060750924,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle_end",
+      "force": 10.0,
+      "gel_force": 10.116930409773904,
+      "depth_mm": 1.6205452829599343,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     }
+    ],
+    "passed": true
+   }
+  ],
+  "command": "python stl_to_mjcf.py results_multi/objects/source_mm/Fork_mm.stl --name fork2_stl --units mm --threshold 0.01 --face 21.6 0 --site tips 31 0 --site palm 4.5 0 --site neck -2 0 --site handle -45 0 --site handle_end -76 0 --tine-root 7.0",
+  "stl_to_mjcf_stdout_tail": [
+   "rest pose 0: p=0.45, 48 support vertices, body z 0.0000 mm",
+   "7 convex parts, max 0.1808 mm outside the visual mesh; 2 parts on 4 tines",
+   "wrote meshes/fork2_stl/ (fork2_stl.xml, 8 STL files, report.json)"
+  ],
+  "threshold": 0.01,
+  "mirror_hausdorff_mm": 5.1181281435219717e-14,
+  "symmetric": true,
+  "volume_mm3": 1708.058836448491,
+  "com_mm": [
+   -21.301878394563204,
+   -7.349232589198138e-17,
+   1.0000000000000002
+  ],
+  "seconds": 3.0658841133117676
+ },
+ "knife_stl": {
+  "file": "Knife.stl",
+  "kind": "knife",
+  "longest_extent_in_file_units": 0.14413300529122353,
+  "unit_candidates_mm": {
+   "m": 144.13300529122353
+  },
+  "units": "m",
+  "source_mm": "results_multi/objects/source_mm/Knife_mm.stl",
+  "repair": [
+   "merged duplicate vertices: 456 -> 78 (STL stores 3 per triangle; geometry unchanged)"
+  ],
+  "mesh": {
+   "triangles": 152,
+   "vertices": 78,
+   "watertight": true,
+   "winding_consistent": true,
+   "is_volume": true,
+   "bodies": 1,
+   "euler_number": 2,
+   "degenerate_faces": 0,
+   "boundary_edges": 0,
+   "nonmanifold_edges": 0,
+   "bbox_min": [
+    -83.9781,
+    -9.9246,
+    0.0
+   ],
+   "bbox_max": [
+    60.1549,
+    4.0,
+    2.0
+   ],
+   "extents": [
+    144.133,
+    13.9246,
+    2.0
+   ],
+   "volume": 2065.274254615831,
+   "area": 2660.940806183566
+  },
+  "threshold_search": [
+   {
+    "threshold": 0.01,
+    "parts": 2,
+    "max_outside_visual_mm": 0.11154165671393744,
+    "top_view_iou": 0.9976103077626686,
+    "top_view_outside_mm": 0.1598449945449829,
+    "top_view_outside_edge_mm": 0.0,
+    "geometry_passed": true,
+    "force_sweep_passed": true,
+    "force_sweep": [
+     {
+      "site": "face",
+      "force": 0.5,
+      "gel_force": 0.49629870611330573,
+      "depth_mm": 0.8636463880538903,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "face",
+      "force": 2.0,
+      "gel_force": 2.0843762445880083,
+      "depth_mm": 1.1944652050733529,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "face",
+      "force": 5.0,
+      "gel_force": 4.979637342402584,
+      "depth_mm": 1.423412233591076,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "face",
+      "force": 10.0,
+      "gel_force": 10.037321364939372,
+      "depth_mm": 1.629124626517292,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "tip",
+      "force": 0.5,
+      "gel_force": 0.4930118925477732,
+      "depth_mm": 0.8623946905136071,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "tip",
+      "force": 2.0,
+      "gel_force": 2.090692737280014,
+      "depth_mm": 1.1914272308349572,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "tip",
+      "force": 5.0,
+      "gel_force": 4.949164187405334,
+      "depth_mm": 1.4187649339437447,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "tip",
+      "force": 10.0,
+      "gel_force": 10.115062530074972,
+      "depth_mm": 1.6209029108285866,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "blade",
+      "force": 0.5,
+      "gel_force": 0.4968861222550795,
+      "depth_mm": 0.8638252019882164,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "blade",
+      "force": 2.0,
+      "gel_force": 2.0796398015769015,
+      "depth_mm": 1.1948228329420052,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "blade",
+      "force": 5.0,
+      "gel_force": 5.0169054741435914,
+      "depth_mm": 1.42466206848621,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "blade",
+      "force": 10.0,
+      "gel_force": 10.017466954399437,
+      "depth_mm": 1.626978859305378,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "bolster",
+      "force": 0.5,
+      "gel_force": 0.49479215254023234,
+      "depth_mm": 0.7340714782476387,
+      "contacts": 2,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "bolster",
+      "force": 2.0,
+      "gel_force": 2.0163690730340313,
+      "depth_mm": 1.0148484706878624,
+      "contacts": 2,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "bolster",
+      "force": 5.0,
+      "gel_force": 4.996196146885623,
+      "depth_mm": 1.2302112281322442,
+      "contacts": 2,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "bolster",
+      "force": 10.0,
+      "gel_force": 10.050084682380522,
+      "depth_mm": 1.4184073060750924,
+      "contacts": 2,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle",
+      "force": 0.5,
+      "gel_force": 0.4965217481543704,
+      "depth_mm": 0.8638252019882164,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle",
+      "force": 2.0,
+      "gel_force": 2.0822379871767174,
+      "depth_mm": 1.1942863911390267,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle",
+      "force": 5.0,
+      "gel_force": 5.007031350472054,
+      "depth_mm": 1.4239486753940545,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle",
+      "force": 10.0,
+      "gel_force": 10.035749430717166,
+      "depth_mm": 1.628945812582966,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle_end",
+      "force": 0.5,
+      "gel_force": 0.4983328311642413,
+      "depth_mm": 0.8623946905136071,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle_end",
+      "force": 2.0,
+      "gel_force": 2.090838805698172,
+      "depth_mm": 1.191248416900631,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle_end",
+      "force": 5.0,
+      "gel_force": 4.94720979365345,
+      "depth_mm": 1.4182284921407662,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle_end",
+      "force": 10.0,
+      "gel_force": 10.080832721467287,
+      "depth_mm": 1.6187571436166726,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     }
+    ],
+    "passed": true
+   }
+  ],
+  "command": "python stl_to_mjcf.py results_multi/objects/source_mm/Knife_mm.stl --name knife_stl --units mm --threshold 0.01 --face 25 -3.9 --site tip 52 -1.5 --site blade 40 -2.5 --site bolster -5 0 --site handle -45 0 --site handle_end -76 0",
+  "stl_to_mjcf_stdout_tail": [
+   "rest pose 0: p=0.44, 39 support vertices, body z 2.0000 mm",
+   "2 convex parts, max 0.1115 mm outside the visual mesh; 0 parts on 0 tines",
+   "wrote meshes/knife_stl/ (knife_stl.xml, 3 STL files, report.json)"
+  ],
+  "threshold": 0.01,
+  "mirror_hausdorff_mm": 7.9245968821169654,
+  "symmetric": false,
+  "volume_mm3": 2065.274254615831,
+  "com_mm": [
+   -8.139842065448352,
+   -1.4146775231786102,
+   1.0
+  ],
+  "seconds": 1.396071434020996
+ },
+ "spoon_stl": {
+  "file": "Spoon.stl",
+  "kind": "spoon",
+  "longest_extent_in_file_units": 0.12868446484208107,
+  "unit_candidates_mm": {
+   "m": 128.68446484208107
+  },
+  "units": "m",
+  "source_mm": "results_multi/objects/source_mm/Spoon_mm.stl",
+  "repair": [
+   "merged duplicate vertices: 528 -> 90 (STL stores 3 per triangle; geometry unchanged)"
+  ],
+  "mesh": {
+   "triangles": 176,
+   "vertices": 90,
+   "watertight": true,
+   "winding_consistent": true,
+   "is_volume": true,
+   "bodies": 1,
+   "euler_number": 2,
+   "degenerate_faces": 0,
+   "boundary_edges": 0,
+   "nonmanifold_edges": 0,
+   "bbox_min": [
+    -83.9781,
+    -12.4551,
+    0.0
+   ],
+   "bbox_max": [
+    44.7064,
+    12.3989,
+    2.0
+   ],
+   "extents": [
+    128.6845,
+    24.854,
+    2.0
+   ],
+   "volume": 2758.8982249859637,
+   "area": 3320.041146673897
+  },
+  "threshold_search": [
+   {
+    "threshold": 0.01,
+    "parts": 4,
+    "max_outside_visual_mm": 0.018392557233351956,
+    "top_view_iou": 0.9996229961523961,
+    "top_view_outside_mm": 0.05000000074505806,
+    "top_view_outside_edge_mm": 0.05000000074505806,
+    "geometry_passed": true,
+    "force_sweep_passed": true,
+    "force_sweep": [
+     {
+      "site": "face",
+      "force": 0.5,
+      "gel_force": 0.49640320765930934,
+      "depth_mm": 0.66990894079208,
+      "contacts": 3,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "face",
+      "force": 2.0,
+      "gel_force": 2.0059477375283636,
+      "depth_mm": 0.9319197833538018,
+      "contacts": 3,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "face",
+      "force": 5.0,
+      "gel_force": 4.989169108633595,
+      "depth_mm": 1.143529310822483,
+      "contacts": 3,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "face",
+      "force": 10.0,
+      "gel_force": 10.006743117921152,
+      "depth_mm": 1.3269011378288231,
+      "contacts": 3,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "bowl_tip",
+      "force": 0.5,
+      "gel_force": 0.4983017015303201,
+      "depth_mm": 0.667586222290989,
+      "contacts": 3,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "bowl_tip",
+      "force": 2.0,
+      "gel_force": 2.018962125900471,
+      "depth_mm": 0.9260207861661873,
+      "contacts": 3,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "bowl_tip",
+      "force": 5.0,
+      "gel_force": 5.029752250286981,
+      "depth_mm": 1.1329848766326867,
+      "contacts": 3,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "bowl_tip",
+      "force": 10.0,
+      "gel_force": 10.076857487814456,
+      "depth_mm": 1.3120670318603478,
+      "contacts": 3,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "bowl_side",
+      "force": 0.5,
+      "gel_force": 0.49504850419497304,
+      "depth_mm": 0.6684802919626198,
+      "contacts": 3,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "bowl_side",
+      "force": 2.0,
+      "gel_force": 2.0112551622409276,
+      "depth_mm": 0.9295952022075615,
+      "contacts": 3,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "bowl_side",
+      "force": 5.0,
+      "gel_force": 4.969617736661309,
+      "depth_mm": 1.1419199854135476,
+      "contacts": 3,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "bowl_side",
+      "force": 10.0,
+      "gel_force": 10.04377662371844,
+      "depth_mm": 1.3283297866582833,
+      "contacts": 3,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "neck",
+      "force": 0.5,
+      "gel_force": 0.49609693019363893,
+      "depth_mm": 0.6216533929109536,
+      "contacts": 4,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "neck",
+      "force": 2.0,
+      "gel_force": 2.0022969725146154,
+      "depth_mm": 0.8640040159225426,
+      "contacts": 4,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "neck",
+      "force": 5.0,
+      "gel_force": 4.994344628240287,
+      "depth_mm": 1.0607794374227486,
+      "contacts": 4,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "neck",
+      "force": 10.0,
+      "gel_force": 10.004917811744908,
+      "depth_mm": 1.2287807166576348,
+      "contacts": 4,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle",
+      "force": 0.5,
+      "gel_force": 0.49652174392700804,
+      "depth_mm": 0.8638252019882164,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle",
+      "force": 2.0,
+      "gel_force": 2.082238015670832,
+      "depth_mm": 1.1942863911390267,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle",
+      "force": 5.0,
+      "gel_force": 5.0070314143678125,
+      "depth_mm": 1.4239486753940545,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle",
+      "force": 10.0,
+      "gel_force": 10.035749567302048,
+      "depth_mm": 1.628945812582966,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle_end",
+      "force": 0.5,
+      "gel_force": 0.49342976277938433,
+      "depth_mm": 0.8623946905136071,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle_end",
+      "force": 2.0,
+      "gel_force": 2.090842461867892,
+      "depth_mm": 1.191248416900631,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle_end",
+      "force": 5.0,
+      "gel_force": 4.944930376164904,
+      "depth_mm": 1.4182284921407662,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     },
+     {
+      "site": "handle_end",
+      "force": 10.0,
+      "gel_force": 10.119485397728335,
+      "depth_mm": 1.6207240968942604,
+      "contacts": 1,
+      "settled": true,
+      "ok": true
+     }
+    ],
+    "passed": true
+   }
+  ],
+  "command": "python stl_to_mjcf.py results_multi/objects/source_mm/Spoon_mm.stl --name spoon_stl --units mm --threshold 0.01 --face 22 0 --site bowl_tip 38 0 --site bowl_side 20 8 --site neck -5 0 --site handle -45 0 --site handle_end -76 0",
+  "stl_to_mjcf_stdout_tail": [
+   "rest pose 0: p=0.47, 45 support vertices, body z 0.0000 mm",
+   "4 convex parts, max 0.0184 mm outside the visual mesh; 0 parts on 0 tines",
+   "wrote meshes/spoon_stl/ (spoon_stl.xml, 5 STL files, report.json)"
+  ],
+  "threshold": 0.01,
+  "mirror_hausdorff_mm": 0.12316770095123446,
+  "symmetric": true,
+  "volume_mm3": 2758.8982249859637,
+  "com_mm": [
+   -2.8524375375508626,
+   9.752740602579002e-05,
+   1.0000000000000002
+  ],
+  "seconds": 2.7416067123413086
+ },
+ "fork_stl_symmetry": {
+  "note": "outline = boundary of the upward-facing faces of the visual mesh",
+  "mirror_hausdorff_mm": 3.552713678800501e-15
+ }
+}

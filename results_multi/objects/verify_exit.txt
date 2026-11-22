@@ -1,0 +1,3 @@
+knife_stl exit 1
+spoon_stl exit 1
+fork2_stl exit 1

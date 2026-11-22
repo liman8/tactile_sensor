@@ -36,16 +36,24 @@ if sys.platform.startswith("linux") and "MUJOCO_GL" not in os.environ:
 import cv2
 import numpy as np
 
+import objects as _objects
+
 HERE = os.path.dirname(os.path.abspath(__file__))
+# The object comes from the registry (objects.json, objects.py); fork_stl is the default. use_object() switches to
+# another registered object (the multi-object collector, collect_multi.py), like set_sensor() switches the sensor.
 NAME = "fork_stl"
-MESH_DIR = os.path.join(HERE, "meshes", NAME)
+MESH_DIR = _objects.mesh_dir(NAME)
+SCENE_XML = None       # None: GelSightSim's default scene (gelsight_moving.xml); use_object(..., scene=...) sets another
 OUT = os.path.join(HERE, "dataset")
 DETECTOR = os.path.join(HERE, "results_moving", "fork_detector.joblib")   # its ball calibration -> depth_recon
 
-# fork parts, by position along the STL x axis (mm) and by surface normal (see README)
-PARTS = ["tines", "palm", "neck", "handle", "edge"]
-TINE_ROOT_MM, PALM_START_MM, NECK_START_MM = 7.0, 1.0, -15.0
-EDGE_NZ = 0.5          # |normal . STL z| below this: side wall / rim of the 1.5 mm thick fork -> "edge"
+# the object's parts, by position along the STL x axis (mm) and by surface normal (see README): from the registry.
+# fork_stl: tines >= 7.0 > palm >= 1.0 > neck >= -15.0 > handle, |normal . z| < 0.5 = edge (the constants this file
+# had before objects.json; TINE_ROOT_MM etc. are kept for readers of the old names)
+PARTS = _objects.part_names(NAME) + ["edge"]
+X_STARTS_MM = _objects.part_starts_mm(NAME)
+TINE_ROOT_MM, PALM_START_MM, NECK_START_MM = X_STARTS_MM
+EDGE_NZ = _objects.edge_nz(NAME)   # |normal . STL z| below this: side wall / rim of the 1.5 mm thick fork -> "edge"
 SAMPLE_TYPES = ["on_fork", "table", "hover"]
 CATEGORIES = ["natural", "propped", "rejected"]
 SPLITS = ["train", "val", "test", "train2", "test2"]   # train2 / test2: the 40k + 5k presses of dataset_v3/
@@ -138,10 +146,24 @@ def arm_axes(yaw, pitch, roll):
 
 
 def part_of(x_mm, nz):
-    """Part index for fork-frame x (mm) and |normal . fork z| (arrays)."""
+    """Part index for object-frame x (mm) and |normal . object z| (arrays); len(PARTS) - 1 = "edge"."""
     x, nz = np.asarray(x_mm, float), np.abs(np.asarray(nz, float))
-    p = np.where(x >= TINE_ROOT_MM, 0, np.where(x >= PALM_START_MM, 1, np.where(x >= NECK_START_MM, 2, 3)))
-    return np.where(nz < EDGE_NZ, 4, p).astype(np.int8)
+    p = _objects.part_from_x(X_STARTS_MM, x)
+    return np.where(nz < EDGE_NZ, len(PARTS) - 1, p).astype(np.int8)
+
+
+def use_object(name, scene=None):
+    """Switch this module to another registered object (objects.json): its name, mesh folder, parts and scene.
+    scene: the MJCF file to simulate in (default: the registry's scene of the object; None for gelsight_moving.xml's
+    fork_stl keeps GelSightSim's default). Spawned workers must call it again (module state)."""
+    global NAME, MESH_DIR, SCENE_XML, PARTS, X_STARTS_MM, EDGE_NZ
+    NAME = name
+    MESH_DIR = _objects.mesh_dir(name)
+    sx = scene or _objects.get(name)["scene"]
+    SCENE_XML = None if os.path.basename(sx) == "gelsight_moving.xml" else os.path.join(HERE, sx)
+    PARTS = _objects.part_names(name) + ["edge"]
+    X_STARTS_MM = _objects.part_starts_mm(name)
+    EDGE_NZ = _objects.edge_nz(name)
 
 
 def rasterize(P, F, H, W, keep="min"):
@@ -245,7 +267,9 @@ def git_commit():
 
 def source_hashes():
     files = ["collect_dataset.py", "gelsight_sim.py", "fork_detector.py", "stl_to_mjcf.py", "gelsight_moving.xml",
-             f"meshes/{NAME}/{NAME}.xml", "ForkMilimeter.stl"]
+             f"meshes/{NAME}/{NAME}.xml", _objects.get(NAME)["stl"]]
+    if NAME != "fork_stl":
+        files += ["objects.json", "objects.py"] + ([os.path.relpath(SCENE_XML, HERE)] if SCENE_XML else [])
     return {f: sha256_file(os.path.join(HERE, f)) for f in files if os.path.exists(os.path.join(HERE, f))}
 
 
@@ -267,7 +291,7 @@ def model_hash(model):
 # ================================================================ PART 1: stable poses
 def _free_sim():
     from gelsight_sim import GelSightSim
-    sim = GelSightSim(mode="moving_sensor", free_objects=True, seed=0)
+    sim = GelSightSim(xml_path=SCENE_XML, mode="moving_sensor", free_objects=True, seed=0)
     sim.place_object(NAME)
     return sim
 
@@ -291,8 +315,11 @@ def _release(sim, pos, quat, T, trace_every=0):
     return d.qpos[a:a + 3].copy(), d.qpos[a + 3:a + 7].copy(), np.array(tr)
 
 
-def _drop_worker(seeds):
+def _drop_worker(seeds, obj=None):
+    """obj = (name, scene) when the parent switched objects (use_object): a spawned worker starts with fork_stl."""
     from scipy.spatial.transform import Rotation
+    if obj is not None:
+        use_object(*obj)
     geo = ForkGeometry()
     sim = _free_sim()
     out = []
@@ -356,9 +383,13 @@ def stable_poses(out_dir, n_drops=500, workers=24):
             ok_pert += (mv < MOVE_MM) and (rt < MOVE_DEG)
             worst = max(worst, rt)
         upz = float(up @ [0, 0, 1.0])
-        desc = ("face down: tines curve down onto the table" if upz < -0.9 else
-                "face up: lying on its back, tines curving up" if upz > 0.9 else
-                f"on its side edge ({'+' if up[1] > 0 else '-'}y side up)" if abs(upz) < 0.3 else "other")
+        if NAME == "fork_stl":
+            desc = ("face down: tines curve down onto the table" if upz < -0.9 else
+                    "face up: lying on its back, tines curving up" if upz > 0.9 else
+                    f"on its side edge ({'+' if up[1] > 0 else '-'}y side up)" if abs(upz) < 0.3 else "other")
+        else:                                           # flat objects: STL +z is the top face of the plate
+            desc = ("lying flat, STL +z face down" if upz < -0.9 else "lying flat, STL +z face up" if upz > 0.9 else
+                    f"on its side edge ({'+' if up[1] > 0 else '-'}y side up)" if abs(upz) < 0.3 else "other")
         poses.append(dict(id=k, description=desc, quat_wxyz=q.tolist(), rpy=mat2rpy(R).tolist(),
                           rest_pos_m=rest_pos.tolist(), up_in_fork=up.tolist(),
                           trimesh_probability=c["prob"], height_mm=float((Vh[:, 2].max()) * 1000),
@@ -375,7 +406,8 @@ def stable_poses(out_dir, n_drops=500, workers=24):
     seeds = list(range(n_drops))
     W = max(1, min(workers, n_drops))
     with get_context("spawn").Pool(W) as pool:
-        drops = sum(pool.map(_drop_worker, [seeds[i::W] for i in range(W)]), [])
+        obj = None if NAME == "fork_stl" and SCENE_XML is None else (NAME, SCENE_XML)
+        drops = sum(pool.starmap(_drop_worker, [(seeds[i::W], obj) for i in range(W)]), [])
     U = np.array([p["up_in_fork"] for p in poses])
     clusters = {}
     for r in drops:
@@ -436,15 +468,21 @@ def stable_poses(out_dir, n_drops=500, workers=24):
 
 def pose_figure(poses, path):
     from gelsight_sim import GelSightSim
-    sim = GelSightSim(mode="moving_sensor", seed=0)
+    sim = GelSightSim(xml_path=SCENE_XML, mode="moving_sensor", seed=0)
     tiles = []
     for p in poses:
         sim.set_rest_pose(NAME, p["rest_pos_m"], p["quat_wxyz"])
         sim.place_object(NAME)
         sim.set_pose(x=0.15, y=0.15, z=0.08)
         R, t = quat2mat(p["quat_wxyz"]), np.array(p["rest_pos_m"])
-        head = R @ np.array([0.024, 0, 0.0025]) + t          # middle of the tines, world
-        tail = R @ np.array([-0.072, 0, 0.0008]) + t         # near the handle end
+        if NAME == "fork_stl":
+            head = R @ np.array([0.024, 0, 0.0025]) + t      # middle of the tines, world
+            tail = R @ np.array([-0.072, 0, 0.0008]) + t     # near the handle end
+        else:                                               # 12 mm in from either end, mid-height
+            bb = np.array(_objects.get(NAME)["bbox_mm"]) / 1000.0
+            zm = bb[:, 2].mean()
+            head = R @ np.array([bb[1, 0] - 0.012, 0, zm]) + t
+            tail = R @ np.array([bb[0, 0] + 0.012, 0, zm]) + t
         head[2] = tail[2] = 0.004
         vw = dict(width=400, height=260)
         views = [sim.render_scene(azimuth=-60, elevation=-28, distance=0.17, lookat=(0, 0, 0.004), **vw),
@@ -462,7 +500,8 @@ def pose_figure(poses, path):
         cv2.putText(bar, t2, (8, 37), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (200, 200, 200), 1, cv2.LINE_AA)
         tiles.append(np.concatenate([bar, row], 0))
     head = np.zeros((26, tiles[0].shape[1], 3), np.uint8)
-    cv2.putText(head, "fork_stl stable poses: oblique | end view from the tine tips | side close-up of the tines | "
+    cv2.putText(head, f"{NAME} stable poses: oblique | end view from the {'tine tips' if NAME == 'fork_stl' else 'head'} | "
+                f"side close-up of the {'tines' if NAME == 'fork_stl' else 'head'} | "
                 "side close-up of the handle end (side views look along world -y: tips to the LEFT)",
                 (8, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1, cv2.LINE_AA)
     cv2.imwrite(path, np.concatenate([head] + tiles, 0))
@@ -481,8 +520,8 @@ class Collector:
         self.cfg = cfg
         set_sensor(cfg.sensor)
         self.geo = ForkGeometry()
-        self.sim = GelSightSim(mode="moving_sensor", seed=0, render_table=True, sensor=cfg.sensor)
-        self.free = GelSightSim(mode="moving_sensor", free_objects=True, seed=0, sensor=cfg.sensor)
+        self.sim = GelSightSim(xml_path=SCENE_XML, mode="moving_sensor", seed=0, render_table=True, sensor=cfg.sensor)
+        self.free = GelSightSim(xml_path=SCENE_XML, mode="moving_sensor", free_objects=True, seed=0, sensor=cfg.sensor)
         if not np.isclose(self.sim.mm_per_px, 0.1) or len(self.sim._markers) != N_MARKERS:
             raise RuntimeError("sensor image size / markers disagree with set_sensor()")
         for s in (self.sim, self.free):
@@ -525,8 +564,8 @@ class Collector:
             R = quat2mat(p["quat_wxyz"])
             V2 = (self.geo.V @ R.T)[:, :2] - (R @ self.geo.bbox_centre)[:2]      # relative to the bbox centre
             self.hull2d[p["id"]] = V2[ConvexHull(V2).vertices]
-        self.model_hash = model_hash(mujoco.MjModel.from_xml_path(MOVING_XML) if cfg.sensor == "standard"
-                                     else sensor_model(cfg.sensor))
+        self.model_hash = model_hash(mujoco.MjModel.from_xml_path(SCENE_XML or MOVING_XML) if cfg.sensor == "standard"
+                                     else sensor_model(cfg.sensor, SCENE_XML))
 
     # ------------------------------------------------------------ placement
     def _place(self, pose, cx, cy, yaw):
@@ -812,8 +851,9 @@ def metadata(col: Collector, poses_json, cfg: Config):
                   inertia_tensor_f=(Ri @ np.diag(m.body_inertia[b]) @ Ri.T).tolist(),
                   bbox_centre_f=col.geo.bbox_centre.tolist(), bbox_f=(col.geo.vis.bounds / 1000).tolist(),
                   mesh="meshes/fork_stl/fork_stl_visual.stl (mm, scale 0.001)", coacd_parts=col.geo.part_names,
-                  part_boundaries_mm=dict(tine_root=TINE_ROOT_MM, palm_start=PALM_START_MM,
-                                          neck_start=NECK_START_MM, edge_abs_nz_below=EDGE_NZ)),
+                  part_boundaries_mm=(dict(tine_root=TINE_ROOT_MM, palm_start=PALM_START_MM,
+                                           neck_start=NECK_START_MM, edge_abs_nz_below=EDGE_NZ) if NAME == "fork_stl"
+                                      else dict(names=PARTS[:-1], x_starts_mm=X_STARTS_MM, edge_abs_nz_below=EDGE_NZ))),
         gel=dict(size_half_m=m.geom_size[g].tolist(), solref=m.geom_solref[g].tolist(),
                  solimp=m.geom_solimp[g].tolist(), friction=m.geom_friction[g].tolist(),
                  priority=int(m.geom_priority[g]), condim=int(m.geom_condim[g]),

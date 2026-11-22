@@ -1,0 +1,268 @@
+{
+  "source": "Knife_mm.stl",
+  "units": "mm",
+  "raw": {
+    "triangles": 152,
+    "vertices": 78,
+    "watertight": true,
+    "winding_consistent": true,
+    "is_volume": true,
+    "bodies": 1,
+    "euler_number": 2,
+    "degenerate_faces": 0,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "bbox_min": [
+      -83.9781,
+      -9.9246,
+      0.0
+    ],
+    "bbox_max": [
+      60.1549,
+      4.0,
+      2.0
+    ],
+    "extents": [
+      144.133,
+      13.9246,
+      2.0
+    ],
+    "volume": 2065.274254615831,
+    "area": 2660.940806183566,
+    "triangles_in_file": 152
+  },
+  "changes": [
+    "merged duplicate vertices: 456 -> 78 (STL stores 3 per triangle; geometry unchanged)"
+  ],
+  "final": {
+    "triangles": 152,
+    "vertices": 78,
+    "watertight": true,
+    "winding_consistent": true,
+    "is_volume": true,
+    "bodies": 1,
+    "euler_number": 2,
+    "degenerate_faces": 0,
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "bbox_min": [
+      -83.9781,
+      -9.9246,
+      0.0
+    ],
+    "bbox_max": [
+      60.1549,
+      4.0,
+      2.0
+    ],
+    "extents": [
+      144.133,
+      13.9246,
+      2.0
+    ],
+    "volume": 2065.274254615831,
+    "area": 2660.940806183566
+  },
+  "rest_pose": {
+    "index": 0,
+    "prob": 0.4404388316939249,
+    "z_up_in_mesh": [
+      0.0,
+      0.0,
+      -1.0
+    ],
+    "support_vertices": 39,
+    "support_mesh_bbox": [
+      [
+        -83.978,
+        -9.925,
+        2.0
+      ],
+      [
+        60.155,
+        4.0,
+        2.0
+      ]
+    ],
+    "body_pos_m": [
+      0.0,
+      0.0,
+      0.00200000000114583
+    ],
+    "body_quat": [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    "all": [
+      {
+        "prob": 0.4404388316939249,
+        "z_up_in_mesh": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "support_vertices": 39,
+        "support_mesh_bbox": [
+          [
+            -83.978,
+            -9.925,
+            2.0
+          ],
+          [
+            60.155,
+            4.0,
+            2.0
+          ]
+        ]
+      },
+      {
+        "prob": 0.4404388316939249,
+        "z_up_in_mesh": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "support_vertices": 39,
+        "support_mesh_bbox": [
+          [
+            -83.978,
+            -9.925,
+            0.0
+          ],
+          [
+            60.155,
+            4.0,
+            0.0
+          ]
+        ]
+      },
+      {
+        "prob": 0.07157493997695066,
+        "z_up_in_mesh": [
+          -0.0145,
+          -0.9999,
+          0.0
+        ],
+        "support_vertices": 4,
+        "support_mesh_bbox": [
+          [
+            -80.0,
+            2.0,
+            0.0
+          ],
+          [
+            58.158,
+            4.0,
+            2.0
+          ]
+        ]
+      },
+      {
+        "prob": 0.047547396635467365,
+        "z_up_in_mesh": [
+          0.0575,
+          0.9983,
+          0.0
+        ],
+        "support_vertices": 4,
+        "support_mesh_bbox": [
+          [
+            -80.0,
+            -9.925,
+            0.0
+          ],
+          [
+            22.864,
+            -4.0,
+            2.0
+          ]
+        ]
+      }
+    ]
+  },
+  "inertia": {
+    "mass_kg": 0.016212402898734272,
+    "com_m": [
+      -0.008139842065448353,
+      -0.0014146775231786103,
+      0.001
+    ],
+    "density": 7850.0
+  },
+  "decomposition": {
+    "threshold": 0.01,
+    "parts": 2,
+    "hull_vertices": [
+      36,
+      46
+    ],
+    "max_outside_visual": 0.11154165671393744,
+    "per_part_outside_visual": [
+      0.0001517655886008124,
+      0.11154165671393744
+    ],
+    "tines_found": 0,
+    "tine_labels": [
+      null,
+      null
+    ]
+  },
+  "sites": {
+    "face": {
+      "stl_xy": [
+        25.0,
+        -3.9
+      ],
+      "hits": 1257,
+      "plane_fit_max_residual": 1.3322676295501878e-14,
+      "tilt_deg": 0.0
+    },
+    "tip": {
+      "stl_xy": [
+        52.0,
+        -1.5
+      ],
+      "hits": 1257,
+      "plane_fit_max_residual": 2.6645352591003757e-15,
+      "tilt_deg": 0.0
+    },
+    "blade": {
+      "stl_xy": [
+        40.0,
+        -2.5
+      ],
+      "hits": 1257,
+      "plane_fit_max_residual": 5.773159728050814e-15,
+      "tilt_deg": 0.0
+    },
+    "bolster": {
+      "stl_xy": [
+        -5.0,
+        0.0
+      ],
+      "hits": 1175,
+      "plane_fit_max_residual": 8.881784197001252e-16,
+      "tilt_deg": 0.0
+    },
+    "handle": {
+      "stl_xy": [
+        -45.0,
+        0.0
+      ],
+      "hits": 1257,
+      "plane_fit_max_residual": 1.7763568394002505e-15,
+      "tilt_deg": 0.0
+    },
+    "handle_end": {
+      "stl_xy": [
+        -76.0,
+        0.0
+      ],
+      "hits": 1257,
+      "plane_fit_max_residual": 3.552713678800501e-15,
+      "tilt_deg": 0.0
+    }
+  }
+}

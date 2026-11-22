@@ -1,0 +1,7 @@
+=== spoon_stl: scene gelsight_multi.xml, parts ['bowl', 'neck', 'handle', 'edge']
+pose 0: lying flat, STL +z face up; trimesh p=0.469; 1 mm release: moved 0.000 mm, 0.000 deg (rocking up to 0.01 deg in the last 0.5 s); tilted releases passed 20/20
+pose 1: lying flat, STL +z face down; trimesh p=0.469; 1 mm release: moved 0.002 mm, 0.001 deg (rocking up to 0.01 deg in the last 0.5 s); tilted releases passed 20/20
+pose 2: on its side edge (+y side up); trimesh p=0.031; 1 mm release: moved 0.023 mm, 0.123 deg (rocking up to 0.22 deg in the last 0.5 s); tilted releases passed 20/20
+pose 3: on its side edge (-y side up); trimesh p=0.031; 1 mm release: moved 0.006 mm, 0.030 deg (rocking up to 0.17 deg in the last 0.5 s); tilted releases passed 19/20
+pose 4: on its side edge (-y side up); trimesh p=0.000; 1 mm release: moved 0.018 mm, 0.109 deg (rocking up to 0.11 deg in the last 0.5 s); tilted releases passed 6/20
+natural: [0, 1, 2, 3], propped: [4], rejected: []; drops per pose {0: 243, 1: 238, 2: 9, 3: 10, 4: 0}, unmatched 0 (13 s)

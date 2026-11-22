@@ -1,0 +1,6 @@
+=== knife_stl: scene gelsight_multi.xml, parts ['blade', 'bolster', 'handle', 'edge']
+pose 0: lying flat, STL +z face down; trimesh p=0.440; 1 mm release: moved 0.040 mm, 0.158 deg (rocking up to 0.15 deg in the last 0.5 s); tilted releases passed 20/20
+pose 1: lying flat, STL +z face up; trimesh p=0.440; 1 mm release: moved 0.078 mm, 0.085 deg (rocking up to 0.09 deg in the last 0.5 s); tilted releases passed 20/20
+pose 2: on its side edge (-y side up); trimesh p=0.072; 1 mm release: moved 0.001 mm, 0.006 deg (rocking up to 0.46 deg in the last 0.5 s); tilted releases passed 20/20
+pose 3: on its side edge (+y side up); trimesh p=0.048; 1 mm release: moved 0.000 mm, 0.006 deg (rocking up to 0.02 deg in the last 0.5 s); tilted releases passed 20/20
+natural: [0, 1, 2, 3], propped: [], rejected: []; drops per pose {0: 249, 1: 233, 2: 8, 3: 10}, unmatched 0 (12 s)

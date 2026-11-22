@@ -1,0 +1,23 @@
+{
+ "tag": "after",
+ "part": "regen",
+ "egl_device": "default",
+ "regen": {
+  "dataset_mini/test2-0000.h5": {
+   "n": 20,
+   "identical": 20,
+   "differing": []
+  },
+  "dataset_mini/train2-0000.h5": {
+   "n": 20,
+   "identical": 20,
+   "differing": []
+  }
+ },
+ "search": {
+  "n": 0,
+  "identical_to_stored": 0
+ },
+ "digest": "6ca23898f21a473c6cbda9e26019af5200c2d0d7c45b5ece229337e797f7ada6",
+ "seconds": 2.755307197570801
+}

@@ -1,0 +1,12 @@
+{
+ "tag": "after",
+ "part": "search",
+ "egl_device": "2",
+ "regen": {},
+ "search": {
+  "n": 20,
+  "identical_to_stored": 20
+ },
+ "digest": "47d20a7bb84a101b69050bf988e097e6b507b648fa3c9bd69f6d32fdd1e04b0d",
+ "seconds": 9.137657880783081
+}

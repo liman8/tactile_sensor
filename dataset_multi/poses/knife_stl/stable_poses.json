@@ -1,0 +1,267 @@
+{
+ "method": {
+  "candidates": "trimesh.poses.compute_stable_poses (convex hull, quasi-static probabilities), yaw-aligned so fork +x = world +x",
+  "release_1mm": "free fork released 1 mm above the pose, 1 s; passed if moved < 0.5 mm and < 1.0 deg",
+  "release_tilted": "20 releases tilted 0-2 deg about random horizontal axes (+1 mm), 1 s, same thresholds",
+  "drops": "500 random orientations (uniform), lowest point 2-10 mm above the table, 3 s; final orientation matched to a candidate by its up vector (< 10 deg)",
+  "natural": "release_1mm passed AND >= 19/20 tilted releases passed AND drop frequency >= 1 %",
+  "propped": "side-edge pose that is not natural: kept only as a separate category (fork held by a fixture)",
+  "sim": "GelSightSim(free_objects=True): CoACD parts vs the table plane, the simulator's own contact settings (incl. the free object's invweight0 = 5 % of the sensor's)"
+ },
+ "poses": [
+  {
+   "id": 0,
+   "description": "lying flat, STL +z face down",
+   "quat_wxyz": [
+    0.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   "rpy": [
+    3.141592653589793,
+    -0.0,
+    0.0
+   ],
+   "rest_pos_m": [
+    0.011911584854125976,
+    -0.0029622859954833982,
+    0.002
+   ],
+   "up_in_fork": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "trimesh_probability": 0.4404388316939249,
+   "height_mm": 2.00000000114583,
+   "com_height_mm": 1.0,
+   "visual_gap_um": 0.0,
+   "support_parts": [
+    "blade",
+    "bolster",
+    "handle"
+   ],
+   "support_points": 41,
+   "com_margin_mm": 4.373930588419681,
+   "tip_angle_deg": 77.12195548580918,
+   "release_1mm": {
+    "moved_mm": 0.0403406177154472,
+    "rot_deg": 0.15828057326800363,
+    "max_rot_last_half_s_deg": 0.15087223649927003,
+    "passed": true
+   },
+   "release_tilted": {
+    "n": 20,
+    "passed": 20,
+    "worst_rot_deg": 0.22799341615518526
+   },
+   "drops": {
+    "n": 249,
+    "frequency": 0.498,
+    "rock_deg_median": 0.050768692001716874
+   },
+   "category": "natural",
+   "probability_within_category": 0.44043883169380693,
+   "top_surface_points": {
+    "blade": 8495,
+    "bolster": 1130,
+    "handle": 7004,
+    "edge": 0
+   }
+  },
+  {
+   "id": 1,
+   "description": "lying flat, STL +z face up",
+   "quat_wxyz": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "rpy": [
+    0.0,
+    -0.0,
+    0.0
+   ],
+   "rest_pos_m": [
+    0.011911584854125976,
+    0.0029622859954833982,
+    1.1458300974709345e-12
+   ],
+   "up_in_fork": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "trimesh_probability": 0.4404388316939249,
+   "height_mm": 2.00000000114583,
+   "com_height_mm": 1.00000000114583,
+   "visual_gap_um": 1.1458300974709346e-06,
+   "support_parts": [
+    "blade",
+    "bolster",
+    "handle"
+   ],
+   "support_points": 41,
+   "com_margin_mm": 4.373930588419681,
+   "tip_angle_deg": 77.1219554715451,
+   "release_1mm": {
+    "moved_mm": 0.07793984958235067,
+    "rot_deg": 0.08542689435320161,
+    "max_rot_last_half_s_deg": 0.09455788770733306,
+    "passed": true
+   },
+   "release_tilted": {
+    "n": 20,
+    "passed": 20,
+    "worst_rot_deg": 0.260461674677442
+   },
+   "drops": {
+    "n": 233,
+    "frequency": 0.466,
+    "rock_deg_median": 0.05994409497753337
+   },
+   "category": "natural",
+   "probability_within_category": 0.44043883169380693,
+   "top_surface_points": {
+    "blade": 8334,
+    "bolster": 1115,
+    "handle": 7018,
+    "edge": 0
+   }
+  },
+  {
+   "id": 2,
+   "description": "on its side edge (-y side up)",
+   "quat_wxyz": [
+    0.7070882612017896,
+    -0.7070882612017897,
+    0.005117701694096134,
+    0.005117701694096134
+   ],
+   "rpy": [
+    -1.5707963267948966,
+    0.014475172662274823,
+    0.0
+   ],
+   "rest_pos_m": [
+    0.011867458851170588,
+    -0.001,
+    0.0028416954771824455
+   ],
+   "up_in_fork": [
+    -0.014474667168911555,
+    -0.999895236517481,
+    0.0
+   ],
+   "trimesh_probability": 0.07157493997695066,
+   "height_mm": 12.434274179306204,
+   "com_height_mm": 4.374046298521956,
+   "visual_gap_um": 0.0879046254459101,
+   "support_parts": [
+    "blade",
+    "handle"
+   ],
+   "support_points": 4,
+   "com_margin_mm": 1.0,
+   "tip_angle_deg": 12.87771519893968,
+   "release_1mm": {
+    "moved_mm": 0.001018665815647214,
+    "rot_deg": 0.005889378266150314,
+    "max_rot_last_half_s_deg": 0.4553489714463138,
+    "passed": true
+   },
+   "release_tilted": {
+    "n": 20,
+    "passed": 20,
+    "worst_rot_deg": 0.13443341154580812
+   },
+   "drops": {
+    "n": 8,
+    "frequency": 0.016,
+    "rock_deg_median": 0.01008942151855927
+   },
+   "category": "natural",
+   "probability_within_category": 0.0715749399769315,
+   "top_surface_points": {
+    "blade": 0,
+    "bolster": 0,
+    "handle": 0,
+    "edge": 4608
+   }
+  },
+  {
+   "id": 3,
+   "description": "on its side edge (+y side up)",
+   "quat_wxyz": [
+    0.7068142335917711,
+    0.7068142335917711,
+    -0.020338121645748202,
+    0.020338121645748292
+   ],
+   "rpy": [
+    1.5707963267948966,
+    -0.05753282940040539,
+    1.2246467991473532e-16
+   ],
+   "rest_pos_m": [
+    0.011721541770993164,
+    0.0010000000000000015,
+    0.008593469409322206
+   ],
+   "up_in_fork": [
+    0.05750109545494302,
+    0.9983454432316908,
+    0.0
+   ],
+   "trimesh_probability": 0.047547396635467365,
+   "height_mm": 13.93413586358299,
+   "com_height_mm": 6.71308271482104,
+   "visual_gap_um": 0.0,
+   "support_parts": [
+    "blade",
+    "handle"
+   ],
+   "support_points": 4,
+   "com_margin_mm": 0.9999999999999998,
+   "tip_angle_deg": 8.472640649363292,
+   "release_1mm": {
+    "moved_mm": 0.00015327967101144398,
+    "rot_deg": 0.005583104170379216,
+    "max_rot_last_half_s_deg": 0.01984545452756377,
+    "passed": true
+   },
+   "release_tilted": {
+    "n": 20,
+    "passed": 20,
+    "worst_rot_deg": 0.40319659949045644
+   },
+   "drops": {
+    "n": 10,
+    "frequency": 0.02,
+    "rock_deg_median": 0.005373848108485242
+   },
+   "category": "natural",
+   "probability_within_category": 0.04754739663545463,
+   "top_surface_points": {
+    "blade": 0,
+    "bolster": 0,
+    "handle": 0,
+    "edge": 4611
+   }
+  }
+ ],
+ "drops": {
+  "n": 500,
+  "unmatched": 0,
+  "unmatched_clusters": [],
+  "per_pose": {
+   "0": 249,
+   "1": 233,
+   "2": 8,
+   "3": 10
+  }
+ },
+ "elapsed_s": 10.768325328826904
+}

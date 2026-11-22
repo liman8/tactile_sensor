@@ -1,0 +1,14 @@
+<!--
+  Multi-object scene (results_multi/): the moving-sensor scene gelsight_moving.xml, unchanged, plus the three objects
+  imported from Fork.stl, Knife.stl and Spoon.stl by results_multi/objects/import_objects.py (stl_to_mjcf.py). The
+  registry objects.json names them. fork_stl stays the active object; the others are parked like every other object
+  of the library, and GelSightSim(xml_path="gelsight_multi.xml") picks them up through their "<name>_face" sites.
+  gelsight_moving.xml itself is not edited, so everything made with it (fork_stl datasets, the final fork model)
+  stays reproducible.
+-->
+<mujoco model="gelsight_multi">
+  <include file="gelsight_moving.xml"/>
+  <include file="meshes/fork2_stl/fork2_stl.xml"/>
+  <include file="meshes/knife_stl/knife_stl.xml"/>
+  <include file="meshes/spoon_stl/spoon_stl.xml"/>
+</mujoco>

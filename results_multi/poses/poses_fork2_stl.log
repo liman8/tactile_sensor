@@ -1,0 +1,8 @@
+=== fork2_stl: scene gelsight_multi.xml, parts ['tines', 'palm', 'neck', 'handle', 'edge']
+pose 0: lying flat, STL +z face up; trimesh p=0.453; 1 mm release: moved 0.008 mm, 0.025 deg (rocking up to 0.03 deg in the last 0.5 s); tilted releases passed 20/20
+pose 1: lying flat, STL +z face down; trimesh p=0.453; 1 mm release: moved 0.000 mm, 0.000 deg (rocking up to 0.00 deg in the last 0.5 s); tilted releases passed 20/20
+pose 2: on its side edge (+y side up); trimesh p=0.046; 1 mm release: moved 0.006 mm, 0.030 deg (rocking up to 0.81 deg in the last 0.5 s); tilted releases passed 20/20
+pose 3: on its side edge (-y side up); trimesh p=0.046; 1 mm release: moved 0.001 mm, 0.004 deg (rocking up to 0.01 deg in the last 0.5 s); tilted releases passed 20/20
+pose 4: on its side edge (-y side up); trimesh p=0.001; 1 mm release: moved 0.014 mm, 0.021 deg (rocking up to 0.03 deg in the last 0.5 s); tilted releases passed 14/20
+pose 5: on its side edge (-y side up); trimesh p=0.000; 1 mm release: moved 0.039 mm, 0.111 deg (rocking up to 0.11 deg in the last 0.5 s); tilted releases passed 6/20
+natural: [0, 1], propped: [2, 3, 4, 5], rejected: []; drops per pose {0: 243, 1: 249, 2: 4, 3: 4, 4: 0, 5: 0}, unmatched 0 (14 s)

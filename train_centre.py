@@ -29,13 +29,16 @@ import time
 import cv2
 import numpy as np
 
+import objects as _objects
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(HERE, "dataset")
 CACHE = os.path.join(DATA, "cache_centre.npz")
 OUT = os.path.join(HERE, "results_centre")
 
-PARTS4 = ["tines", "palm", "neck", "handle"]
-TINE_ROOT_MM, PALM_START_MM, NECK_START_MM = 7.0, 1.0, -15.0      # as collect_dataset.py
+# fork_stl's parts from the object registry (objects.json): tines >= 7.0 > palm >= 1.0 > neck >= -15.0 > handle
+PARTS4 = _objects.part_names("fork_stl")
+TINE_ROOT_MM, PALM_START_MM, NECK_START_MM = _objects.part_starts_mm("fork_stl")      # as collect_dataset.py
 CLASSES = ["hover", "table", "fork"]
 POSES = ["face down", "face up"]
 # Sensor size (gelsight_sim.SENSORS; read from GELSIGHT_SENSOR, so spawned workers agree). This file's
@@ -51,8 +54,7 @@ CELL_C = -HALF_MM + CELL_MM * (np.arange(NC) + 0.5)          # cell centres (mm)
 
 # ---------------------------------------------------------------- labels
 def part_from_x(x_mm):
-    x = np.asarray(x_mm)
-    return np.where(x >= TINE_ROOT_MM, 0, np.where(x >= PALM_START_MM, 1, np.where(x >= NECK_START_MM, 2, 3)))
+    return _objects.part_from_x((TINE_ROOT_MM, PALM_START_MM, NECK_START_MM), x_mm)
 
 
 def quat2mat(q):

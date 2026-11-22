@@ -1,0 +1,290 @@
+{
+ "description": "Object registry of the tactile pipeline (objects.py). Order = object id of the multi-object models. Coordinates: the STL file's own frame in mm (+x towards the head: tines / bowl / blade). Parts: names[k] covers x >= x_starts_mm[k] (decreasing starts); below the last start is the last name; |normal . z| < edge_nz is 'edge'.",
+ "objects": {
+  "fork_stl": {
+   "class": "fork",
+   "stl": "ForkMilimeter.stl",
+   "units": "mm",
+   "units_note": "imported in mm when the project started (file name; 120.3 x 16.3 x 5.0 mm, a dinner fork)",
+   "scene": "gelsight_moving.xml",
+   "mesh_dir": "meshes/fork_stl",
+   "import_command": "python stl_to_mjcf.py ForkMilimeter.stl --name fork_stl --units mm --threshold 0.01 --face 21.6 0 --site tips 31 0 --site palm 4.5 0 --site neck -2 0 --site handle -45 0 --site handle_end -76 0 --tine-root 7.0 --active",
+   "coacd_threshold": 0.01,
+   "convex_parts": 17,
+   "material": "steel",
+   "density_kg_m3": 7850.0,
+   "material_note": "one solid body; nothing in the mesh suggests another material",
+   "volume_mm3": 1207.7376912590664,
+   "mass_g": 9.480740876383672,
+   "com_mm": [
+    -24.25959849057483,
+    -0.0012819285990839325,
+    1.0102797604505165
+   ],
+   "bbox_mm": [
+    [
+     -84.0,
+     -8.1268,
+     0.0
+    ],
+    [
+     36.2819,
+     8.1268,
+     5.0
+    ]
+   ],
+   "shape": "bent dinner fork, 1.5 mm sheet, 5 mm tall: the tines and the handle end curve towards +z",
+   "symmetric": true,
+   "mirror_hausdorff_mm": 0.0,
+   "mirror_note": "top-view outline vs its mirror image y -> -y (results_multi/objects/import_report.json); mirror augmentation allowed",
+   "face_defined": true,
+   "face_note": "face down (tines curve down onto the table) and face up are different surfaces for the sensor",
+   "parts": {
+    "names": [
+     "tines",
+     "palm",
+     "neck",
+     "handle"
+    ],
+    "x_starts_mm": [
+     7.0,
+     1.0,
+     -15.0
+    ],
+    "edge_nz": 0.5
+   },
+   "poses": {
+    "standard": "dataset/poses/stable_poses.json",
+    "mini": "dataset_mini/poses/stable_poses.json",
+    "natural": [
+     0,
+     1
+    ],
+    "propped": [
+     2,
+     3
+    ]
+   }
+  },
+  "fork2_stl": {
+   "class": "fork",
+   "stl": "Fork.stl",
+   "units": "m",
+   "units_note": "longest extent 0.1203 file units; only metres give a cutlery length in 120-250 mm (120.3 mm); scaled x1000 to results_multi/objects/source_mm/Fork_mm.stl and imported in mm",
+   "scene": "gelsight_multi.xml",
+   "mesh_dir": "meshes/fork2_stl",
+   "import_command": "python stl_to_mjcf.py results_multi/objects/source_mm/Fork_mm.stl --name fork2_stl --units mm --threshold 0.01 --face 21.6 0 --site tips 31 0 --site palm 4.5 0 --site neck -2 0 --site handle -45 0 --site handle_end -76 0 --tine-root 7.0",
+   "coacd_threshold": 0.01,
+   "convex_parts": 7,
+   "material": "steel",
+   "density_kg_m3": 7850.0,
+   "material_note": "one solid body of uniform 2 mm thickness; nothing in the mesh marks a separate handle or another material, so steel throughout (default)",
+   "volume_mm3": 1708.058836448491,
+   "mass_g": 13.408261866120656,
+   "com_mm": [
+    -21.301878394563204,
+    -7.349232589198138e-17,
+    1.0000000000000002
+   ],
+   "bbox_mm": [
+    [
+     -83.9781,
+     -8.1268,
+     0.0
+    ],
+    [
+     36.2819,
+     8.1268,
+     2.0
+    ]
+   ],
+   "shape": "flat 2 mm plate with fork_stl's exact top-view outline (4 tines from x = 7 mm); not bent",
+   "symmetric": true,
+   "mirror_hausdorff_mm": 5.1181281435219717e-14,
+   "mirror_note": "top-view outline vs its mirror image y -> -y (results_multi/objects/import_report.json); mirror augmentation allowed",
+   "face_defined": false,
+   "face_note": "a flat, mirror-symmetric plate: face up and face down give the same surface to the sensor",
+   "parts": {
+    "names": [
+     "tines",
+     "palm",
+     "neck",
+     "handle"
+    ],
+    "x_starts_mm": [
+     7.0,
+     1.0,
+     -15.0
+    ],
+    "edge_nz": 0.5,
+    "note": "along the STL x axis like fork_stl's: the narrow part from -15 mm to where the head widens (x = 1 mm) is the neck (spoon) / bolster (knife); the head (bowl / blade) starts at 1 mm, the handle below -15 mm"
+   },
+   "poses": {
+    "mini": "dataset_multi/poses/fork2_stl/stable_poses.json",
+    "natural": [
+     0,
+     1
+    ],
+    "propped": [
+     2,
+     3,
+     4,
+     5
+    ],
+    "descriptions": {
+     "0": "lying flat, STL +z face up [natural], drops 48.6 %, trimesh p 0.453",
+     "1": "lying flat, STL +z face down [natural], drops 49.8 %, trimesh p 0.453",
+     "2": "on its side edge (+y side up) [propped], drops 0.8 %, trimesh p 0.046",
+     "3": "on its side edge (-y side up) [propped], drops 0.8 %, trimesh p 0.046",
+     "4": "on its side edge (-y side up) [propped], drops 0.0 %, trimesh p 0.001",
+     "5": "on its side edge (-y side up) [propped], drops 0.0 %, trimesh p 0.000"
+    },
+    "face_down_pose": 1,
+    "face_up_pose": 0
+   }
+  },
+  "knife_stl": {
+   "class": "knife",
+   "stl": "Knife.stl",
+   "units": "m",
+   "units_note": "longest extent 0.1441 file units; only metres give a cutlery length in 120-250 mm (144.1 mm); scaled x1000 to results_multi/objects/source_mm/Knife_mm.stl and imported in mm",
+   "scene": "gelsight_multi.xml",
+   "mesh_dir": "meshes/knife_stl",
+   "import_command": "python stl_to_mjcf.py results_multi/objects/source_mm/Knife_mm.stl --name knife_stl --units mm --threshold 0.01 --face 25 -3.9 --site tip 52 -1.5 --site blade 40 -2.5 --site bolster -5 0 --site handle -45 0 --site handle_end -76 0",
+   "coacd_threshold": 0.01,
+   "convex_parts": 2,
+   "material": "steel",
+   "density_kg_m3": 7850.0,
+   "material_note": "one solid body of uniform 2 mm thickness; nothing in the mesh marks a separate handle or another material, so steel throughout (default)",
+   "volume_mm3": 2065.274254615831,
+   "mass_g": 16.212402898734272,
+   "com_mm": [
+    -8.139842065448352,
+    -1.4146775231786102,
+    1.0
+   ],
+   "bbox_mm": [
+    [
+     -83.9781,
+     -9.9246,
+     0.0
+    ],
+    [
+     60.1549,
+     4.0,
+     2.0
+    ]
+   ],
+   "shape": "flat 2 mm plate; the shared handle, then a blade (0-60 mm) widening to the -y side only (cutting edge on -y, straight back on +y)",
+   "symmetric": false,
+   "mirror_hausdorff_mm": 7.9245968821169654,
+   "mirror_note": "top-view outline vs its mirror image y -> -y (results_multi/objects/import_report.json); mirror augmentation NOT allowed",
+   "face_defined": true,
+   "face_note": "a flat but asymmetric plate: face down shows the blade on the other side of the handle axis than face up (mirror image)",
+   "parts": {
+    "names": [
+     "blade",
+     "bolster",
+     "handle"
+    ],
+    "x_starts_mm": [
+     1.0,
+     -15.0
+    ],
+    "edge_nz": 0.5,
+    "note": "along the STL x axis like fork_stl's: the narrow part from -15 mm to where the head widens (x = 1 mm) is the neck (spoon) / bolster (knife); the head (bowl / blade) starts at 1 mm, the handle below -15 mm"
+   },
+   "poses": {
+    "mini": "dataset_multi/poses/knife_stl/stable_poses.json",
+    "natural": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "propped": [],
+    "descriptions": {
+     "0": "lying flat, STL +z face down [natural], drops 49.8 %, trimesh p 0.440",
+     "1": "lying flat, STL +z face up [natural], drops 46.6 %, trimesh p 0.440",
+     "2": "on its side edge (-y side up) [natural], drops 1.6 %, trimesh p 0.072",
+     "3": "on its side edge (+y side up) [natural], drops 2.0 %, trimesh p 0.048"
+    },
+    "face_down_pose": 0,
+    "face_up_pose": 1
+   }
+  },
+  "spoon_stl": {
+   "class": "spoon",
+   "stl": "Spoon.stl",
+   "units": "m",
+   "units_note": "longest extent 0.1287 file units; only metres give a cutlery length in 120-250 mm (128.7 mm); scaled x1000 to results_multi/objects/source_mm/Spoon_mm.stl and imported in mm",
+   "scene": "gelsight_multi.xml",
+   "mesh_dir": "meshes/spoon_stl",
+   "import_command": "python stl_to_mjcf.py results_multi/objects/source_mm/Spoon_mm.stl --name spoon_stl --units mm --threshold 0.01 --face 22 0 --site bowl_tip 38 0 --site bowl_side 20 8 --site neck -5 0 --site handle -45 0 --site handle_end -76 0",
+   "coacd_threshold": 0.01,
+   "convex_parts": 4,
+   "material": "steel",
+   "density_kg_m3": 7850.0,
+   "material_note": "one solid body of uniform 2 mm thickness; nothing in the mesh marks a separate handle or another material, so steel throughout (default)",
+   "volume_mm3": 2758.8982249859637,
+   "mass_g": 21.657351066139817,
+   "com_mm": [
+    -2.8524375375508626,
+    9.752740602579002e-05,
+    1.0000000000000002
+   ],
+   "bbox_mm": [
+    [
+     -83.9781,
+     -12.4551,
+     0.0
+    ],
+    [
+     44.7064,
+     12.3989,
+     2.0
+    ]
+   ],
+   "shape": "flat 2 mm plate; the shared handle, then a flat oval 'bowl' (0-45 mm, 24.9 mm wide) - no hollow",
+   "symmetric": true,
+   "mirror_hausdorff_mm": 0.12316770095123446,
+   "mirror_note": "top-view outline vs its mirror image y -> -y (results_multi/objects/import_report.json); mirror augmentation allowed",
+   "face_defined": false,
+   "face_note": "a flat, mirror-symmetric plate: face up and face down give the same surface to the sensor",
+   "parts": {
+    "names": [
+     "bowl",
+     "neck",
+     "handle"
+    ],
+    "x_starts_mm": [
+     1.0,
+     -15.0
+    ],
+    "edge_nz": 0.5,
+    "note": "along the STL x axis like fork_stl's: the narrow part from -15 mm to where the head widens (x = 1 mm) is the neck (spoon) / bolster (knife); the head (bowl / blade) starts at 1 mm, the handle below -15 mm"
+   },
+   "poses": {
+    "mini": "dataset_multi/poses/spoon_stl/stable_poses.json",
+    "natural": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "propped": [
+     4
+    ],
+    "descriptions": {
+     "0": "lying flat, STL +z face up [natural], drops 48.6 %, trimesh p 0.469",
+     "1": "lying flat, STL +z face down [natural], drops 47.6 %, trimesh p 0.469",
+     "2": "on its side edge (+y side up) [natural], drops 1.8 %, trimesh p 0.031",
+     "3": "on its side edge (-y side up) [natural], drops 2.0 %, trimesh p 0.031",
+     "4": "on its side edge (-y side up) [propped], drops 0.0 %, trimesh p 0.000"
+    },
+    "face_down_pose": 1,
+    "face_up_pose": 0
+   }
+  }
+ }
+}

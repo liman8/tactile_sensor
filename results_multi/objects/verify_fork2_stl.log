@@ -1,0 +1,167 @@
+fork2_stl: sites ['face', 'tips', 'palm', 'neck', 'handle', 'handle_end']; fork checks on
+
+== rest pose ==
+  placed at {'x': 0.0, 'y': 0.0, 'yaw': 0.0}: lowest visual vertex -0.000027 um, lowest collision vertex -0.000037 um
+  placed at {'x': 0.012, 'y': -0.02, 'yaw': 1.1}: lowest visual vertex -0.000027 um, lowest collision vertex -0.000037 um
+  placed at {'x': -0.03, 'y': 0.01, 'yaw': -2.5}: lowest visual vertex -0.000027 um, lowest collision vertex -0.000037 um
+  MuJoCo's compiled vertices vs the STL files (same body frame): visual 9.44e-07 mm, parts 1.51e-06 mm
+  48 support vertices at STL x = [-83.98, -83.8, -83.46, -82.97, -82.35, -81.63, -80.83, -80.0, 0.0, 0.15, 0.52, 1.11, 1.89, 2.84, 3.91, 5.08, 6.28, 7.0, 36.28]; centre of mass 6.80 mm inside the support polygon
+  freejoint, 2 s on the table: moved 0.3 um, speed 196.05 um/s, deepest point -1.72 um (soft contact), final -1.29 um
+
+== a. overlay: visual mesh vs CoACD collision parts ==
+  gel side (up)     : collision surface outside the visual by max 0.000 mm, p99 0.0000, mean 0.0000 (inside by at most -0.0000); area only in collision 0.67 mm2 (0.368 beyond a 1-px rim), only in visual 0.22 mm2, fork area 855 mm2
+  table side (down) : collision surface outside the visual by max 0.000 mm, p99 0.0000, mean 0.0000 (inside by at most -0.0000); area only in collision 0.66 mm2 (0.368 beyond a 1-px rim), only in visual 0.22 mm2, fork area 855 mm2
+  worst top deviation at STL (x, y) = (6.3, 8.1) mm
+  worst bot deviation at STL (x, y) = (6.3, 8.1) mm
+  3D: collision parts reach at most 0.181 mm outside the visual mesh (part 2: the underside chord of a curved tine); every visual surface point is within 6.3 um of the collision geometry
+  x =  7.5 mm: gap widths visual [1.051, 1.056, 1.051]  collision [1.051, 1.056, 1.051]
+  x =  8.0 mm: gap widths visual [1.102, 1.111, 1.102]  collision [1.102, 1.111, 1.103]
+  x =  9.0 mm: gap widths visual [1.205, 1.222, 1.205]  collision [1.205, 1.222, 1.205]
+  x = 10.0 mm: gap widths visual [1.307, 1.333, 1.307]  collision [1.307, 1.333, 1.307]
+  x = 12.0 mm: gap widths visual [1.512, 1.556, 1.512]  collision [1.512, 1.556, 1.512]
+  x = 15.0 mm: gap widths visual [1.82, 1.889, 1.82]  collision [1.82, 1.889, 1.82]
+  x = 20.0 mm: gap widths visual [2.332, 2.444, 2.332]  collision [2.332, 2.445, 2.332]
+  x = 25.0 mm: gap widths visual [2.844, 3.0, 2.844]  collision [2.844, 3.0, 2.844]
+  x = 30.0 mm: gap widths visual [3.356, 3.556, 3.356]  collision [3.357, 3.556, 3.356]
+  x = 34.0 mm: gap widths visual [3.766, 4.0, 3.766]  collision [3.767, 4.001, 3.766]
+  x = 36.0 mm: gap widths visual [3.971, 4.222, 3.971]  collision [3.972, 4.223, 3.971]
+
+== b. between the tines: first contact ==
+  sphere probes, coacd               : 84/84 agree with the exact geometry within 20 um (60/60 slip through to the table like the exact geometry); 0 disagree excluding 3 ties; max |height error| 0.0014 mm
+  sphere probes, sdf                 : 58/84 agree with the exact geometry within 20 um (58/60 slip through to the table like the exact geometry); 24 disagree excluding 3 ties; max |height error| 0.4047 mm
+  sphere probes, convex_hull_of_mesh : 0/84 agree with the exact geometry within 20 um (0/60 slip through to the table like the exact geometry); 81 disagree excluding 3 ties; max |height error| 1.4168 mm
+    tie: centre gap at x = 9.0 mm (1.222 mm wide), probe r = 0.6 mm slips through the visual mesh with 10.2 um to spare; coacd: through, sdf: through
+    tie: side+ gap at x = 9.0 mm (1.205 mm wide), probe r = 0.6 mm slips through the visual mesh with 1.7 um to spare; coacd: through, sdf: touches at 1.662 mm
+    tie: side- gap at x = 9.0 mm (1.205 mm wide), probe r = 0.6 mm slips through the visual mesh with 1.7 um to spare; coacd: through, sdf: touches at 1.633 mm
+    centre x= 9.0 gap 1.22 mm, r=0.3: exact through  coacd through  sdf through  convex_hull_of_mesh 2.300
+    centre x=12.0 gap 1.56 mm, r=1.5: exact 3.283  coacd 3.283  sdf 3.000  convex_hull_of_mesh 3.500
+    centre x=20.0 gap 2.44 mm, r=1.0: exact through  coacd through  sdf through  convex_hull_of_mesh 3.000
+    centre x=30.0 gap 3.56 mm, r=0.6: exact through  coacd through  sdf through  convex_hull_of_mesh 2.600
+    side+  x= 9.0 gap 1.21 mm, r=0.3: exact through  coacd through  sdf through  convex_hull_of_mesh 2.300
+    side+  x=12.0 gap 1.51 mm, r=1.5: exact 3.296  coacd 3.296  sdf 3.000  convex_hull_of_mesh 3.500
+    side+  x=20.0 gap 2.33 mm, r=1.0: exact through  coacd through  sdf through  convex_hull_of_mesh 3.000
+    side+  x=30.0 gap 3.36 mm, r=0.6: exact through  coacd through  sdf through  convex_hull_of_mesh 2.600
+    side-  x= 9.0 gap 1.21 mm, r=0.3: exact through  coacd through  sdf through  convex_hull_of_mesh 2.300
+    side-  x=12.0 gap 1.51 mm, r=1.5: exact 3.296  coacd 3.296  sdf 3.000  convex_hull_of_mesh 3.500
+    side-  x=20.0 gap 2.33 mm, r=1.0: exact through  coacd through  sdf through  convex_hull_of_mesh 3.000
+    side-  x=30.0 gap 3.36 mm, r=0.6: exact through  coacd through  sdf through  convex_hull_of_mesh 2.600
+  gel edge (roll 20 deg) over the centre gap, offset -0.25 mm: exact first contact at slide_z 5.797 mm (edge 1.682 mm above the table); error [mm]: coacd +0.0038  sdf -0.4360  convex_hull_of_mesh +0.3182
+  gel edge (roll 20 deg) over the centre gap, offset +0.00 mm: exact first contact at slide_z 5.888 mm (edge 1.773 mm above the table); error [mm]: coacd +0.0038  sdf -0.1726  convex_hull_of_mesh +0.2270
+  gel edge (roll 20 deg) over the centre gap, offset +0.25 mm: exact first contact at slide_z 5.979 mm (edge 1.864 mm above the table); error [mm]: coacd +0.0038  sdf -0.2605  convex_hull_of_mesh +0.1357
+  gel edge (roll 20 deg) over the side+  gap, offset -0.25 mm: exact first contact at slide_z 5.795 mm (edge 1.680 mm above the table); error [mm]: coacd +0.0089  sdf -0.2239  convex_hull_of_mesh +0.3202
+  gel edge (roll 20 deg) over the side+  gap, offset +0.00 mm: exact first contact at slide_z 5.886 mm (edge 1.771 mm above the table); error [mm]: coacd +0.0089  sdf -0.3467  convex_hull_of_mesh +0.2289
+  gel edge (roll 20 deg) over the side+  gap, offset +0.25 mm: exact first contact at slide_z 5.977 mm (edge 1.862 mm above the table); error [mm]: coacd +0.0089  sdf -0.1773  convex_hull_of_mesh +0.1377
+
+== c. footprint: physics geometry vs depth render of the visual mesh ==
+   0 palm       F 0.67 N (gel 0.67): IoU 0.9987, centroid offset   4.5 um, boundary   0.9 um, peak 0.723/0.723 mm (visual/physics), 6 contacts, 100% on the visual footprint, depth within 12 um of the visual map there
+   1 handle_end F 0.67 N (gel 0.67): IoU 0.9999, centroid offset   0.6 um, boundary   0.2 um, peak 0.917/0.917 mm (visual/physics), 1 contacts, 100% on the visual footprint, depth within 5 um of the visual map there
+   2 handle     F 0.69 N (gel 0.69): IoU 1.0000, centroid offset   0.0 um, boundary   0.0 um, peak 0.921/0.921 mm (visual/physics), 1 contacts, 100% on the visual footprint, depth within 6 um of the visual map there
+   3 palm       F 0.80 N (gel 0.80): IoU 0.9977, centroid offset   0.4 um, boundary   2.0 um, peak 0.884/0.884 mm (visual/physics), 7 contacts, 100% on the visual footprint, depth within 11 um of the visual map there
+   4 face       F 3.68 N (gel 3.69): IoU 0.9996, centroid offset   1.8 um, boundary   0.1 um, peak 1.070/1.070 mm (visual/physics), 4 contacts, 100% on the visual footprint, depth within 11 um of the visual map there
+   5 neck       F 0.70 N (gel 0.70): IoU 0.9967, centroid offset   4.7 um, boundary   2.6 um, peak 0.918/0.918 mm (visual/physics), 4 contacts, 100% on the visual footprint, depth within 19 um of the visual map there
+   6 tips       F 1.11 N (gel 1.11): IoU 0.9996, centroid offset   0.4 um, boundary   0.1 um, peak 0.780/0.781 mm (visual/physics), 4 contacts, 100% on the visual footprint, depth within 1 um of the visual map there
+   7 tips       F 4.96 N (gel 4.96): IoU 0.9999, centroid offset   1.2 um, boundary   0.0 um, peak 1.129/1.129 mm (visual/physics), 4 contacts, 100% on the visual footprint, depth within 8 um of the visual map there
+   8 face       F 1.02 N (gel 1.02): IoU 0.9997, centroid offset   1.2 um, boundary   0.1 um, peak 0.798/0.798 mm (visual/physics), 4 contacts, 100% on the visual footprint, depth within 3 um of the visual map there
+   9 neck       F 0.67 N (gel 0.67): IoU 0.9992, centroid offset   4.1 um, boundary   0.4 um, peak 0.784/0.784 mm (visual/physics), 5 contacts, 100% on the visual footprint, depth within 17 um of the visual map there
+  10 face       F 3.19 N (gel 3.20): IoU 0.9985, centroid offset  12.1 um, boundary   0.9 um, peak 1.013/1.013 mm (visual/physics), 6 contacts, 100% on the visual footprint, depth within 5 um of the visual map there
+  11 face       F 3.56 N (gel 3.57): IoU 0.9996, centroid offset   1.4 um, boundary   0.1 um, peak 1.066/1.066 mm (visual/physics), 4 contacts, 100% on the visual footprint, depth within 9 um of the visual map there
+  12 face       F 1.36 N (gel 1.39): IoU 0.9989, centroid offset  11.6 um, boundary   0.6 um, peak 0.888/0.888 mm (visual/physics), 6 contacts, 100% on the visual footprint, depth within 5 um of the visual map there
+  13 handle     F 3.50 N (gel 3.49): IoU 0.9999, centroid offset   0.6 um, boundary   0.2 um, peak 1.306/1.306 mm (visual/physics), 1 contacts, 100% on the visual footprint, depth within 9 um of the visual map there
+  14 neck       F 0.71 N (gel 0.70): IoU 0.9965, centroid offset   5.9 um, boundary   3.9 um, peak 0.744/0.744 mm (visual/physics), 7 contacts, 100% on the visual footprint, depth within 17 um of the visual map there
+  15 tips       F 0.54 N (gel 0.54): IoU 0.9997, centroid offset   1.7 um, boundary   0.1 um, peak 0.802/0.801 mm (visual/physics), 4 contacts, 100% on the visual footprint, depth within 8 um of the visual map there
+  16 handle_end F 0.58 N (gel 0.57): IoU 0.9998, centroid offset   1.9 um, boundary   0.3 um, peak 0.884/0.884 mm (visual/physics), 1 contacts, 100% on the visual footprint, depth within 7 um of the visual map there
+  17 face       F 0.85 N (gel 0.85): IoU 0.9997, centroid offset   2.8 um, boundary   0.1 um, peak 0.670/0.670 mm (visual/physics), 6 contacts, 100% on the visual footprint, depth within 6 um of the visual map there
+  18 face       F 1.12 N (gel 1.12): IoU 0.9986, centroid offset   7.4 um, boundary   1.1 um, peak 0.806/0.806 mm (visual/physics), 6 contacts, 100% on the visual footprint, depth within 16 um of the visual map there
+  19 handle_end F 1.82 N (gel 1.82): IoU 0.9998, centroid offset   2.5 um, boundary   0.2 um, peak 1.149/1.149 mm (visual/physics), 1 contacts, 100% on the visual footprint, depth within 1 um of the visual map there
+  => IoU mean 0.9991 (min 0.9965), centroid offset mean 3.3 um (max 12.1), boundary 0.7 um; MuJoCo contact points: 100.0% (force-weighted 100.00%) on the visual footprint; penetration of each of the 81 contacts facing the gel within 19 um of the visual depth map there (1 sideways contacts where the gel's rim cuts a tine); deepest contact vs peak of the map within 9 um
+
+== d. sanity: force, depth, settling, jitter, speed ==
+  static fork2_stl: 22/24 presses OK; touch error median 0.66% max 4.52%; depth 0.54-1.63 mm; jitter slide_z std <= 2.41 um, touch std <= 0.1313 N
+    not OK: handle 2.0 N -> gel 2.082 N, depth 1.194 mm, settled True, table False, housing False, z std 2.41 um, F std 0.0102, shift 0.00 mm
+    not OK: handle_end 2.0 N -> gel 2.090 N, depth 1.191 mm, settled True, table False, housing False, z std 2.41 um, F std 0.0166, shift 0.00 mm
+  FAIL: static force sweep
+  baseline fork_dinner (tines): depth 0.37, 0.54, 0.69, 0.83 mm at [0.5, 2.0, 5.0, 10.0] N; jitter slide_z std <= 2.04 um, touch std <= 0.0013 N
+  freejoint fork2_stl, face site: 0/4 presses OK; touch error median 7.48% max 15.28%; depth 0.59-1.17 mm; jitter slide_z std <= 10.32 um, touch std <= 1.3470 N
+    not OK: face 0.5 N -> gel 0.531 N, depth 0.587 mm, settled True, table False, housing False, z std 4.53 um, F std 0.1807, shift 0.00 mm
+    not OK: face 2.0 N -> gel 2.110 N, depth 0.821 mm, settled True, table False, housing False, z std 5.82 um, F std 0.3580, shift 0.00 mm
+    not OK: face 5.0 N -> gel 5.438 N, depth 1.036 mm, settled True, table False, housing False, z std 7.80 um, F std 0.7765, shift 0.00 mm
+    not OK: face 10.0 N -> gel 8.472 N, depth 1.170 mm, settled False, table False, housing False, z std 10.32 um, F std 1.3470, shift 0.00 mm
+  FAIL: freejoint force sweep on the face site
+  freejoint fork2_stl, tips/palm/neck/handle/handle_end (not judged): 3/20 presses OK; touch error median 1.39% max 71.08%; depth 0.55-3.00 mm; jitter slide_z std <= 60.84 um, touch std <= 1.2339 N
+    not OK: tips 0.5 N -> gel 0.494 N, depth 0.631 mm, settled True, table False, housing False, z std 3.47 um, F std 0.1024, shift 0.00 mm
+    not OK: tips 2.0 N -> gel 2.014 N, depth 0.877 mm, settled True, table False, housing False, z std 2.60 um, F std 0.2230, shift 0.00 mm
+    not OK: tips 5.0 N -> gel 5.034 N, depth 1.078 mm, settled True, table False, housing False, z std 6.36 um, F std 0.7256, shift 0.00 mm
+    not OK: tips 10.0 N -> gel 10.118 N, depth 1.256 mm, settled True, table False, housing False, z std 11.08 um, F std 1.2339, shift 0.00 mm
+    not OK: palm 0.5 N -> gel 0.489 N, depth 0.546 mm, settled True, table False, housing False, z std 7.98 um, F std 0.0867, shift 0.00 mm
+    not OK: palm 2.0 N -> gel 2.004 N, depth 0.814 mm, settled True, table False, housing False, z std 6.38 um, F std 0.2747, shift 0.00 mm
+    not OK: palm 5.0 N -> gel 4.021 N, depth 0.982 mm, settled True, table False, housing False, z std 14.67 um, F std 0.6023, shift 0.00 mm
+    not OK: palm 10.0 N -> gel 9.194 N, depth 1.174 mm, settled False, table False, housing False, z std 21.26 um, F std 1.1571, shift 0.00 mm
+    not OK: neck 0.5 N -> gel 0.495 N, depth 0.551 mm, settled True, table False, housing False, z std 1.05 um, F std 0.0419, shift 0.00 mm
+    not OK: neck 2.0 N -> gel 2.015 N, depth 0.775 mm, settled True, table False, housing False, z std 2.44 um, F std 0.2531, shift 0.00 mm
+    not OK: neck 5.0 N -> gel 4.978 N, depth 0.964 mm, settled True, table False, housing False, z std 5.57 um, F std 0.2598, shift 0.00 mm
+    not OK: handle 0.5 N -> gel 0.222 N, depth 1.400 mm, settled False, table False, housing False, z std 34.54 um, F std 0.7430, shift 0.05 mm
+    not OK: handle 2.0 N -> gel 3.422 N, depth 1.468 mm, settled False, table False, housing False, z std 60.84 um, F std 1.1857, shift 0.05 mm
+    not OK: handle 5.0 N -> gel 5.353 N, depth 3.000 mm, settled True, table True, housing True, z std 0.05 um, F std 0.0179, shift 0.66 mm
+    not OK: handle 10.0 N -> gel 10.234 N, depth 3.000 mm, settled True, table True, housing True, z std 1.48 um, F std 0.5631, shift 0.34 mm
+    not OK: handle_end 2.0 N -> gel 2.595 N, depth 3.000 mm, settled True, table True, housing True, z std 0.11 um, F std 0.1484, shift 0.44 mm
+    not OK: handle_end 10.0 N -> gel 10.637 N, depth 3.000 mm, settled True, table True, housing True, z std 0.15 um, F std 0.1771, shift 0.18 mm
+  steps/s (best of 3 x 2000-3000 steps, single thread):
+    before: fork_dinner pressed 3 N                         55,852
+    after:  fork_dinner pressed 3 N (fork2_stl parked)      55,352
+    before: fork_dinner active, sensor in the air          199,989
+    after:  fork_dinner active, sensor in the air          194,654
+    after:  fork2_stl active, sensor in the air            188,423
+    after:  fork2_stl face pressed 3 N                      56,285
+    after:  fork2_stl tips pressed 3 N                      67,211
+    after:  fork2_stl palm pressed 3 N                      48,742
+    after:  freejoint fork2_stl face pressed 3 N            30,281
+
+== e. gallery ==
+  tines, 3 N                         gel  3.02 N  peak 0.87 mm  tines 0  settled True  table False  housing False  detector: FORK p=0.93
+  tines turned 90 deg, 3 N           gel  3.01 N  peak 0.96 mm  tines 0  settled True  table False  housing False  detector: FORK p=0.99
+  tines, light 0.5 N                 gel  0.50 N  peak 0.56 mm  tines 0  settled True  table False  housing False  detector: FORK p=0.98
+  tines, tilted 4.6 deg to the palm, 4 N gel  4.01 N  peak 1.11 mm  tines 0  settled True  table False  housing False  detector: FORK p=0.99
+  tine tips, pad across, 2 N         gel  2.00 N  peak 0.87 mm  tines 0  settled True  table False  housing False  detector: FORK p=1.00
+  2 tines on the pad, 2 N            gel  2.00 N  peak 0.93 mm  tines 0  settled True  table False  housing False  detector: FORK p=0.99
+  palm + tine roots, 2 N             gel  2.00 N  peak 0.76 mm  tines 0  settled True  table False  housing False  detector: FORK p=0.71
+  palm, 6 N, turned                  gel  6.01 N  peak 0.98 mm  tines 0  settled True  table False  housing False  detector: FORK p=0.95
+  neck, 3 N                          gel  2.97 N  peak 0.83 mm  tines 0  settled True  table False  housing False  detector: FORK p=0.75
+  handle, 3 N                        gel  2.99 N  peak 1.28 mm  tines 0  settled True  table False  housing False  detector: not fork p=0.36
+  handle end, 4 N                    gel  4.02 N  peak 1.35 mm  tines 0  settled True  table False  housing False  detector: not fork p=0.23
+  handle, 10 N, rolled               gel 10.07 N  peak 1.62 mm  tines 0  settled True  table True  housing False  detector: not fork p=0.24
+  FAIL: gallery press 'handle, 10 N, rolled'
+
+== f. MuJoCo native mesh SDF instead of CoACD ==
+    rays onto the SDF: gel-side error max 2.000 mm, p99 1.9948, mean 0.0952; gap area filled 3.61 mm2, missing 100.12 mm2
+  sdf_octree_depth6: 0/9 presses OK; touch error median 16.81% max 170.80%; depth 0.83-3.00 mm; jitter slide_z std <= 8.83 um, touch std <= 0.2468 N
+    not OK: face 0.5 N -> gel 0.520 N, depth 0.965 mm, settled True, table False, housing False, z std 7.64 um, F std 0.0075, shift 0.00 mm
+    not OK: face 2.0 N -> gel 2.386 N, depth 1.287 mm, settled True, table False, housing False, z std 1.80 um, F std 0.0210, shift 0.00 mm
+    not OK: face 5.0 N -> gel 9.152 N, depth 2.004 mm, settled True, table True, housing False, z std 0.52 um, F std 0.1112, shift 0.00 mm
+    not OK: tips 0.5 N -> gel 0.551 N, depth 0.970 mm, settled True, table False, housing False, z std 1.69 um, F std 0.0175, shift 0.00 mm
+    not OK: tips 2.0 N -> gel 2.562 N, depth 1.365 mm, settled True, table False, housing False, z std 8.83 um, F std 0.0458, shift 0.00 mm
+    not OK: tips 5.0 N -> gel 13.540 N, depth 3.000 mm, settled True, table True, housing True, z std 1.30 um, F std 0.2468, shift 0.00 mm
+    not OK: palm 0.5 N -> gel 0.517 N, depth 0.826 mm, settled True, table False, housing False, z std 3.73 um, F std 0.0037, shift 0.00 mm
+    not OK: palm 2.0 N -> gel 2.215 N, depth 1.215 mm, settled True, table False, housing False, z std 5.57 um, F std 0.0344, shift 0.00 mm
+    not OK: palm 5.0 N -> gel 5.840 N, depth 1.435 mm, settled True, table False, housing False, z std 0.85 um, F std 0.0452, shift 0.00 mm
+  sdf_octree_depth6: compile 0.12 s, 69129 octree nodes, 4,371 steps/s at 3 N on the tines
+    rays onto the SDF: gel-side error max 2.000 mm, p99 2.0000, mean 0.0969; gap area filled 2.98 mm2, missing 7.07 mm2
+  sdf_octree_depth7: 0/9 presses OK; touch error median 15.66% max 173.22%; depth 0.83-3.00 mm; jitter slide_z std <= 10.28 um, touch std <= 0.2509 N
+    not OK: face 0.5 N -> gel 0.522 N, depth 0.938 mm, settled True, table False, housing False, z std 8.85 um, F std 0.0069, shift 0.00 mm
+    not OK: face 2.0 N -> gel 2.551 N, depth 1.278 mm, settled True, table False, housing False, z std 2.52 um, F std 0.0619, shift 0.00 mm
+    not OK: face 5.0 N -> gel 8.921 N, depth 2.005 mm, settled True, table True, housing False, z std 0.19 um, F std 0.2509, shift 0.00 mm
+    not OK: tips 0.5 N -> gel 0.542 N, depth 0.940 mm, settled True, table False, housing False, z std 5.42 um, F std 0.0203, shift 0.00 mm
+    not OK: tips 2.0 N -> gel 2.569 N, depth 1.330 mm, settled True, table False, housing False, z std 10.28 um, F std 0.0987, shift 0.00 mm
+    not OK: tips 5.0 N -> gel 13.661 N, depth 3.000 mm, settled True, table True, housing True, z std 0.47 um, F std 0.1454, shift 0.00 mm
+    not OK: palm 0.5 N -> gel 0.508 N, depth 0.828 mm, settled True, table False, housing False, z std 2.41 um, F std 0.0053, shift 0.00 mm
+    not OK: palm 2.0 N -> gel 2.178 N, depth 1.234 mm, settled True, table False, housing False, z std 1.97 um, F std 0.0144, shift 0.00 mm
+    not OK: palm 5.0 N -> gel 5.783 N, depth 1.419 mm, settled True, table False, housing False, z std 7.88 um, F std 0.0429, shift 0.00 mm
+  sdf_octree_depth7: compile 0.51 s, 302825 octree nodes, 3,646 steps/s at 3 N on the tines
+  CoACD, same ray test: gel-side error max 0.000 mm, p99 0.0000, gap area filled 3.04 mm2
+
+== h. regression: original objects with and without fork2_stl in the model ==
+  60/60 presses bit-identical (gel force, steps, arm pose, tactile image)
+
+3 failed checks (51 s); report: results_multi/objects/verify_fork2_stl/verify_stl_report.json
+  - static force sweep
+  - freejoint force sweep on the face site
+  - gallery press 'handle, 10 N, rolled'
