@@ -3,6 +3,10 @@ Interactive search demo in the MuJoCo viewer: the fork's estimated pose (green g
 
     GELSIGHT_SENSOR=mini python search_viewer.py [--net MODEL.pt] [--start 16] [--seed N]   # no --start: a random natural pose
     (--net defaults to the final model named in results_centre/FINAL_MODEL.md, else the retrained Mini model)
+    GELSIGHT_SENSOR=mini python search_viewer.py --model A --object knife_stl [--start 5] [--mode joint|oracle|generic]
+    (multi-object run: the object is unknown to the search; Page Down / Page Up = next / previous object (a new random
+    pose); the identity probabilities are shown as text and the ghost is the most likely object at its estimated pose;
+    multi_viz.py)
 
 What is drawn (search_viz.py): the ghost fork at the estimated pose (centre, yaw, face); green sphere = estimated
 centre, red sphere = true centre of mass, a line between them; the 90 % region as see-through tiles on the table;
@@ -41,6 +45,7 @@ import search_viz as sv
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 KEY_F6, KEY_F7, KEY_F8, KEY_F9 = 295, 296, 297, 298          # GLFW key codes
+KEY_PGUP, KEY_PGDN = 266, 267                                 # multi-object mode: previous / next object
 TRAVEL_S, PRESS_ANIM_S = 0.8, 0.25
 
 
@@ -63,7 +68,7 @@ class DisplayGuard:
         self.hit, self.saved = False, None
 
     def on_key(self, key):
-        if key in (KEY_F6, KEY_F7, KEY_F8, KEY_F9):
+        if key in (KEY_F6, KEY_F7, KEY_F8, KEY_F9, KEY_PGUP, KEY_PGDN):
             self.hit = True
 
     def sync(self, opt):
@@ -207,14 +212,82 @@ class ViewerApp:
         return lab + "\nkeys", val + "\nF6 step, F7 run, F8 reset belief, F9 new fork"
 
 
+class MultiViewerApp(ViewerApp):
+    """The same viewer loop on multi_viz.MultiSession: the object is unknown to the search (joint belief over identity
+    and centre); Page Down / Page Up switch the object."""
+
+    def __init__(self, model="A", obj="knife_stl", start=None, seed=0, mode="joint"):
+        import multi_viz as mv
+        self.mv = mv
+        self.sess = mv.MultiSession(model, obj, mode)
+        self.S = self.sess.S
+        self.objs = list(mv.objects.names()) if model == "A" else list(mv.cm.MODELS[model]["objects"]) + ["fork2_stl"]
+        self.m, self.d = self.S.sim.model, self.S.sim.data
+        self.rng = np.random.default_rng(seed)
+        self.pending, self.auto, self.anim, self._now = [], False, None, time.time()
+        self.e, self.tactile = None, None
+        if start is None:
+            self.sess.start_random(seed=int(self.rng.integers(1 << 30)))
+        else:
+            self.sess.start_stored(start)
+        self._place_fork(home=True)
+
+    def on_key(self, key):
+        if key in (KEY_F6, KEY_F7, KEY_F8, KEY_F9, KEY_PGUP, KEY_PGDN):
+            self.pending.append(key)
+
+    def _place_fork(self, home=False):
+        m, d, S = self.m, self.d, self.S
+        if home:
+            mujoco.mj_resetDataKeyframe(m, d, 0)
+        S.sim.set_tool(self.sess.obj)
+        m.body_pos[S.fb], m.body_quat[S.fb] = S.cur["fork_body_pos"], S.cur["fork_body_quat"]
+        if self.e is None:
+            self.sess.hide_ghost()
+        else:
+            self.sess.set_ghost(self.e)
+        mujoco.mj_forward(m, d)
+
+    def update(self, n_sub, now=None):
+        while self.pending and self.anim is None and self.pending[0] in (KEY_PGUP, KEY_PGDN):
+            k = self.pending.pop(0)
+            i = self.objs.index(self.sess.obj)
+            self.sess.set_object(self.objs[(i + (1 if k == KEY_PGDN else -1)) % len(self.objs)])
+            self.sess.start_random(seed=int(self.rng.integers(1 << 30)))
+            self.e, self.tactile, self.auto = None, None, False
+            self._place_fork(home=True)
+        return ViewerApp.update(self, n_sub, now)
+
+    def info_panel(self, w=360):
+        if getattr(self, "_info_e", 0) is not self.e or self._info_w != w:
+            self._info_img = np.ascontiguousarray(self.mv.info_panel(self.sess, self.e, w)[..., ::-1])
+            self._info_e, self._info_w = self.e, w
+        return self._info_img
+
+    @staticmethod
+    def keys_text():
+        return "keys", "F6 step  F7 run  F8 reset belief  F9 new pose  PgDn / PgUp object  (Tab: viewer panels)"
+
+    def texts(self):
+        lines = self.sess.status_lines(self.e)
+        lab = "\n".join(l[:14].strip() for l in lines)
+        val = "\n".join(l[14:].strip() for l in lines)
+        return lab + "\nkeys", val + "\nF6 step, F7 run, F8 reset, F9 new pose, PgDn/PgUp object"
+
+
 def info_width(height):
     """Width of the right-hand panel (top view w x w plus about 245 px of numbers) for a window this tall."""
     return int(np.clip(height - 265, 220, 380))
 
 
-def selftest(net, out_png):
-    """The app logic without a window: keys F6 x2, F8, F9, F7; overlays rendered offscreen to a png."""
-    app = ViewerApp(net, start=16)
+def selftest(net, out_png, multi=None):
+    """The app logic without a window: keys F6 x2, F8, F9, F7; overlays rendered offscreen to a png.
+    multi = (model, object, mode): the multi-object app instead (and PgDn once at the end: the next object, F7)."""
+    if multi is None:
+        app = ViewerApp(net, start=16)
+    else:                                       # the first stored start the multi search uses for this object
+        import search_multi as smu
+        app = MultiViewerApp(multi[0], multi[1], start=int(smu.starts(multi[1], 1)[0]), mode=multi[2])
     r = mujoco.Renderer(app.m, 720, 1280, max_geom=12000)
     cam = mujoco.MjvCamera()
     cam.distance, cam.elevation, cam.azimuth = 0.2, -35.0, 150.0
@@ -241,12 +314,25 @@ def selftest(net, out_png):
     log.append(f"after F8: {len(app.sess.presses)} presses, estimate {'none' if app.e is None else 'kept'}")
     app.on_key(KEY_F9)
     run_until_idle()
-    log.append(f"after F9: fork at {np.round(app.S.cur['com_w'][:2] * 1000, 1)} mm, face {sv.POSES[app.S.cur['pose_id']]}")
+    if multi is None:
+        log.append(f"after F9: fork at {np.round(app.S.cur['com_w'][:2] * 1000, 1)} mm, face {sv.POSES[app.S.cur['pose_id']]}")
+    else:
+        log.append(f"after F9: {app.sess.obj} at {np.round(app.S.cur['com_w'][:2] * 1000, 1)} mm, pose {app.S.cur['pose_id']}")
     app.on_key(KEY_F7)
     run_until_idle()
     e = app.e
-    log.append(f"after F7: {len(app.sess.presses)} presses, done {app.sess.done}, error {e['err']:.2f} mm, yaw error "
-               f"{e['yaw_err']:.0f} deg, face {sv.POSES[e['face']]} (true {sv.POSES[e['true_face']]})")
+    if multi is None:
+        log.append(f"after F7: {len(app.sess.presses)} presses, done {app.sess.done}, error {e['err']:.2f} mm, yaw error "
+                   f"{e['yaw_err']:.0f} deg, face {sv.POSES[e['face']]} (true {sv.POSES[e['true_face']]})")
+    else:
+        log.append(f"after F7: {len(app.sess.presses)} presses, done {app.sess.done}, object {e['object']} "
+                   f"{e['p_object'] * 100:.0f}% (true {app.sess.obj}), error {e['err']:.2f} mm, yaw error {e['yaw_err']:.0f} deg")
+        app.on_key(KEY_PGDN)
+        app.on_key(KEY_F7)
+        run_until_idle()
+        e = app.e
+        log.append(f"after PgDn + F7: {app.sess.obj}: {len(app.sess.presses)} presses, object {e['object']} "
+                   f"{e['p_object'] * 100:.0f}%, error {e['err']:.2f} mm")
     mujoco.mj_forward(app.m, app.d)
     cam.lookat[:] = (app.S.cur["com_w"][0], app.S.cur["com_w"][1], 0.004)
     r.update_scene(app.d, camera=cam)
@@ -269,13 +355,17 @@ def main():
     ap.add_argument("--start", type=int, default=None, help="a stored test2 start (default: random natural pose)")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--selftest", default=None, help="no window: run the keys headless, write this png")
+    ap.add_argument("--model", default=None, choices=["A", "B"], help="multi-object model (results_multi/): object unknown")
+    ap.add_argument("--object", default="knife_stl", help="multi-object mode: the object on the table")
+    ap.add_argument("--mode", default="joint", choices=["joint", "oracle", "generic"], help="multi-object search mode")
     a = ap.parse_args()
     net = a.net or default_net()
     if a.selftest:
-        selftest(net, a.selftest)
+        selftest(net, a.selftest, None if a.model is None else (a.model, a.object, a.mode))
         return
     import mujoco.viewer
-    app = ViewerApp(net, start=a.start, seed=a.seed)
+    app = (ViewerApp(net, start=a.start, seed=a.seed) if a.model is None else
+           MultiViewerApp(a.model, a.object, start=a.start, seed=a.seed, mode=a.mode))
     m, d = app.m, app.d
     frame_dt = 1.0 / 60.0
     n_sub = max(1, int(round(frame_dt / m.opt.timestep)))
