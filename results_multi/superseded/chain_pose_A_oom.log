@@ -1,0 +1,4 @@
+=== 2026-11-22 19:38:52 pose eval single A
+=== 2026-11-22 19:48:23 pose eval fork vs final
+=== 2026-11-22 19:56:46 pose search A --ig full
+FAILED: search --ig full

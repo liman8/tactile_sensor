@@ -23,9 +23,12 @@ CAD VERIFICATION (C4, no training). After each press, the K = 64 most probable c
   every contact press so far, the expected indentation map is rendered from the top-surface height at that pose
   (E = max(0, z - (z_max - delta)), delta = the press's peak reconstructed depth) and compared with the reconstructed
   depth X: masked mean squared error over pixels where E or X > 0.05 mm, summed over the presses (S). The cells get
-  log-weight -(S - median S over the K) / tau (tau calibrated on validation presses, pose_calib.json); other cells are
-  unchanged. At the end the best pose is refined (Nelder-Mead on continuous x, y, yaw, the object and stable pose
-  fixed) by minimising S over all presses; both the binned and the refined estimate are kept (C4 report).
+  log-weight -(S - median S over the K) / tau_search; other cells are unchanged. tau_search = 1.0 was chosen on
+  validation searches by a rule written before the results (pose_calib_search/choice.json: a sharp check, tau 0.027,
+  sent the belief to a wrong mirrored pose after one press). At the end the best pose is refined (Nelder-Mead on
+  continuous x, y, yaw, the object and stable pose fixed) two ways: on the CAD match alone (minimise S, C4 as written),
+  and on S / tau - the network log-belief with tau = 0.027 (calibrated per press given the network,
+  pose_calib_given_net.py) = the reported "refined" pose. The binned estimate is kept too (C4 report).
 NEXT PRESS. After an empty press (with an earlier contact): the fork search's backtracking. Otherwise the candidate with
   the largest expected information gain:
   --ig full (C3): over the WHOLE pose. 2,048 states are drawn from the belief; for a candidate pad position each state
@@ -137,7 +140,12 @@ class PoseSearcher:
         det = ForkDetector.load(cs.DETECTOR)
         self.perturb = perturb or {}
         self.pm = PhotometricModel(det.pm.A * np.asarray(self.perturb.get("A_mult", np.ones((3, 3)))), det.pm.b)
-        self.tau = json.load(open(CALIB))["tau"] if os.path.exists(CALIB) else 0.05
+        cal = json.load(open(CALIB)) if os.path.exists(CALIB) else {}
+        # two temperatures (RUN_LOG): the CAD check of the top cells during the search uses tau_search (chosen on validation
+        # searches: a sharp check collapsed the belief on a wrong mirrored pose); the final local refinement uses tau
+        # (calibrated per press GIVEN the network, which is exactly the refinement's setting)
+        self.tau = cal.get("tau_search") or cal.get("tau", 0.05)
+        self.tau_refine = cal.get("tau", 0.05)
         self.arm = [self.sim.jnt[n] for n in ("slide_x", "slide_y", "slide_z", "yaw", "pitch", "roll")]
 
     # ---- starts / physics (as search_multi)
@@ -367,17 +375,39 @@ class PoseSearcher:
         return np.asarray(last_contact, float)
 
     # ---- refinement (C4, end of search)
-    def refine(self, est, presses):
+    def net_logbelief(self, hyp, c, psi):
+        """The network belief L (without the CAD adjustments) at a continuous pose: trilinear in (yaw, cy, cx)."""
+        from scipy.ndimage import map_coordinates
+        if getattr(self, "_Lnp", None) is None or self._Lnp[0] is not self.L:
+            self._Lnp = (self.L, self.L[hyp].cpu().numpy() if self.L is not None else None, hyp)
+        if self._Lnp[2] != hyp:
+            self._Lnp = (self.L, self.L[hyp].cpu().numpy(), hyp)
+        Lh = self._Lnp[1]
+        kf = np.mod(psi, 2 * np.pi) / pg.YAW_BIN - 0.5
+        k0 = int(np.floor(kf)) % pg.YAW_BINS
+        k1, w = (k0 + 1) % pg.YAW_BINS, kf - np.floor(kf)
+        pts = [[c[1] + GRID], [c[0] + GRID]]
+        v0 = map_coordinates(Lh[k0], pts, order=1, mode="nearest")[0]
+        v1 = map_coordinates(Lh[k1], pts, order=1, mode="nearest")[0]
+        return (1 - w) * v0 + w * v1
+
+    def refine(self, est, presses, with_net=True):
+        """Local continuous refinement of the best pose. with_net=False: minimise the CAD error S alone (C4 as written);
+        with_net=True: minimise S / tau - (the network log-belief), i.e. the posterior with the CAD as likelihood."""
         from scipy.optimize import minimize
         G = self.G[est["hyp"]]
         x0 = np.array([est["c"][0], est["c"][1], est["psi"]])
-        f = lambda v: cad_error(G, v[2], v[:2], presses)
+        if with_net:
+            f = lambda v: cad_error(G, v[2], v[:2], presses) / self.tau_refine - self.net_logbelief(est["hyp"], v[:2], v[2])
+        else:
+            f = lambda v: cad_error(G, v[2], v[:2], presses)
         r = minimize(f, x0, method="Nelder-Mead", options=dict(xatol=0.05, fatol=1e-6, maxfev=160,
                                                                  initial_simplex=[x0, x0 + [1.5, 0, 0], x0 + [0, 1.5, 0], x0 + [0, 0, np.radians(4)]]))
         v = r.x
         if np.linalg.norm(v[:2] - x0[:2]) > 6 or abs(wrap(v[2] - x0[2])) > np.radians(15) or r.fun > f(x0):
             v = x0                                                # stay near the binned estimate
-        return dict(c=v[:2], psi=float(v[2] % (2 * np.pi)), S=float(min(r.fun, f(x0))), S0=float(f(x0)), nfev=int(r.nfev))
+        return dict(c=v[:2], psi=float(v[2] % (2 * np.pi)), S=float(min(r.fun, f(x0))), S0=float(f(x0)), nfev=int(r.nfev),
+                    S_cad=cad_error(G, v[2], v[:2], presses), S_cad0=cad_error(G, x0[2], x0[:2], presses))
 
     # ---- one episode
     def episode(self, i, ig="full", verify=True, oracle=False, refine=True, seed=0, record=False):
@@ -392,6 +422,13 @@ class PoseSearcher:
             ep.step()
         res = ep.result(refine)
         res.update(index=int(i), first_part=int(st["part"][i]))
+        # the episode's lambdas (to_s / to_w) close over it: a reference cycle that only the cyclic garbage collector
+        # frees; drop its GPU tensors now (a 140 MB posterior per episode accumulated otherwise)
+        ep.P = None
+        self._Lnp = None
+        del ep
+        import gc
+        gc.collect()
         return res
 
     # ---- metrics of one estimate (C6)
@@ -463,6 +500,7 @@ class PoseEpisode:
         S, cur = self.S, self.cur
         kp = len(self.rows)
         t0 = time.time()
+        self.P = None                                    # free the previous posterior before building the next (GPU memory)
         x, y, yaw, pi, ro = self.next
         X, o, R, info = S.press(cur, x, y, yaw, pi, ro, cur["force"], kp)
         q = self.to_s(np.array([x, y]) * 1000)
@@ -517,6 +555,8 @@ class PoseEpisode:
             Q = S.candidates(est["Pc"], extend=70.0 if self.ig == "full" else 0.0, rng=self.rng)
             gain = S.ig_full(P, Q) if self.ig == "full" else S.ig_centre(est["Pc"], Q)
             nq = Q[int(np.argmax(gain))]
+            del P
+            self.P = None
         else:
             nq = S.backtrack(est["Pc"], self.last_contact, [self.to_s(np.array([r["x_mm"], r["y_mm"]])) for r in self.rows])
             self.rows[-1]["backtrack"] = True
@@ -524,11 +564,12 @@ class PoseEpisode:
         self.next = (float(np.clip(nw[0], -0.148, 0.148)), float(np.clip(nw[1], -0.148, 0.148)), yaw, 0.0, 0.0)
         return rec
 
-    def refined(self):
-        if not hasattr(self, "_ref"):
-            rf = self.S.refine(self.est, self.presses)
-            self._ref = (rf, self.S.evaluate(dict(self.est, c=rf["c"], psi=rf["psi"]), self.truth, self.to_w, self.gam))
-        return self._ref
+    def refined(self, with_net=True):
+        key = "_ref_net" if with_net else "_ref_cad"
+        if not hasattr(self, key):
+            rf = self.S.refine(self.est, self.presses, with_net)
+            setattr(self, key, (rf, self.S.evaluate(dict(self.est, c=rf["c"], psi=rf["psi"]), self.truth, self.to_w, self.gam)))
+        return getattr(self, key)
 
     def result(self, refine=True):
         import torch
@@ -537,35 +578,46 @@ class PoseEpisode:
                    stopped=bool(self.stop), true_pose=int(self.truth["pose"]), trace=self.rows, final=self.rows[-1],
                    gpu_peak_mb=(torch.cuda.max_memory_allocated() / 1e6 if S.dev == "cuda" else None))
         if refine:
-            rf, ev = self.refined()
+            rf, ev = self.refined(True)
             res["refined"] = ev
-            res["refine_info"] = dict(S0=rf["S0"], S=rf["S"], nfev=rf["nfev"])
+            res["refine_info"] = dict(objective0=rf["S0"], objective=rf["S"], S_cad0=rf["S_cad0"], S_cad=rf["S_cad"], nfev=rf["nfev"])
+            rf2, ev2 = self.refined(False)
+            res["refined_cad_only"] = ev2
+            res["refine_cad_only_info"] = dict(S0=rf2["S0"], S=rf2["S"], nfev=rf2["nfev"])
         return res
 
 
-def starts(name, n=300, seed=2028):
-    import search_multi as smu
-    return smu.starts(name, n, seed)
+def starts(name, n=300, seed=2028, shard="test-0000.h5"):
+    """Search starts: on-object presses with object contact of <object>/<shard> (index in that shard)."""
+    import h5py
+    with h5py.File(os.path.join(cm.DATA, name, shard)) as f:
+        ok = np.nonzero((f["sample_type"][()] == 0) & f["contact_fork"][()])[0]
+    return np.sort(np.random.default_rng(seed).choice(ok, min(n, len(ok)), replace=False))
 
 
 def _worker(args):
     key, name, idx, opts, seed = args
     import torch
     S = PoseSearcher(key, seed, cad_extra=opts.get("cad", ()), perturb=cs.PERTURB[opts.get("cond", "clean")])
-    S.load_starts(name)
+    if opts.get("tau") is not None:
+        S.tau = opts["tau"]
+    S.load_starts(name, opts.get("shard", "test-0000.h5"))
     out = []
     for i in idx:
         t = time.time()
         e = S.episode(int(i), ig=opts["ig"], verify=opts["verify"], oracle=opts["oracle"])
         e["seconds"] = time.time() - t
         out.append(e)
+        if S.dev == "cuda":
+            torch.cuda.empty_cache()
     return out
 
 
-def run(key, names, ig="full", verify=True, oracle=False, cad=(), n=300, workers=4, seed=0, tag=None, cond="clean"):
+def run(key, names, ig="full", verify=True, oracle=False, cad=(), n=300, workers=4, seed=0, tag=None, cond="clean",
+        split="test", tau=None, out_sub=None):
     from concurrent.futures import ProcessPoolExecutor
     from multiprocessing import get_context
-    d = os.path.join(cm.model_dir(key), "pose_search" + ("" if seed == 0 else f"_seed{seed}"))
+    d = os.path.join(cm.model_dir(key), out_sub or ("pose_search" + ("" if seed == 0 else f"_seed{seed}")))
     os.makedirs(d, exist_ok=True)
     tag = tag or f"{ig}{'' if verify else '_noverify'}{'_oracle' if oracle else ''}{'_cad-' + '-'.join(cad) if cad else ''}{'' if cond == 'clean' else '_' + cond}"
     for name in names:
@@ -573,10 +625,11 @@ def run(key, names, ig="full", verify=True, oracle=False, cad=(), n=300, workers
         if os.path.exists(fn):
             print("exists:", fn)
             continue
-        idx = starts(name, n)
+        shard = f"{split}-0000.h5"
+        idx = starts(name, n, shard=shard)
         chunks = [list(idx[k::workers]) for k in range(workers)]
         t0 = time.time()
-        opts = dict(ig=ig, verify=verify, oracle=oracle, cad=tuple(cad), cond=cond)
+        opts = dict(ig=ig, verify=verify, oracle=oracle, cad=tuple(cad), cond=cond, shard=shard, tau=tau)
         with ProcessPoolExecutor(workers, mp_context=get_context("spawn")) as ex:
             eps = sum(ex.map(_worker, [(key, name, c, opts, seed) for c in chunks]), [])
         eps.sort(key=lambda e: e["index"])
@@ -604,9 +657,13 @@ def main():
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--cond", default="clean", choices=list(cs.PERTURB))
+    ap.add_argument("--split", default="test", choices=["test", "val"])
+    ap.add_argument("--tau", type=float, default=None, help="override the CAD temperature (calibration runs)")
+    ap.add_argument("--tag", default=None)
+    ap.add_argument("--out-sub", default=None, help="results folder under the model (default pose_search)")
     a = ap.parse_args()
     run(a.model, a.objects or cm.MODELS[a.model]["objects"], a.ig, not a.no_verify, a.oracle, a.cad, a.n, a.workers,
-        a.seed, cond=a.cond)
+        a.seed, tag=a.tag, cond=a.cond, split=a.split, tau=a.tau, out_sub=a.out_sub)
 
 
 if __name__ == "__main__":

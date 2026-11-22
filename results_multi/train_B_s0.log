@@ -1,0 +1,5 @@
+multi B (multi_holdout): objects ['fork_stl', 'knife_stl', 'spoon_stl'], 90000 train / 6000 val presses, seed 0, 120 epochs, robust augmentation (mirror only for ['fork_stl', 'spoon_stl']), test border 2 px -> results_multi/multi_holdout/model_seed0.pt
+  [B s0] epoch   1: train d 6.632 yaw 3.556 | val a 0.216 id 0.857 b 0.725 pose 0.756 d 5.638 yaw 2.901 (117 s)
+  [B s0] epoch   5: train d 4.646 yaw 2.014 | val a 0.181 id 0.687 b 0.546 pose 0.695 d 4.347 yaw 1.842 (594 s)
+  [B s0] epoch  10: train d 4.114 yaw 1.630 | val a 0.172 id 0.641 b 0.510 pose 0.684 d 3.732 yaw 1.449 (1274 s)
+  [B s0] epoch  15: train d 3.774 yaw 1.442 | val a 0.155 id 0.596 b 0.452 pose 0.655 d 3.391 yaw 1.286 (1800 s)

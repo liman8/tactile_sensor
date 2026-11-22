@@ -3,7 +3,7 @@
 # then the full-pose searches (3 processes on the GPU, rendering on the Intel iGPU), robustness, checks, videos.
 # Waits for model A. Re-running skips finished steps (pose_search skips existing episode files).
 cd "$(dirname "$(readlink -f "$0")")/.."
-export GELSIGHT_SENSOR=mini
+export GELSIGHT_SENSOR=mini PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 PY=.venv/bin/python
 L=results_multi
 D=$L/multi_all

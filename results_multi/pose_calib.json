@@ -1,10 +1,14 @@
 {
- "tau": 0.03282614390750258,
+ "tau": 0.02663396869445782,
+ "method": "given the network (pose_calib_given_net.py)",
  "n": 1200,
- "mean_log_p_truth": -1.6244019543323558,
- "uniform_log_p": -3.2188758248682006,
- "truth_best_of_25": 0.6041666666666666,
- "truth_rank_median": 0.0,
- "S_truth_median": 0.08864782750606537,
- "S_wrong_median": 0.35873112082481384
+ "mean_log_p_truth_network_only": -2.1293911933898926,
+ "mean_log_p_truth_network_and_cad": -1.2308930182732505,
+ "mean_log_p_truth_cad_tau_0p033": -1.2388923070218554,
+ "truth_best_network_only": 0.16583333333333333,
+ "truth_best_network_and_cad": 0.5133333333333333,
+ "median_p_truth_network_only": 0.12326803803443909,
+ "median_p_truth_network_and_cad": 0.3458008618441011,
+ "tau_search": 1.0,
+ "tau_search_rule": "pose_calib_search/choice.json (results_multi/choose_tau.py)"
 }

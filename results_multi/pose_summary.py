@@ -98,10 +98,14 @@ def main():
                 add_median_full_minus_oracle=paired(addv(F), addv(O), lambda x: np.median(x, -1)))
         if F:
             b, r = ep_rows(F, "final"), ep_rows(F, "refined")
+            rc = [e.get("refined_cad_only", e["final"]) for e in F]
+            med = lambda rr, k: float(np.median([x[k] for x in rr]))
+            a5 = lambda rr: float(np.mean([x["add_mm"] is not None and x["add_mm"] < 5 for x in rr]))
             S["cad_verification"][n] = dict(
-                refine_centre_median=[float(np.median([x["centre_err_mm"] for x in b])), float(np.median([x["centre_err_mm"] for x in r]))],
-                refine_yaw_median=[float(np.median([x["yaw_err_deg"] for x in b])), float(np.median([x["yaw_err_deg"] for x in r]))],
-                note="[binned, CAD-refined] final estimate of the same episodes")
+                refine_centre_median=[med(b, "centre_err_mm"), med(rc, "centre_err_mm"), med(r, "centre_err_mm")],
+                refine_yaw_median=[med(b, "yaw_err_deg"), med(rc, "yaw_err_deg"), med(r, "yaw_err_deg")],
+                refine_add_lt5=[a5(b), a5(rc), a5(r)],
+                note="[binned, refined on the CAD match alone, refined on CAD + network belief] final estimate of the same episodes")
             if NV:
                 S["cad_verification"][n]["verify_vs_noverify_add_median"] = paired(addv(F), addv(NV), lambda x: np.median(x, -1))
     seeds = [load(f"multi_all/pose_eval_single{'' if s == 0 else f'_seed{s}'}.json") for s in (0, 1, 2)]
@@ -153,11 +157,12 @@ def main():
                       f"{v['success_add5_centre_minus_full'][0] * 100:+.1f} [{v['success_add5_centre_minus_full'][1] * 100:+.1f}, {v['success_add5_centre_minus_full'][2] * 100:+.1f}]"]
                      for n, v in S["ablation_centre_vs_full"].items()], ["object", "presses", "ADD median mm", "ADD < 5 mm, points"]))
     md.append("\n## CAD verification and refinement (C4)\n")
-    md.append(table([[SHORT[n], f"{v['refine_centre_median'][0]:.2f} -> {v['refine_centre_median'][1]:.2f}",
-                      f"{v['refine_yaw_median'][0]:.2f} -> {v['refine_yaw_median'][1]:.2f}",
+    md.append(table([[SHORT[n], " / ".join(f"{x:.2f}" for x in v["refine_centre_median"]),
+                      " / ".join(f"{x:.2f}" for x in v["refine_yaw_median"]), " / ".join(f"{x * 100:.0f}" for x in v["refine_add_lt5"]),
                       (lambda d: f"{d[0]:+.2f} [{d[1]:+.2f}, {d[2]:+.2f}]")(v["verify_vs_noverify_add_median"]) if "verify_vs_noverify_add_median" in v else "-"]
                      for n, v in S["cad_verification"].items()],
-                    ["object", "centre median mm, binned -> refined", "yaw median deg, binned -> refined", "ADD median, with - without the CAD check"]))
+                    ["object", "centre median mm: binned / CAD-only refine / CAD+belief refine", "yaw median deg: same", "ADD < 5 mm %: same",
+                     "ADD median, with - without the CAD check"]))
     open(os.path.join(R, "pose_summary.md"), "w").write("\n".join(md))
     print("\n".join(md))
 

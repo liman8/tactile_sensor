@@ -201,6 +201,35 @@ def single(key="A", seed=0):
     return rep
 
 
+def confusion(key="A", seed=0):
+    """Identity confusion (object-contact test presses): true object x predicted object, also by the touched part; and
+    the stable-pose confusion within the right object."""
+    import torch
+    torch.set_num_threads(8)
+    C = cm.load_cache()
+    objs = cm.MODELS[key]["objects"]
+    _, pose_mask, _, pose_ids = cm.pose_layout(objs)
+    net, _ = cm.load_net(cm.model_path(key, seed))
+    rep = dict(model=key, identity={}, identity_by_part={}, pose={})
+    for name in objects.names():
+        sel = cm.rows(C, [name], "test")
+        sel = sel[C["cls"][sel] == 2]
+        R = predict(net, C["X"][sel])
+        pred = R["pid"].argmax(1)
+        rep["identity"][name] = {o: int((pred == j).sum()) for j, o in enumerate(objs)}
+        rep["identity_by_part"][name] = {pn: {o: int(((pred == j) & (C["part"][sel] == k)).sum()) for j, o in enumerate(objs)}
+                                         for k, pn in enumerate(objects.part_names(name))}
+        if name in objs:
+            h = objs.index(name)
+            ps_ = np.array([pose_ids[h][int(np.argmax(b[pose_mask[h]]))] for b in R["pc"]])
+            tp = C["pose_id"][sel]
+            rep["pose"][name] = {f"true {a}": {f"pred {b}": int(((tp == a) & (ps_ == b)).sum()) for b in pose_ids[h]}
+                                 for a in pose_ids[h]}
+        print(name, rep["identity"][name], rep["identity_by_part"][name], rep["pose"].get(name), flush=True)
+    json.dump(rep, open(os.path.join(cm.model_dir(key), "pose_eval_confusion" + ("" if seed == 0 else f"_seed{seed}") + ".json"), "w"), indent=1)
+    return rep
+
+
 def fork(key="A", seed=0):
     """5.2: the fork-only final model and model A on the same dataset_mini test2 presses (fork_stl)."""
     import torch
@@ -335,12 +364,12 @@ def robust(key="A", seed=0, n=600, workers=4):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("cmd", choices=["single", "fork", "holdout", "robust"])
+    ap.add_argument("cmd", choices=["single", "fork", "holdout", "robust", "confusion"])
     ap.add_argument("--model", choices=list(cm.MODELS), default="A")
     ap.add_argument("--seed", type=int, default=0)
     a = ap.parse_args()
     {"single": lambda: single(a.model, a.seed), "fork": lambda: fork(a.model, a.seed), "holdout": lambda: holdout(a.seed),
-     "robust": lambda: robust(a.model, a.seed)}[a.cmd]()
+     "robust": lambda: robust(a.model, a.seed), "confusion": lambda: confusion(a.model, a.seed)}[a.cmd]()
 
 
 if __name__ == "__main__":

@@ -1,0 +1,46 @@
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/lib64/python3.14/concurrent/futures/process.py", line 254, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/usr/lib64/python3.14/concurrent/futures/process.py", line 203, in _process_chunk
+    return [fn(*args) for args in chunk]
+            ~~^^^^^^^
+  File "pose_search.py", line 559, in _worker
+    e = S.episode(int(i), ig=opts["ig"], verify=opts["verify"], oracle=opts["oracle"])
+  File "pose_search.py", line 390, in episode
+    ep = PoseEpisode(self, cur, truth, ig, verify, oracle, record)
+  File "pose_search.py", line 447, in __init__
+    S.L = torch.zeros((len(S.hyps), pg.YAW_BINS, NG, NG), device=S.dev)
+          ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 134.00 MiB. GPU 0 has a total capacity of 7.62 GiB of which 149.69 MiB is free. Process 1337934 has 3.38 GiB memory in use. Including non-PyTorch memory, this process has 1.16 GiB memory in use. Process 1347531 has 1.25 GiB memory in use. Process 1347532 has 1.69 GiB memory in use. Of the allocated memory 1016.86 MiB is allocated by PyTorch, and 7.14 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "pose_search.py", line 613, in <module>
+    main()
+    ~~~~^^
+  File "pose_search.py", line 608, in main
+    run(a.model, a.objects or cm.MODELS[a.model]["objects"], a.ig, not a.no_verify, a.oracle, a.cad, a.n, a.workers,
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        a.seed, cond=a.cond)
+        ^^^^^^^^^^^^^^^^^^^^
+  File "pose_search.py", line 581, in run
+    eps = sum(ex.map(_worker, [(key, name, c, opts, seed) for c in chunks]), [])
+  File "/usr/lib64/python3.14/concurrent/futures/process.py", line 617, in _chain_from_iterable_of_lists
+    for element in iterable:
+                   ^^^^^^^^
+  File "/usr/lib64/python3.14/concurrent/futures/_base.py", line 639, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib64/python3.14/concurrent/futures/_base.py", line 311, in _result_or_cancel
+    return fut.result(timeout)
+           ~~~~~~~~~~^^^^^^^^^
+  File "/usr/lib64/python3.14/concurrent/futures/_base.py", line 450, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib64/python3.14/concurrent/futures/_base.py", line 395, in __get_result
+    raise self._exception
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 134.00 MiB. GPU 0 has a total capacity of 7.62 GiB of which 149.69 MiB is free. Process 1337934 has 3.38 GiB memory in use. Including non-PyTorch memory, this process has 1.16 GiB memory in use. Process 1347531 has 1.25 GiB memory in use. Process 1347532 has 1.69 GiB memory in use. Of the allocated memory 1016.86 MiB is allocated by PyTorch, and 7.14 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)

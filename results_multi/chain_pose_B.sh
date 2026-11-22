@@ -3,7 +3,7 @@
 # its CAD (C8: CAD-only hypotheses + CAD verification), without it, and B on its own objects; a video. Waits for model B
 # and for chain_pose_A's searches (the GPU holds 3 search processes at a time).
 cd "$(dirname "$(readlink -f "$0")")/.."
-export GELSIGHT_SENSOR=mini
+export GELSIGHT_SENSOR=mini PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 PY=.venv/bin/python
 L=results_multi
 D=$L/multi_holdout
