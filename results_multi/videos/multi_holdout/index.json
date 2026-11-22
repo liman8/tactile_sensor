@@ -1,0 +1,22 @@
+[
+ {
+  "start": 13,
+  "object": "fork2_stl",
+  "estimate": "fork_stl",
+  "p_object": 0.9519054889678955,
+  "presses": 9,
+  "final_err_mm": 2.897997277373864,
+  "yaw_err_deg": 0.12733605437630738,
+  "area_mm2": 3.0,
+  "frames": 324,
+  "mp4": "fork2_stl_13.mp4",
+  "pose": 1,
+  "add_mm": null,
+  "adds_mm": 0.8092593233934707,
+  "stored": {
+   "obj": "fork_stl",
+   "presses": 9,
+   "add": null
+  }
+ }
+]

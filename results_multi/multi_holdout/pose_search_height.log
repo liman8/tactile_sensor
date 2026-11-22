@@ -1,0 +1,57 @@
+[W1122 23:55:13.805302821 CUDACachingAllocator.cpp:623] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 9568256, total: 8184725504).
+[W1122 23:55:13.806592250 CUDACachingAllocator.cpp:623] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 11206656, total: 8184725504).
+[W1122 23:55:14.655650193 CUDACachingAllocator.cpp:623] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 11993088, total: 8184725504).
+[W1122 23:55:14.659233270 CUDACachingAllocator.cpp:623] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 14090240, total: 8184725504).
+[W1122 23:55:14.662581893 CUDACachingAllocator.cpp:623] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 14090240, total: 8184725504).
+[W1122 23:55:14.800217146 CUDACachingAllocator.cpp:623] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 16187392, total: 8184725504).
+[W1122 23:55:14.800326528 CUDACachingAllocator.cpp:623] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 16187392, total: 8184725504).
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/lib64/python3.14/concurrent/futures/process.py", line 254, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/usr/lib64/python3.14/concurrent/futures/process.py", line 203, in _process_chunk
+    return [fn(*args) for args in chunk]
+            ~~^^^^^^^
+  File "pose_search.py", line 685, in _worker
+    e = S.episode(int(i), ig=opts["ig"], verify=opts["verify"], oracle=opts["oracle"])
+  File "pose_search.py", line 481, in episode
+    ep.step()
+    ~~~~~~~^^
+  File "pose_search.py", line 632, in step
+    gain = S.ig_full(P, Q) if self.ig == "full" else S.ig_centre(est["Pc"], Q)
+           ~~~~~~~~~^^^^^^
+  File "pose_search.py", line 396, in ig_full
+    return (-(torch.where(p > 0, p * torch.log(p), torch.zeros_like(p))).sum(1)).cpu().numpy()
+                                 ~~^~~~~~~~~~~~~~
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 20.00 MiB. GPU 0 has a total capacity of 7.62 GiB of which 13.44 MiB is free. Process 1408707 has 3.41 GiB memory in use. Process 1419169 has 678.00 MiB memory in use. Process 1419166 has 658.00 MiB memory in use. Including non-PyTorch memory, this process has 728.00 MiB memory in use. Process 1419951 has 670.00 MiB memory in use. Process 1419954 has 688.00 MiB memory in use. Of the allocated memory 559.53 MiB is allocated by PyTorch, and 8.47 MiB is reserved by PyTorch but unallocated. expandable_segments is enabled. If instead the process is running out of virtual address space (VSZ), expandable segments may be over-reserving VA (each segment reserves ~9/8 of device memory, times the number of streams); reduce it via PYTORCH_CUDA_ALLOC_CONF expandable_segments_reserve / expandable_segments_reserve_by_class.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "pose_search.py", line 751, in <module>
+    main()
+    ~~~~^^
+  File "pose_search.py", line 746, in main
+    run(a.model, a.objects or cm.MODELS[a.model]["objects"], a.ig, not a.no_verify, a.oracle, a.cad, a.n, a.workers,
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        a.seed, tag=a.tag, cond=a.cond, split=a.split, tau=a.tau, out_sub=a.out_sub, height=a.height, cad_align=a.cad_align)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pose_search.py", line 712, in run
+    eps = sum(ex.map(_worker, [(key, name, c, opts, seed) for c in chunks]), [])
+  File "/usr/lib64/python3.14/concurrent/futures/process.py", line 617, in _chain_from_iterable_of_lists
+    for element in iterable:
+                   ^^^^^^^^
+  File "/usr/lib64/python3.14/concurrent/futures/_base.py", line 639, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/lib64/python3.14/concurrent/futures/_base.py", line 311, in _result_or_cancel
+    return fut.result(timeout)
+           ~~~~~~~~~~^^^^^^^^^
+  File "/usr/lib64/python3.14/concurrent/futures/_base.py", line 450, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib64/python3.14/concurrent/futures/_base.py", line 395, in __get_result
+    raise self._exception
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 20.00 MiB. GPU 0 has a total capacity of 7.62 GiB of which 13.44 MiB is free. Process 1408707 has 3.41 GiB memory in use. Process 1419169 has 678.00 MiB memory in use. Process 1419166 has 658.00 MiB memory in use. Including non-PyTorch memory, this process has 728.00 MiB memory in use. Process 1419951 has 670.00 MiB memory in use. Process 1419954 has 688.00 MiB memory in use. Of the allocated memory 559.53 MiB is allocated by PyTorch, and 8.47 MiB is reserved by PyTorch but unallocated. expandable_segments is enabled. If instead the process is running out of virtual address space (VSZ), expandable segments may be over-reserving VA (each segment reserves ~9/8 of device memory, times the number of streams); reduce it via PYTORCH_CUDA_ALLOC_CONF expandable_segments_reserve / expandable_segments_reserve_by_class.

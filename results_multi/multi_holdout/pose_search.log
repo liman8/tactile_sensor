@@ -1,0 +1,5 @@
+B full_cad-fork2_stl fork2_stl: id 8.3 %, presses 8.17, stopped 67 % | binned: centre 2.95 mm, yaw 1.3 deg | refined: centre 2.73, yaw 0.2, ADD median 0.80, ADD<2 6 % (986 s, GPU peak 504 MB)
+B full fork2_stl: id 0.0 %, presses 2.53, stopped 100 % | binned: centre 2.94 mm, yaw 1.3 deg | refined: centre 2.82, yaw 0.4, ADD median nan, ADD<2 0 % (238 s, GPU peak 448 MB)
+B full fork_stl: id 100.0 %, presses 2.30, stopped 100 % | binned: centre 0.76 mm, yaw 1.3 deg | refined: centre 0.50, yaw 0.6, ADD median 0.60, ADD<2 98 % (235 s, GPU peak 448 MB)
+B full knife_stl: id 100.0 %, presses 3.62, stopped 93 % | binned: centre 0.78 mm, yaw 1.3 deg | refined: centre 0.35, yaw 0.2, ADD median 0.46, ADD<2 92 % (365 s, GPU peak 448 MB)
+B full spoon_stl: id 95.3 %, presses 4.15, stopped 91 % | binned: centre 0.75 mm, yaw 1.2 deg | refined: centre 0.27, yaw 0.4, ADD median 0.64, ADD<2 95 % (410 s, GPU peak 448 MB)

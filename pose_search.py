@@ -107,7 +107,7 @@ def cad_error(G, psi, c, presses):
 
 class PoseSearcher:
     def __init__(self, model_key="A", seed=0, cad_extra=(), perturb=None, threads=2, device=None, ghost=False,
-                 use_height=False):
+                 use_height=False, cad_align=False):
         import torch
         from gelsight_sim import GelSightSim
         from fork_detector import ForkDetector, PhotometricModel
@@ -126,6 +126,19 @@ class PoseSearcher:
             proxy = self.objs.index("fork_stl") if objects.get(o)["class"] == "fork" else 0
             for pid in objects.get(o)["poses"]["natural"]:
                 self.hyps.append(dict(obj=o, pose=pid, h=proxy, pj=None, cad_only=True))
+        # --cad-align (post hoc, after the first C8 run): the proxy's heatmap locates the PROXY's centre of mass; a CAD-only
+        # hypothesis reads it shifted by (its CoM - the proxy's CoM) in the object frame (valid when the two STL frames
+        # coincide: Fork.stl and ForkMilimeter.stl have the same outline at the same coordinates), and its stable pose
+        # is credited with the proxy's best stable-pose probability instead of a uniform 1 / n (which penalised it
+        # against the confident proxy at every press).
+        self.cad_align = cad_align
+        self.cad_shift = {}
+        if cad_align:
+            for j, hy in enumerate(self.hyps):
+                if hy["cad_only"]:
+                    Gn = pg.get(hy["obj"], hy["pose"])
+                    dc = Gn.R_c @ (np.array(objects.get(hy["obj"])["com_mm"]) - np.array(objects.get(self.objs[hy["h"]])["com_mm"]))
+                    self.cad_shift[j] = np.stack([pg.M(pg.bin_centre(k)) @ dc[:2] for k in range(pg.YAW_BINS)])   # (72, 2)
         self.names = sorted({hy["obj"] for hy in self.hyps}, key=lambda n: objects.names().index(n))
         self.G = [pg.get(hy["obj"], hy["pose"]) for hy in self.hyps]
         HS = len(self.hyps)
@@ -566,7 +579,10 @@ class PoseEpisode:
             for j, hy in enumerate(S.hyps):
                 h = hy["h"]
                 lid = np.log((1 - EPS) * out["pid"][h] + EPS / len(S.objs))
-                if hy["cad_only"]:
+                if hy["cad_only"] and S.cad_align:
+                    blk = out["pc"][torch.tensor(S.pose_mask[h], device=S.dev)]
+                    lpose = float(torch.log((1 - EPS) * torch.softmax(blk, 0).max() + EPS / len(blk)))
+                elif hy["cad_only"]:
                     # C8: the network has no class for this object; its closest known class (proxy) stands in for
                     # "an object like this" (identity) and for the heatmap; its stable pose gets no network evidence
                     lpose = np.log(1.0 / len(objects.get(hy["obj"])["poses"]["natural"]))
@@ -574,8 +590,13 @@ class PoseEpisode:
                     blk = out["pc"][torch.tensor(S.pose_mask[h], device=S.dev)]
                     pp = torch.softmax(blk, 0)[hy["pj"]]
                     lpose = float(torch.log((1 - EPS) * pp + EPS / len(blk)))
-                lh = torch.log((1 - EPS) * heat[h] + EPS / (NG * NG))
-                S.L[j] += float(lid + lpose) + ly[:, None, None] + lh[None] + torch.where(T[j], 0.0, float(np.log(EPS)))
+                if j in S.cad_shift:                     # per yaw bin: the proxy's heatmap read at the shifted centre
+                    hs = torch.cat([S._heat_on_grid(out["hm"][h:h + 1], q + d) for d in S.cad_shift[j]])   # (72, NG, NG)
+                    lh = torch.log((1 - EPS) * hs + EPS / (NG * NG))
+                    del hs
+                else:
+                    lh = torch.log((1 - EPS) * heat[h] + EPS / (NG * NG))[None]
+                S.L[j] += float(lid + lpose) + ly[:, None, None] + lh + torch.where(T[j], 0.0, float(np.log(EPS)))
             self.last_contact = q
         else:
             for j in range(len(S.hyps)):
@@ -654,7 +675,7 @@ def _worker(args):
     key, name, idx, opts, seed = args
     import torch
     S = PoseSearcher(key, seed, cad_extra=opts.get("cad", ()), perturb=cs.PERTURB[opts.get("cond", "clean")],
-                     use_height=opts.get("height", False))
+                     use_height=opts.get("height", False), cad_align=opts.get("cad_align", False))
     if opts.get("tau") is not None:
         S.tau = opts["tau"]
     S.load_starts(name, opts.get("shard", "test-0000.h5"))
@@ -670,13 +691,13 @@ def _worker(args):
 
 
 def run(key, names, ig="full", verify=True, oracle=False, cad=(), n=300, workers=4, seed=0, tag=None, cond="clean",
-        split="test", tau=None, out_sub=None, height=False):
+        split="test", tau=None, out_sub=None, height=False, cad_align=False):
     from concurrent.futures import ProcessPoolExecutor
     from multiprocessing import get_context
     d = os.path.join(cm.model_dir(key), out_sub or ("pose_search" + ("" if seed == 0 else f"_seed{seed}")))
     os.makedirs(d, exist_ok=True)
     tag = tag or (f"{ig}{'' if verify else '_noverify'}{'_oracle' if oracle else ''}{'_height' if height else ''}"
-                  f"{'_cad-' + '-'.join(cad) if cad else ''}{'' if cond == 'clean' else '_' + cond}")
+                  f"{'_cad-' + '-'.join(cad) if cad else ''}{'_aligned' if cad_align else ''}{'' if cond == 'clean' else '_' + cond}")
     for name in names:
         fn = os.path.join(d, f"episodes_{tag}_{name}.json")
         if os.path.exists(fn):
@@ -686,7 +707,7 @@ def run(key, names, ig="full", verify=True, oracle=False, cad=(), n=300, workers
         idx = starts(name, n, shard=shard)
         chunks = [list(idx[k::workers]) for k in range(workers)]
         t0 = time.time()
-        opts = dict(ig=ig, verify=verify, oracle=oracle, cad=tuple(cad), cond=cond, shard=shard, tau=tau, height=height)
+        opts = dict(ig=ig, verify=verify, oracle=oracle, cad=tuple(cad), cond=cond, shard=shard, tau=tau, height=height, cad_align=cad_align)
         with ProcessPoolExecutor(workers, mp_context=get_context("spawn")) as ex:
             eps = sum(ex.map(_worker, [(key, name, c, opts, seed) for c in chunks]), [])
         eps.sort(key=lambda e: e["index"])
@@ -719,9 +740,11 @@ def main():
     ap.add_argument("--tag", default=None)
     ap.add_argument("--out-sub", default=None, help="results folder under the model (default pose_search)")
     ap.add_argument("--height", action="store_true", help="use the measured contact height (proprioception) and the CAD")
+    ap.add_argument("--cad-align", action="store_true", help="CAD-only hypotheses: proxy heatmap shifted by the CoM offset, "
+                    "proxy's best stable-pose probability (post hoc, after the first C8 run)")
     a = ap.parse_args()
     run(a.model, a.objects or cm.MODELS[a.model]["objects"], a.ig, not a.no_verify, a.oracle, a.cad, a.n, a.workers,
-        a.seed, tag=a.tag, cond=a.cond, split=a.split, tau=a.tau, out_sub=a.out_sub, height=a.height)
+        a.seed, tag=a.tag, cond=a.cond, split=a.split, tau=a.tau, out_sub=a.out_sub, height=a.height, cad_align=a.cad_align)
 
 
 if __name__ == "__main__":

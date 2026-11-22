@@ -18,3 +18,10 @@ multi B (multi_holdout): objects ['fork_stl', 'knife_stl', 'spoon_stl'], 90000 t
   [B s0] epoch  80: train d 2.546 yaw 0.792 | val a 0.111 id 0.521 b 0.256 pose 0.533 d 2.156 yaw 0.720 (8791 s)
   [B s0] epoch  85: train d 2.490 yaw 0.763 | val a 0.090 id 0.514 b 0.253 pose 0.531 d 2.083 yaw 0.690 (9368 s)
   [B s0] epoch  90: train d 2.450 yaw 0.746 | val a 0.088 id 0.512 b 0.243 pose 0.522 d 2.056 yaw 0.681 (9817 s)
+  [B s0] epoch  95: train d 2.411 yaw 0.733 | val a 0.084 id 0.512 b 0.241 pose 0.521 d 2.006 yaw 0.657 (10321 s)
+  [B s0] epoch 100: train d 2.380 yaw 0.717 | val a 0.087 id 0.511 b 0.242 pose 0.520 d 1.967 yaw 0.659 (10816 s)
+  [B s0] epoch 105: train d 2.369 yaw 0.705 | val a 0.083 id 0.509 b 0.236 pose 0.517 d 1.963 yaw 0.644 (11311 s)
+  [B s0] epoch 110: train d 2.346 yaw 0.694 | val a 0.129 id 0.510 b 0.239 pose 0.516 d 1.941 yaw 0.636 (11805 s)
+  [B s0] epoch 115: train d 2.350 yaw 0.693 | val a 0.078 id 0.509 b 0.237 pose 0.516 d 1.930 yaw 0.633 (12300 s)
+  [B s0] epoch 120: train d 2.331 yaw 0.689 | val a 0.085 id 0.509 b 0.236 pose 0.516 d 1.930 yaw 0.635 (12795 s)
+  [B s0] best epoch 115 (val loss 3.903), 12795 s

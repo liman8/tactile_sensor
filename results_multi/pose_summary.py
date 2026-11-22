@@ -16,9 +16,48 @@ OBJ = ["fork_stl", "fork2_stl", "knife_stl", "spoon_stl"]
 SHORT = {"fork_stl": "fork_stl", "fork2_stl": "Fork.stl", "knife_stl": "Knife.stl", "spoon_stl": "Spoon.stl"}
 
 
+RESCORED = {}
+_COM = {}
+
+
+def true_com_mm(name, i):
+    """True centre of mass (mm, world) of stored start i (dataset_multi/<object>/test-0000.h5)."""
+    if name not in _COM:
+        import h5py
+        with h5py.File(os.path.join(ROOT, "dataset_multi", name, "test-0000.h5")) as f:
+            _COM[name] = f["com_w"][()] * 1000.0
+    return _COM[name][i]
+
+
+def rescore(E, path):
+    """The ADD rule (pose_geom.add): corresponding body points, ADD-S only for indistinguishable stable-pose pairs.
+    Episodes saved before 2026-11-22 23:30 scored EVERY wrong stable pose of the right object with ADD-S; those rows are
+    rescored here from the stored estimate and truth (the episode files are not changed)."""
+    sys.path.insert(0, ROOT)
+    import pose_geom as pg
+    n = 0
+    for e in E:
+        name = e["object"]
+        for k in ("refined", "refined_cad_only", "final"):
+            r = e.get(k)
+            if (r is None or not r["identity_ok"] or r["pose_est"] == e["true_pose"]
+                    or pg.indistinguishable(name, r["pose_est"], e["true_pose"])):
+                continue
+            new = pg.add(pg.get(name, e["true_pose"]), true_com_mm(name, e["index"])[:2], r["true_psi_w"],
+                         pg.get(name, r["pose_est"]), np.array(r["est_c_w"]), r["est_psi_w"])
+            if not np.isclose(new, r["add_mm"]):
+                n += k == "refined"
+                r["add_mm"], r["add_rescored"] = new, True
+    RESCORED[os.path.relpath(path, R)] = n
+    return E
+
+
 def load(p):
     p = os.path.join(R, p)
-    return json.load(open(p)) if os.path.exists(p) else None
+    if not os.path.exists(p):
+        return None
+    E = json.load(open(p))
+    return rescore(E, p) if "pose_search" in p and os.path.basename(p).startswith("episodes_") else E
 
 
 def ep_rows(E, which="refined"):
@@ -80,8 +119,9 @@ def main():
              holdout=load("multi_holdout/pose_eval_holdout_fork2.json"), robust=load("multi_all/pose_eval_robust.json"),
              calib=load("pose_calib.json"))
     S["search_A"] = {t: search_block("multi_all", t, OBJ) for t in ("full", "centre", "full_noverify", "full_oracle", "full_height")}
-    S["search_B"] = {t: search_block("multi_holdout", t, ["fork2_stl"]) for t in ("full_cad-fork2_stl", "full")}
+    S["search_B"] = {t: search_block("multi_holdout", t, ["fork2_stl"]) for t in ("full_cad-fork2_stl", "full", "full_cad-fork2_stl_aligned", "full_height_cad-fork2_stl", "full_height_cad-fork2_stl_aligned")}
     S["search_B_own"] = search_block("multi_holdout", "full", ["fork_stl", "knife_stl", "spoon_stl"])
+    S["search_B_own_height"] = search_block("multi_holdout", "full_height", ["fork_stl", "knife_stl", "spoon_stl"])
     # paired comparisons
     S["ablation_centre_vs_full"], S["cost_unknown_identity"], S["cad_verification"], S["height_vs_full"] = {}, {}, {}, {}
     for n in OBJ:
@@ -129,8 +169,12 @@ def main():
             st = [stats(load(f"multi_all/pose_search{'' if s == 0 else f'_seed{s}'}/episodes_full_{n}.json")) for s in (0, 1, 2)]
             S["seeds_search"][n] = {k: dict(mean=float(np.mean([x[k] for x in st])), std=float(np.std([x[k] for x in st], ddof=1)),
                                             values=[x[k] for x in st]) for k in ("identity", "centre_med", "yaw_med", "add_lt5", "presses")}
+    S["rescored_refined_rows"] = {k: v for k, v in RESCORED.items() if v}
     json.dump(S, open(os.path.join(R, "pose_summary.json"), "w"), indent=1)
-    md = ["# Multi-object pose results (recomputed by results_multi/pose_summary.py)\n"]
+    md = ["# Multi-object pose results (recomputed by results_multi/pose_summary.py)\n",
+          "ADD uses corresponding body points also for a wrong stable pose; ADD-S only for the indistinguishable pairs "
+          "(Fork.stl 0/1, Spoon.stl 0/1 and 2/3). Rows saved under the earlier, lenient rule were rescored here: "
+          + (", ".join(f"{k} {v}" for k, v in S["rescored_refined_rows"].items()) or "none") + ".\n"]
     H = ["object", "variant", "identity %", "stable pose % (sym)", "centre med / p90 mm", "yaw med / p90 deg", "ADD med mm",
          "ADD-S med mm", "ADD<2 / <5 %", "grasp med mm", "presses", "centre / yaw in 90 %"]
     rows = []
@@ -152,11 +196,18 @@ def main():
                              f"{s['centre_med']:.2f} / {s['centre_p90']:.2f}", f"{s['yaw_med']:.1f} / {s['yaw_p90']:.1f}", fmt(s["add_med"]),
                              fmt(s["adds_med"]), f"{fmt(s['add_lt2'], 2, True)} / {fmt(s['add_lt5'], 2, True)}", fmt(s["grasp_med"]),
                              f"{s['presses']:.2f}", f"{fmt(s['centre_in90'], 2, True)} / {fmt(s['yaw_in90'], 2, True)}"])
-    for tag, lab in (("full_cad-fork2_stl", "B (never saw Fork.stl), search with Fork.stl's CAD"), ("full", "B, search without Fork.stl's CAD")):
-        b = S["search_B"][tag].get("fork2_stl")
+    blist = [("fork2_stl", "search_B", "full_cad-fork2_stl", "B (never saw Fork.stl), search with Fork.stl's CAD (pre-planned C8)"),
+             ("fork2_stl", "search_B", "full", "B, search without Fork.stl's CAD"),
+             ("fork2_stl", "search_B", "full_cad-fork2_stl_aligned", "B, with its CAD, aligned CAD-only hypothesis (post hoc)"),
+             ("fork2_stl", "search_B", "full_height_cad-fork2_stl", "B, with its CAD + contact height"),
+             ("fork2_stl", "search_B", "full_height_cad-fork2_stl_aligned", "B, with its CAD, aligned (post hoc) + contact height")]
+    blist += [(n, "search_B_own", None, "B, search (own object)") for n in ("fork_stl", "knife_stl", "spoon_stl")]
+    blist += [(n, "search_B_own_height", None, "B, search + contact height (own object)") for n in ("fork_stl", "knife_stl", "spoon_stl")]
+    for n_, blk, tag, lab in blist:
+        b = (S[blk][tag] if tag else S[blk]).get(n_)
         if b:
             s = b["refined"]
-            rows.append([SHORT["fork2_stl"], lab, fmt(s["identity"], 2, True), f"{fmt(s['pose'], 2, True)} ({fmt(s['pose_sym'], 2, True)})",
+            rows.append([SHORT[n_], lab, fmt(s["identity"], 2, True), f"{fmt(s['pose'], 2, True)} ({fmt(s['pose_sym'], 2, True)})",
                          f"{s['centre_med']:.2f} / {s['centre_p90']:.2f}", f"{s['yaw_med']:.1f} / {s['yaw_p90']:.1f}", fmt(s["add_med"]),
                          fmt(s["adds_med"]), f"{fmt(s['add_lt2'], 2, True)} / {fmt(s['add_lt5'], 2, True)}", fmt(s["grasp_med"]),
                          f"{s['presses']:.2f}", f"{fmt(s['centre_in90'], 2, True)} / {fmt(s['yaw_in90'], 2, True)}"])

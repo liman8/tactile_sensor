@@ -52,7 +52,11 @@ def add_metrics(Gt, ct, pt, Ge, ce, pe):
     from scipy.spatial import cKDTree
     A, B = points_sensor(Gt, ct, pt), points_sensor(Ge, ce, pe)
     adds = float(cKDTree(B).query(A)[0].mean())
-    add = float(np.linalg.norm(A - B, axis=1).mean()) if Gt.name == Ge.name else None
+    if Gt.name != Ge.name:
+        return None, adds
+    # ADD with corresponding body points; ADD-S only for stable poses that cannot be told apart (until 2026-11-22 23:30
+    # those pairs were scored with ADD as well, too strict)
+    add = adds if pg.indistinguishable(Gt.name, Gt.pose_id, Ge.pose_id) else float(np.linalg.norm(A - B, axis=1).mean())
     return add, adds
 
 

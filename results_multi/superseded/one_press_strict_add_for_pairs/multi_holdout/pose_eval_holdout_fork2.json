@@ -1,0 +1,85 @@
+{
+ "B": {
+  "objects": [
+   "fork_stl",
+   "knife_stl",
+   "spoon_stl"
+  ],
+  "identity_counts": {
+   "fork_stl": 1366,
+   "knife_stl": 377,
+   "spoon_stl": 343
+  },
+  "one_press": {
+   "n": 2086,
+   "identity_acc": 0.0,
+   "pose_acc": 0.0,
+   "pose_acc_up_to_symmetry": 0.0,
+   "centre_err_median_mm": 3.55103217038545,
+   "centre_err_p90_mm": 18.745980239368734,
+   "yaw_err_median_deg": 1.2775292687545012,
+   "yaw_err_p90_deg": 2.4431989486038725,
+   "yaw_flipped_gt150deg": 0.029242569511025888,
+   "add_median_mm": null,
+   "adds_median_mm": 1.025084645410037,
+   "success_add_lt2": 0.0,
+   "success_add_lt5": 0.0,
+   "success_adds_lt2": 0.950143815915628,
+   "success_adds_lt5": 0.9688398849472675,
+   "grasp_err_median_mm": 3.6173011226028935,
+   "grasp_err_p90_mm": 18.745980239368734,
+   "centre_in90": 0.0,
+   "yaw_in90": 0.9913710450623202,
+   "yaw_interval90_median_deg": 5.0,
+   "yaw_mass_on_opposite_direction": 0.0345803434884687
+  },
+  "fork_stl_as_proxy": {
+   "centre_median_mm": 3.119576145002336,
+   "centre_p90_mm": 4.431529587959584,
+   "hit90": 0.29769894534995206,
+   "yaw_median_deg": 1.2775292687545012,
+   "yaw_flipped": 0.029242569511025888,
+   "add_with_fork2_cad_median_mm": 3.263696164890666,
+   "add_lt2": 0.06184084372003835,
+   "add_lt5": 0.9185043144774688,
+   "note": "pose = fork2's own stable pose (true, flat), centre from the fork_stl heatmap, yaw from the yaw head; ADD with Fork.stl's CAD"
+  }
+ },
+ "A": {
+  "objects": [
+   "fork_stl",
+   "fork2_stl",
+   "knife_stl",
+   "spoon_stl"
+  ],
+  "identity_counts": {
+   "fork_stl": 110,
+   "fork2_stl": 1255,
+   "knife_stl": 322,
+   "spoon_stl": 399
+  },
+  "one_press": {
+   "n": 2086,
+   "identity_acc": 0.6016299137104506,
+   "pose_acc": 0.30201342281879195,
+   "pose_acc_up_to_symmetry": 0.6016299137104506,
+   "centre_err_median_mm": 1.1935137276751036,
+   "centre_err_p90_mm": 18.764315910440047,
+   "yaw_err_median_deg": 1.2781854543017497,
+   "yaw_err_p90_deg": 2.3802744724663922,
+   "yaw_flipped_gt150deg": 0.02828379674017258,
+   "add_median_mm": 7.022622865383354,
+   "adds_median_mm": 0.7566269688962722,
+   "success_add_lt2": 0.2953020134228188,
+   "success_add_lt5": 0.30105465004793863,
+   "success_adds_lt2": 0.9582933844678811,
+   "success_adds_lt5": 0.9726749760306808,
+   "grasp_err_median_mm": 1.1943795420633527,
+   "grasp_err_p90_mm": 18.764315910440047,
+   "centre_in90": 0.5973154362416108,
+   "yaw_in90": 0.9966442953020134,
+   "yaw_interval90_median_deg": 5.0,
+   "yaw_mass_on_opposite_direction": 0.03256720240339429
+  }
+ }
+}

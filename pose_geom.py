@@ -190,14 +190,24 @@ def get(name, pose_id):
     return _CACHE[k]
 
 
+def indistinguishable(name, pose_a, pose_b):
+    """True if the two stable poses of `name` are the same shape on the table (objects.json indistinguishable_pose_pairs)."""
+    pa, pb = sorted((int(pose_a), int(pose_b)))
+    return pa != pb and [pa, pb] in [sorted(p) for p in objects.get(name).get("indistinguishable_pose_pairs", [])]
+
+
 def add(G_true, c_true, psi_true, G_est, c_est, psi_est):
-    """ADD (mm): mean distance between corresponding CAD points at the true and the estimated pose (same object and pose:
-    corresponding points; otherwise the estimated object's points are compared by nearest neighbour, i.e. ADD-S)."""
+    """ADD (mm) of a pose estimate of the right object: the mean distance between corresponding CAD points (the same body
+    points) at the true and the estimated pose - also when the estimated stable pose is wrong. Only for a pair of stable
+    poses that cannot be told apart (objects.json indistinguishable_pose_pairs) it is ADD-S (nearest neighbour).
+    (Until 2026-11-22 23:30 every wrong stable pose was scored with ADD-S, too lenient; pose_summary.py rescored those.)"""
+    if G_true.name != G_est.name:
+        return add_s(G_true, c_true, psi_true, G_est, c_est, psi_est)
+    if indistinguishable(G_true.name, G_true.pose_id, G_est.pose_id):
+        return add_s(G_true, c_true, psi_true, G_est, c_est, psi_est)
     A = G_true.points(c_true, psi_true)
     B = G_est.points(c_est, psi_est)
-    if G_true.name == G_est.name and G_true.pose_id == G_est.pose_id:
-        return float(np.linalg.norm(A - B, axis=1).mean())
-    return add_s(G_true, c_true, psi_true, G_est, c_est, psi_est)
+    return float(np.linalg.norm(A - B, axis=1).mean())
 
 
 def add_s(G_true, c_true, psi_true, G_est, c_est, psi_est):
