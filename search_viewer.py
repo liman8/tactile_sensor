@@ -4,9 +4,10 @@ Interactive search demo in the MuJoCo viewer: the fork's estimated pose (green g
     GELSIGHT_SENSOR=mini python search_viewer.py [--net MODEL.pt] [--start 16] [--seed N]   # no --start: a random natural pose
     (--net defaults to the final model named in results_centre/FINAL_MODEL.md, else the retrained Mini model)
     GELSIGHT_SENSOR=mini python search_viewer.py --model A --object knife_stl [--start 5] [--mode joint|oracle|generic]
-    (multi-object run: the object is unknown to the search; Page Down / Page Up = next / previous object (a new random
-    pose); the identity probabilities are shown as text and the ghost is the most likely object at its estimated pose;
-    multi_viz.py)
+    (multi-object run: the object is unknown to the search, which estimates the full pose - object, centre, yaw and
+    stable pose (pose_search.py); Page Down / Page Up = next / previous object (a new random pose); the text gives the
+    object, yaw and stable pose with their probabilities and the centre / yaw error and ADD; the ghost is the most likely
+    object at its full estimated pose (CAD-refined after the stop); pose_viz.py)
 
 What is drawn (search_viz.py): the ghost fork at the estimated pose (centre, yaw, face); green sphere = estimated
 centre, red sphere = true centre of mass, a line between them; the 90 % region as see-through tiles on the table;
@@ -216,10 +217,13 @@ class MultiViewerApp(ViewerApp):
     """The same viewer loop on multi_viz.MultiSession: the object is unknown to the search (joint belief over identity
     and centre); Page Down / Page Up switch the object."""
 
-    def __init__(self, model="A", obj="knife_stl", start=None, seed=0, mode="joint"):
+    def __init__(self, model="A", obj="knife_stl", start=None, seed=0, mode="full"):
         import multi_viz as mv
+        import pose_viz as pv
         self.mv = mv
-        self.sess = mv.MultiSession(model, obj, mode)
+        # the full-pose search (pose_viz / pose_search); model B also carries Fork.stl's CAD (never seen in training, C8)
+        self.sess = pv.PoseVizSession(model, obj, ig="centre" if mode == "centre" else "full",
+                                      cad=("fork2_stl",) if model == "B" else ())
         self.S = self.sess.S
         self.objs = list(mv.objects.names()) if model == "A" else list(mv.cm.MODELS[model]["objects"]) + ["fork2_stl"]
         self.m, self.d = self.S.sim.model, self.S.sim.data
@@ -326,7 +330,8 @@ def selftest(net, out_png, multi=None):
                    f"{e['yaw_err']:.0f} deg, face {sv.POSES[e['face']]} (true {sv.POSES[e['true_face']]})")
     else:
         log.append(f"after F7: {len(app.sess.presses)} presses, done {app.sess.done}, object {e['object']} "
-                   f"{e['p_object'] * 100:.0f}% (true {app.sess.obj}), error {e['err']:.2f} mm, yaw error {e['yaw_err']:.0f} deg")
+                   f"{e['p_object'] * 100:.0f}% (true {app.sess.obj}), pose {e['pose']} (true {e['true_pose']}), error "
+                   f"{e['err']:.2f} mm, yaw error {e['yaw_err']:.1f} deg, ADD {e['add']}")
         app.on_key(KEY_PGDN)
         app.on_key(KEY_F7)
         run_until_idle()
@@ -357,7 +362,7 @@ def main():
     ap.add_argument("--selftest", default=None, help="no window: run the keys headless, write this png")
     ap.add_argument("--model", default=None, choices=["A", "B"], help="multi-object model (results_multi/): object unknown")
     ap.add_argument("--object", default="knife_stl", help="multi-object mode: the object on the table")
-    ap.add_argument("--mode", default="joint", choices=["joint", "oracle", "generic"], help="multi-object search mode")
+    ap.add_argument("--mode", default="full", choices=["full", "centre"], help="multi-object search: information gain over the full pose or the centre only")
     a = ap.parse_args()
     net = a.net or default_net()
     if a.selftest:
