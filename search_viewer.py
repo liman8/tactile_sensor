@@ -292,7 +292,8 @@ def selftest(net, out_png, multi=None):
         app = ViewerApp(net, start=16)
     else:                                       # the first stored start the multi search uses for this object
         import search_multi as smu
-        app = MultiViewerApp(multi[0], multi[1], start=int(smu.starts(multi[1], 1)[0]), mode=multi[2])
+        app = MultiViewerApp(multi[0], multi[1], start=int(smu.starts(multi[1], 1)[0]), mode=multi[2],
+                             height=multi[3] if len(multi) > 3 else False, cad_align=multi[4] if len(multi) > 4 else False)
     r = mujoco.Renderer(app.m, 720, 1280, max_geom=12000)
     cam = mujoco.MjvCamera()
     cam.distance, cam.elevation, cam.azimuth = 0.2, -35.0, 150.0
@@ -369,7 +370,7 @@ def main():
     a = ap.parse_args()
     net = a.net or default_net()
     if a.selftest:
-        selftest(net, a.selftest, None if a.model is None else (a.model, a.object, a.mode))
+        selftest(net, a.selftest, None if a.model is None else (a.model, a.object, a.mode, a.height, a.cad_align))
         return
     import mujoco.viewer
     app = (ViewerApp(net, start=a.start, seed=a.seed) if a.model is None else

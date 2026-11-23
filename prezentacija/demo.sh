@@ -8,7 +8,8 @@
 #   3   pretraga, start 18: licem nadole, prvi pritisak na zupcima
 #   4   pretraga, start 10: licem nagore, prvi pritisak na vratu
 #   5   pretraga, nasumična poza (F9 u prozoru daje novu)
-#   6   više predmeta, model A: predmet je nepoznat pretrazi (verovatnoće predmeta u tekstu, senka najverovatnijeg);
+#   6   više predmeta, model A, sa visinom dodira: predmet je nepoznat pretrazi (verovatnoće predmeta u tekstu,
+#       senka najverovatnijeg u proceni pune poze);
 #       Page Down / Page Up = sledeći / prethodni predmet (viljuška, Fork.stl, nož, kašika)
 #   7   model B na viljušci Fork.stl, koju nikad nije video u treningu (kako je planirano: obično je nazove ForkMilimeter)
 #   8   isto, ali sa visinom dodira i poravnatom CAD hipotezom (naknadno): Fork.stl prepozna i nađe joj pozu
@@ -32,7 +33,7 @@ case "${1:-}" in
   4) exec env GELSIGHT_SENSOR=mini $PY search_viewer.py --net "$NET" --start 10 ;;
   5) exec env GELSIGHT_SENSOR=mini $PY search_viewer.py --net "$NET" --seed "${2:-7}" ;;
   6) [ -f results_multi/multi_all/model_seed0.pt ] || { echo "nema modela results_multi/multi_all/model_seed0.pt"; exit 1; }
-     exec env GELSIGHT_SENSOR=mini $PY search_viewer.py --model A --object "${2:-knife_stl}" --seed 3 ;;
+     exec env GELSIGHT_SENSOR=mini $PY search_viewer.py --model A --object "${2:-knife_stl}" --seed 3 --height ;;
   7) [ -f results_multi/multi_holdout/model_seed0.pt ] || { echo "nema modela results_multi/multi_holdout/model_seed0.pt"; exit 1; }
      exec env GELSIGHT_SENSOR=mini $PY search_viewer.py --model B --object fork2_stl --seed 3 ;;
   8) [ -f results_multi/multi_holdout/model_seed0.pt ] || { echo "nema modela results_multi/multi_holdout/model_seed0.pt"; exit 1; }
