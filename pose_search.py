@@ -69,6 +69,52 @@ N_CAND = 600
 STOP_ID, STOP_AREA, STOP_YAW_HALF_DEG, STOP_POSE = 0.95, 16.0, 3.0, 0.95
 MAX_PRESSES = 10
 CALIB = os.path.join(HERE, "results_multi", "pose_calib.json")
+# search-level stress tests (the search assumes the commanded arm pose, the nominal CAD and the training sensor):
+# arm repeatability / calibration error, an object 1 % larger / smaller in x-y than its CAD, image noise, all together
+STRESS = {"arm_noise": dict(arm_sigma_mm=0.5, arm_sigma_deg=1.0),
+          "arm_bias": dict(arm_bias_mm=1.0, arm_bias_deg=1.0),
+          "scale_0.99": dict(object_scale=0.99),
+          "scale_1.01": dict(object_scale=1.01),
+          "img_noise": dict(noise=0.05),
+          "combined": dict(arm_sigma_mm=0.5, arm_sigma_deg=1.0, arm_bias_mm=1.0, arm_bias_deg=1.0, object_scale=1.01,
+                           noise=0.05)}
+
+
+def stress_scene(s):
+    """gelsight_stress_<s>.xml (repo root, generated, git-ignored): gelsight_multi.xml with every object's meshes scaled
+    by s in x and y about the STL origin (z unchanged), the CAD the search uses stays nominal. The per-object includes
+    are written to results_multi/stress/scene/; mesh paths stay relative to the repo root."""
+    import re
+    import tempfile
+
+    def write(path, txt):                     # atomic and only when different: parallel workers read these files
+        if os.path.exists(path) and open(path).read() == txt:
+            return
+        fd, tmp = tempfile.mkstemp(dir=os.path.dirname(path) or ".", suffix=".tmp")
+        with os.fdopen(fd, "w") as fh:
+            fh.write(txt)
+        os.replace(tmp, path)
+    tag = f"{s:.4f}".rstrip("0")
+    d = os.path.join(HERE, "results_multi", "stress", "scene")
+    os.makedirs(d, exist_ok=True)
+    inc = {}
+    for name in objects.names():
+        src = os.path.join(objects.mesh_dir(name), f"{name}.xml")
+        txt = open(src).read()
+        txt = re.sub(r'scale="0\.001 0\.001 0\.001"', f'scale="{0.001 * s:.9g} {0.001 * s:.9g} 0.001"', txt)
+        rel = os.path.join("results_multi", "stress", "scene", f"{name}_{tag}.xml")
+        write(os.path.join(HERE, rel), txt)
+        inc[name] = rel
+    mv = open(os.path.join(HERE, "gelsight_moving.xml")).read()
+    assert mv.count('<include file="meshes/fork_stl/fork_stl.xml"/>') == 1
+    mv = mv.replace('<include file="meshes/fork_stl/fork_stl.xml"/>', f'<include file="{inc["fork_stl"]}"/>')
+    mvf = f"gelsight_stress_moving_{tag}.xml"
+    write(os.path.join(HERE, mvf), mv)
+    main = (f'<mujoco model="gelsight_stress_{tag}">\n  <include file="{mvf}"/>\n'
+            + "".join(f'  <include file="{inc[n]}"/>\n' for n in objects.names() if n != "fork_stl") + "</mujoco>\n")
+    f = os.path.join(HERE, f"gelsight_stress_{tag}.xml")
+    write(f, main)
+    return f
 # contact height (--height, the user's request after the spoon analysis): measured first-contact height above the table
 HEIGHT_NOISE_MM = 0.3          # assumed z accuracy of the arm (added to the simulated measurement)
 HEIGHT_SIGMA_MM = 0.5          # likelihood width (noise + the tilt of the first press, <= 0.5 mm over the pad)
@@ -107,7 +153,7 @@ def cad_error(G, psi, c, presses):
 
 class PoseSearcher:
     def __init__(self, model_key="A", seed=0, cad_extra=(), perturb=None, threads=2, device=None, ghost=False,
-                 use_height=False, cad_align=False):
+                 use_height=False, cad_align=False, stress=None):
         import torch
         from gelsight_sim import GelSightSim
         from fork_detector import ForkDetector, PhotometricModel
@@ -163,7 +209,9 @@ class PoseSearcher:
                 self.cls_pairs.append((o, a, b))
         g = np.arange(NG) - GRID
         self.cgx, self.cgy = np.meshgrid(g, g)                    # sensor-frame CoM grid (mm), [iy, ix]
-        self.sim = GelSightSim(xml_path=os.path.join(HERE, "gelsight_multi.xml"), mode="moving_sensor", seed=0,
+        self.stress = dict(stress or {})
+        scene = stress_scene(self.stress["object_scale"]) if self.stress.get("object_scale") else os.path.join(HERE, "gelsight_multi.xml")
+        self.sim = GelSightSim(xml_path=scene, mode="moving_sensor", seed=0,
                                render_table=True, **({"spec_edit": __import__("multi_viz").ghost_edit_multi} if ghost else {}))
         det = ForkDetector.load(cs.DETECTOR)
         self.perturb = perturb or {}
@@ -192,6 +240,18 @@ class PoseSearcher:
     def press(self, cur, x, y, yaw, pitch, roll, force, k):
         import mujoco
         sim = self.sim
+        if self.stress.get("arm_bias_mm") or self.stress.get("arm_sigma_mm") or self.stress.get("arm_bias_deg") or self.stress.get("arm_sigma_deg"):
+            # stress test: the arm does not press where it was told (the search keeps using the commanded pose);
+            # a per-episode bias (calibration error) plus a per-press error (repeatability)
+            st_ = self.stress
+            rb = np.random.default_rng([int(cur["noise_seed"]), 4242])
+            ang = rb.uniform(0, 2 * np.pi)
+            bxy = st_.get("arm_bias_mm", 0.0) * np.array([np.cos(ang), np.sin(ang)]) / 1000.0
+            byaw = np.radians(st_.get("arm_bias_deg", 0.0)) * rb.choice([-1.0, 1.0])
+            rn = np.random.default_rng([int(cur["noise_seed"]), int(k), 4243])
+            nxy = rn.normal(0, st_.get("arm_sigma_mm", 0.0), 2) / 1000.0
+            nyaw = np.radians(rn.normal(0, st_.get("arm_sigma_deg", 0.0)))
+            x, y, yaw = x + bxy[0] + nxy[0], y + bxy[1] + nxy[1], yaw + byaw + nyaw
         m, d = sim.model, sim.data
         mujoco.mj_resetDataKeyframe(m, d, 0)
         sim.set_tool(self.obj_name)
@@ -476,6 +536,10 @@ class PoseSearcher:
                    fork_body_pos=st["fork_body_pos"][i], fork_body_quat=st["fork_body_quat"][i], noise_seed=int(st["seed"][i]),
                    com_w=st["com_w"][i], pose_id=int(st["pose_id"][i]))
         truth = dict(obj=self.obj_name, pose=int(st["pose_id"][i]), com_w=st["com_w"][i] * 1000, quat_w=st["fork_quat_w"][i])
+        if self.stress.get("object_scale"):
+            cb = np.array(objects.get(self.obj_name)["com_mm"], float)
+            Rb = pg.quat2mat(st["fork_body_quat"][i])
+            truth["com_w"] = truth["com_w"] + Rb @ ((self.stress["object_scale"] - 1.0) * np.array([cb[0], cb[1], 0.0]))
         ep = PoseEpisode(self, cur, truth, ig, verify, oracle, record)
         while not ep.done:
             ep.step()
@@ -674,8 +738,12 @@ def starts(name, n=300, seed=2028, shard="test-0000.h5"):
 def _worker(args):
     key, name, idx, opts, seed = args
     import torch
-    S = PoseSearcher(key, seed, cad_extra=opts.get("cad", ()), perturb=cs.PERTURB[opts.get("cond", "clean")],
-                     use_height=opts.get("height", False), cad_align=opts.get("cad_align", False))
+    stress = STRESS.get(opts.get("stress")) if opts.get("stress") else None
+    perturb = dict(cs.PERTURB[opts.get("cond", "clean")])
+    if stress and stress.get("noise"):
+        perturb["noise"] = stress["noise"]
+    S = PoseSearcher(key, seed, cad_extra=opts.get("cad", ()), perturb=perturb,
+                     use_height=opts.get("height", False), cad_align=opts.get("cad_align", False), stress=stress)
     if opts.get("tau") is not None:
         S.tau = opts["tau"]
     S.load_starts(name, opts.get("shard", "test-0000.h5"))
@@ -691,13 +759,13 @@ def _worker(args):
 
 
 def run(key, names, ig="full", verify=True, oracle=False, cad=(), n=300, workers=4, seed=0, tag=None, cond="clean",
-        split="test", tau=None, out_sub=None, height=False, cad_align=False):
+        split="test", tau=None, out_sub=None, height=False, cad_align=False, stress=None):
     from concurrent.futures import ProcessPoolExecutor
     from multiprocessing import get_context
     d = os.path.join(cm.model_dir(key), out_sub or ("pose_search" + ("" if seed == 0 else f"_seed{seed}")))
     os.makedirs(d, exist_ok=True)
     tag = tag or (f"{ig}{'' if verify else '_noverify'}{'_oracle' if oracle else ''}{'_height' if height else ''}"
-                  f"{'_cad-' + '-'.join(cad) if cad else ''}{'_aligned' if cad_align else ''}{'' if cond == 'clean' else '_' + cond}")
+                  f"{'_cad-' + '-'.join(cad) if cad else ''}{'_aligned' if cad_align else ''}{'' if cond == 'clean' else '_' + cond}{'_stress-' + stress if stress else ''}")
     for name in names:
         fn = os.path.join(d, f"episodes_{tag}_{name}.json")
         if os.path.exists(fn):
@@ -707,7 +775,9 @@ def run(key, names, ig="full", verify=True, oracle=False, cad=(), n=300, workers
         idx = starts(name, n, shard=shard)
         chunks = [list(idx[k::workers]) for k in range(workers)]
         t0 = time.time()
-        opts = dict(ig=ig, verify=verify, oracle=oracle, cad=tuple(cad), cond=cond, shard=shard, tau=tau, height=height, cad_align=cad_align)
+        opts = dict(ig=ig, verify=verify, oracle=oracle, cad=tuple(cad), cond=cond, shard=shard, tau=tau, height=height, cad_align=cad_align, stress=stress)
+        if stress and STRESS[stress].get("object_scale"):
+            stress_scene(STRESS[stress]["object_scale"])          # written once here, before the workers start
         with ProcessPoolExecutor(workers, mp_context=get_context("spawn")) as ex:
             eps = sum(ex.map(_worker, [(key, name, c, opts, seed) for c in chunks]), [])
         eps.sort(key=lambda e: e["index"])
@@ -740,11 +810,12 @@ def main():
     ap.add_argument("--tag", default=None)
     ap.add_argument("--out-sub", default=None, help="results folder under the model (default pose_search)")
     ap.add_argument("--height", action="store_true", help="use the measured contact height (proprioception) and the CAD")
+    ap.add_argument("--stress", default=None, choices=list(STRESS), help="search-level stress test (STRESS)")
     ap.add_argument("--cad-align", action="store_true", help="CAD-only hypotheses: proxy heatmap shifted by the CoM offset, "
                     "proxy's best stable-pose probability (post hoc, after the first C8 run)")
     a = ap.parse_args()
     run(a.model, a.objects or cm.MODELS[a.model]["objects"], a.ig, not a.no_verify, a.oracle, a.cad, a.n, a.workers,
-        a.seed, tag=a.tag, cond=a.cond, split=a.split, tau=a.tau, out_sub=a.out_sub, height=a.height, cad_align=a.cad_align)
+        a.seed, tag=a.tag, cond=a.cond, split=a.split, tau=a.tau, out_sub=a.out_sub, height=a.height, cad_align=a.cad_align, stress=a.stress)
 
 
 if __name__ == "__main__":

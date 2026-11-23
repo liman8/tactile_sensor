@@ -2840,6 +2840,13 @@ fails the ADD success rates.
   scale 0.98 / 1.02 hurts the knife and the spoon most (centre median knife 3.57 -> 2.73 / 4.63 mm, spoon 1.97 -> 3.59 /
   2.73 mm; forks within 0.15 mm); drift 0.03 / 0.08 mm: knife 3.62 / 3.76, spoon 1.91 / 2.33 mm.
 
+**Stress test of the search** (`pose_search.py --stress`, model A, the same 300 starts; the search keeps the commanded
+arm pose, the nominal CAD and the training sensor): ADD < 5 mm and identity are unchanged under every condition (within
+-1.3..+2.0 points); the centre error grows with the arm's error: per-press noise 0.5 mm / 1 deg +0.3-0.4 mm, a 1 mm /
+1 deg calibration bias +0.6-0.8 mm (not observable by touch), the object 1 % off its CAD +0.1-0.25 mm, image noise
+0.05 mm nothing; all together centre median 1.2-1.3 mm. The belief becomes overconfident (true centre in the 90 % region
+58-78 % instead of 88-99 %): the arm's error is not in the likelihood yet.
+
 **Model B (never saw Fork.stl) on Fork.stl:**
 
 | variant | identity | centre median | ADD median | ADD < 2 / < 5 mm | presses |

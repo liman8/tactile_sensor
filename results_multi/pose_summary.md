@@ -1,6 +1,6 @@
 # Multi-object pose results (recomputed by results_multi/pose_summary.py)
 
-ADD uses corresponding body points also for a wrong stable pose; ADD-S only for the indistinguishable pairs (Fork.stl 0/1, Spoon.stl 0/1 and 2/3). Rows saved under the earlier, lenient rule were rescored here: multi_all/pose_search/episodes_full_knife_stl.json 10, multi_all/pose_search/episodes_full_spoon_stl.json 4, multi_all/pose_search/episodes_centre_fork_stl.json 3, multi_all/pose_search/episodes_centre_knife_stl.json 7, multi_all/pose_search/episodes_centre_spoon_stl.json 2, multi_all/pose_search/episodes_full_noverify_knife_stl.json 23, multi_all/pose_search/episodes_full_noverify_spoon_stl.json 4, multi_all/pose_search/episodes_full_oracle_knife_stl.json 9, multi_all/pose_search/episodes_full_oracle_spoon_stl.json 3.
+ADD uses corresponding body points also for a wrong stable pose; ADD-S only for the indistinguishable pairs (Fork.stl 0/1, Spoon.stl 0/1 and 2/3). Rows saved under the earlier, lenient rule were rescored here: multi_all/pose_search/episodes_full_knife_stl.json 10, multi_all/pose_search/episodes_full_spoon_stl.json 4, multi_all/pose_search/episodes_centre_fork_stl.json 3, multi_all/pose_search/episodes_centre_knife_stl.json 7, multi_all/pose_search/episodes_centre_spoon_stl.json 2, multi_all/pose_search/episodes_full_noverify_knife_stl.json 23, multi_all/pose_search/episodes_full_noverify_spoon_stl.json 4, multi_all/pose_search/episodes_full_oracle_knife_stl.json 9, multi_all/pose_search/episodes_full_oracle_spoon_stl.json 3, multi_all/pose_search_stress/episodes_full_stress-scale_0.99_knife_stl.json 7, multi_all/pose_search_stress/episodes_full_stress-scale_0.99_spoon_stl.json 4, multi_all/pose_search_stress/episodes_full_stress-scale_1.01_knife_stl.json 10, multi_all/pose_search_stress/episodes_full_stress-scale_1.01_spoon_stl.json 4, multi_all/pose_search_stress/episodes_full_stress-combined_fork_stl.json 1, multi_all/pose_search_stress/episodes_full_stress-combined_knife_stl.json 15, multi_all/pose_search_stress/episodes_full_stress-combined_spoon_stl.json 5, multi_all/pose_search_stress/episodes_full_height_stress-combined_knife_stl.json 8.
 
 | object | variant | identity % | stable pose % (sym) | centre med / p90 mm | yaw med / p90 deg | ADD med mm | ADD-S med mm | ADD<2 / <5 % | grasp med mm | presses | centre / yaw in 90 % |
 |---|---|---|---|---|---|---|---|---|---|---|---|
@@ -59,6 +59,40 @@ ADD uses corresponding body points also for a wrong stable pose; ADD-S only for 
 | Fork.stl | -0.16 [-0.30, -0.04] | +0.00 [-0.00, +0.01] | +0.33 [+0.00, +1.00] | +0.33 [+0.00, +1.00] |
 | Knife.stl | -0.51 [-0.72, -0.31] | -0.01 [-0.07, +0.05] | +5.33 [+2.33, +8.33] | +0.33 [+0.00, +1.00] |
 | Spoon.stl | -0.31 [-0.53, -0.10] | -0.01 [-0.01, +0.00] | +4.67 [+2.33, +7.33] | +4.00 [+2.00, +6.33] |
+
+
+## Stress test of the search (model A; the same starts as the clean search; minus clean, 95 % interval)
+
+| condition | object | identity % | centre median mm | minus clean | ADD < 5 mm % | minus clean, points | presses | centre / yaw in 90 % |
+|---|---|---|---|---|---|---|---|---|
+| arm_noise | fork_stl | 100.0 | 0.79 | +0.29 [+0.21, +0.41] | 100.0 | +0.0 [+0.0, +0.0] | 2.16 | 92.7 / 87.7 |
+| arm_noise | Fork.stl | 99.7 | 0.73 | +0.31 [+0.22, +0.38] | 99.7 | +0.0 [-1.0, +1.0] | 2.03 | 94.7 / 89.3 |
+| arm_noise | Knife.stl | 99.7 | 0.75 | +0.40 [+0.30, +0.48] | 91.7 | -1.3 [-4.0, +1.0] | 3.70 | 82.0 / 84.7 |
+| arm_noise | Spoon.stl | 96.0 | 0.62 | +0.33 [+0.27, +0.38] | 94.7 | +1.0 [-0.3, +2.7] | 3.94 | 87.7 / 84.7 |
+| arm_bias | fork_stl | 99.7 | 1.10 | +0.61 [+0.52, +0.69] | 99.3 | -0.7 [-1.7, +0.0] | 2.38 | 78.3 / 77.3 |
+| arm_bias | Fork.stl | 100.0 | 1.10 | +0.68 [+0.62, +0.75] | 100.0 | +0.3 [+0.0, +1.0] | 2.24 | 71.7 / 78.7 |
+| arm_bias | Knife.stl | 100.0 | 1.06 | +0.72 [+0.64, +0.77] | 94.0 | +1.0 [-1.0, +3.0] | 3.71 | 69.7 / 79.3 |
+| arm_bias | Spoon.stl | 95.0 | 1.05 | +0.76 [+0.71, +0.80] | 92.7 | -1.0 [-3.0, +1.0] | 4.14 | 68.3 / 80.7 |
+| scale_0.99 | fork_stl | 99.7 | 0.63 | +0.13 [+0.08, +0.18] | 99.7 | -0.3 [-1.0, +0.0] | 2.27 | 98.3 / 96.0 |
+| scale_0.99 | Fork.stl | 100.0 | 0.51 | +0.09 [+0.03, +0.14] | 100.0 | +0.3 [+0.0, +1.0] | 2.08 | 97.3 / 98.7 |
+| scale_0.99 | Knife.stl | 99.7 | 0.49 | +0.15 [+0.08, +0.20] | 94.7 | +1.7 [-0.3, +3.7] | 3.75 | 86.3 / 94.0 |
+| scale_0.99 | Spoon.stl | 96.0 | 0.41 | +0.12 [+0.05, +0.18] | 94.3 | +0.7 [-1.0, +2.3] | 3.88 | 91.0 / 91.0 |
+| scale_1.01 | fork_stl | 100.0 | 0.61 | +0.11 [+0.02, +0.17] | 100.0 | +0.0 [+0.0, +0.0] | 2.27 | 98.7 / 96.7 |
+| scale_1.01 | Fork.stl | 100.0 | 0.56 | +0.14 [+0.09, +0.19] | 100.0 | +0.3 [+0.0, +1.0] | 2.17 | 98.7 / 98.3 |
+| scale_1.01 | Knife.stl | 99.3 | 0.55 | +0.20 [+0.13, +0.27] | 92.7 | -0.3 [-2.7, +2.0] | 3.87 | 86.0 / 94.0 |
+| scale_1.01 | Spoon.stl | 95.3 | 0.54 | +0.25 [+0.16, +0.29] | 93.3 | -0.3 [-1.7, +1.0] | 4.09 | 90.7 / 91.7 |
+| img_noise | fork_stl | 100.0 | 0.52 | +0.02 [-0.02, +0.08] | 99.7 | -0.3 [-1.0, +0.0] | 2.25 | 99.3 / 96.0 |
+| img_noise | Fork.stl | 99.7 | 0.44 | +0.02 [-0.01, +0.07] | 99.7 | +0.0 [-1.0, +1.0] | 2.15 | 96.7 / 98.0 |
+| img_noise | Knife.stl | 100.0 | 0.32 | -0.03 [-0.08, +0.01] | 95.0 | +2.0 [+0.0, +4.0] | 3.82 | 87.3 / 91.7 |
+| img_noise | Spoon.stl | 95.7 | 0.28 | -0.01 [-0.04, +0.02] | 94.0 | +0.3 [-1.0, +1.7] | 4.03 | 91.3 / 92.3 |
+| combined | fork_stl | 99.3 | 1.27 | +0.77 [+0.68, +0.86] | 99.0 | -1.0 [-2.3, +0.0] | 2.26 | 65.3 / 75.3 |
+| combined | Fork.stl | 100.0 | 1.21 | +0.79 [+0.69, +0.90] | 100.0 | +0.3 [+0.0, +1.0] | 2.14 | 66.0 / 79.3 |
+| combined | Knife.stl | 99.7 | 1.29 | +0.95 [+0.87, +1.04] | 92.0 | -1.0 [-3.7, +1.7] | 3.72 | 57.7 / 77.7 |
+| combined | Spoon.stl | 94.7 | 1.27 | +0.98 [+0.91, +1.07] | 92.7 | -1.0 [-3.3, +1.0] | 4.13 | 59.3 / 77.7 |
+| combined_height | fork_stl | 100.0 | 1.26 | +0.77 [+0.66, +0.88] | 100.0 | +0.0 [+0.0, +0.0] | 2.12 | 66.7 / 77.0 |
+| combined_height | Fork.stl | 100.0 | 1.20 | +0.78 [+0.69, +0.90] | 100.0 | +0.3 [+0.0, +1.0] | 2.04 | 67.7 / 79.7 |
+| combined_height | Knife.stl | 99.7 | 1.30 | +0.95 [+0.87, +1.04] | 94.7 | +1.7 [-1.7, +5.0] | 3.35 | 57.0 / 79.0 |
+| combined_height | Spoon.stl | 99.3 | 1.21 | +0.92 [+0.81, +1.00] | 98.3 | +4.7 [+2.0, +7.7] | 3.58 | 63.0 / 82.0 |
 
 
 ## CAD verification and refinement (C4)

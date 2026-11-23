@@ -474,6 +474,12 @@ ADD-S samo za parove poza koje se ne mogu razlikovati. Pogrešan predmet je neus
 - Model A prema modelu samo za viljušku, sa poznatim predmetom: medijana greške težišta +0,02 mm, p90 +0,2 mm.
 - Robusnost (jedan pritisak): šum, zamućenje i drift skoro ništa ne menjaju; skala ±2 % najviše smeta nožu i kašiki.
 
+**Test opterećenja pretrage** (model A, istih 300 početaka; pretraga veruje zadatoj pozi ruke, nominalnom CAD-u i
+senzoru iz treninga): ADD < 5 mm i prepoznavanje se ne menjaju ni pod jednom smetnjom. Greška težišta raste sa greškom
+ruke: šum 0,5 mm / 1° +0,3-0,4 mm, pomeraj kalibracije 1 mm / 1° +0,6-0,8 mm (dodirom se ne vidi), predmet 1 % različit
+od CAD-a +0,1-0,25 mm, šum slike ništa; sve zajedno 1,2-1,3 mm. Verovanje tada postaje presigurno (pravo težište u 90 %
+oblasti u 58-78 % umesto 88-99 %), jer greška ruke još nije u modelu verovatnoće.
+
 **Model B (Fork.stl nikad viđen) na Fork.stl:**
 
 | varijanta | predmet | težište | ADD < 5 mm | pritisaka |

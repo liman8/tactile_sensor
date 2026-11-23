@@ -169,6 +169,23 @@ def main():
             st = [stats(load(f"multi_all/pose_search{'' if s == 0 else f'_seed{s}'}/episodes_full_{n}.json")) for s in (0, 1, 2)]
             S["seeds_search"][n] = {k: dict(mean=float(np.mean([x[k] for x in st])), std=float(np.std([x[k] for x in st], ddof=1)),
                                             values=[x[k] for x in st]) for k in ("identity", "centre_med", "yaw_med", "add_lt5", "presses")}
+    # search-level stress test (chain_stress.sh): the same starts as the clean search, paired differences
+    S["stress_A"] = {}
+    for st in ("arm_noise", "arm_bias", "scale_0.99", "scale_1.01", "img_noise", "combined", "combined_height"):
+        tag = "full_height_stress-combined" if st == "combined_height" else f"full_stress-{st}"
+        for n in OBJ:
+            E = load(f"multi_all/pose_search_stress/episodes_{tag}_{n}.json")
+            F = load(f"multi_all/pose_search/episodes_full_{n}.json")
+            if not E or not F:
+                continue
+            fi = {e["index"]: e for e in F}
+            E = [e for e in E if e["index"] in fi]
+            F = [fi[e["index"]] for e in E]
+            b = stats(E)
+            S["stress_A"].setdefault(st, {})[n] = dict(
+                stats=b, add5_minus_clean=paired((addv(E) < 5).astype(float), (addv(F) < 5).astype(float), lambda x: x.mean(-1)),
+                centre_median_minus_clean=paired(np.array([e["refined"]["centre_err_mm"] for e in E]),
+                                                 np.array([e["refined"]["centre_err_mm"] for e in F]), lambda x: np.median(x, -1)))
     S["rescored_refined_rows"] = {k: v for k, v in RESCORED.items() if v}
     json.dump(S, open(os.path.join(R, "pose_summary.json"), "w"), indent=1)
     md = ["# Multi-object pose results (recomputed by results_multi/pose_summary.py)\n",
@@ -223,6 +240,19 @@ def main():
         md.append(table([[SHORT[n], f3(v["presses_height_minus_full"]), f3(v["add_median_height_minus_full"]),
                           f3(v["success_add5_height_minus_full"], 100), f3(v["identity_height_minus_full"], 100)]
                          for n, v in S["height_vs_full"].items()], ["object", "presses", "ADD median mm", "ADD < 5 mm, points", "identity, points"]))
+    if S.get("stress_A"):
+        md.append("\n## Stress test of the search (model A; the same starts as the clean search; minus clean, 95 % interval)\n")
+        rows_ = []
+        for st, per in S["stress_A"].items():
+            for n, v in per.items():
+                b = v["stats"]
+                rows_.append([st, SHORT[n], fmt(b["identity"], 2, True), f"{b['centre_med']:.2f}",
+                              f"{v['centre_median_minus_clean'][0]:+.2f} [{v['centre_median_minus_clean'][1]:+.2f}, {v['centre_median_minus_clean'][2]:+.2f}]",
+                              fmt(b["add_lt5"], 2, True),
+                              f"{v['add5_minus_clean'][0] * 100:+.1f} [{v['add5_minus_clean'][1] * 100:+.1f}, {v['add5_minus_clean'][2] * 100:+.1f}]",
+                              f"{b['presses']:.2f}", f"{fmt(b['centre_in90'], 2, True)} / {fmt(b['yaw_in90'], 2, True)}"])
+        md.append(table(rows_, ["condition", "object", "identity %", "centre median mm", "minus clean", "ADD < 5 mm %",
+                                "minus clean, points", "presses", "centre / yaw in 90 %"]))
     md.append("\n## CAD verification and refinement (C4)\n")
     md.append(table([[SHORT[n], " / ".join(f"{x:.2f}" for x in v["refine_centre_median"]),
                       " / ".join(f"{x:.2f}" for x in v["refine_yaw_median"]), " / ".join(f"{x * 100:.0f}" for x in v["refine_add_lt5"]),

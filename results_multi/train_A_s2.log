@@ -1,0 +1,7 @@
+multi A (multi_all): objects ['fork_stl', 'fork2_stl', 'knife_stl', 'spoon_stl'], 120000 train / 8000 val presses, seed 2, 120 epochs, robust augmentation (mirror only for ['fork_stl', 'fork2_stl', 'spoon_stl']), test border 2 px -> results_multi/multi_all/model_seed2.pt
+  [A s2] epoch   1: train d 6.173 yaw 3.303 | val a 0.185 id 1.075 b 0.686 pose 0.736 d 5.199 yaw 2.622 (124 s)
+  [A s2] epoch   5: train d 4.163 yaw 1.693 | val a 0.153 id 0.910 b 0.537 pose 0.716 d 3.713 yaw 1.496 (701 s)
+  [A s2] epoch  10: train d 3.674 yaw 1.376 | val a 0.143 id 0.859 b 0.508 pose 0.677 d 3.285 yaw 1.203 (1480 s)
+  [A s2] epoch  15: train d 3.360 yaw 1.211 | val a 0.131 id 0.820 b 0.430 pose 0.664 d 2.923 yaw 1.032 (2241 s)
+  [A s2] epoch  20: train d 3.110 yaw 1.083 | val a 0.131 id 0.787 b 0.370 pose 0.631 d 2.699 yaw 0.932 (3025 s)
+  [A s2] epoch  25: train d 2.954 yaw 1.000 | val a 0.111 id 0.768 b 0.329 pose 0.617 d 2.514 yaw 0.870 (3804 s)
