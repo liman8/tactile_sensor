@@ -112,13 +112,24 @@ viewer window itself always uses GLFW. To use another backend: `MUJOCO_GL=glfw p
 
 ```bash
 git clone git@github.com:liman8/tactile_sensor.git && cd tactile_sensor
-python -m venv .venv && .venv/bin/pip install -r requirements.txt
+python3.14 -m venv .venv && .venv/bin/pip install -r requirements-lock.txt   # the exact tested versions
 bash get_models.sh                     # the demo's model: present (versioned) -> "ok"; else fetched and checked
+bash get_models.sh --multi --check     # the multi-object models A and B (versioned) -> "ok"
 GELSIGHT_SENSOR=mini .venv/bin/python collect_dataset.py collect --sensor mini --only-split test2 --n 1000 \
     --out dataset_mini                 # regenerate only test2-0000.h5 (the search starts), ~30 s, 112 MB
 bash prezentacija/demo.sh t            # headless self-test -> prezentacija/selftest_<time>.png
 bash prezentacija/demo.sh 2            # the main demo (opens the MuJoCo window)
+bash prezentacija/demo.sh 6            # multi-object: model A, the object unknown, with the contact height
+bash prezentacija/demo.sh 7            # model B on Fork.stl, never seen in training (pre-planned: names it fork_stl)
+bash prezentacija/demo.sh 8            # the same with the contact height and the aligned CAD hypothesis
 ```
+
+* **Python and packages:** `requirements-lock.txt` pins the versions the project was run and tested with (Python
+  3.14, Linux x86_64). `requirements.txt` has the same packages without versions. Without an NVIDIA GPU torch runs on
+  the CPU (slower). The demo scripts are bash; the viewer itself is `search_viewer.py` (the commands are in
+  `prezentacija/demo.sh`).
+* **The multi-object demo needs no download:** models A and B (37 MB each) and the four test shards
+  `dataset_multi/<object>/test-0000.h5` (11 MB each: the viewer's reference image and stored starts) are in git.
 
 * **`get_models.sh`** checks the models `prezentacija/demo.sh` uses against `MODELS.sha256`. A model that is
   present with the right SHA-256 is kept. A missing one is fetched from `--from DIR|URL` (or `$MODELS_URL`) under

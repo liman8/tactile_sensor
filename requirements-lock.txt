@@ -1,0 +1,21 @@
+# Exact versions this project was run and tested with (Python 3.14, Linux x86_64, 2026-11-23).
+# A fresh machine: python3.14 -m venv .venv && .venv/bin/pip install -r requirements-lock.txt
+# requirements.txt lists the same packages without versions (newer releases may work, but were not tested).
+mujoco==4.0.1
+glfw==2.11.0
+numpy==2.5.4
+scipy==1.18.1
+opencv-python==5.0.0.93
+scikit-learn==1.9.1
+joblib==1.6.0
+imageio==2.38.1
+pillow==13.0.0
+trimesh==5.2.1
+manifold3d==3.5.5
+coacd==1.0.14
+rtree==1.4.1
+networkx==3.7
+fast-simplification==0.2.0
+h5py==3.16.0
+matplotlib==3.11.2
+torch==2.15.0
