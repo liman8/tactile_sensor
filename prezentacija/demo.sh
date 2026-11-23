@@ -9,10 +9,12 @@
 #   4   pretraga, start 10: licem nagore, prvi pritisak na vratu
 #   5   pretraga, nasumična poza (F9 u prozoru daje novu)
 #   6   više predmeta, model A, sa visinom dodira: predmet je nepoznat pretrazi (verovatnoće predmeta u tekstu,
-#       senka najverovatnijeg u proceni pune poze);
+#       senka najverovatnijeg u proceni pune poze); NASUMIČAN START: prvi pritisak je bilo gde u kvadratu 10 x 10 cm
+#       oko predmeta i često promaši (sivi disk), pa pretraga sama traži predmet; F9 = nova nasumična poza i start;
 #       Page Down / Page Up = sledeći / prethodni predmet (viljuška, Fork.stl, nož, kašika)
 #   7   model B na viljušci Fork.stl, koju nikad nije video u treningu (kako je planirano: obično je nazove ForkMilimeter)
 #   8   isto, ali sa visinom dodira i poravnatom CAD hipotezom (naknadno): Fork.stl prepozna i nađe joj pozu
+#       (6, 7, 8: nasumičan start; stari start, uvek na predmetu: dodati DEMO_ON_OBJECT=1 ispred komande)
 #   t   provera bez prozora (isti tasteri F6 F6 F8 F9 F7), piše prezentacija/selftest_<vreme>.png
 #
 # Tasteri u pretrazi: F6 jedan pritisak, F7 do kraja, F8 briše verovanje, F9 nova viljuška.
@@ -22,6 +24,8 @@
 # Ne koristiti Ctrl + vuci: to primenjuje silu na izabrano telo.
 set -e
 cd "$(dirname "$0")/.."
+COLD=--cold
+[ "${DEMO_ON_OBJECT:-0}" = 1 ] && COLD=
 PY=python
 [ -x .venv/bin/python ] && PY=.venv/bin/python
 NET=${NET:-results_centre/mini_robust/model_100k_seed0.pt}     # trenutni kandidat za konačni model
@@ -33,11 +37,11 @@ case "${1:-}" in
   4) exec env GELSIGHT_SENSOR=mini $PY search_viewer.py --net "$NET" --start 10 ;;
   5) exec env GELSIGHT_SENSOR=mini $PY search_viewer.py --net "$NET" --seed "${2:-7}" ;;
   6) [ -f results_multi/multi_all/model_seed0.pt ] || { echo "nema modela results_multi/multi_all/model_seed0.pt"; exit 1; }
-     exec env GELSIGHT_SENSOR=mini $PY search_viewer.py --model A --object "${2:-knife_stl}" --seed 3 --height ;;
+     exec env GELSIGHT_SENSOR=mini $PY search_viewer.py --model A --object "${2:-knife_stl}" --seed 3 --height $COLD ;;
   7) [ -f results_multi/multi_holdout/model_seed0.pt ] || { echo "nema modela results_multi/multi_holdout/model_seed0.pt"; exit 1; }
-     exec env GELSIGHT_SENSOR=mini $PY search_viewer.py --model B --object fork2_stl --seed 3 ;;
+     exec env GELSIGHT_SENSOR=mini $PY search_viewer.py --model B --object fork2_stl --seed 3 $COLD ;;
   8) [ -f results_multi/multi_holdout/model_seed0.pt ] || { echo "nema modela results_multi/multi_holdout/model_seed0.pt"; exit 1; }
-     exec env GELSIGHT_SENSOR=mini $PY search_viewer.py --model B --object fork2_stl --seed 3 --height --cad-align ;;
+     exec env GELSIGHT_SENSOR=mini $PY search_viewer.py --model B --object fork2_stl --seed 3 --height --cad-align $COLD ;;
   t) out=prezentacija/selftest_$(date +%H%M%S).png
      MUJOCO_GL=egl GELSIGHT_SENSOR=mini $PY search_viewer.py --net "$NET" --selftest "$out" ;;
   *) sed -n '2,20p' "$0"; exit 1 ;;

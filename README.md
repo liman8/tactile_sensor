@@ -2855,6 +2855,15 @@ fails the ADD success rates.
 0.49 +- 0.01 / 0.42 +- 0.00 / 0.35 +- 0.01 / 0.29 +- 0.00 mm and ADD < 5 mm 99.9 +- 0.2 / 99.9 +- 0.2 / 93.2 +- 0.4 /
 94.1 +- 0.4 % (fork_stl / Fork.stl / Knife / Spoon); seed 0, used everywhere above, is typical.
 
+**Cold start** (`pose_search.py --cold`; the demos 6-8 start this way): the first press is uniform in +-50 mm around the
+object's centre (level sensor, random yaw) and hits the object in only 31-37 % of the episodes; the search knows only
+that the centre is within 50 mm of the first press (a coarse prior, as a camera or an operator would give) and may
+press up to 15 times. Model A with the contact height, 300 starts per object: first contact after a median of 2 presses
+(p90 5-6), 1 of 1,200 episodes never touched the object; identity 99.0-100 %, ADD < 5 mm 98.7 / 100 / 94.3 / 96.7 %
+(fork_stl / Fork / Knife / Spoon), 4.4-6.2 presses, centre median 0.25-0.46 mm. Model B on Fork.stl (aligned + height):
+100 %, 5.75 presses, 0.28 mm. Without the coarse prior (belief uniform over +-100 mm) 4-10 % of the episodes never found
+the object in 15 presses (ADD < 5 mm 88.7-93.0 %; `results_multi/superseded/cold_start_no_prior/`).
+
 **Stress test of the search** (`pose_search.py --stress`, model A, the same 300 starts; the search keeps the commanded
 arm pose, the nominal CAD and the training sensor): ADD < 5 mm and identity are unchanged under every condition (within
 -1.3..+2.0 points); the centre error grows with the arm's error: per-press noise 0.5 mm / 1 deg +0.3-0.4 mm, a 1 mm /

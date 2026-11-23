@@ -68,6 +68,10 @@ N_STATES = 2048
 N_CAND = 600
 STOP_ID, STOP_AREA, STOP_YAW_HALF_DEG, STOP_POSE = 0.95, 16.0, 3.0, 0.95
 MAX_PRESSES = 10
+# cold start (the user's request: a random first press, not one known to be on the object): the first press is uniform
+# in a COLD_HALF_MM square around the table point the object lies near; more presses are allowed to find it first
+COLD_HALF_MM = 50.0
+COLD_MAX_PRESSES = 15
 CALIB = os.path.join(HERE, "results_multi", "pose_calib.json")
 # search-level stress tests (the search assumes the commanded arm pose, the nominal CAD and the training sensor):
 # arm repeatability / calibration error, an object 1 % larger / smaller in x-y than its CAD, image noise, all together
@@ -531,12 +535,20 @@ class PoseSearcher:
                     S_cad=cad_error(G, v[2], v[:2], presses), S_cad0=cad_error(G, x0[2], x0[:2], presses))
 
     # ---- one episode
-    def episode(self, i, ig="full", verify=True, oracle=False, refine=True, seed=0, record=False):
-        """One stored start (index i of <object>/test-0000.h5) run to the stop; see PoseEpisode."""
+    def episode(self, i, ig="full", verify=True, oracle=False, refine=True, seed=0, record=False, cold=False):
+        """One stored start (index i of <object>/test-0000.h5) run to the stop; see PoseEpisode. cold: the stored object
+        pose, but the first press uniform in +-COLD_HALF_MM around the object's centre of mass (level sensor, random yaw),
+        so it often misses the object; up to COLD_MAX_PRESSES."""
         st = self.st
         cur = dict(first=tuple(float(v) for v in st["arm_cmd"][i]), force=float(st["force_cmd"][i]),
                    fork_body_pos=st["fork_body_pos"][i], fork_body_quat=st["fork_body_quat"][i], noise_seed=int(st["seed"][i]),
                    com_w=st["com_w"][i], pose_id=int(st["pose_id"][i]))
+        if cold:
+            rc = np.random.default_rng([int(st["seed"][i]), 2026])
+            xy = st["com_w"][i][:2] + rc.uniform(-COLD_HALF_MM, COLD_HALF_MM, 2) / 1000.0
+            cur["first"] = (float(xy[0]), float(xy[1]), float(rc.uniform(-np.pi, np.pi)), 0.0, 0.0)
+            cur["max_presses"] = COLD_MAX_PRESSES
+            cur["prior_half_mm"] = COLD_HALF_MM
         truth = dict(obj=self.obj_name, pose=int(st["pose_id"][i]), com_w=st["com_w"][i] * 1000, quat_w=st["fork_quat_w"][i])
         if self.stress.get("object_scale"):
             cb = np.array(objects.get(self.obj_name)["com_mm"], float)
@@ -546,7 +558,8 @@ class PoseSearcher:
         while not ep.done:
             ep.step()
         res = ep.result(refine)
-        res.update(index=int(i), first_part=int(st["part"][i]))
+        res.update(index=int(i), first_part=-1 if cold else int(st["part"][i]), cold=bool(cold),
+                   first_contact_press=next((r["press"] for r in res["trace"] if r["contact"]), None))
         # the episode's lambdas (to_s / to_w) close over it: a reference cycle that only the cyclic garbage collector
         # frees; drop its GPU tensors now (a 140 MB posterior per episode accumulated otherwise)
         ep.P = None
@@ -607,6 +620,13 @@ class PoseEpisode:
         if S.dev == "cuda":
             torch.cuda.reset_peak_memory_stats()
         S.L = torch.zeros((len(S.hyps), pg.YAW_BINS, NG, NG), device=S.dev)
+        if cur.get("prior_half_mm"):
+            # coarse prior (cold start): the centre of mass is within +-prior_half_mm (table axes) of the first press, as a
+            # camera or an operator would say "roughly here"; cells outside start at log(EPS^2)
+            cxw = self.p0[0] + S.cgx * ex[0] + S.cgy * ey[0] - self.p0[0]
+            cyw = self.p0[1] + S.cgx * ex[1] + S.cgy * ey[1] - self.p0[1]
+            out_ = (np.abs(cxw) > cur["prior_half_mm"]) | (np.abs(cyw) > cur["prior_half_mm"])
+            S.L[:, :, torch.tensor(out_, device=S.dev)] = float(2 * np.log(EPS))
         if oracle:                                                # the identity is given: the other objects are out
             for j, hy in enumerate(S.hyps):
                 if hy["obj"] != truth["obj"]:
@@ -690,7 +710,7 @@ class PoseEpisode:
         self.est, self.P = est, P
         self.stop = (est["p_obj"] >= STOP_ID and est["area90"] < STOP_AREA and est["yaw_half_deg"] <= STOP_YAW_HALF_DEG
                      and est["p_pose_cls"] >= STOP_POSE)
-        if self.stop or kp + 1 >= MAX_PRESSES:
+        if self.stop or kp + 1 >= self.cur.get("max_presses", MAX_PRESSES):
             self.done = True
             return rec
         if contact or self.last_contact is None:
@@ -752,7 +772,7 @@ def _worker(args):
     out = []
     for i in idx:
         t = time.time()
-        e = S.episode(int(i), ig=opts["ig"], verify=opts["verify"], oracle=opts["oracle"])
+        e = S.episode(int(i), ig=opts["ig"], verify=opts["verify"], oracle=opts["oracle"], cold=opts.get("cold", False))
         e["seconds"] = time.time() - t
         out.append(e)
         if S.dev == "cuda":
@@ -761,13 +781,13 @@ def _worker(args):
 
 
 def run(key, names, ig="full", verify=True, oracle=False, cad=(), n=300, workers=4, seed=0, tag=None, cond="clean",
-        split="test", tau=None, out_sub=None, height=False, cad_align=False, stress=None):
+        split="test", tau=None, out_sub=None, height=False, cad_align=False, stress=None, cold=False):
     from concurrent.futures import ProcessPoolExecutor
     from multiprocessing import get_context
     d = os.path.join(cm.model_dir(key), out_sub or ("pose_search" + ("" if seed == 0 else f"_seed{seed}")))
     os.makedirs(d, exist_ok=True)
     tag = tag or (f"{ig}{'' if verify else '_noverify'}{'_oracle' if oracle else ''}{'_height' if height else ''}"
-                  f"{'_cad-' + '-'.join(cad) if cad else ''}{'_aligned' if cad_align else ''}{'' if cond == 'clean' else '_' + cond}{'_stress-' + stress if stress else ''}"
+                  f"{'_cad-' + '-'.join(cad) if cad else ''}{'_aligned' if cad_align else ''}{'' if cond == 'clean' else '_' + cond}{'_stress-' + stress if stress else ''}{'_cold' if cold else ''}"
                   f"{'' if (not height or HEIGHT_NOISE_MM == 0.3) else f'_hn{HEIGHT_NOISE_MM:g}'}")
     for name in names:
         fn = os.path.join(d, f"episodes_{tag}_{name}.json")
@@ -778,7 +798,7 @@ def run(key, names, ig="full", verify=True, oracle=False, cad=(), n=300, workers
         idx = starts(name, n, shard=shard)
         chunks = [list(idx[k::workers]) for k in range(workers)]
         t0 = time.time()
-        opts = dict(ig=ig, verify=verify, oracle=oracle, cad=tuple(cad), cond=cond, shard=shard, tau=tau, height=height, cad_align=cad_align, stress=stress)
+        opts = dict(ig=ig, verify=verify, oracle=oracle, cad=tuple(cad), cond=cond, shard=shard, tau=tau, height=height, cad_align=cad_align, stress=stress, cold=cold)
         if stress and STRESS[stress].get("object_scale"):
             stress_scene(STRESS[stress]["object_scale"])          # written once here, before the workers start
         with ProcessPoolExecutor(workers, mp_context=get_context("spawn")) as ex:
@@ -814,11 +834,12 @@ def main():
     ap.add_argument("--out-sub", default=None, help="results folder under the model (default pose_search)")
     ap.add_argument("--height", action="store_true", help="use the measured contact height (proprioception) and the CAD")
     ap.add_argument("--stress", default=None, choices=list(STRESS), help="search-level stress test (STRESS)")
+    ap.add_argument("--cold", action="store_true", help="cold start: a random first press near the object (often a miss)")
     ap.add_argument("--cad-align", action="store_true", help="CAD-only hypotheses: proxy heatmap shifted by the CoM offset, "
                     "proxy's best stable-pose probability (post hoc, after the first C8 run)")
     a = ap.parse_args()
     run(a.model, a.objects or cm.MODELS[a.model]["objects"], a.ig, not a.no_verify, a.oracle, a.cad, a.n, a.workers,
-        a.seed, tag=a.tag, cond=a.cond, split=a.split, tau=a.tau, out_sub=a.out_sub, height=a.height, cad_align=a.cad_align, stress=a.stress)
+        a.seed, tag=a.tag, cond=a.cond, split=a.split, tau=a.tau, out_sub=a.out_sub, height=a.height, cad_align=a.cad_align, stress=a.stress, cold=a.cold)
 
 
 if __name__ == "__main__":

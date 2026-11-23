@@ -42,7 +42,8 @@ def pose_desc(name, pid):
 
 class PoseVizSession:
     def __init__(self, model_key="A", obj="knife_stl", ig="full", verify=True, ghost=True, seed=0, cad=(), height=False,
-                 cad_align=False):
+                 cad_align=False, cold=False):
+        self.cold = cold                     # random starts: the first press anywhere near the object, often a miss
         self.S = ps.PoseSearcher(model_key, seed, cad_extra=cad, ghost=ghost, use_height=height, cad_align=cad_align)
         S = self.S
         m = S.sim.model
@@ -77,11 +78,17 @@ class PoseVizSession:
         x, y, psi = rng.uniform(-20, 20), rng.uniform(-20, 20), rng.uniform(-np.pi, np.pi)
         pos, q = self.body_pose(self.obj, pid, np.array([x, y]), psi)
         P = G.points(np.array([x, y]), psi)
-        top = P[P[:, 2] > P[:, 2].max() - 0.1]
-        p = top[rng.integers(len(top))] / 1000
+        if self.cold:                        # anywhere in a 10 x 10 cm square around the table centre (the object is within 20 mm)
+            p = np.r_[rng.uniform(-ps.COLD_HALF_MM, ps.COLD_HALF_MM, 2), 0.0] / 1000
+        else:                                # a random point on the object's top surface (first press always on the object)
+            top = P[P[:, 2] > P[:, 2].max() - 0.1]
+            p = top[rng.integers(len(top))] / 1000
         cur = dict(index=None, first=(float(p[0]), float(p[1]), float(rng.uniform(-np.pi, np.pi)), 0.0, 0.0),
                    force=float(np.exp(rng.uniform(np.log(0.5), np.log(5.0)))), fork_body_pos=pos / 1000, fork_body_quat=q,
                    noise_seed=int(rng.integers(1 << 30)), com_w=np.array([x, y, G.z_com]) / 1000, pose_id=pid)
+        if self.cold:
+            cur["max_presses"] = ps.COLD_MAX_PRESSES
+            cur["prior_half_mm"] = ps.COLD_HALF_MM + 20.0          # first press within 50 mm of the centre, the object within 20
         self._start(cur)
 
     def body_pose(self, name, pid, c_xy, psi_w):

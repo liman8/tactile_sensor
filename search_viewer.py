@@ -218,13 +218,13 @@ class MultiViewerApp(ViewerApp):
     """The same viewer loop on multi_viz.MultiSession: the object is unknown to the search (joint belief over identity
     and centre); Page Down / Page Up switch the object."""
 
-    def __init__(self, model="A", obj="knife_stl", start=None, seed=0, mode="full", height=False, cad_align=False):
+    def __init__(self, model="A", obj="knife_stl", start=None, seed=0, mode="full", height=False, cad_align=False, cold=False):
         import multi_viz as mv
         import pose_viz as pv
         self.mv = mv
         # the full-pose search (pose_viz / pose_search); model B also carries Fork.stl's CAD (never seen in training, C8)
         self.sess = pv.PoseVizSession(model, obj, ig="centre" if mode == "centre" else "full",
-                                      cad=("fork2_stl",) if model == "B" else (), height=height, cad_align=cad_align)
+                                      cad=("fork2_stl",) if model == "B" else (), height=height, cad_align=cad_align, cold=cold)
         self.S = self.sess.S
         self.objs = list(mv.objects.names()) if model == "A" else list(mv.cm.MODELS[model]["objects"]) + ["fork2_stl"]
         self.m, self.d = self.S.sim.model, self.S.sim.data
@@ -292,8 +292,10 @@ def selftest(net, out_png, multi=None):
         app = ViewerApp(net, start=16)
     else:                                       # the first stored start the multi search uses for this object
         import search_multi as smu
-        app = MultiViewerApp(multi[0], multi[1], start=int(smu.starts(multi[1], 1)[0]), mode=multi[2],
-                             height=multi[3] if len(multi) > 3 else False, cad_align=multi[4] if len(multi) > 4 else False)
+        cold = multi[5] if len(multi) > 5 else False
+        app = MultiViewerApp(multi[0], multi[1], start=None if cold else int(smu.starts(multi[1], 1)[0]), mode=multi[2],
+                             height=multi[3] if len(multi) > 3 else False, cad_align=multi[4] if len(multi) > 4 else False,
+                             cold=cold)
     r = mujoco.Renderer(app.m, 720, 1280, max_geom=12000)
     cam = mujoco.MjvCamera()
     cam.distance, cam.elevation, cam.azimuth = 0.2, -35.0, 150.0
@@ -367,14 +369,16 @@ def main():
     ap.add_argument("--mode", default="full", choices=["full", "centre"], help="multi-object search: information gain over the full pose or the centre only")
     ap.add_argument("--height", action="store_true", help="multi-object search: use the contact height (arm proprioception)")
     ap.add_argument("--cad-align", action="store_true", help="model B: the aligned CAD-only hypothesis for Fork.stl (post hoc)")
+    ap.add_argument("--cold", action="store_true", help="multi-object: random first press near the object (often a miss)")
     a = ap.parse_args()
     net = a.net or default_net()
     if a.selftest:
-        selftest(net, a.selftest, None if a.model is None else (a.model, a.object, a.mode, a.height, a.cad_align))
+        selftest(net, a.selftest, None if a.model is None else (a.model, a.object, a.mode, a.height, a.cad_align, a.cold))
         return
     import mujoco.viewer
     app = (ViewerApp(net, start=a.start, seed=a.seed) if a.model is None else
-           MultiViewerApp(a.model, a.object, start=a.start, seed=a.seed, mode=a.mode, height=a.height, cad_align=a.cad_align))
+           MultiViewerApp(a.model, a.object, start=a.start, seed=a.seed, mode=a.mode, height=a.height, cad_align=a.cad_align,
+                          cold=a.cold))
     m, d = app.m, app.d
     frame_dt = 1.0 / 60.0
     n_sub = max(1, int(round(frame_dt / m.opt.timestep)))

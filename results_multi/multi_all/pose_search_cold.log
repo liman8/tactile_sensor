@@ -1,0 +1,4 @@
+A full_height_cold_hn0.01 fork_stl: id 99.0 %, presses 4.43, stopped 99 % | binned: centre 0.74 mm, yaw 1.2 deg | refined: centre 0.46, yaw 0.4, ADD median 0.58, ADD<2 96 % (294 s, GPU peak 597 MB)
+A full_height_cold_hn0.01 fork2_stl: id 100.0 %, presses 4.39, stopped 100 % | binned: centre 0.80 mm, yaw 1.3 deg | refined: centre 0.35, yaw 0.2, ADD median 0.54, ADD<2 99 % (138 s, GPU peak 597 MB)
+A full_height_cold_hn0.01 knife_stl: id 99.7 %, presses 5.61, stopped 98 % | binned: centre 0.81 mm, yaw 1.3 deg | refined: centre 0.37, yaw 0.2, ADD median 0.49, ADD<2 91 % (152 s, GPU peak 597 MB)
+A full_height_cold_hn0.01 spoon_stl: id 99.7 %, presses 6.16, stopped 96 % | binned: centre 0.75 mm, yaw 1.2 deg | refined: centre 0.25, yaw 0.3, ADD median 0.63, ADD<2 95 % (162 s, GPU peak 597 MB)

@@ -478,6 +478,13 @@ ADD-S samo za parove poza koje se ne mogu razlikovati. Pogrešan predmet je neus
 greška težišta 0,49 ± 0,01 / 0,42 ± 0,00 / 0,35 ± 0,01 / 0,29 ± 0,00 mm i ADD < 5 mm 99,9 ± 0,2 / 99,9 ± 0,2 /
 93,2 ± 0,4 / 94,1 ± 0,4 % (ForkMilimeter / Fork / nož / kašika); seed 0, korišćen svuda gore, je tipičan.
 
+**Nasumičan start** (`--cold`; tako počinju i demoi 6-8): prvi pritisak je bilo gde u kvadratu ±50 mm oko težišta i
+pogodi predmet u samo 31-37 % slučajeva; pretraga zna samo da je težište na najviše 5 cm od prvog pritiska (gruba
+oblast, kao od kamere) i sme do 15 pritisaka. Model A sa visinom, 300 početaka po predmetu: prvi dodir posle medijane
+od 2 pritiska (p90 5-6), 1 od 1.200 epizoda nije našla predmet; predmet 99-100 %, ADD < 5 mm 98,7 / 100 / 94,3 / 96,7 %,
+4,4-6,2 pritiska, težište 0,25-0,46 mm. Model B na Fork.stl (poravnato + visina): 100 %. Bez grube oblasti 4-10 %
+epizoda nije našlo predmet za 15 pritisaka.
+
 **Test opterećenja pretrage** (model A, istih 300 početaka; pretraga veruje zadatoj pozi ruke, nominalnom CAD-u i
 senzoru iz treninga): ADD < 5 mm i prepoznavanje se ne menjaju ni pod jednom smetnjom. Greška težišta raste sa greškom
 ruke: šum 0,5 mm / 1° +0,3-0,4 mm, pomeraj kalibracije 1 mm / 1° +0,6-0,8 mm (dodirom se ne vidi), predmet 1 % različit
