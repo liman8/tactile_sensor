@@ -116,7 +116,9 @@ def stress_scene(s):
     write(f, main)
     return f
 # contact height (--height, the user's request after the spoon analysis): measured first-contact height above the table
-HEIGHT_NOISE_MM = 0.3          # assumed z accuracy of the arm (added to the simulated measurement)
+HEIGHT_NOISE_MM = float(os.environ.get("POSE_HEIGHT_NOISE_MM", 0.3))   # assumed z accuracy of the arm (added to the
+# simulated measurement); 0.3 mm in the first height runs, the arm's stated accuracy is 0.01 mm (user, 2026-11-23):
+# POSE_HEIGHT_NOISE_MM=0.01 (the result files then carry "_hn0.01")
 HEIGHT_SIGMA_MM = 0.5          # likelihood width (noise + the tilt of the first press, <= 0.5 mm over the pad)
 HEIGHT_CONTACT_MM = 0.5        # above this the press touched an object (every object is >= 2 mm tall)
 HEIGHT_RANGE_MM = 30.0         # the uniform part of the mixture (1 % of the mass)
@@ -765,7 +767,8 @@ def run(key, names, ig="full", verify=True, oracle=False, cad=(), n=300, workers
     d = os.path.join(cm.model_dir(key), out_sub or ("pose_search" + ("" if seed == 0 else f"_seed{seed}")))
     os.makedirs(d, exist_ok=True)
     tag = tag or (f"{ig}{'' if verify else '_noverify'}{'_oracle' if oracle else ''}{'_height' if height else ''}"
-                  f"{'_cad-' + '-'.join(cad) if cad else ''}{'_aligned' if cad_align else ''}{'' if cond == 'clean' else '_' + cond}{'_stress-' + stress if stress else ''}")
+                  f"{'_cad-' + '-'.join(cad) if cad else ''}{'_aligned' if cad_align else ''}{'' if cond == 'clean' else '_' + cond}{'_stress-' + stress if stress else ''}"
+                  f"{'' if (not height or HEIGHT_NOISE_MM == 0.3) else f'_hn{HEIGHT_NOISE_MM:g}'}")
     for name in names:
         fn = os.path.join(d, f"episodes_{tag}_{name}.json")
         if os.path.exists(fn):
