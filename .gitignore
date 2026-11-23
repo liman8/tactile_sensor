@@ -43,3 +43,6 @@ results_centre/FROZEN_SIM/
 
 # Full-pose search: per-(object, pose) CAD contact-height maps (162 MB), rebuilt by pose_geom.ObjectPose.cache_height_hits
 results_multi/pose_cache/
+
+# Downloaded third-party models (YCB, CC BY 4.0), kept as downloaded; rebuilt by results_multi/ycb/get_ycb.sh
+downloads/

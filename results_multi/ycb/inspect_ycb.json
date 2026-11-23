@@ -1,0 +1,110 @@
+{
+ "030_fork": {
+  "sha256": "6d58340cab51ed6b4745416e27c1028bd7fad07b1f49ac5b0de9b14d872353e8",
+  "triangles": 16384,
+  "extents_file_units": [
+   0.1975559964776039,
+   0.02710999920964241,
+   0.015883999527432024
+  ],
+  "longest_mm_if_m": 197.5559964776039,
+  "watertight": true,
+  "winding_consistent": true,
+  "components": 1,
+  "boundary_edges": 0,
+  "nonmanifold_edges": 0,
+  "degenerate_faces": 0,
+  "volume_cm3_if_m": 19.601593289520935,
+  "euler": -20
+ },
+ "031_spoon": {
+  "sha256": "a1b9faea20742504f7b100bdaba71fbe9ea6ddf8c7528467bb4a110e8931e440",
+  "triangles": 16384,
+  "extents_file_units": [
+   0.18596000224351883,
+   0.08292900025844574,
+   0.020891999593004584
+  ],
+  "longest_mm_if_m": 185.96000224351883,
+  "watertight": false,
+  "winding_consistent": true,
+  "components": 3,
+  "boundary_edges": 0,
+  "nonmanifold_edges": 3,
+  "degenerate_faces": 2,
+  "volume_cm3_if_m": null,
+  "euler": -10
+ },
+ "032_knife": {
+  "sha256": "b77702fac0581a4881a88d1c20db712209f8f6493d4ec364ec2ebe1d191e0415",
+  "triangles": 16384,
+  "extents_file_units": [
+   0.21483000367879868,
+   0.020605001598596573,
+   0.022613999899476767
+  ],
+  "longest_mm_if_m": 214.83000367879868,
+  "watertight": true,
+  "winding_consistent": true,
+  "components": 1,
+  "boundary_edges": 0,
+  "nonmanifold_edges": 0,
+  "degenerate_faces": 0,
+  "volume_cm3_if_m": 21.835475921472554,
+  "euler": -58
+ },
+ "033_spatula": {
+  "sha256": "b20dd99090c152923984c9574c0e6ed3b5d4c5da6c8427810f878b6f01fdbe63",
+  "triangles": 16384,
+  "extents_file_units": [
+   0.30552199482917786,
+   0.12459399551153183,
+   0.032932998961769044
+  ],
+  "longest_mm_if_m": 305.52199482917786,
+  "watertight": true,
+  "winding_consistent": true,
+  "components": 1,
+  "boundary_edges": 0,
+  "nonmanifold_edges": 0,
+  "degenerate_faces": 0,
+  "volume_cm3_if_m": 67.13356307582275,
+  "euler": 0
+ },
+ "043_phillips_screwdriver": {
+  "sha256": "fea4e3bae7b139650e966e5e71dbf313039754c1f30ce22e9544a7e7146179f7",
+  "triangles": 16384,
+  "extents_file_units": [
+   0.19485800340771675,
+   0.10696699842810631,
+   0.03551500040339306
+  ],
+  "longest_mm_if_m": 194.85800340771675,
+  "watertight": true,
+  "winding_consistent": true,
+  "components": 1,
+  "boundary_edges": 0,
+  "nonmanifold_edges": 0,
+  "degenerate_faces": 0,
+  "volume_cm3_if_m": 77.00548581539846,
+  "euler": 2
+ },
+ "044_flat_screwdriver": {
+  "sha256": "1fef3ad28feb04c3f9c27704512889fed1a5034f7cef242e38985b6790ff3f5c",
+  "triangles": 16384,
+  "extents_file_units": [
+   0.16187100112438202,
+   0.15688499808311462,
+   0.0350410015671514
+  ],
+  "longest_mm_if_m": 161.87100112438202,
+  "watertight": true,
+  "winding_consistent": true,
+  "components": 1,
+  "boundary_edges": 0,
+  "nonmanifold_edges": 0,
+  "degenerate_faces": 0,
+  "volume_cm3_if_m": 76.21626196338724,
+  "euler": 2
+ }
+}
