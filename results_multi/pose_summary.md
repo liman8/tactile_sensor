@@ -61,6 +61,16 @@ ADD uses corresponding body points also for a wrong stable pose; ADD-S only for 
 | Spoon.stl | -0.31 [-0.53, -0.10] | -0.01 [-0.01, +0.00] | +4.67 [+2.33, +7.33] | +4.00 [+2.00, +6.33] |
 
 
+## Seed spread of model A (full-pose search, seeds 0 / 1 / 2, mean +- std)
+
+| object | identity % | centre median mm | ADD median mm | ADD < 5 mm % | presses | ADD < 5 per seed 0 / 1 / 2 |
+|---|---|---|---|---|---|---|
+| fork_stl | 99.9 +- 0.2 | 0.49 +- 0.01 | 0.58 +- 0.01 | 99.9 +- 0.2 | 2.29 +- 0.05 | 100.0 / 99.7 / 100.0 |
+| Fork.stl | 99.9 +- 0.2 | 0.42 +- 0.00 | 0.55 +- 0.00 | 99.9 +- 0.2 | 2.16 +- 0.09 | 99.7 / 100.0 / 100.0 |
+| Knife.stl | 99.9 +- 0.2 | 0.35 +- 0.01 | 0.45 +- 0.01 | 93.2 +- 0.4 | 3.75 +- 0.11 | 93.0 / 93.0 / 93.7 |
+| Spoon.stl | 95.8 +- 0.4 | 0.29 +- 0.00 | 0.64 +- 0.00 | 94.1 +- 0.4 | 4.03 +- 0.03 | 93.7 / 94.3 / 94.3 |
+
+
 ## Stress test of the search (model A; the same starts as the clean search; minus clean, 95 % interval)
 
 | condition | object | identity % | centre median mm | minus clean | ADD < 5 mm % | minus clean, points | presses | centre / yaw in 90 % |

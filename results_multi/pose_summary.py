@@ -186,6 +186,19 @@ def main():
                 stats=b, add5_minus_clean=paired((addv(E) < 5).astype(float), (addv(F) < 5).astype(float), lambda x: x.mean(-1)),
                 centre_median_minus_clean=paired(np.array([e["refined"]["centre_err_mm"] for e in E]),
                                                  np.array([e["refined"]["centre_err_mm"] for e in F]), lambda x: np.median(x, -1)))
+    # seed spread of model A (chain_seeds.sh): the full-pose search of seeds 0, 1, 2 on the same starts
+    S["seeds_A"] = {}
+    for n in OBJ:
+        per = {}
+        for sd in (0, 1, 2):
+            E = load(f"multi_all/pose_search{'' if sd == 0 else f'_seed{sd}'}/episodes_full_{n}.json")
+            if E:
+                b = stats(E)
+                per[sd] = dict(identity=b["identity"], centre_med=b["centre_med"], add_med=b["add_med"], add_lt5=b["add_lt5"],
+                               presses=b["presses"])
+        if len(per) == 3:
+            S["seeds_A"][n] = dict(per_seed=per, mean_std={k: [float(np.mean([per[d][k] for d in per])), float(np.std([per[d][k] for d in per], ddof=1))]
+                                                         for k in ("identity", "centre_med", "add_med", "add_lt5", "presses")})
     S["rescored_refined_rows"] = {k: v for k, v in RESCORED.items() if v}
     json.dump(S, open(os.path.join(R, "pose_summary.json"), "w"), indent=1)
     md = ["# Multi-object pose results (recomputed by results_multi/pose_summary.py)\n",
@@ -240,6 +253,14 @@ def main():
         md.append(table([[SHORT[n], f3(v["presses_height_minus_full"]), f3(v["add_median_height_minus_full"]),
                           f3(v["success_add5_height_minus_full"], 100), f3(v["identity_height_minus_full"], 100)]
                          for n, v in S["height_vs_full"].items()], ["object", "presses", "ADD median mm", "ADD < 5 mm, points", "identity, points"]))
+    if S.get("seeds_A"):
+        md.append("\n## Seed spread of model A (full-pose search, seeds 0 / 1 / 2, mean +- std)\n")
+        ms = lambda v, k, pct=False: (f"{v[k][0] * 100:.1f} +- {v[k][1] * 100:.1f}" if pct else f"{v[k][0]:.2f} +- {v[k][1]:.2f}")
+        md.append(table([[SHORT[n], ms(v["mean_std"], "identity", True), ms(v["mean_std"], "centre_med"), ms(v["mean_std"], "add_med"),
+                          ms(v["mean_std"], "add_lt5", True), ms(v["mean_std"], "presses"),
+                          " / ".join(f"{v['per_seed'][d]['add_lt5'] * 100:.1f}" for d in (0, 1, 2))]
+                         for n, v in S["seeds_A"].items()],
+                        ["object", "identity %", "centre median mm", "ADD median mm", "ADD < 5 mm %", "presses", "ADD < 5 per seed 0 / 1 / 2"]))
     if S.get("stress_A"):
         md.append("\n## Stress test of the search (model A; the same starts as the clean search; minus clean, 95 % interval)\n")
         rows_ = []

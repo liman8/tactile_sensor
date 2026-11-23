@@ -82,7 +82,7 @@ so `fixed_sensor` still starts with `fork_dinner`.
 | `REZIME.md`, `REZIME_hronologija.md` | a self-contained summary in Serbian for the professor (goal, setup, data, model, robustness findings, search, choice of the final model, CAD comparison, viewer, limits, what the real sensor needs; every number with its source file); the earlier chronological summary (v1 to Mini) |
 | `prezentacija/` | presentation material in Serbian: `PREZENTACIJA.md` (talk text, demo script, expected questions, sources of every number), `demo.sh` (the MuJoCo demos, `bash prezentacija/demo.sh` lists them), `slike/` and `video/` (copies, in the order of the talk), headless self-test images |
 | `get_models.sh` | puts the models `prezentacija/demo.sh` uses in place and checks them against `MODELS.sha256` (`--all`, `--check`, `--from DIR|URL`, `--export DIR`); see "The demo on a fresh machine" |
-| `DATA_AND_MODELS.md`, `MODELS.sha256` | what is not in git (datasets, caches, 17 of the 23 model files), with sizes and the commands that rebuild them; SHA-256 of every model file |
+| `DATA_AND_MODELS.md`, `MODELS.sha256` | what is not in git (datasets, caches, 22 of the 28 model files), with sizes and the commands that rebuild them; SHA-256 of every model file |
 | `objects.json`, `objects.py` | the object registry (fork_stl, Fork.stl, Knife.stl, Spoon.stl): files, units, SHA-256, mass, centre of mass, parts, stable poses, pose conventions, indistinguishable pose pairs (see "Multi-object") |
 | `gelsight_multi.xml`, `meshes/{fork2,knife,spoon}_stl/` | the scene with all four objects (includes `gelsight_moving.xml` unchanged) and the imported meshes |
 | `collect_multi.py`, `dataset_multi/` | multi-object data: 30k / 2k / 3k presses per object, shards with the network inputs only (regenerated from seeds) |
@@ -2839,6 +2839,10 @@ fails the ADD success rates.
 * **Robustness** (one press, 600 per object): noise 0.02-0.05 mm and blur 1-2 px change nothing material; lateral
   scale 0.98 / 1.02 hurts the knife and the spoon most (centre median knife 3.57 -> 2.73 / 4.63 mm, spoon 1.97 -> 3.59 /
   2.73 mm; forks within 0.15 mm); drift 0.03 / 0.08 mm: knife 3.62 / 3.76, spoon 1.91 / 2.33 mm.
+
+**Seeds** (model A trained three times; the full search on the same starts, mean +- std over seeds 0-2): centre median
+0.49 +- 0.01 / 0.42 +- 0.00 / 0.35 +- 0.01 / 0.29 +- 0.00 mm and ADD < 5 mm 99.9 +- 0.2 / 99.9 +- 0.2 / 93.2 +- 0.4 /
+94.1 +- 0.4 % (fork_stl / Fork.stl / Knife / Spoon); seed 0, used everywhere above, is typical.
 
 **Stress test of the search** (`pose_search.py --stress`, model A, the same 300 starts; the search keeps the commanded
 arm pose, the nominal CAD and the training sensor): ADD < 5 mm and identity are unchanged under every condition (within
