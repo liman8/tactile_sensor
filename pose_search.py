@@ -120,9 +120,9 @@ def stress_scene(s):
     write(f, main)
     return f
 # contact height (--height, the user's request after the spoon analysis): measured first-contact height above the table
-HEIGHT_NOISE_MM = float(os.environ.get("POSE_HEIGHT_NOISE_MM", 0.3))   # assumed z accuracy of the arm (added to the
-# simulated measurement); 0.3 mm in the first height runs, the arm's stated accuracy is 0.01 mm (user, 2026-11-23):
-# POSE_HEIGHT_NOISE_MM=0.01 (the result files then carry "_hn0.01")
+HEIGHT_NOISE_MM = float(os.environ.get("POSE_HEIGHT_NOISE_MM", 0.01))  # assumed z accuracy of the arm (added to the
+# simulated measurement): the arm's stated accuracy, 0.01 mm (user, 2026-11-23; result files carry "_hn0.01"). The first
+# height runs used 0.3 mm (files without the suffix): reproduce them with POSE_HEIGHT_NOISE_MM=0.3
 HEIGHT_SIGMA_MM = 0.5          # likelihood width (noise + the tilt of the first press, <= 0.5 mm over the pad)
 HEIGHT_CONTACT_MM = 0.5        # above this the press touched an object (every object is >= 2 mm tall)
 HEIGHT_RANGE_MM = 30.0         # the uniform part of the mixture (1 % of the mass)
